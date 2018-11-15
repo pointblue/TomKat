@@ -69,6 +69,7 @@ dat_abs$Pasture = toupper(dat_abs$Pasture) #inconsistency in lower/uppercase pas
 
 # save to master data in long format:
 dat_long <- dat_abs %>%
+  select(-grasstot) %>%
   gather(AnnualGr:Weeds, key = 'vegtype', value = 'cover')
 write_csv(dat_long, here::here(masterdat))
 
