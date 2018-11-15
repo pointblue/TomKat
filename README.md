@@ -1,5 +1,5 @@
-<img src='figs/TomKat_TKREF-trans.png' alt="TomKat logo" style="width: 150px;"/>
-<img src='figs/PB_logo_RGB_Full_Color_cs.png' alt="Point Blue logo" style="width: 200px;"/>
+<img src='figs/TomKat_TKREF-trans.png' alt="TomKat logo" style="width: 15%;"/>
+<img src='figs/PB_logo_RGB_Full_Color_cs.png' alt="Point Blue logo" style="width: 20%;"/>
 
 TomKat State of the Ranch Data Pages
 =========================
