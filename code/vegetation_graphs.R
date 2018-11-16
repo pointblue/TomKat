@@ -1,9 +1,8 @@
 # README----------------------
-# Script to produce vegetation graph 1: ranch-wide trend in % cover
-# Accounting for different sizes of each pasture, total area of pastures 
-# surveyed each year, and some missing data.
-#
-# From RStudio Viewer: Export as webpage "docs/vegetation_map1.html"
+# Script to produce vegetation trend graphs (accounting for different sizes of 
+# each pasture, total area of pastures surveyed each year, and some missing data)
+# 1: ranch-wide trend in % cover of major veg types
+# 2: comparison of native, annual, perennial grasses
 
 ## packages
 library(tidyverse)
@@ -11,9 +10,11 @@ library(sf)
 
 ## input files
 masterveg <- 'data_master/TK_veg_master.csv'
+poly <- 'TK_veg_fields' ## shapefile
 
-## shapefile
-poly <- 'TK_veg_fields'
+## output files
+graph1 <- 'vegetation_graph1.html'
+graph2 <- 'vegetation_graph2.html'
 
 pointblue.palette <-
   c('#4495d1',
@@ -73,29 +74,35 @@ theme_custom = theme_classic() +
     axis.line.x = element_line(color = "black")
   )
 
-plot1 <- ggplot(dat_final %>%
-                  filter(
-                    vegtype %in% c('All Grasses', 'Shrubs', 'Forbs', 'Bare Ground', 'Invasive Weeds')
-                  ),
-                aes(x = Year, y = Cover, color = vegtype)) +
+plot1 <- dat_final %>% 
+  filter(vegtype %in% c(
+    'All Grasses', 'Shrubs', 'Forbs', 'Bare Ground', 'Invasive Weeds')) %>%
+  ggplot(aes(x = Year, y = Cover, color = vegtype)) +
   geom_line() + geom_point(pch = 19) + ylab('% Cover') + xlab(NULL) +
   ylim(0, 80) + scale_color_manual(values = pointblue.palette[c(1:4, 6)]) +
-  theme_custom 
-  
-plotly::ggplotly(plot1) %>% 
+  theme_custom
+
+plot1 <- plot1 %>%
+  plotly::ggplotly() %>% 
   plotly::layout(legend = list(x = 0, y = 1, tracegroupgap = 5)) 
+
+htmlwidgets::saveWidget(plot1, graph1, selfcontained = TRUE, 
+                        title = 'TomKat Vegetation Trends')
 
 # PLOT 2-------------
 # Native vs. Perennial vs. Annual Grasses
 
-plot2 <- ggplot(dat_final %>%
-                  filter(
-                    vegtype %in% c('Native Grasses', 'Annual Grasses', 'Perennial Grasses')
-                  ),
-                aes(x = Year, y = Cover, color = vegtype)) + 
+plot2 <- dat_final %>%
+  filter(vegtype %in% c('Native Grasses', 'Annual Grasses', 'Perennial Grasses')) %>%
+  ggplot(aes(x = Year, y = Cover, color = vegtype)) + 
   geom_line() + geom_point(pch = 19) + ylab('% Cover') + xlab(NULL) + 
   ylim(0, 80) + scale_color_manual(values = pointblue.palette[1:3]) +
   theme_custom
 
-plotly::ggplotly(plot2) %>% 
+plot2 <-  plot2 %>% 
+  plotly::ggplotly() %>% 
   plotly::layout(legend = list(x = 0, y = 1, tracegroupgap = 5))
+
+htmlwidgets::saveWidget(plot2, graph2, selfcontained = TRUE, 
+                        title = 'TomKat Vegetation Trends')
+

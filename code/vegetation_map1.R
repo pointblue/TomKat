@@ -1,6 +1,5 @@
 # README----------------------
 # Script to produce vegetation map 1: current veg map
-# From RStudio Viewer: Export as webpage "docs/vegetation_map1.html"
 
 ## packages
 library(tidyverse)
@@ -11,6 +10,9 @@ library(mapview)
 
 ## input files
 masterveg <- 'data_master/TK_veg_master.csv'
+
+## output files
+output1 <- 'vegetation_map1.html'
 
 ## shapefiles
 poly <- 'TK_veg_fields'
@@ -152,9 +154,9 @@ pal <-
 
 # MAP----------------------
 
-leaflet(height = 500) %>% setView(lng = -122.3598,
-                                  lat = 37.26693,
-                                  zoom = 14) %>%
+map1 <- leaflet(height = 500) %>% setView(lng = -122.3598,
+                                          lat = 37.26693,
+                                          zoom = 14) %>%
   ## background terrain
   addProviderTiles("Stamen.Terrain",
                    options = providerTileOptions(minzoom = 14, maxzoom = 15)) %>%
@@ -187,7 +189,7 @@ leaflet(height = 500) %>% setView(lng = -122.3598,
     fillColor = ~ pal(NativeGr),
     group = 'Native Grasses',
     popup = ~ label_NativeGr
-  ) %>% 
+  ) %>%
   
   ## annual grasses
   addPolygons(
@@ -242,7 +244,7 @@ leaflet(height = 500) %>% setView(lng = -122.3598,
     fillColor = ~ pal(Weeds),
     group = 'Invasive Weeds',
     popup = ~ label_Weeds
-  ) %>% 
+  ) %>%
   
   ## bare ground
   addPolygons(
@@ -280,7 +282,7 @@ leaflet(height = 500) %>% setView(lng = -122.3598,
     ),
     options = layersControlOptions(collapsed = F),
     position = 'bottomleft'
-  ) %>% 
+  ) %>%
   
   ## logo
   addLogo(
@@ -291,3 +293,7 @@ leaflet(height = 500) %>% setView(lng = -122.3598,
     height = 90,
     offset.y = -5
   )
+
+title <- paste0('TomKat Vegetation Map ', max(dat$Year))
+htmlwidgets::saveWidget(map1, output1, selfcontained = TRUE, 
+                        title = title)
