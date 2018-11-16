@@ -12,11 +12,8 @@ library(sf)
 ## input files
 masterveg <- 'data_master/TK_veg_master.csv'
 
-## shapefiles
+## shapefile
 poly <- 'TK_veg_fields'
-ranch <- 'TomKat_ranch_boundary'
-
-logo <- 'https://data.pointblue.org/apps/assets/images/pb-logo-full.png'
 
 pointblue.palette <-
   c('#4495d1',
