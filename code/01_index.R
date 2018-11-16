@@ -16,5 +16,6 @@ source('code/vegetation_prep.R')
 # source('widgets/vegetation_graphs.R')
 
 # render Rmd to html
-knitr::knit(here::here('Rmd/vegetation.Rmd'), 
-            output = here::here('vegetation.html'))
+rmarkdown::render(here::here("Rmd/vegetation.Rmd"), 
+                  output_file = here::here("vegetation.html"))
+
