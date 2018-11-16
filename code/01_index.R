@@ -7,13 +7,13 @@
 source('code/vegetation_prep.R')
 
 # produce current veg map (veg map 1)
-source('widgets/vegetation_map1.R')
+source('code/vegetation_map1.R')
 
 # produce net change from 2012 map (veg map 2)
-source('widgets/vegetation_map2.R')
+source('code/vegetation_map2.R')
 
 # produce ranch-wide trend graphs
-source('widgets/vegetation_graphs.R')
+source('code/vegetation_graphs.R')
 
 # render Rmd to html
 rmarkdown::render(here::here("Rmd/vegetation.Rmd"), 

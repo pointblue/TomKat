@@ -71,7 +71,7 @@ Since 2012, <font color='`r pointblue.palette[1]`'><b>total grass cover</b></fon
 
 #### Grasses  
 
-Ranch-wide, we have detected a significant increase in <font color='`r pointblue.palette[3]`'><b>native grasses</b></font>, and a trend toward increasing <font color='`r pointblue.palette[2]`'><b>perennial grasses</b></font>.
+Ranch-wide, we have detected a significant increase in <font color='`r pointblue.palette[2]`'><b>native grasses</b></font>, and a trend toward increasing <font color='`r pointblue.palette[3]`'><b>perennial grasses</b></font>.
 
 
 <iframe src="vegetation_graph2.html" style="border: none;" width = 80%; height = 500px;></iframe>
