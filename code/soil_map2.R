@@ -44,7 +44,9 @@ net_change <- dat %>%
                         Year == 2015 ~ 'baseline'),
          Year = NULL) %>%
   spread(key = yr, value = value) %>%
-  mutate(net = current - baseline) %>%
+  mutate(net = current - baseline,
+         net = case_when(is.nan(net) ~ NA_real_,
+                         TRUE ~ net)) %>%
   select(-baseline, -current) %>%
   spread(key = metric, value = net)
 
@@ -52,7 +54,8 @@ net_change_long <- net_change %>%
   gather(bulk.dens.gcm3:water.infil, key = 'metric', value = 'netchange') %>%
   mutate('Net change' = case_when(
     netchange > 0 ~ paste0('+', round(netchange, digits = 2)),
-    netchange <= 0 ~ as.character(round(netchange, digits = 2))
+    netchange <= 0 ~ as.character(round(netchange, digits = 2)),
+    TRUE ~ as.character(netchange)
   ))
 
 dat_long <- dat %>%
@@ -73,7 +76,7 @@ dat_lab <- net_change %>%
       Name,
       ~ dat_long %>% filter(Name == .x & metric == 'bulk.dens.gcm3') %>%
         select(year, value) %>%
-        mutate(value = txtRound(value, digits = 2)) %>%
+        mutate(value = txtRound(value, digits = 2, txt.NA = 'NA')) %>%
         htmlTable(
           header = c('Year', 'g/cm<sup>3</sup>'),
           align = c('l', 'r'),
@@ -86,7 +89,7 @@ dat_lab <- net_change %>%
       Name,
       ~ dat_long %>% filter(Name == .x & metric == 'water.infil') %>%
         select(year, value) %>%
-        mutate(value = txtRound(value, digits = 2)) %>%
+        mutate(value = txtRound(value, digits = 2, txt.NA = 'NA')) %>%
         htmlTable(
           header = c('Year', 'Minutes'),
           align = c('l', 'r'),
@@ -99,7 +102,7 @@ dat_lab <- net_change %>%
       Name,
       ~ dat_long %>% filter(Name == .x & metric %in% c('carbonA', 'carbonB')) %>%
         select(metric, year, value) %>%
-        mutate(value = txtRound(value, digits = 1)) %>%
+        mutate(value = txtRound(value, digits = 1, txt.NA = 'NA')) %>%
         spread(key = metric, value = value) %>%
         htmlTable(
           header = c('Year', '0-10 cm', '10-40 cm'),

@@ -67,7 +67,7 @@ dat_perc_lab <- dat_yr %>%
       Name,
       ~ dat_perc %>% filter(Name == .x & var == 'bulk.dens.gcm3') %>%
         select(Value, Percentile) %>%
-        mutate(Value = txtRound(Value, digits = 2)) %>%
+        mutate(Value = txtRound(Value, digits = 2, txt.NA = 'NA')) %>%
         htmlTable(
           header = c('Value', 'Percentile'),
           align = c('r', 'r'),
@@ -79,7 +79,7 @@ dat_perc_lab <- dat_yr %>%
       Name,
       ~ dat_perc %>% filter(Name == .x & var == 'water.infil') %>%
         select(Value, Percentile) %>%
-        mutate(Value = txtRound(Value, digits = 2)) %>%
+        mutate(Value = txtRound(Value, digits = 2, txt.NA = 'NA')) %>%
         htmlTable(
           header = c('Value', 'Percentile'),
           align = c('r', 'r'),
@@ -91,7 +91,7 @@ dat_perc_lab <- dat_yr %>%
       Name,
       ~ dat_perc %>% filter(Name == .x & var %in% c('carbonA', 'carbonB')) %>%
         select(Value, Percentile) %>%
-        mutate(Value = txtRound(Value, digits = 2)) %>%
+        mutate(Value = txtRound(Value, digits = 1, txt.NA = 'NA')) %>%
         htmlTable(
           header = c('Value', 'Percentile'),
           align = c('r', 'r'),
@@ -120,9 +120,10 @@ dat_lab <- dat_perc_lab %>%
       Name,
       ~ mean_perc %>% filter(Name == .x) %>%
         select(Value, Percentile) %>%
-        mutate(Value = txtRound(Value, digits = 2)) %>%
+        mutate(Value = txtRound(Value, digits = 2, txt.NA = 'NA')) %>%
         htmlTable(
           header = c('Value', 'Percentile'),
+          align = c('r', 'r'),
           rnames = c('Bulk Density (g/cm<sup>3</sup>)',
                      'Water Infiltration (min/in)',
                      '% Carbon (0-10cm)', 
