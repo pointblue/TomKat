@@ -11,27 +11,6 @@ labdat <- 'data_raw/TOKA_soildata_Lab_2015.csv'
 # output files
 masterdat <- 'data_master/TK_soil_master.csv'
 
-# functions
-## calculate sample volume from diameter, height, mass, and rock volume (offset)
-## to estimate soil bulk density
-calcDensity = function(data, diameter, height, mass, offset=NULL) {
-  vol <- data %>% select(height) * pi * (data %>% select(diameter)/2)^2
-  # vol = data[,height]*pi*(data[,diameter]/2)^2
-  if (!is.null(offset)) {
-    vol <- vol - data %>% select(offset)
-  }
-  dens <- data %>% select(mass) / vol
-  return(dens)
-}
-
-## converting water infiltration times (in hours:minutes:seconds) to minutes (decimal)
-time2minutes = function(data, var) {
-  require(chron)
-  t = times(dat %>% select(var))
-  t = ((hours(t) * 60 * 60) + (minutes(t) * 60) + seconds(t)) / 60
-  return(t)
-}
-
 
 # DATA SET UP----------------
 # main data set from CADC
@@ -47,7 +26,13 @@ dat <- read_csv(here::here(rawdat)) %>%
                                                                                    2) ^ 2 - `Bulk Density Rock Vol`),
          # convert water infiltration time from h:m:s to seconds
          water1 = as.numeric(`Water Infiltration Time 1`),
-         water2 = as.numeric(`Water Infiltration Time 2`))
+         water2 = as.numeric(`Water Infiltration Time 2`),
+         
+         # fix missing values reported as 0 (the only zeroes for carbon)
+         `Carbon 0-10 cm` = case_when(`Point Name` == 'TOKA-013' & Year == 2015 ~ NA_real_,
+                                      TRUE ~ `Carbon 0-10 cm`),
+         `Carbon 10-40 cm` = case_when(`Point Name` == 'TOKA-013' & Year == 2015 ~ NA_real_,
+                                       TRUE ~ `Carbon 10-40 cm`))
 
 # summarize values over 5 samples at each point in each sample year
 sdat <- dat %>%
@@ -67,25 +52,17 @@ lab <- read_csv(here::here(labdat)) %>%
   mutate(`Point Name` = gsub('TK', 'TOKA', `Point Name`),
          CollectDate = as.Date(CollectDate, format = '%d-%b-%y'), 
          Year = as.factor(format(CollectDate, '%Y'))) %>%
-  gather(c(`Olsen P`:Clay, pH:`Total Nitrogen`), key = 'var', value = 'value') %>%
+  gather(c(`Olsen P`:`Total Nitrogen`), key = 'var', value = 'value') %>%
   mutate(value = case_when(value == '< 2.0' ~ '1',
                            value == '< 0.090' ~ '0.05',
                            value == 'QNS' ~ NA_character_,
-                           TRUE ~ value),
-         value = as.numeric(value)) %>%
+                           TRUE ~ value)) %>%
   unite('var', var, depth.group, sep='') %>%
   select(-CollectDate, -County, -Ranch, -Depth) %>%
-  spread(key = 'var', value = 'value')
+  spread(key = 'var', value = 'value') %>%
+  mutate_at(vars(CalciumA:SodiumB), as.numeric) %>%
+  mutate_at(vars(`Total CarbonA`:`Total NitrogenB`), as.numeric)
 
 # master data
 mdat <- full_join(sdat, lab, by = c('Point Name', 'Year'))
-
-summary(mdat)
-hist(mdat$bulk.dens.gcm3)
-hist(mdat$water.infil)
-hist(mdat$carbonA)
-hist(mdat$carbonB)
-hist(mdat$CalciumA)
-hist(mdat$MagnesiumA)
-
 write_csv(mdat, masterdat)
