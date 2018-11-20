@@ -1,5 +1,6 @@
 # README--------------
 # Master script file
+# Best practice: restart R after each call (ctrl+shift+F10)
 
 
 # VEGETATION-----------
@@ -33,8 +34,24 @@ source('code/soil_prep.R')
 source('code/soil_map1.R')
 
 # produce net change from 2014 map (soil map 2)
+source('code/soil_map2.R')
 
-# produce soil microbes map (soil map 3?)
+# produce soil nutrients map (soil map 3)
+source('code/soil_map3.R')
+
+# produce soil microbes map (soil map 4?)
+## -->waiting on data from Chelsea
 
 # render Rmd to html
+rmarkdown::render(here::here("Rmd/soil.Rmd"), 
+                  output_file = here::here("soil.html"))
 
+# wishlist/to do:
+# - show some metric for net change in overall score for soil productivity
+# - increase transparency of polygons so terrain is visible
+
+
+# INDEX------------------
+# render Rmd to html
+rmarkdown::render(here::here("Rmd/index.Rmd"), 
+                  output_file = here::here("index.html"))
