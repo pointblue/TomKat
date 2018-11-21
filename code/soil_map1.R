@@ -29,7 +29,11 @@ pointblue.palette <-
     '#005baa',
     '#bfd730',
     '#a7a9ac',
-    '#666666')
+    '#666666',
+    '#456d28', #add a few more complementary colors
+    '#b74374', 
+    '#8643b7',
+    '#d2c921')
 
 # DATA SET UP-------------
 
@@ -138,38 +142,50 @@ dat_lab <- dat_perc_lab %>%
 
 
 # SHAPEFILES SET UP------
-shp_pts <- st_read(here::here('GIS'), pts) %>%
+shp_pts <- st_read(here::here('GIS'), pts, quiet = TRUE) %>%
   st_transform('+proj=longlat +datum=WGS84') %>%
   right_join(dat_lab, by = 'Name')
 
-shp_poly <- st_read(here::here('GIS'), poly) %>%
+shp_poly <- st_read(here::here('GIS'), poly, quiet = TRUE) %>%
   st_transform('+proj=longlat +datum=WGS84')
 
-shp_ranch <- st_read(here::here('GIS'), ranch) %>%
+shp_ranch <- st_read(here::here('GIS'), ranch, quiet = TRUE) %>%
   st_transform('+proj=longlat +datum=WGS84')
 
 
 # COLOR PALETTE-----------
 ## Define color palette for each metric:
-pal0 <- colorBin(palette = colorRamp(colors = c('#ffffff', pointblue.palette[1])),
-                 domain = dat$bulk.dens.gcm3,
-                 bins = c(0, 20, 40, 60, 80, 100),
-                 na.color = pointblue.palette[6])
+pal0 <-
+  colorBin(
+    palette = colorRamp(colors = c('#ffffff', pointblue.palette[4])),
+    domain = dat_lab$mean,
+    bins = c(0, 20, 40, 60, 80, 100),
+    na.color = pointblue.palette[7]
+  )
 
-pal1 <- colorBin(palette = colorRamp(colors = c('#ffffff', pointblue.palette[3])),
-                 domain = dat$bulk.dens.gcm3,
-                 bins = c(0.7, 0.9, 1.1, 1.3, 1.5),
-                 na.color = pointblue.palette[6])
+pal1 <-
+  colorBin(
+    palette = colorRamp(colors = c('#ffffff', pointblue.palette[3])),
+    domain = dat_lab$bulk.dens.gcm3,
+    bins = c(0.7, 0.9, 1.1, 1.3, 1.5),
+    na.color = pointblue.palette[7]
+  )
 
-pal2 <- colorBin(palette = colorRamp(colors = c('#ffffff', pointblue.palette[4])),
-                 domain = dat$water.infil, 
-                 bins = c(0, 1, 5, 10, 20, 60),
-                 na.color = pointblue.palette[6])
+pal2 <-
+  colorBin(
+    palette = colorRamp(colors = c('#ffffff', pointblue.palette[10])),
+    domain = dat_lab$water.infil,
+    bins = c(0, 1, 5, 10, 20, 60),
+    na.color = pointblue.palette[7]
+  )
 
-pal3 <- colorBin(palette = colorRamp(colors = c('#ffffff', pointblue.palette[2])),
-                 domain = c(dat$carbonA, dat$carbonB),
-                 bins = c(0, 2, 4, 6, 10),
-                 na.color = pointblue.palette[6])
+pal3 <-
+  colorBin(
+    palette = colorRamp(colors = c('#ffffff', pointblue.palette[9])),
+    domain = c(dat_lab$carbonA, dat_lab$carbonB),
+    bins = c(0, 2, 4, 6, 10),
+    na.color = pointblue.palette[7]
+  )
 
 
 # MAP-----------
@@ -185,8 +201,8 @@ map1 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   addPolygons(
     data = shp_poly,
     color = 'black',
-    fillColor = pointblue.palette[6],
-    fillOpacity = 0.5,
+    fillColor = pointblue.palette[2],
+    fillOpacity = 0.1,
     weight = 1
   ) %>% 
   
@@ -194,14 +210,14 @@ map1 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   addPolygons(
     data = shp_ranch,
     color = 'black',
-    fill = F,
-    weight = 2.5
+    fill = FALSE,
+    weight = 3
   ) %>%
   
   # overall score:
   addCircleMarkers(
     data = shp_pts,
-    radius = 6,
+    radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 10, 6),
     weight = 1.5,
     fillOpacity = 1,
     color = 'black',
@@ -213,7 +229,7 @@ map1 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   # bulk density:
   addCircleMarkers(
     data = shp_pts,
-    radius = 6,
+    radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 10, 6),
     weight = 1.5,
     fillOpacity = 1,
     color = 'black',
@@ -225,7 +241,7 @@ map1 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   # water infiltration:
   addCircleMarkers(
     data = shp_pts,
-    radius = 6,
+    radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 10, 6),
     weight = 1.5,
     fillOpacity = 1,
     color = 'black',
@@ -237,7 +253,7 @@ map1 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   # carbon: (overlapping circles for two depths)
   addCircleMarkers(
     data = shp_pts,
-    radius = 9,
+    radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 12, 9),
     weight = 1.5,
     fillOpacity = 1,
     color = 'black',
@@ -248,7 +264,7 @@ map1 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   
   addCircleMarkers(
     data = shp_pts,
-    radius = 4,
+    radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 7, 4),
     weight = 1.5,
     fillOpacity = 1,
     color = 'black',
@@ -320,4 +336,8 @@ map1 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   )
 
 title <- paste0('TomKat Soil Map ', max(dat$Year))
-htmlwidgets::saveWidget(map1, output1, selfcontained = TRUE, title = title)
+
+htmlwidgets::saveWidget(map1,
+                        here::here(output1),
+                        selfcontained = TRUE,
+                        title = title)

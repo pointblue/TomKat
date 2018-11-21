@@ -116,33 +116,48 @@ dat_lab <- net_change %>%
 
 
 # SHAPEFILES SET UP------
-shp_pts <- st_read(here::here('GIS'), pts) %>%
+shp_pts <- st_read(here::here('GIS'), pts, quiet = TRUE) %>%
   st_transform('+proj=longlat +datum=WGS84') %>%
   right_join(dat_lab, by = 'Name')
 
-shp_poly <- st_read(here::here('GIS'), poly) %>%
+shp_poly <- st_read(here::here('GIS'), poly, quiet = TRUE) %>%
   st_transform('+proj=longlat +datum=WGS84')
 
-shp_ranch <- st_read(here::here('GIS'), ranch) %>%
+shp_ranch <- st_read(here::here('GIS'), ranch, quiet = TRUE) %>%
   st_transform('+proj=longlat +datum=WGS84')
 
 
 # COLOR PALETTE-----------
 ## Define color palette for each metric:
-pal1 <- colorBin(palette = colorRamp(colors = c(pointblue.palette[4], '#ffffff', pointblue.palette[3])),
-                 domain = net_change$bulk.dens.gcm3,
-                 bins = c(-0.25, -0.1, -0.05, 0.05, 0.1, 0.25),
-                 na.color = pointblue.palette[6])
+pal1 <-
+  colorBin(
+    palette = colorRamp(colors = c(
+      pointblue.palette[4], '#ffffff', pointblue.palette[3]
+    )),
+    domain = net_change$bulk.dens.gcm3,
+    bins = c(-0.25, -0.1, -0.05, 0.05, 0.1, 0.25),
+    na.color = pointblue.palette[7]
+  )
 
-pal2 <- colorBin(palette = colorRamp(colors = c(pointblue.palette[4], '#ffffff', pointblue.palette[3])),
-                 domain = net_change$water.infil, 
-                 bins = c(-50, -10, -5, -0.25, 0.25, 5, 10, 50),
-                 na.color = pointblue.palette[6])
+pal2 <-
+  colorBin(
+    palette = colorRamp(colors = c(
+      pointblue.palette[4], '#ffffff', pointblue.palette[3]
+    )),
+    domain = net_change$water.infil,
+    bins = c(-50, -10, -5, -0.25, 0.25, 5, 10, 50),
+    na.color = pointblue.palette[7]
+  )
 
-pal3 <- colorBin(palette = colorRamp(colors = c(pointblue.palette[3], '#ffffff', pointblue.palette[4])),
-                 domain = c(net_change$carbonA, net_change$carbonB),
-                 bins = c(-5, -1, -0.25, 0.25, 1, 5),
-                 na.color = pointblue.palette[6])
+pal3 <-
+  colorBin(
+    palette = colorRamp(colors = c(
+      pointblue.palette[3], '#ffffff', pointblue.palette[4]
+    )),
+    domain = c(net_change$carbonA, net_change$carbonB),
+    bins = c(-5, -1, -0.25, 0.25, 1, 5),
+    na.color = pointblue.palette[7]
+  )
 
 
 # MAP-----------
@@ -158,8 +173,8 @@ map2 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   addPolygons(
     data = shp_poly,
     color = 'black',
-    fillColor = pointblue.palette[6],
-    fillOpacity = 0.5,
+    fillColor = pointblue.palette[2],
+    fillOpacity = 0.1,
     weight = 1
   ) %>% 
   
@@ -168,13 +183,13 @@ map2 <- leaflet(height = 500) %>% setView(lng = -122.3598,
     data = shp_ranch,
     color = 'black',
     fill = F,
-    weight = 2.5
+    weight = 3
   ) %>%
   
   # bulk density:
   addCircleMarkers(
     data = shp_pts,
-    radius = 6,
+    radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 10, 6),
     weight = 1.5,
     fillOpacity = 1,
     color = 'black',
@@ -186,7 +201,7 @@ map2 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   # water infiltration:
   addCircleMarkers(
     data = shp_pts,
-    radius = 6,
+    radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 10, 6),
     weight = 1.5,
     fillOpacity = 1,
     color = 'black',
@@ -198,7 +213,7 @@ map2 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   # carbon: (overlapping circles for two depths)
   addCircleMarkers(
     data = shp_pts,
-    radius = 9,
+    radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 12, 9),
     weight = 1.5,
     fillOpacity = 1,
     color = 'black',
@@ -209,7 +224,7 @@ map2 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   
   addCircleMarkers(
     data = shp_pts,
-    radius = 4,
+    radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 7, 4),
     weight = 1.5,
     fillOpacity = 1,
     color = 'black',
@@ -234,7 +249,7 @@ map2 <- leaflet(height = 500) %>% setView(lng = -122.3598,
     title = 'Water infiltration<br>(minutes)',
     opacity = 1,
     # pal = pal2,
-    # values = net_change$water.infil,
+    values = net_change$water.infil,
     # labFormat = labelFormat(transform = function(x) {
       # if (x < -10) {x = '< -10'} else if (x > 10) {x = '> +10'} else if (x > 0) {x = paste0('+', x)}}),
     colors = pal2(c(-12, -7, -2, 0, 2, 7, 12)),
@@ -275,4 +290,8 @@ map2 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   )
 
 title <- paste0('TomKat Soil Changes 2014-', max(dat$Year))
-htmlwidgets::saveWidget(map2, output2, selfcontained = TRUE, title = title)
+
+htmlwidgets::saveWidget(map2,
+                        here::here(output2),
+                        selfcontained = TRUE,
+                        title = title)

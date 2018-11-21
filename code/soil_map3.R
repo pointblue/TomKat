@@ -30,7 +30,8 @@ pointblue.palette <-
     '#bfd730',
     '#a7a9ac',
     '#666666',
-    '#b74374', #add a few more colors for soil nutrients
+    '#456d28', #add a few more complementary colors
+    '#b74374', 
     '#8643b7',
     '#d2c921')
 
@@ -130,48 +131,66 @@ dat_lab <- dat %>%
   )
 
 # SHAPEFILES SET UP------
-shp_pts <- st_read(here::here('GIS'), pts) %>%
+shp_pts <- st_read(here::here('GIS'), pts, quiet = TRUE) %>%
   st_transform('+proj=longlat +datum=WGS84') %>%
   right_join(dat_lab, by = 'Name')
 
-shp_poly <- st_read(here::here('GIS'), poly) %>%
+shp_poly <- st_read(here::here('GIS'), poly, quiet = TRUE) %>%
   st_transform('+proj=longlat +datum=WGS84')
 
-shp_ranch <- st_read(here::here('GIS'), ranch) %>%
+shp_ranch <- st_read(here::here('GIS'), ranch, quiet = TRUE) %>%
   st_transform('+proj=longlat +datum=WGS84')
 
 
 # COLOR PALETTE-----------
 ## Define color palette for each metric:
-pal0 <- colorBin(palette = colorRamp(colors = c('#ffffff', pointblue.palette[10])),
-                 domain = c(dat$SodiumA, dat$SodiumB),
-                 bins = c(0, 0.25, 0.5, 0.75, 1),
-                 na.color = pointblue.palette[7])
+pal0 <-
+  colorBin(
+    palette = colorRamp(colors = c('#ffffff', pointblue.palette[11])),
+    domain = c(dat$SodiumA, dat$SodiumB),
+    bins = c(0, 0.25, 0.5, 0.75, 1),
+    na.color = pointblue.palette[7]
+  )
 
-pal1 <- colorBin(palette = colorRamp(colors = c('#ffffff', pointblue.palette[2])),
-                 domain = c(dat$`Total NitrogenA`, dat$`Total NitrogenB`),
-                 bins = c(0, 0.2, 0.3, 0.4, 0.7),
-                 na.color = pointblue.palette[7])
+pal1 <-
+  colorBin(
+    palette = colorRamp(colors = c('#ffffff', pointblue.palette[4])),
+    domain = c(dat$`Total NitrogenA`, dat$`Total NitrogenB`),
+    bins = c(0, 0.2, 0.3, 0.4, 0.7),
+    na.color = pointblue.palette[7]
+  )
 
-pal2 <- colorBin(palette = colorRamp(colors = c('#ffffff', pointblue.palette[4])),
-                 domain = c(dat$PotassiumA, dat$PotassiumB), 
-                 bins = c(0, 0.5, 1, 1.5, 3),
-                 na.color = pointblue.palette[7])
+pal2 <-
+  colorBin(
+    palette = colorRamp(colors = c('#ffffff', pointblue.palette[8])),
+    domain = c(dat$PotassiumA, dat$PotassiumB),
+    bins = c(0, 0.5, 1, 1.5, 3),
+    na.color = pointblue.palette[7]
+  )
 
-pal3 <- colorBin(palette = colorRamp(colors = c('#ffffff', pointblue.palette[3])),
-                 domain = c(dat$MagnesiumA, dat$MagnesiumB),
-                 bins = c(0, 5, 8, 11, 15),
-                 na.color = pointblue.palette[7])
+pal3 <-
+  colorBin(
+    palette = colorRamp(colors = c('#ffffff', pointblue.palette[3])),
+    domain = c(dat$MagnesiumA, dat$MagnesiumB),
+    bins = c(0, 5, 8, 11, 15),
+    na.color = pointblue.palette[7]
+  )
 
-pal4 <- colorBin(palette = colorRamp(colors = c('#ffffff', pointblue.palette[9])),
-                 domain = c(dat$CalciumA, dat$CalciumB),
-                 bins = c(0, 10, 15, 20, 25),
-                 na.color = pointblue.palette[7])
+pal4 <-
+  colorBin(
+    palette = colorRamp(colors = c('#ffffff', pointblue.palette[10])),
+    domain = c(dat$CalciumA, dat$CalciumB),
+    bins = c(0, 10, 15, 20, 25),
+    na.color = pointblue.palette[7]
+  )
 
-pal5 <- colorBin(palette = colorRamp(colors = c('#ffffff', pointblue.palette[8])),
-                 domain = c(dat$pHA, dat$pHB),
-                 bins = c(5, 5.5, 6, 6.5),
-                 na.color = pointblue.palette[7])
+pal5 <-
+  colorBin(
+    palette = colorRamp(colors = c('#ffffff', pointblue.palette[9])),
+    domain = c(dat$pHA, dat$pHB),
+    bins = c(5, 5.5, 6, 6.5),
+    na.color = pointblue.palette[7]
+  )
 
 
 # MAP-----------
@@ -187,8 +206,8 @@ map3 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   addPolygons(
     data = shp_poly,
     color = 'black',
-    fillColor = pointblue.palette[6],
-    fillOpacity = 0.5,
+    fillColor = pointblue.palette[2],
+    fillOpacity = 0.1,
     weight = 1
   ) %>% 
   
@@ -197,13 +216,13 @@ map3 <- leaflet(height = 500) %>% setView(lng = -122.3598,
     data = shp_ranch,
     color = 'black',
     fill = F,
-    weight = 2.5
+    weight = 3
   ) %>%
   
   # nitrogen: (overlapping circles for two depths)
   addCircleMarkers(
     data = shp_pts,
-    radius = 9,
+    radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 12, 9),
     weight = 1.5,
     fillOpacity = 1,
     color = 'black',
@@ -214,7 +233,7 @@ map3 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   
   addCircleMarkers(
     data = shp_pts,
-    radius = 4,
+    radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 7, 4),
     weight = 1.5,
     fillOpacity = 1,
     color = 'black',
@@ -226,7 +245,7 @@ map3 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   # potassium: (overlapping circles for two depths)
   addCircleMarkers(
     data = shp_pts,
-    radius = 9,
+    radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 12, 9),
     weight = 1.5,
     fillOpacity = 1,
     color = 'black',
@@ -237,7 +256,7 @@ map3 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   
   addCircleMarkers(
     data = shp_pts,
-    radius = 4,
+    radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 7, 4),
     weight = 1.5,
     fillOpacity = 1,
     color = 'black',
@@ -249,7 +268,7 @@ map3 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   # sodium: (overlapping circles for two depths)
   addCircleMarkers(
     data = shp_pts,
-    radius = 9,
+    radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 12, 9),
     weight = 1.5,
     fillOpacity = 1,
     color = 'black',
@@ -260,7 +279,7 @@ map3 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   
   addCircleMarkers(
     data = shp_pts,
-    radius = 4,
+    radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 7, 4),
     weight = 1.5,
     fillOpacity = 1,
     color = 'black',
@@ -272,7 +291,7 @@ map3 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   # magnesium: (overlapping circles for two depths)
   addCircleMarkers(
     data = shp_pts,
-    radius = 9,
+    radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 12, 9),
     weight = 1.5,
     fillOpacity = 1,
     color = 'black',
@@ -283,7 +302,7 @@ map3 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   
   addCircleMarkers(
     data = shp_pts,
-    radius = 4,
+    radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 7, 4),
     weight = 1.5,
     fillOpacity = 1,
     color = 'black',
@@ -295,7 +314,7 @@ map3 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   # calcium: (overlapping circles for two depths)
   addCircleMarkers(
     data = shp_pts,
-    radius = 9,
+    radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 12, 9),
     weight = 1.5,
     fillOpacity = 1,
     color = 'black',
@@ -306,7 +325,7 @@ map3 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   
   addCircleMarkers(
     data = shp_pts,
-    radius = 4,
+    radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 7, 4),
     weight = 1.5,
     fillOpacity = 1,
     color = 'black',
@@ -318,7 +337,7 @@ map3 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   # pH: (overlapping circles for two depths)
   addCircleMarkers(
     data = shp_pts,
-    radius = 9,
+    radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 12, 9),
     weight = 1.5,
     fillOpacity = 1,
     color = 'black',
@@ -329,7 +348,7 @@ map3 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   
   addCircleMarkers(
     data = shp_pts,
-    radius = 4,
+    radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 7, 4),
     weight = 1.5,
     fillOpacity = 1,
     color = 'black',
@@ -424,4 +443,8 @@ map3 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   )
 
 title <- paste0('TomKat Soil Nutrients ', max(dat$Year))
-htmlwidgets::saveWidget(map3, output3, selfcontained = TRUE, title = title)
+
+htmlwidgets::saveWidget(map3,
+                        here::here(output3),
+                        selfcontained = TRUE,
+                        title = title)
