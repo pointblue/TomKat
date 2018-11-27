@@ -434,6 +434,17 @@ map1 <- leaflet(height = 500) %>% setView(lng = -122.3598,
     offset.y = -5
   )
 
+# add CSS
+map1$dependencies <- c(map1$dependencies, 
+                       list(
+  htmltools::htmlDependency(
+    name = 'tomkat',
+    version = '1.0.0',
+    src = here::here('Rmd'),
+    stylesheet = 'tk_custom.css'
+  )
+))
+
 title <- paste0('TomKat Soil Map ', max(dat$Year))
 
 htmlwidgets::saveWidget(map1,

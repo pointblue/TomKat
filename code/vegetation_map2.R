@@ -170,11 +170,11 @@ dat_lab <- net_change %>%
 
 # SHAPEFILES SET UP------
 
-shp_poly <- st_read(here::here('GIS'), poly) %>%
+shp_poly <- st_read(here::here('GIS'), poly, quiet = TRUE) %>%
   st_transform('+proj=longlat +datum=WGS84') %>%
   full_join(dat_lab, by = 'Pasture')
 
-shp_ranch <- st_read(here::here('GIS'), ranch) %>%
+shp_ranch <- st_read(here::here('GIS'), ranch, quiet = TRUE) %>%
   st_transform('+proj=longlat +datum=WGS84')
 
 
@@ -333,6 +333,17 @@ map2 <- leaflet(height = 500) %>% setView(lng = -122.3598,
     height = 90,
     offset.y = -5
   )
+
+# add CSS
+map2$dependencies <- c(map2$dependencies, 
+                       list(
+                         htmltools::htmlDependency(
+                           name = 'tomkat',
+                           version = '1.0.0',
+                           src = here::here('Rmd'),
+                           stylesheet = 'tk_custom.css'
+                         )
+                       ))
 
 title <- paste0('TomKat Vegetation Changes 2012-', max(dat$Year))
 
