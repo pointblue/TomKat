@@ -36,10 +36,39 @@ pointblue.palette <-
 dat <- read_csv(here::here(masterdat)) %>%
   rename(Name = 'Point Name') %>%
   select(Name, Year, bulk.dens.gcm3, water.infil, carbonA, carbonB)  %>%
-  mutate(water.infil = water.infil/60) %>% #convert to minutes
-  gather(bulk.dens.gcm3:carbonB, key = 'metric', value = 'value')
+  mutate(water.infil = water.infil/60) #convert to minutes
 
-net_change <- dat %>% 
+# percentile scores (based on all years combined to be able to show change in percentiles over years)
+f1 <- ecdf(dat$carbonA)
+f2 <- ecdf(dat$carbonB)
+f3 <- ecdf(max(dat$bulk.dens.gcm3, na.rm = T) - dat$bulk.dens.gcm3) #reverse so lower density = higher score
+f4 <- ecdf(max(dat$water.infil, na.rm = T) - dat$water.infil)
+
+
+dat_perc <- dat %>% 
+  mutate(carbonA_perc = round(f1(carbonA) * 100, digits = 0),
+         carbonB_perc = round(f2(carbonB) * 100, digits = 0),
+         bulk.dens.gcm3_perc = round(f3(max(bulk.dens.gcm3, na.rm = T) - bulk.dens.gcm3) * 100, digits = 0),
+         water.infil_perc = round(f4(max(water.infil, na.rm = T) - water.infil) * 100, digits = 0)) %>%
+  gather(bulk.dens.gcm3:water.infil_perc, key = 'var', value = 'Value') %>%
+  separate(var, into = c('var', 'type'), sep = '_') %>%
+  mutate(type = case_when(is.na(type) ~ 'Value',
+                          TRUE ~ 'Percentile')) %>%
+  spread(key = 'type', value = 'Value') 
+
+# calculate overall score 
+mean_perc <- dat_perc %>%
+  group_by(Name, Year) %>%
+  summarize(var = 'mean',
+            Percentile = round(mean(Percentile), digits = 0),
+            Value = NA) %>%
+  bind_rows(dat_perc) %>%
+  mutate(var = factor(var, levels = c('bulk.dens.gcm3', 'water.infil', 'carbonA', 'carbonB', 'mean'))) %>%
+  arrange(Name, var)
+
+# net change
+net_change <- mean_perc %>%
+  gather(Percentile:Value, key = 'type', value = 'value') %>%
   mutate(yr = case_when(Year == max(Year) ~ 'current',
                         Year == 2015 ~ 'baseline'),
          Year = NULL) %>%
@@ -47,70 +76,170 @@ net_change <- dat %>%
   mutate(net = current - baseline,
          net = case_when(is.nan(net) ~ NA_real_,
                          TRUE ~ net)) %>%
-  select(-baseline, -current) %>%
-  spread(key = metric, value = net)
+  filter((var == 'mean' & type == 'Percentile') | (var != 'mean' & type == 'Value')) %>%
+  select(-baseline, -current, -type) %>%
+  spread(key = var, value = net)
 
+# arrange data for popup tables
 net_change_long <- net_change %>%
-  gather(bulk.dens.gcm3:water.infil, key = 'metric', value = 'netchange') %>%
+  gather(bulk.dens.gcm3:mean, key = 'metric', value = 'netchange') %>%
   mutate('Net change' = case_when(
     netchange > 0 ~ paste0('+', round(netchange, digits = 2)),
     netchange <= 0 ~ as.character(round(netchange, digits = 2)),
     TRUE ~ as.character(netchange)
   ))
 
-dat_long <- dat %>%
-  mutate(value = case_when(is.nan(value) ~ NA_real_,
-                           TRUE ~ round(value, digits = 2))) %>%
-  spread(key = Year, value = value) %>%
+dat_long <- mean_perc %>%
+  mutate(Value = case_when(var == 'mean' ~ Percentile,
+                           is.nan(Value) ~ NA_real_,
+                           TRUE ~ round(Value, digits = 2))) %>%
+  select(-Percentile) %>%
+  spread(key = Year, value = Value) %>%
   full_join(net_change_long %>% select(Name, metric, `Net change`),
-            by = c('Name', 'metric')) %>%
+            by = c('Name', 'var' = 'metric')) %>%
   gather(`2015`:`Net change`, key = year, value = value) %>%
-  arrange(Name, metric, year)
+  arrange(Name, var, year) %>%
+  ungroup()
 
 
 # POPUP HTML TABLES-------------
+# flag points 22 and 68 as having had compost applied
 
 dat_lab <- net_change %>%
   mutate(
-    label_bulk.dens.gcm3 = map(
-      Name,
-      ~ dat_long %>% filter(Name == .x & metric == 'bulk.dens.gcm3') %>%
-        select(year, value) %>%
-        mutate(value = txtRound(value, digits = 2, txt.NA = 'NA')) %>%
-        htmlTable(
-          header = c('Year', 'g/cm<sup>3</sup>'),
-          align = c('l', 'r'),
-          rnames = FALSE,
-          total = TRUE,
-          caption = paste0('<b>', .x, ': Bulk density</b>')
-        )
+    label_bulk.dens.gcm3 = case_when(
+      Name %in% c('TOKA-022', 'TOKA-068') ~ map(
+        Name,
+        ~ dat_long %>% filter(Name == .x &
+                                var == 'bulk.dens.gcm3') %>%
+          select(year, value) %>%
+          mutate(value = txtRound(
+            value, digits = 2, txt.NA = 'NA'
+          )) %>%
+          htmlTable(
+            header = c('Year', 'Bulk density<br>g/cm<sup>3</sup>'),
+            align = c('l', 'r'),
+            rnames = FALSE,
+            total = TRUE,
+            caption = paste0('<b>', .x, ' (compost applied)</b>')
+          )
+      ),
+      TRUE ~ map(
+        Name,
+        ~ dat_long %>% filter(Name == .x &
+                                var == 'bulk.dens.gcm3') %>%
+          select(year, value) %>%
+          mutate(value = txtRound(
+            value, digits = 2, txt.NA = 'NA'
+          )) %>%
+          htmlTable(
+            header = c('Year', 'Bulk density<br>g/cm<sup>3</sup>'),
+            align = c('l', 'r'),
+            rnames = FALSE,
+            total = TRUE,
+            caption = paste0('<b>', .x, '</b>')
+          )
+      )
     ),
-    label_water.infil = map(
-      Name,
-      ~ dat_long %>% filter(Name == .x & metric == 'water.infil') %>%
-        select(year, value) %>%
-        mutate(value = txtRound(value, digits = 2, txt.NA = 'NA')) %>%
-        htmlTable(
-          header = c('Year', 'Minutes'),
-          align = c('l', 'r'),
-          rnames = FALSE,
-          total = TRUE,
-          caption = paste0('<b>', .x, ': Water infiltration</b>')
-        )
+    label_water.infil = case_when(
+      Name %in% c('TOKA-022', 'TOKA-068') ~ map(
+        Name,
+        ~ dat_long %>% filter(Name == .x & var == 'water.infil') %>%
+          select(year, value) %>%
+          mutate(value = txtRound(
+            value, digits = 2, txt.NA = 'NA'
+          )) %>%
+          htmlTable(
+            header = c('Year', 'Water<br>infiltration (min)'),
+            align = c('l', 'r'),
+            rnames = FALSE,
+            total = TRUE,
+            caption = paste0('<b>', .x, ' (compost applied)</b>')
+          )
+      ),
+      TRUE ~ map(
+        Name,
+        ~ dat_long %>% filter(Name == .x & var == 'water.infil') %>%
+          select(year, value) %>%
+          mutate(value = txtRound(
+            value, digits = 2, txt.NA = 'NA'
+          )) %>%
+          htmlTable(
+            header = c('Year', 'Water<br>infiltration (min)'),
+            align = c('l', 'r'),
+            rnames = FALSE,
+            total = TRUE,
+            caption = paste0('<b>', .x, '</b>')
+          )
+      )
     ),
-    label_carbon = map(
-      Name,
-      ~ dat_long %>% filter(Name == .x & metric %in% c('carbonA', 'carbonB')) %>%
-        select(metric, year, value) %>%
-        mutate(value = txtRound(value, digits = 1, txt.NA = 'NA')) %>%
-        spread(key = metric, value = value) %>%
-        htmlTable(
-          header = c('Year', '0-10 cm', '10-40 cm'),
-          align = c('l', 'r'),
-          rnames = FALSE,
-          total = TRUE,
-          caption = paste0('<b>', .x, ': % Carbon</b>')
-        )
+    label_carbon = case_when(
+      Name %in% c('TOKA-022', 'TOKA-068') ~ map(
+        Name,
+        ~ dat_long %>% filter(Name == .x &
+                                var %in% c('carbonA', 'carbonB')) %>%
+          select(var, year, value) %>%
+          mutate(value = txtRound(
+            value, digits = 1, txt.NA = 'NA'
+          )) %>%
+          spread(key = var, value = value) %>%
+          htmlTable(
+            header = c('Year', '% Carbon<br>0-10 cm', '% Carbon<br>10-40 cm'),
+            align = c('l', 'r'),
+            rnames = FALSE,
+            total = TRUE,
+            caption = paste0('<b>', .x, ' (compost applied)</b>')
+          )
+      ),
+      TRUE ~ map(
+        Name,
+        ~ dat_long %>% filter(Name == .x &
+                                var %in% c('carbonA', 'carbonB')) %>%
+          select(var, year, value) %>%
+          mutate(value = txtRound(
+            value, digits = 1, txt.NA = 'NA'
+          )) %>%
+          spread(key = var, value = value) %>%
+          htmlTable(
+            header = c('Year', '% Carbon<br>0-10 cm', '% Carbon<br>10-40 cm'),
+            align = c('l', 'r'),
+            rnames = FALSE,
+            total = TRUE,
+            caption = paste0('<b>', .x, '</b>')
+          )
+      )
+    ),
+    label_overall = case_when(
+      Name %in% c('TOKA-022', 'TOKA-068') ~ map(
+        Name,
+        ~ dat_long %>% filter(Name == .x & var == 'mean') %>%
+          select(year, value) %>%
+          mutate(value = txtRound(
+            value, digits = 0, txt.NA = 'NA'
+          )) %>%
+          htmlTable(
+            header = c('Year', 'Overall score<br>(percentile)'),
+            align = c('l', 'r'),
+            rnames = FALSE,
+            total = TRUE,
+            caption = paste0('<b>', .x, ' (compost applied)</b>')
+          )
+      ),
+      TRUE ~ map(
+        Name,
+        ~ dat_long %>% filter(Name == .x & var == 'mean') %>%
+          select(year, value) %>%
+          mutate(value = txtRound(
+            value, digits = 0, txt.NA = 'NA'
+          )) %>%
+          htmlTable(
+            header = c('Year', 'Overall score<br>(percentile)'),
+            align = c('l', 'r'),
+            rnames = FALSE,
+            total = TRUE,
+            caption = paste0('<b>', .x, '</b>')
+          )
+      )
     )
   )
 
@@ -129,6 +258,16 @@ shp_ranch <- st_read(here::here('GIS'), ranch, quiet = TRUE) %>%
 
 # COLOR PALETTE-----------
 ## Define color palette for each metric:
+pal0 <-
+  colorBin(
+    palette = colorRamp(colors = c(
+      pointblue.palette[3], '#ffffff', pointblue.palette[4]
+    )),
+    domain = net_change$bulk.dens.gcm3,
+    bins = c(-40, -10, -5, 5, 10, 40),
+    na.color = pointblue.palette[7]
+  )
+
 pal1 <-
   colorBin(
     palette = colorRamp(colors = c(
@@ -186,13 +325,31 @@ map2 <- leaflet(height = 500) %>% setView(lng = -122.3598,
     weight = 3
   ) %>%
   
+  # overall score:
+  addCircleMarkers(
+    data = shp_pts,
+    # radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 10, 6),
+    radius = 6,
+    # weight = 1.5,
+    weight = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 3, 1.5),
+    color = 'black',
+    opacity = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 1, 0.5),
+    fillOpacity = 1,
+    fillColor =  ~ pal0(mean),
+    popup =  ~ label_overall,
+    group = 'Overall score'
+  ) %>%
+  
   # bulk density:
   addCircleMarkers(
     data = shp_pts,
-    radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 10, 6),
-    weight = 1.5,
-    fillOpacity = 1,
+    # radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 10, 6),
+    radius = 6,
+    # weight = 1.5,
+    weight = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 3, 1.5),
     color = 'black',
+    opacity = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 1, 0.5),
+    fillOpacity = 1,
     fillColor =  ~ pal1(bulk.dens.gcm3),
     popup =  ~ label_bulk.dens.gcm3,
     group = 'Bulk density'
@@ -201,10 +358,13 @@ map2 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   # water infiltration:
   addCircleMarkers(
     data = shp_pts,
-    radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 10, 6),
-    weight = 1.5,
-    fillOpacity = 1,
+    # radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 10, 6),
+    radius = 6,
+    # weight = 1.5,
+    weight = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 3, 1.5),
     color = 'black',
+    opacity = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 1, 0.5),
+    fillOpacity = 1,
     fillColor =  ~ pal2(water.infil),
     popup =  ~ label_water.infil,
     group = 'Water infiltration'
@@ -213,10 +373,12 @@ map2 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   # carbon: (overlapping circles for two depths)
   addCircleMarkers(
     data = shp_pts,
-    radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 12, 9),
-    weight = 1.5,
-    fillOpacity = 1,
+    radius = 9,
+    # weight = 1.5,
+    weight = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 3, 1.5),
     color = 'black',
+    opacity = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 1, 0.5),
+    fillOpacity = 1,
     fillColor =  ~ pal3(carbonB),
     popup =  ~ label_carbon,
     group = '% Carbon'
@@ -224,16 +386,27 @@ map2 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   
   addCircleMarkers(
     data = shp_pts,
-    radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 7, 4),
+    radius = 4,
     weight = 1.5,
-    fillOpacity = 1,
     color = 'black',
+    opacity = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 1, 0.5),
+    fillOpacity = 1,
     fillColor =  ~ pal3(carbonA),
     popup =  ~ label_carbon,
     group = '% Carbon'
   ) %>% 
   
   # legends (one per metric)
+  addLegend(
+    position = 'topright',
+    title = 'Overall score',
+    opacity = 1,
+    pal = pal0,
+    values = net_change$mean,
+    group = 'Overall score',
+    na.label = 'No data'
+  ) %>% 
+  
   addLegend(
     position = 'topright',
     title = 'Bulk density<br>(g/cm<sup>3</sup>)',
@@ -273,9 +446,10 @@ map2 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   addLayersControl(
     position = 'bottomleft',
     options = layersControlOptions(collapsed = F),
-    overlayGroups = c('Bulk density', 'Water infiltration', '% Carbon')
+    overlayGroups = c('Overall score', 'Bulk density', 'Water infiltration', '% Carbon')
   ) %>% 
   
+  hideGroup('Bulk density') %>%
   hideGroup('Water infiltration') %>%
   hideGroup('% Carbon') %>%
   
