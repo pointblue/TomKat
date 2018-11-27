@@ -222,7 +222,7 @@ map3 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   # nitrogen: (overlapping circles for two depths)
   addCircleMarkers(
     data = shp_pts,
-    radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 12, 9),
+    radius = 9,
     weight = 1.5,
     fillOpacity = 1,
     color = 'black',
@@ -233,7 +233,7 @@ map3 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   
   addCircleMarkers(
     data = shp_pts,
-    radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 7, 4),
+    radius = 4,
     weight = 1.5,
     fillOpacity = 1,
     color = 'black',
@@ -245,7 +245,7 @@ map3 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   # potassium: (overlapping circles for two depths)
   addCircleMarkers(
     data = shp_pts,
-    radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 12, 9),
+    radius = 9,
     weight = 1.5,
     fillOpacity = 1,
     color = 'black',
@@ -256,7 +256,7 @@ map3 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   
   addCircleMarkers(
     data = shp_pts,
-    radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 7, 4),
+    radius = 4,
     weight = 1.5,
     fillOpacity = 1,
     color = 'black',
@@ -268,7 +268,7 @@ map3 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   # sodium: (overlapping circles for two depths)
   addCircleMarkers(
     data = shp_pts,
-    radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 12, 9),
+    radius = 9,
     weight = 1.5,
     fillOpacity = 1,
     color = 'black',
@@ -279,7 +279,7 @@ map3 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   
   addCircleMarkers(
     data = shp_pts,
-    radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 7, 4),
+    radius = 4,
     weight = 1.5,
     fillOpacity = 1,
     color = 'black',
@@ -291,7 +291,7 @@ map3 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   # magnesium: (overlapping circles for two depths)
   addCircleMarkers(
     data = shp_pts,
-    radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 12, 9),
+    radius = 9,
     weight = 1.5,
     fillOpacity = 1,
     color = 'black',
@@ -302,7 +302,7 @@ map3 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   
   addCircleMarkers(
     data = shp_pts,
-    radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 7, 4),
+    radius = 4,
     weight = 1.5,
     fillOpacity = 1,
     color = 'black',
@@ -314,7 +314,7 @@ map3 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   # calcium: (overlapping circles for two depths)
   addCircleMarkers(
     data = shp_pts,
-    radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 12, 9),
+    radius = 9,
     weight = 1.5,
     fillOpacity = 1,
     color = 'black',
@@ -325,7 +325,7 @@ map3 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   
   addCircleMarkers(
     data = shp_pts,
-    radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 7, 4),
+    radius = 4,
     weight = 1.5,
     fillOpacity = 1,
     color = 'black',
@@ -337,7 +337,7 @@ map3 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   # pH: (overlapping circles for two depths)
   addCircleMarkers(
     data = shp_pts,
-    radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 12, 9),
+    radius = 9,
     weight = 1.5,
     fillOpacity = 1,
     color = 'black',
@@ -348,7 +348,7 @@ map3 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   
   addCircleMarkers(
     data = shp_pts,
-    radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 7, 4),
+    radius = 4,
     weight = 1.5,
     fillOpacity = 1,
     color = 'black',
