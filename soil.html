@@ -68,7 +68,6 @@ h6 {
 }
 </style>
 
-<link href="data:text/css;charset=utf-8,%2Eleaflet%2Dcontrol%2Dlayers%20label%20%7B%0Afont%2Dweight%3A%20normal%3B%0Afont%2Dsize%3A%2012px%3B%0A%7D%0A%2Eleaflet%2Dcontrol%2Dlayers%2Dexpanded%20%7B%0Aline%2Dheight%3A%201%3B%0Apadding%2Dbottom%3A%203px%3B%0Apadding%2Dtop%3A%203px%3B%0A%7D%0Ainput%5Btype%3D%22radio%22%5D%20%7B%0Amargin%3A%200%200%200%3B%0A%7D%0A%2Einfo%20%7B%0Afont%2Dsize%3A%2012px%3B%0A%7D%0A%2Elegend%20i%20%7B%0Awidth%3A%2016px%3B%0Aheight%3A%2016px%3B%0A%7D%0A%2Elegend%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Ath%2C%20td%20%7B%0Apadding%2Dleft%3A%20%2E5em%3B%20padding%2Dright%3A%20%2E5em%3B%0A%7D" rel="stylesheet" type="text/css" />
 
 </head>
 
@@ -135,7 +134,7 @@ $(document).ready(function () {
 <p>Sites with relatively high overall scores may be the most productive while sites with relatively low overall scores may be good candidates for management actions designed to improve soil productivity.</p>
 <p>*Note: These scores are only based on comparing these locations to each other and not to values that may be found elsewhere on the ranch or beyond. We measured carbon content at two soil depths, and in the map below, the inner circle represents the carbon concentration at the surface (0-10 cm deep), and the outer circle represents deeper soil (10-40 cm).</p>
 <p><i>Choose one metric at a time at bottom left. Click on any of the survey points to learn more.</i></p>
-<iframe src="soil_map1.html" style="border: none;" width="80%;" height="500px;">
+<iframe src="soil_map1.html" style="border: none;" width="80%;" height="550px;">
 </iframe>
 <p><a href="#top">Back to top</a></p>
 <p><a id="diff"></a></p>
@@ -144,7 +143,7 @@ $(document).ready(function () {
 <h3>Changes in soil productivity indicators</h3>
 <p>Improvements in each indicator are shown in blue, and declines are shown in orange. Note that lower values in bulk density and water infiltration reflect improvements.</p>
 <p><i>Choose one metric at a time at bottom left. Click on any of the survey points to learn more.</i></p>
-<iframe src="soil_map2.html" style="border: none;" width="80%;" height="500px;">
+<iframe src="soil_map2.html" style="border: none;" width="80%;" height="550px;">
 </iframe>
 <p><a href="#top">Back to top</a></p>
 <p><a id="nutrients"></a></p>
@@ -153,7 +152,7 @@ $(document).ready(function () {
 <h3>Soil nutrient concentrations</h3>
 <p>In 2015, we measured soil nutrient concentrations and pH at two soil depths. In the map below, the inner circle represents the surface soil sample (0-10 cm deep), and the outer circle represents the deeper soil sample (10-40 cm).</p>
 <p><i>Choose one metric at a time at bottom left. Click on any of the survey points to learn more.</i></p>
-<iframe src="soil_map3.html" style="border: none;" width="80%;" height="500px;">
+<iframe src="soil_map3.html" style="border: none;" width="80%;" height="550px;">
 </iframe>
 <p><a href="#top">Back to top</a></p>
 <p><a id="microbes"></a></p>
@@ -171,7 +170,7 @@ $(document).ready(function () {
 <p><a id="carbon"></a><br />
 <b>Organic carbon content:</b> An indicator of soil organic matter and soil productivity, organic carbon is measured as the percent of soil volume made up by organic carbon. Productive soils have an abundant microbial community that contribute to high levels of soil organic matter, driving plant growth and improving soil stabilization and capacity for storing water.</p>
 <p><a id="overall"></a><br />
-<b>Overall score:</b> To combine values of all 3 soil metrics above into one overall score, we first calculated a separate percentile score for each metric (including separate scores for surface and deeper soil carbon). These percentile scores represent how relatively good or poor each point scored for each metric compared to all the other TomKat soil sampling points, and they were based on fitting <a href="https://www.r-bloggers.com/exploratory-data-analysis-conceptual-foundations-of-empirical-cumulative-distribution-functions/">empirical cumulative distribution functions</a> to each metric. We then calculated an overall percentile score as the mean of these individual percentile scores, so that points with a combination of high and low scores might fall in the &quot;moderate&quot; category.</p>
+<b>Overall score:</b> To combine values of all 3 soil metrics above into one overall score, we first calculated a separate percentile score for each metric (including separate scores for surface and deeper soil carbon). These percentile scores represent how relatively good or poor each point scored for each metric compared to all the other TomKat soil sampling points, and they were based on fitting <a href="https://www.r-bloggers.com/exploratory-data-analysis-conceptual-foundations-of-empirical-cumulative-distribution-functions/">empirical cumulative distribution functions</a> to each metric. We then calculated an overall percentile score as the mean of these individual percentile scores, so that points with a combination of high and low scores might fall in the “moderate” category.</p>
 <p><a href="#top">Back to top</a></p>
 <hr />
 </div>

@@ -3,8 +3,6 @@ title: ''
 output:
   html_document:
     theme: spacelab
-    css: tk_custom.css 
-    smart: false
 ---
 
 ```{r setup, include=FALSE}
@@ -48,7 +46,7 @@ Sites with relatively high overall scores may be the most productive while sites
 <i>Choose one metric at a time at bottom left. Click on any of the survey points to learn more.</i>
 
 
-<iframe src="soil_map1.html" style="border: none;" width = 80%; height = 500px;></iframe>
+<iframe src="soil_map1.html" style="border: none;" width = 80%; height = 550px;></iframe>
 
 
 [Back to top](#top)
@@ -63,7 +61,7 @@ Improvements in each indicator are shown in blue, and declines are shown in oran
 <i>Choose one metric at a time at bottom left. Click on any of the survey points to learn more.</i>
 
 
-<iframe src="soil_map2.html" style="border: none;" width = 80%; height = 500px;></iframe>
+<iframe src="soil_map2.html" style="border: none;" width = 80%; height = 550px;></iframe>
 
 
 [Back to top](#top)
@@ -77,7 +75,7 @@ In 2015, we measured soil nutrient concentrations and pH at two soil depths. In 
 <i>Choose one metric at a time at bottom left. Click on any of the survey points to learn more.</i>
 
 
-<iframe src="soil_map3.html" style="border: none;" width = 80%; height = 500px;></iframe>
+<iframe src="soil_map3.html" style="border: none;" width = 80%; height = 550px;></iframe>
 
 
 [Back to top](#top)
