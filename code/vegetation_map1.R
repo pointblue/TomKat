@@ -132,11 +132,11 @@ dat_yr_lab <- dat_yr %>%
 
 # SHAPEFILES SET UP------
 
-shp_poly <- st_read(here::here('GIS'), poly) %>%
+shp_poly <- st_read(here::here('GIS'), poly, quiet = TRUE) %>%
   st_transform('+proj=longlat +datum=WGS84') %>%
   full_join(dat_yr_lab, by = 'Pasture')
 
-shp_ranch <- st_read(here::here('GIS'), ranch) %>%
+shp_ranch <- st_read(here::here('GIS'), ranch, quiet = TRUE) %>%
   st_transform('+proj=longlat +datum=WGS84')
 
 
@@ -148,7 +148,7 @@ pal <-
     palette = colorRamp(colors = c('#ffffff', pointblue.palette[4])),
     domain = c(0, 100),
     bins = c(0, 1, 5, 10, 20, 50, 100),
-    na.color = pointblue.palette[6]
+    na.color = pointblue.palette[7]
   )
 
 
@@ -166,7 +166,7 @@ map1 <- leaflet(height = 500) %>% setView(lng = -122.3598,
     data = shp_ranch,
     color = 'black',
     fill = F,
-    weight = 2.5
+    weight = 3
   ) %>%
   
   ## perennial grasses
@@ -295,5 +295,8 @@ map1 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   )
 
 title <- paste0('TomKat Vegetation Map ', max(dat$Year))
-htmlwidgets::saveWidget(map1, output1, selfcontained = TRUE, 
+
+htmlwidgets::saveWidget(map1,
+                        here::here(output1),
+                        selfcontained = TRUE,
                         title = title)

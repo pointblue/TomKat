@@ -86,7 +86,9 @@ plot1 <- plot1 %>%
   plotly::ggplotly() %>% 
   plotly::layout(legend = list(x = 0, y = 1, tracegroupgap = 5)) 
 
-htmlwidgets::saveWidget(plot1, graph1, selfcontained = TRUE, 
+htmlwidgets::saveWidget(plot1,
+                        here::here(graph1),
+                        selfcontained = TRUE,
                         title = 'TomKat Vegetation Trends')
 
 # PLOT 2-------------
@@ -103,6 +105,8 @@ plot2 <-  plot2 %>%
   plotly::ggplotly() %>% 
   plotly::layout(legend = list(x = 0, y = 1, tracegroupgap = 5))
 
-htmlwidgets::saveWidget(plot2, graph2, selfcontained = TRUE, 
+htmlwidgets::saveWidget(plot2,
+                        here::here(graph2),
+                        selfcontained = TRUE,
                         title = 'TomKat Vegetation Trends')
 

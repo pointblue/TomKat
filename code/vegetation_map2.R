@@ -188,7 +188,7 @@ pal <-
     )),
     domain = c(-100, 100),
     bins = c(-100, -75, -50, -25, -10, 10, 25, 50, 75, 100),
-    na.color = pointblue.palette[6]
+    na.color = pointblue.palette[7]
   )
 
 
@@ -206,7 +206,7 @@ map2 <- leaflet(height = 500) %>% setView(lng = -122.3598,
     data = shp_ranch,
     color = 'black',
     fill = F,
-    weight = 2.5
+    weight = 3
   ) %>%
   
   ## perennial grasses
@@ -335,4 +335,8 @@ map2 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   )
 
 title <- paste0('TomKat Vegetation Changes 2012-', max(dat$Year))
-htmlwidgets::saveWidget(map2, output2, selfcontained = TRUE, title = title)
+
+htmlwidgets::saveWidget(map2,
+                        here::here(output2),
+                        selfcontained = TRUE,
+                        title = title)
