@@ -144,7 +144,7 @@ dat_perc_lab <- dat_yr %>%
             header = c('Value', 'Percentile'),
             align = c('r', 'r'),
             rnames = c('% Carbon (0-10cm)', '% Carbon (10-40cm)'),
-            caption = paste0('<b>', .x, '(compost applied)</b>')
+            caption = paste0('<b>', .x, ' (compost applied)</b>')
           )
       ),
       TRUE ~ map(
