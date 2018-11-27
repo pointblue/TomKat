@@ -94,7 +94,7 @@ Ranch-wide, we have detected a significant increase in <font color='`r pointblue
 -------------
 ### About this page
 
-This interactive web page was produced using [RStudio](https://www.rstudio.com) with the packages [leaflet](http://rstudio.github.io/leaflet/) for mapping, [plotly](https://plot.ly/ggplot2/) for graphs, and [DT](https://rstudio.github.io/DT/) for data tables. RStudio is a free and open-source software for programming in [R](https://www.R-project.org/), a programming language for statistical computing and graphics. The code used to produce this web page is available on [Github](https://github.com/pointblue/state-of-the-ranch/blob/master/vegetation.Rmd).
+This interactive web page was produced using [RStudio](https://www.rstudio.com) with the packages [leaflet](http://rstudio.github.io/leaflet/) for mapping, [plotly](https://plot.ly/ggplot2/) for graphs, and [DT](https://rstudio.github.io/DT/) for data tables. RStudio is a free and open-source software for programming in [R](https://www.R-project.org/), a programming language for statistical computing and graphics. The code used to produce this web page is available on [Github](https://github.com/pointblue/TomKat).
 
 
 ### For more information
