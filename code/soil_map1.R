@@ -38,18 +38,19 @@ pointblue.palette <-
 # DATA SET UP-------------
 
 dat <- read_csv(here::here(masterdat)) %>%
-  rename(Name = 'Point Name')
-
-dat_yr <- dat %>%
-  filter(Year == max(Year)) %>%
-  select(Name, bulk.dens.gcm3, water.infil, carbonA, carbonB)  %>%
+  rename(Name = 'Point Name') %>%
+  select(Name, Year, bulk.dens.gcm3, water.infil, carbonA, carbonB)  %>%
   mutate(water.infil = water.infil/60) #convert to minutes
 
-# percentile scores
-f1 <- ecdf(dat_yr$carbonA)
-f2 <- ecdf(dat_yr$carbonB)
-f3 <- ecdf(max(dat_yr$bulk.dens.gcm3, na.rm = T) - dat_yr$bulk.dens.gcm3) #reverse so lower density = higher score
-f4 <- ecdf(max(dat_yr$water.infil, na.rm = T) - dat_yr$water.infil)
+dat_yr <- dat %>%
+  filter(Year == max(Year))
+  
+
+# percentile scores (based on all years combined to be able to show change in percentiles over years)
+f1 <- ecdf(dat$carbonA)
+f2 <- ecdf(dat$carbonB)
+f3 <- ecdf(max(dat$bulk.dens.gcm3, na.rm = T) - dat$bulk.dens.gcm3) #reverse so lower density = higher score
+f4 <- ecdf(max(dat$water.infil, na.rm = T) - dat$water.infil)
 
 dat_perc <- dat_yr %>%
   mutate(carbonA_perc = round(f1(carbonA) * 100, digits = 0),
@@ -64,44 +65,103 @@ dat_perc <- dat_yr %>%
   
 
 # POPUP HTML TABLES-------------
+# flag points 22 and 68 as having had compost applied
 
 dat_perc_lab <- dat_yr %>%
   mutate(
-    label_bulk.dens.gcm3 = map(
-      Name,
-      ~ dat_perc %>% filter(Name == .x & var == 'bulk.dens.gcm3') %>%
-        select(Value, Percentile) %>%
-        mutate(Value = txtRound(Value, digits = 2, txt.NA = 'NA')) %>%
-        htmlTable(
-          header = c('Value', 'Percentile'),
-          align = c('r', 'r'),
-          rnames = 'Bulk Density (g/cm<sup>3</sup>)',
-          caption = paste0('<b>', .x, '</b>')
-        )
+    label_bulk.dens.gcm3 = case_when(
+      Name %in% c('TOKA-022', 'TOKA-068') ~ map(
+        Name,
+        ~ dat_perc %>% filter(Name == .x &
+                                var == 'bulk.dens.gcm3') %>%
+          select(Value, Percentile) %>%
+          mutate(Value = txtRound(
+            Value, digits = 2, txt.NA = 'NA'
+          )) %>%
+          htmlTable(
+            header = c('Value', 'Percentile'),
+            align = c('r', 'r'),
+            rnames = 'Bulk Density (g/cm<sup>3</sup>)',
+            caption = paste0('<b>', .x, ' (compost applied)</b>')
+          )
+      ),
+      TRUE ~ map(
+        Name,
+        ~ dat_perc %>% filter(Name == .x &
+                                var == 'bulk.dens.gcm3') %>%
+          select(Value, Percentile) %>%
+          mutate(Value = txtRound(
+            Value, digits = 2, txt.NA = 'NA'
+          )) %>%
+          htmlTable(
+            header = c('Value', 'Percentile'),
+            align = c('r', 'r'),
+            rnames = 'Bulk Density (g/cm<sup>3</sup>)',
+            caption = paste0('<b>', .x, '</b>')
+          )
+      )
     ),
-    label_water.infil = map(
-      Name,
-      ~ dat_perc %>% filter(Name == .x & var == 'water.infil') %>%
-        select(Value, Percentile) %>%
-        mutate(Value = txtRound(Value, digits = 2, txt.NA = 'NA')) %>%
-        htmlTable(
-          header = c('Value', 'Percentile'),
-          align = c('r', 'r'),
-          rnames = 'Water Infiltration (min/in)',
-          caption = paste0('<b>', .x, '</b>')
-        )
+    label_water.infil = case_when(
+      Name %in% c('TOKA-022', 'TOKA-068') ~ map(
+        Name,
+        ~ dat_perc %>% filter(Name == .x & var == 'water.infil') %>%
+          select(Value, Percentile) %>%
+          mutate(Value = txtRound(
+            Value, digits = 2, txt.NA = 'NA'
+          )) %>%
+          htmlTable(
+            header = c('Value', 'Percentile'),
+            align = c('r', 'r'),
+            rnames = 'Water Infiltration (min/in)',
+            caption = paste0('<b>', .x, ' (compost applied)</b>')
+          )
+      ),
+      TRUE ~ map(
+        Name,
+        ~ dat_perc %>% filter(Name == .x & var == 'water.infil') %>%
+          select(Value, Percentile) %>%
+          mutate(Value = txtRound(
+            Value, digits = 2, txt.NA = 'NA'
+          )) %>%
+          htmlTable(
+            header = c('Value', 'Percentile'),
+            align = c('r', 'r'),
+            rnames = 'Water Infiltration (min/in)',
+            caption = paste0('<b>', .x, '</b>')
+          )
+      )
     ),
-    label_carbon = map(
-      Name,
-      ~ dat_perc %>% filter(Name == .x & var %in% c('carbonA', 'carbonB')) %>%
-        select(Value, Percentile) %>%
-        mutate(Value = txtRound(Value, digits = 1, txt.NA = 'NA')) %>%
-        htmlTable(
-          header = c('Value', 'Percentile'),
-          align = c('r', 'r'),
-          rnames = c('% Carbon (0-10cm)', '% Carbon (10-40cm)'),
-          caption = paste0('<b>', .x, '</b>')
-        )
+    label_carbon = case_when(
+      Name %in% c('TOKA-022', 'TOKA-068') ~ map(
+        Name,
+        ~ dat_perc %>% filter(Name == .x &
+                                var %in% c('carbonA', 'carbonB')) %>%
+          select(Value, Percentile) %>%
+          mutate(Value = txtRound(
+            Value, digits = 1, txt.NA = 'NA'
+          )) %>%
+          htmlTable(
+            header = c('Value', 'Percentile'),
+            align = c('r', 'r'),
+            rnames = c('% Carbon (0-10cm)', '% Carbon (10-40cm)'),
+            caption = paste0('<b>', .x, '(compost applied)</b>')
+          )
+      ),
+      TRUE ~ map(
+        Name,
+        ~ dat_perc %>% filter(Name == .x &
+                                var %in% c('carbonA', 'carbonB')) %>%
+          select(Value, Percentile) %>%
+          mutate(Value = txtRound(
+            Value, digits = 1, txt.NA = 'NA'
+          )) %>%
+          htmlTable(
+            header = c('Value', 'Percentile'),
+            align = c('r', 'r'),
+            rnames = c('% Carbon (0-10cm)', '% Carbon (10-40cm)'),
+            caption = paste0('<b>', .x, '</b>')
+          )
+      )
     )
   )
 
@@ -117,27 +177,54 @@ mean_perc <- dat_perc %>%
 
 
 dat_lab <- dat_perc_lab %>%
-  full_join(mean_perc %>% filter(var == 'mean') %>% select(Name, Percentile), by = 'Name') %>%
+  full_join(mean_perc %>% filter(var == 'mean') %>% select(Name, Percentile),
+            by = 'Name') %>%
   rename('mean' = 'Percentile') %>%
-  mutate(
-    label_overall = map(
+  mutate(label_overall = case_when(
+    Name %in% c('TOKA-022', 'TOKA-068') ~
+      map(
+        Name,
+        ~ mean_perc %>% filter(Name == .x) %>%
+          select(Value, Percentile) %>%
+          mutate(Value = txtRound(
+            Value, digits = 2, txt.NA = 'NA'
+          )) %>%
+          htmlTable(
+            header = c('Value', 'Percentile'),
+            align = c('r', 'r'),
+            rnames = c(
+              'Bulk Density (g/cm<sup>3</sup>)',
+              'Water Infiltration (min/in)',
+              '% Carbon (0-10cm)',
+              '% Carbon (10-40cm)',
+              'Overall score'
+            ),
+            total = TRUE,
+            caption = paste0('<b>', .x, ' (compost applied)</b>'),
+          )
+      ),
+    TRUE ~ map(
       Name,
       ~ mean_perc %>% filter(Name == .x) %>%
         select(Value, Percentile) %>%
-        mutate(Value = txtRound(Value, digits = 2, txt.NA = 'NA')) %>%
+        mutate(Value = txtRound(
+          Value, digits = 2, txt.NA = 'NA'
+        )) %>%
         htmlTable(
           header = c('Value', 'Percentile'),
           align = c('r', 'r'),
-          rnames = c('Bulk Density (g/cm<sup>3</sup>)',
-                     'Water Infiltration (min/in)',
-                     '% Carbon (0-10cm)', 
-                     '% Carbon (10-40cm)',
-                     'Overall score'),
+          rnames = c(
+            'Bulk Density (g/cm<sup>3</sup>)',
+            'Water Infiltration (min/in)',
+            '% Carbon (0-10cm)',
+            '% Carbon (10-40cm)',
+            'Overall score'
+          ),
           total = TRUE,
-          caption = paste0('<b>', .x, '</b>')
+          caption = paste0('<b>', .x, '</b>'),
         )
     )
-  )
+  ))
   
 
 
@@ -217,10 +304,13 @@ map1 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   # overall score:
   addCircleMarkers(
     data = shp_pts,
-    radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 10, 6),
-    weight = 1.5,
-    fillOpacity = 1,
+    # radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 10, 6),
+    radius = 6,
+    # weight = 1.5,
+    weight = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 3, 1.5),
     color = 'black',
+    opacity = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 1, 0.5),
+    fillOpacity = 1,
     fillColor =  ~ pal0(mean),
     popup =  ~ label_overall,
     group = 'Overall score'
@@ -229,10 +319,13 @@ map1 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   # bulk density:
   addCircleMarkers(
     data = shp_pts,
-    radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 10, 6),
-    weight = 1.5,
-    fillOpacity = 1,
+    # radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 10, 6),
+    radius = 6,
+    # weight = 1.5,
+    weight = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 3, 1.5),
     color = 'black',
+    opacity = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 1, 0.5),
+    fillOpacity = 1,
     fillColor =  ~ pal1(bulk.dens.gcm3),
     popup =  ~ label_bulk.dens.gcm3,
     group = 'Bulk density'
@@ -241,10 +334,13 @@ map1 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   # water infiltration:
   addCircleMarkers(
     data = shp_pts,
-    radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 10, 6),
-    weight = 1.5,
-    fillOpacity = 1,
+    # radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 10, 6),
+    radius = 6,
+    # weight = 1.5,
+    weight = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 3, 1.5),
     color = 'black',
+    opacity = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 1, 0.5),
+    fillOpacity = 1,
     fillColor =  ~ pal2(water.infil),
     popup =  ~ label_water.infil,
     group = 'Water infiltration'
@@ -253,10 +349,12 @@ map1 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   # carbon: (overlapping circles for two depths)
   addCircleMarkers(
     data = shp_pts,
-    radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 12, 9),
-    weight = 1.5,
-    fillOpacity = 1,
+    radius = 9,
+    # weight = 1.5,
+    weight = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 3, 1.5),
     color = 'black',
+    opacity = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 1, 0.5),
+    fillOpacity = 1,
     fillColor =  ~ pal3(carbonB),
     popup =  ~ label_carbon,
     group = '% Carbon'
@@ -264,10 +362,11 @@ map1 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   
   addCircleMarkers(
     data = shp_pts,
-    radius = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 7, 4),
+    radius = 4,
     weight = 1.5,
-    fillOpacity = 1,
     color = 'black',
+    opacity = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 1, 0.5),
+    fillOpacity = 1,
     fillColor =  ~ pal3(carbonA),
     popup =  ~ label_carbon,
     group = '% Carbon'
