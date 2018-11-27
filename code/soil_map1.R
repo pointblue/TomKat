@@ -435,15 +435,15 @@ map1 <- leaflet(height = 500) %>% setView(lng = -122.3598,
   )
 
 # add CSS
-map1$dependencies <- c(map1$dependencies, 
+map1$dependencies <- c(map1$dependencies,
                        list(
-  htmltools::htmlDependency(
-    name = 'tomkat',
-    version = '1.0.0',
-    src = here::here('Rmd'),
-    stylesheet = 'tk_custom.css'
-  )
-))
+                         htmltools::htmlDependency(
+                           name = 'tomkat-leaflet',
+                           version = '1.0.0',
+                           src = here::here('Rmd'),
+                           stylesheet = 'tk_leaflet.css'
+                         )
+                       ))
 
 title <- paste0('TomKat Soil Map ', max(dat$Year))
 

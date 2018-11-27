@@ -467,10 +467,10 @@ map2 <- leaflet(height = 500) %>% setView(lng = -122.3598,
 map2$dependencies <- c(map2$dependencies, 
                        list(
                          htmltools::htmlDependency(
-                           name = 'tomkat',
+                           name = 'tomkat-leaflet',
                            version = '1.0.0',
                            src = here::here('Rmd'),
-                           stylesheet = 'tk_custom.css'
+                           stylesheet = 'tk_leaflet.css'
                          )
                        ))
 
