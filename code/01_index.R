@@ -22,8 +22,6 @@ rmarkdown::render(here::here("Rmd/vegetation.Rmd"),
 
 # wishlist/to do: 
 # - update with corrected data from Mel
-# - update htmltable code for veg maps 1 and 2 to use map2 (faster?)
-# - increase transparency of polygons so terrain is visible
 # - update net change to multi-year trends rather than simple difference
 
 # SOIL------------------
@@ -45,10 +43,6 @@ source('code/soil_map3.R')
 # render Rmd to html
 rmarkdown::render(here::here("Rmd/soil.Rmd"), 
                   output_file = here::here("soil.html"))
-
-# wishlist/to do:
-# - show some metric for net change in overall score for soil productivity
-# - increase transparency of polygons so terrain is visible
 
 
 # INDEX------------------
