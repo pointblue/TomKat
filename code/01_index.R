@@ -45,6 +45,31 @@ rmarkdown::render(here::here("Rmd/soil.Rmd"),
                   output_file = here::here("soil.html"))
 
 
+# WEATHER----------------
+# process & clean local weather data (create master weather file)
+source('code/weather_prep.R')
+
+# process & clean NOAA weather data (some has to be manually downloaded first)
+source('code/weather_prep_noaa.R')
+
+# estimate historic 1981-2010 "Normals" at TomKat from data at Half Moon Bay
+source('code/weather_prep_historic.R')
+
+# produce daily weather timeseries (weather graph 1)
+source('code/weather_graph1.R')
+
+# produce monthly trend summaries (weather graph 2)
+source('code/weather_graph2.R')
+
+# produce drought index graphs (weather graphs 3-4)
+source('code/weather_graphs3-4.R')
+
+
+## render Rmd to html
+rmarkdown::render(here::here("Rmd/weather.Rmd"),
+                  output_file = here::here("weather.html"))
+
+
 # INDEX------------------
 # render Rmd to html
 rmarkdown::render(here::here("Rmd/index.Rmd"), 
