@@ -50,22 +50,84 @@ pdat <- read_csv(here::here(pdsi)) %>%
 
 plot3 <- plot_ly(x = ~date, y = ~value) %>%
   add_trace(data = pdat %>% filter(division == 'PDSI.01'), 
-            type = 'scatter', mode = 'lines+markers', text = ~text, hoverinfo = 'x+text',
-            line = list(color = pointblue.palette[6], dash = 'dash'),
-            marker = list(color = ~I(color), size = 6, line = list(color = pointblue.palette[6], width = 1))) %>%
+            type = 'scatter', mode = 'lines+markers', name = 'North coast',
+            text = ~text, hoverinfo = 'x+text',
+            line = list(color = pointblue.palette[7], width = 0.5),
+            marker = list(color = ~I(color), size = 6, 
+                          line = list(color = pointblue.palette[7], width = 0.5))) %>%
+  add_trace(data = pdat, x = c(min(pdat$year), max(pdat$year) + 1), y = c(4, 4),
+            type = 'scatter', mode = 'lines', hoverinfo = 'none', showlegend = FALSE,
+            line = list(color = pointblue.palette[6], width = 0.4)) %>%
+  add_trace(data = pdat, x = c(min(pdat$year), max(pdat$year) + 1), y = c(3, 3),
+            type = 'scatter', mode = 'lines', hoverinfo = 'none', showlegend = FALSE,
+            line = list(color = pointblue.palette[6], width = 0.4)) %>%
+  add_trace(data = pdat, x = c(min(pdat$year), max(pdat$year) + 1), y = c(2, 2),
+            type = 'scatter', mode = 'lines', hoverinfo = 'none', showlegend = FALSE,
+            line = list(color = pointblue.palette[6], width = 0.4)) %>%
+  add_trace(data = pdat, x = c(min(pdat$year), max(pdat$year) + 1), y = c(-2, -2),
+            type = 'scatter', mode = 'lines', hoverinfo = 'none', showlegend = FALSE,
+            line = list(color = pointblue.palette[6], width = 0.4)) %>%
+  add_trace(data = pdat, x = c(min(pdat$year), max(pdat$year) + 1), y = c(-3, -3),
+            type = 'scatter', mode = 'lines', hoverinfo = 'none', showlegend = FALSE,
+            line = list(color = pointblue.palette[6], width = 0.4)) %>%
+  add_trace(data = pdat, x = c(min(pdat$year), max(pdat$year) + 1), y = c(-4, -4),
+            type = 'scatter', mode = 'lines', hoverinfo = 'none', showlegend = FALSE,
+            line = list(color = pointblue.palette[6], width = 0.4)) %>%
   add_trace(data = pdat %>% filter(division == 'PDSI.06'), 
-            type = 'scatter', mode = 'lines+markers', text = ~text, hoverinfo = 'x+text',
-            line = list(color = pointblue.palette[6], dash = 'dot'),
-            marker = list(color = ~I(color), size = 6, line = list(color = pointblue.palette[6], width = 1))) %>%
+            type = 'scatter', mode = 'lines+markers', 
+            text = ~text, hoverinfo = 'x+text', name = 'South coast',
+            line = list(color = pointblue.palette[7], dash = 'dot', width = 0.5),
+            marker = list(color = ~I(color), size = 6, 
+                          line = list(color = pointblue.palette[7], width = 0.5))) %>%
   add_trace(data = pdat %>% filter(division == 'PDSI.04'), 
-            type = 'scatter', mode = 'lines+markers', text = ~text, hoverinfo = 'x+text',
-            line = list(color = 'black'),
-            marker = list(color = ~I(color), size = 7, line = list(color = 'black', width = 2))) %>%
-  layout(yaxis = list(title = NA),
+            type = 'scatter', mode = 'lines+markers', name = 'Central coast',
+            text = ~text, hoverinfo = 'x+text',
+            line = list(color = 'black', width = 1),
+            marker = list(color = ~I(color), size = 7, 
+                          line = list(color = 'black', width = 1))) %>%
+  layout(yaxis = list(title = NA, showgrid = FALSE, zeroline = FALSE),
          xaxis = list(title = NA),
-         showlegend = F,
+         legend = list(x = 1, xanchor = 'right', y = 1, yanchor = 'top',
+                       bgcolor = 'rgba(189, 191, 193, 0.8)', 
+                       bordercolor = 'rgba(0, 0, 0, 1)', borderwidth = 1),
          hovermode = 'x',
          dragmode = 'pan') %>%
+  layout(annotations = list(xref = 'paper', x = 0.01, xanchor = 'left',
+                           yref = 'y', y = 4, yanchor = 'bottom',
+                           text = ~paste('Extremely moist'),
+                           font = list(family = 'Arial', size = 14,
+                                       color = pal(7)[1]),
+                           showarrow = FALSE)) %>%
+  layout(annotations = list(xref = 'paper', x = 0.01, xanchor = 'left',
+                            yref = 'y', y = 3, yanchor = 'bottom',
+                            text = ~paste('Very moist'),
+                            font = list(family = 'Arial', size = 14,
+                                        color = pal(7)[2]),
+                            showarrow = FALSE)) %>%
+  layout(annotations = list(xref = 'paper', x = 0.01, xanchor = 'left',
+                            yref = 'y', y = 2, yanchor = 'bottom',
+                            text = ~paste('Moderately moist'),
+                            font = list(family = 'Arial', size = 14,
+                                        color = pal(7)[3]),
+                            showarrow = FALSE)) %>%
+  layout(annotations = list(xref = 'paper', x = 0.01, xanchor = 'left',
+                            yref = 'y', y = -2, yanchor = 'top',
+                            text = ~paste('Moderate drought'),
+                            font = list(family = 'Arial', size = 14,
+                                        color = pal(7)[5]),
+                            showarrow = FALSE)) %>%
+  layout(annotations = list(xref = 'paper', x = 0.01, xanchor = 'left',
+                            yref = 'y', y = -3, yanchor = 'top',
+                            text = ~paste('Severe drought'),
+                            font = list(family = 'Arial', size = 14,
+                                        color = pal(7)[6]),
+                            showarrow = FALSE)) %>%
+  layout(annotations = list(xref = 'paper', x = 0.01, xanchor = 'left',
+                            yref = 'y', y = -4, yanchor = 'top',
+                            text = ~paste('Extreme drought'),
+                            font = list(family = 'Arial', size = 14,
+                                        color = pal(7)[7]),
+                            showarrow = FALSE)) %>%
   config(collaborate = FALSE, displaylogo = FALSE)
 
 htmlwidgets::saveWidget(plot3,
@@ -88,22 +150,84 @@ zdat <- read_csv(here::here(zndx)) %>%
 
 plot4 <- plot_ly(x = ~date, y = ~value) %>%
   add_trace(data = zdat %>% filter(division == 'PZI.01'), 
-            type = 'scatter', mode = 'lines+markers', text = ~text, hoverinfo = 'x+text',
-            line = list(color = pointblue.palette[6], dash = 'dash'),
-            marker = list(color = ~I(color), size = 6, line = list(color = pointblue.palette[6], width = 1))) %>%
+            type = 'scatter', mode = 'lines+markers', name = 'North coast',
+            text = ~text, hoverinfo = 'x+text',
+            line = list(color = pointblue.palette[7], width = 0.5),
+            marker = list(color = ~I(color), size = 6, 
+                          line = list(color = pointblue.palette[7], width = 0.5))) %>%
+  add_trace(data = pdat, x = c(min(pdat$year), max(pdat$year) + 1), y = c(3.5, 3.5),
+            type = 'scatter', mode = 'lines', hoverinfo = 'none', showlegend = FALSE,
+            line = list(color = pointblue.palette[6], width = 0.4)) %>%
+  add_trace(data = pdat, x = c(min(pdat$year), max(pdat$year) + 1), y = c(2.5, 2.5),
+            type = 'scatter', mode = 'lines', hoverinfo = 'none', showlegend = FALSE,
+            line = list(color = pointblue.palette[6], width = 0.4)) %>%
+  add_trace(data = pdat, x = c(min(pdat$year), max(pdat$year) + 1), y = c(1, 1),
+            type = 'scatter', mode = 'lines', hoverinfo = 'none', showlegend = FALSE,
+            line = list(color = pointblue.palette[6], width = 0.4)) %>%
+  add_trace(data = pdat, x = c(min(pdat$year), max(pdat$year) + 1), y = c(-1.25, -1.25),
+            type = 'scatter', mode = 'lines', hoverinfo = 'none', showlegend = FALSE,
+            line = list(color = pointblue.palette[6], width = 0.4)) %>%
+  add_trace(data = pdat, x = c(min(pdat$year), max(pdat$year) + 1), y = c(-2, -2),
+            type = 'scatter', mode = 'lines', hoverinfo = 'none', showlegend = FALSE,
+            line = list(color = pointblue.palette[6], width = 0.4)) %>%
+  add_trace(data = pdat, x = c(min(pdat$year), max(pdat$year) + 1), y = c(-2.75, -2.75),
+            type = 'scatter', mode = 'lines', hoverinfo = 'none', showlegend = FALSE,
+            line = list(color = pointblue.palette[6], width = 0.4)) %>%
   add_trace(data = zdat %>% filter(division == 'PZI.06'), 
-            type = 'scatter', mode = 'lines+markers', text = ~text, hoverinfo = 'x+text',
-            line = list(color = pointblue.palette[6], dash = 'dot'),
-            marker = list(color = ~I(color), size = 6, line = list(color = pointblue.palette[6], width = 1))) %>%
+            type = 'scatter', mode = 'lines+markers', name = 'South coast',
+            text = ~text, hoverinfo = 'x+text',
+            line = list(color = pointblue.palette[7], dash = 'dot', width = 0.5),
+            marker = list(color = ~I(color), size = 6, 
+                          line = list(color = pointblue.palette[7], width = 0.5))) %>%
   add_trace(data = zdat %>% filter(division == 'PZI.04'), 
-            type = 'scatter', mode = 'lines+markers', text = ~text, hoverinfo = 'x+text',
-            line = list(color = 'black'),
-            marker = list(color = ~I(color), size = 7, line = list(color = 'black', width = 2))) %>%
-  layout(yaxis = list(title = NA),
+            type = 'scatter', mode = 'lines+markers', name = 'Central coast',
+            text = ~text, hoverinfo = 'x+text',
+            line = list(color = 'black', width = 1),
+            marker = list(color = ~I(color), size = 7, 
+                          line = list(color = 'black', width = 1))) %>%
+  layout(yaxis = list(title = NA, showgrid = FALSE, zeroline = FALSE),
          xaxis = list(title = NA),
-         showlegend = F,
+         legend = list(x = 1, xanchor = 'right', y = 1, yanchor = 'top',
+                       bgcolor = 'rgba(189, 191, 193, 0.8)', 
+                       bordercolor = 'rgba(0, 0, 0, 1)', borderwidth = 1),
          hovermode = 'x',
          dragmode = 'pan') %>%
+  layout(annotations = list(xref = 'paper', x = 0.01, xanchor = 'left',
+                            yref = 'y', y = 3.5, yanchor = 'bottom',
+                            text = ~paste('Extremely moist'),
+                            font = list(family = 'Arial', size = 14,
+                                        color = pal(7)[1]),
+                            showarrow = FALSE)) %>%
+  layout(annotations = list(xref = 'paper', x = 0.01, xanchor = 'left',
+                            yref = 'y', y = 2.5, yanchor = 'bottom',
+                            text = ~paste('Very moist'),
+                            font = list(family = 'Arial', size = 14,
+                                        color = pal(7)[2]),
+                            showarrow = FALSE)) %>%
+  layout(annotations = list(xref = 'paper', x = 0.01, xanchor = 'left',
+                            yref = 'y', y = 1, yanchor = 'bottom',
+                            text = ~paste('Moderately moist'),
+                            font = list(family = 'Arial', size = 14,
+                                        color = pal(7)[3]),
+                            showarrow = FALSE)) %>%
+  layout(annotations = list(xref = 'paper', x = 0.01, xanchor = 'left',
+                            yref = 'y', y = -1.25, yanchor = 'top',
+                            text = ~paste('Moderate drought'),
+                            font = list(family = 'Arial', size = 14,
+                                        color = pal(7)[5]),
+                            showarrow = FALSE)) %>%
+  layout(annotations = list(xref = 'paper', x = 0.01, xanchor = 'left',
+                            yref = 'y', y = -2, yanchor = 'top',
+                            text = ~paste('Severe drought'),
+                            font = list(family = 'Arial', size = 14,
+                                        color = pal(7)[6]),
+                            showarrow = FALSE)) %>%
+  layout(annotations = list(xref = 'paper', x = 0.01, xanchor = 'left',
+                            yref = 'y', y = -2.75, yanchor = 'top',
+                            text = ~paste('Extreme drought'),
+                            font = list(family = 'Arial', size = 14,
+                                        color = pal(7)[7]),
+                            showarrow = FALSE)) %>%
   config(collaborate = FALSE, displaylogo = FALSE)
 
 htmlwidgets::saveWidget(plot4,
