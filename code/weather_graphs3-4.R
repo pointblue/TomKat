@@ -86,7 +86,23 @@ plot3 <- plot_ly(x = ~date, y = ~value) %>%
             marker = list(color = ~I(color), size = 7, 
                           line = list(color = 'black', width = 1))) %>%
   layout(yaxis = list(title = NA, showgrid = FALSE, zeroline = FALSE),
-         xaxis = list(title = NA),
+         xaxis = list(title = NA, type = 'date',
+                      rangeselector = list(buttons = list(list(count = 1,
+                                                               label = "YTD",
+                                                               step = "year",
+                                                               stepmode = "todate"),
+                                                          list(count = 1,
+                                                               label = "1 yr",
+                                                               step = "year",
+                                                               stepmode = "backward"),
+                                                          list(count = 2,
+                                                               label = "2 yrs",
+                                                               step = "year",
+                                                               stepmode = "backward"),
+                                                          list(step = "all")),
+                                           font = list(color = 'white'),
+                                           bgcolor = pointblue.palette[4],
+                                           activecolor = pointblue.palette[1])),
          legend = list(x = 1, xanchor = 'right', y = 1, yanchor = 'top',
                        bgcolor = 'rgba(189, 191, 193, 0.8)', 
                        bordercolor = 'rgba(0, 0, 0, 1)', borderwidth = 1),
@@ -128,6 +144,7 @@ plot3 <- plot_ly(x = ~date, y = ~value) %>%
                             font = list(family = 'Arial', size = 14,
                                         color = pal(7)[7]),
                             showarrow = FALSE)) %>%
+  rangeslider('2018-01-01', '2018-11-15', thickness = 0.05) %>%
   config(collaborate = FALSE, displaylogo = FALSE)
 
 htmlwidgets::saveWidget(plot3,
@@ -146,7 +163,9 @@ zdat <- read_csv(here::here(zndx)) %>%
          div = case_when(division == 'PZI.04' ~ 'Central coast',
                          division == 'PZI.01' ~ 'North coast',
                          division == 'PZI.06' ~ 'South coast'),
-         text = paste0('<b>', div, ': ', value))
+         text = paste0('<b>', div, ': ', value)) %>%
+  # change date format
+  mutate(date = as.Date(paste0(substr(date, 1, 7), '-01')))
 
 plot4 <- plot_ly(x = ~date, y = ~value) %>%
   add_trace(data = zdat %>% filter(division == 'PZI.01'), 
@@ -186,7 +205,23 @@ plot4 <- plot_ly(x = ~date, y = ~value) %>%
             marker = list(color = ~I(color), size = 7, 
                           line = list(color = 'black', width = 1))) %>%
   layout(yaxis = list(title = NA, showgrid = FALSE, zeroline = FALSE),
-         xaxis = list(title = NA),
+         xaxis = list(title = NA, type = 'date',
+                      rangeselector = list(buttons = list(list(count = 1,
+                                                               label = "YTD",
+                                                               step = "year",
+                                                               stepmode = "todate"),
+                                                          list(count = 1,
+                                                               label = "1 yr",
+                                                               step = "year",
+                                                               stepmode = "backward"),
+                                                          list(count = 2,
+                                                               label = "2 yrs",
+                                                               step = "year",
+                                                               stepmode = "backward"),
+                                                          list(step = "all")),
+                                           font = list(color = 'white'),
+                                           bgcolor = pointblue.palette[4],
+                                           activecolor = pointblue.palette[1])),
          legend = list(x = 1, xanchor = 'right', y = 1, yanchor = 'top',
                        bgcolor = 'rgba(189, 191, 193, 0.8)', 
                        bordercolor = 'rgba(0, 0, 0, 1)', borderwidth = 1),
@@ -228,6 +263,7 @@ plot4 <- plot_ly(x = ~date, y = ~value) %>%
                             font = list(family = 'Arial', size = 14,
                                         color = pal(7)[7]),
                             showarrow = FALSE)) %>%
+  rangeslider('2018-01-01', '2018-11-15', thickness = 0.05) %>%
   config(collaborate = FALSE, displaylogo = FALSE)
 
 htmlwidgets::saveWidget(plot4,
