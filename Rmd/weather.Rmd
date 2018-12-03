@@ -42,11 +42,13 @@ palette = pal(7)
 
 TomKat Ranch: Weather
 =========================
+
 Point Blue Conservation Science established a weather station at TomKat Ranch in September 2010. Since 2013, we have observed [consistently warm and dry weather](#diff) and [extreme drought](#drought) conditions.
 
 <a id='daily'></a>  
 
 ### Daily weather
+
 Daily <font color="`r pointblue.palette[3]`"><b>high temperature</b></font>, <font color="`r pointblue.palette[2]`"><b>low temperature</b></font>, and <font color="`r pointblue.palette[1]`"><b>precipitation</b></font> from the TomKat weather station, along with the <font color="`r pointblue.palette[7]`"><b>range of temperatures and precipitation</b></font> observed on each date since the weather station was established. <i>Note: Gaps in weather data occurred when the weather station was being upgraded.</i>
 
 The highest temperature yet recorded was <b>`r dat %>% filter(var == 'high') %>%select(value)`&deg;F</b> on `r dat %>% filter(var == 'high') %>% select(date)`. The lowest was <b>`r dat %>% filter(var == 'low') %>%select(value)`&deg;F</b> on `r dat %>% filter(var == 'low') %>%select(date)`. The single rainiest day was `r dat %>% filter(var == 'rain') %>%select(date)`, with a total of <b>`r dat %>% filter(var == 'rain') %>%select(value)` inches</b> recorded.
@@ -68,6 +70,15 @@ TomKat has been warmer and dryer than historic averages in almost every month si
 </center>
 <i>*Historic averages are estimated from comparing current TomKat and Half Moon Bay data, and applying corrections to historical averages from Half Moon Bay, 1981-2010.</i>
 
+### Consistently warm and dry weather
+TomKat has been warmer and dryer than historic averages in almost every month since the spring of 2013, including during the <b>growing season</b> (March-June, shaded). Values greater than zero are above the estimated historic average (1980-2010)*, and values below zero are below average.
+
+<center>
+<iframe src="weather_graph2.html" style="border: none;" width = 90%; height = 500px;></iframe>
+</center>
+
+<i>*Historic averages are estimated from comparing current TomKat and Half Moon Bay data, and applying corrections to historical averages from Half Moon Bay, 1981-2010.</i>
+
 [Back to top](#top)
 
   
@@ -87,6 +98,7 @@ In comparison, conditions in Northern Coastal California were never quite as dry
 </center>
 
 #### Palmer Z Index (PZI)
+
 The PZI more readily shows the impact of big storms, such as the <b><font color='`r palette[1]`'>extremely moist</font></b> December 2014, October 2016, and January 2017. Northern and Central Coastal California had more frequent short-term relief from drought conditions through these storms than Southern Coastal California. 
 
 <center>
