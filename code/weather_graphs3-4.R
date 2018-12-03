@@ -144,7 +144,7 @@ plot3 <- plot_ly(x = ~date, y = ~value) %>%
                             font = list(family = 'Arial', size = 12,
                                         color = pal(7)[7]),
                             showarrow = FALSE)) %>%
-  rangeslider('2018-01-01', '2018-11-15', thickness = 0.05) %>%
+  # rangeslider('2010-01-01', thickness = 0.1) %>%
   config(collaborate = FALSE, displaylogo = FALSE)
 
 htmlwidgets::saveWidget(plot3,
@@ -263,7 +263,7 @@ plot4 <- plot_ly(x = ~date, y = ~value) %>%
                             font = list(family = 'Arial', size = 12,
                                         color = pal(7)[7]),
                             showarrow = FALSE)) %>%
-  rangeslider('2018-01-01', '2018-11-15', thickness = 0.05) %>%
+  # rangeslider('2010-01-01', thickness = 0.1) %>%
   config(collaborate = FALSE, displaylogo = FALSE)
 
 htmlwidgets::saveWidget(plot4,
