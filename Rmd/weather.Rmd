@@ -43,7 +43,7 @@ oranges = pal2(6)
 
 TomKat Ranch: Weather
 =========================
-Point Blue Conservation Science established a weather station at TomKat Ranch in September 2010. Since 2013, we have observed [consistently warm and dry weather](#diff) and [extreme drought](#drought) conditions, although the drought has begun to relax in 2016. [Explore data](#table).
+Point Blue Conservation Science established a weather station at TomKat Ranch in September 2010. Since 2013, we have observed [consistently warm and dry weather](#diff) and [extreme drought](#drought) conditions. [Explore data](#table).
 
 
 <a id='daily'></a>  
@@ -51,7 +51,7 @@ Point Blue Conservation Science established a weather station at TomKat Ranch in
 
 ### Daily weather
 
-Daily <font color="`r pointblue.palette[3]`"><b>high temperature</b></font>, <font color="`r pointblue.palette[2]`"><b>low temperature</b></font>, and <font color="`r pointblue.palette[1]`"><b>precipitation</b></font> from the TomKat weather station, along with the <font color="`r pointblue.palette[7]`"><b>range of temperatures and precipitation</b></font> observed on each date since the weather station was established. <i>Note: No weather data were recorded between March and August 2016 when the weather station was being updated.</i>
+Daily <font color="`r pointblue.palette[3]`"><b>high temperature</b></font>, <font color="`r pointblue.palette[2]`"><b>low temperature</b></font>, and <font color="`r pointblue.palette[1]`"><b>precipitation</b></font> from the TomKat weather station, along with the <font color="`r pointblue.palette[7]`"><b>range of temperatures and precipitation</b></font> observed on each date since the weather station was established. <i>Note: Gaps in weather data occurred when the weather station was being upgraded.</i>
 
 The highest temperature yet recorded was <b>`r dat %>% filter(var == 'high') %>%select(value)`&deg;F</b> on `r dat %>% filter(var == 'high') %>% select(date)`. The lowest was <b>`r dat %>% filter(var == 'low') %>%select(value)`&deg;F</b> on `r dat %>% filter(var == 'low') %>%select(date)`. The single rainiest day was `r dat %>% filter(var == 'rain') %>%select(date)`, with a total of <b>`r dat %>% filter(var == 'rain') %>%select(value)` inches</b> recorded.
 
@@ -69,13 +69,13 @@ The highest temperature yet recorded was <b>`r dat %>% filter(var == 'high') %>%
 
 
 ### Consistently warm and dry weather
-TomKat has been warmer and dryer than historic averages in almost every month since the spring of 2013, including during the <b>growing season</b> (March-June, shaded). Values greater than zero are above the historic average (1980-2010), and values below zero are below average.
+TomKat has been warmer and dryer than historic averages in almost every month since the spring of 2013, including during the <b>growing season</b> (March-June, shaded). Values greater than zero are above the estimated historic average (1980-2010)*, and values below zero are below average.
 
 
 <iframe src="weather_graph2.html" style="border: none;" width = 80%; height = 500px;></iframe>
 
 
-<i>*Historic averages and extreme values based on records from Half Moon Bay, 1981-2010.</i>
+<i>*Historic averages are estimated from comparing current TomKat and Half Moon Bay data, and applying corrections to historical averages from Half Moon Bay, 1981-2010.</i>
 
 
 [Back to top](#top)
@@ -84,14 +84,13 @@ TomKat has been warmer and dryer than historic averages in almost every month si
 <a id='drought'></a>
 
 
-### Nearly 4 years of drought come to an end
-Central Coastal California entered drought conditions early in 2013, which persisted until the fall of 2016 with the onset of a record-setting wet winter. However, conditions are drying again with the slow start to the rainy season in 2017-2018.
-</br></br>
+### Drought conditions return
+Central Coastal California entered drought conditions early in 2013, which persisted until the fall of 2016 with the onset of a record-setting wet winter. However, moderate drought conditions returned in 2018.
 
 #### Palmer Drought Severity Index (PDSI)
 The PDSI is an indicator of long-term drought that takes into account precipitation and temperatures over several months. Values less than -2 are considered to be <b><font color='`r oranges[3]`'>moderate</font></b> (-2 to -3), <b><font color='`r oranges[4]`'>severe</font></b> (-3 to -4), or <b><font color='`r oranges[5]`'>extreme drought</font></b> (-4 and below). Values greater than 2 are considered to be <b><font color='`r blues[3]`'>moderately</font></b> (2 to 3), <b><font color='`r blues[4]`'>very</font></b> (3 to 4), or <b><font color='`r blues[5]`'>extremely moist</font></b> (4 and above). 
 
-The PDSI for Central Coastal California was at <b><font color='`r oranges[5]`'>extreme drought</font></b> levels from June 2013 through November 2015, except briefly during the very rainy December of 2014, and did not return to normal range until October 2016. Conditions in Northern Coastal California were never quite as dry as Central Coastal California, and recovered dramatically almost a year earlier than Central Coastal Caliafornia in December 2015. Southern Coastal California generally fared worse, and did not return to normal range until January 2016.
+The PDSI for Central Coastal California was at <b><font color='`r oranges[5]`'>extreme drought</font></b> levels from June 2013 through November 2015, except briefly during the very rainy December of 2014, and did not return to normal range until October 2016. Conditions in Northern Coastal California were never quite as dry as Central Coastal California, and recovered dramatically almost a year earlier than Central Coastal California in December 2015. Southern Coastal California generally fared worse, and only briefly returned to normal range in January - March 2017.
 
 
 <iframe src="weather_graph3.html" style="border: none;" width = 80%; height = 500px;></iframe>
@@ -100,7 +99,7 @@ The PDSI for Central Coastal California was at <b><font color='`r oranges[5]`'>e
 #### Palmer Z Index (PZI)
 The PZI measures short-term drought on a monthly scale, and can better reflect recent soil moisture conditions. Values less than -1.25 are considered to be <b><font color='`r oranges[3]`'>moderate</font></b> (-1.25 to -2), <b><font color='`r oranges[4]`'>severe</font></b> (-2 to -2.75), or <b><font color='`r oranges[5]`'>extreme drought</font></b> (-2.75 and below). Values greater than 1 are considered to be <b><font color='`r blues[3]`'>moderately</font></b> (1 to 2.5), <b><font color='`r blues[4]`'>very</font></b> (2.5 to 3.5), or <b><font color='`r blues[5]`'>extremely moist</font></b> (3.5 and above). 
 
-The impact of big storms can be more readily seen in this index, such as the <b><font color='`r blues[5]`'>extremely moist</font></b> December 2014, October 2016, and January 2017. Northern and Central Coastal California have had more frequent short-term relief from drought conditions through such storms than Southern Coastal California.  
+The impact of big storms can be more readily seen in this index, such as the <b><font color='`r blues[5]`'>extremely moist</font></b> December 2014, October 2016, January 2017, and March 2018. Northern and Central Coastal California have had more frequent short-term relief from drought conditions through such storms than Southern Coastal California.  
 
 
 <iframe src="weather_graph4.html" style="border: none;" width = 80%; height = 500px;></iframe>
@@ -116,7 +115,7 @@ More information about these drought indices are available from the [National Ce
 
 ### About this page
 
-This interactive web page was produced using [RStudio](https://www.rstudio.com) with the packages [dygraphs](https://rstudio.github.io/dygraphs/) for time series graphs and [DT](https://rstudio.github.io/DT/) for data tables. RStudio is a free and open-source software for programming in [R](https://www.R-project.org/), a programming language for statistical computing and graphics. The code used to produce this web page is available on [Github](https://github.com/pointblue/tomkat).
+This interactive web page was produced in [R](https://www.R-project.org/) using [rmarkdown](https://rmarkdown.rstudio.com/) and the [plotly package](https://plot.ly/r/). The code used to produce this web page is available on [Github](https://github.com/pointblue/tomkat).
 
 
 ### For more information
