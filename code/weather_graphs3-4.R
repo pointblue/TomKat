@@ -100,7 +100,7 @@ plot3 <- plot_ly(x = ~date, y = ~value) %>%
                                                                step = "year",
                                                                stepmode = "backward"),
                                                           list(step = "all")),
-                                           font = list(color = 'white'),
+                                           font = list(color = 'white', size = 12),
                                            bgcolor = pointblue.palette[4],
                                            activecolor = pointblue.palette[1])),
          legend = list(x = 1, xanchor = 'right', y = 1, yanchor = 'top',
@@ -144,7 +144,7 @@ plot3 <- plot_ly(x = ~date, y = ~value) %>%
                             font = list(family = 'Arial', size = 12,
                                         color = pal(7)[7]),
                             showarrow = FALSE)) %>%
-  rangeslider('2018-01-01', '2018-11-15', thickness = 0.05) %>%
+  # rangeslider('2010-01-01', thickness = 0.1) %>%
   config(collaborate = FALSE, displaylogo = FALSE)
 
 htmlwidgets::saveWidget(plot3,
@@ -219,7 +219,7 @@ plot4 <- plot_ly(x = ~date, y = ~value) %>%
                                                                step = "year",
                                                                stepmode = "backward"),
                                                           list(step = "all")),
-                                           font = list(color = 'white'),
+                                           font = list(color = 'white', size = 12),
                                            bgcolor = pointblue.palette[4],
                                            activecolor = pointblue.palette[1])),
          legend = list(x = 1, xanchor = 'right', y = 1, yanchor = 'top',
@@ -263,7 +263,7 @@ plot4 <- plot_ly(x = ~date, y = ~value) %>%
                             font = list(family = 'Arial', size = 12,
                                         color = pal(7)[7]),
                             showarrow = FALSE)) %>%
-  rangeslider('2018-01-01', '2018-11-15', thickness = 0.05) %>%
+  # rangeslider('2010-01-01', thickness = 0.1) %>%
   config(collaborate = FALSE, displaylogo = FALSE)
 
 htmlwidgets::saveWidget(plot4,
