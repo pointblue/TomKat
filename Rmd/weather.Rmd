@@ -89,7 +89,7 @@ TomKat has been warmer and dryer than historic averages in almost every month si
 We examined two drought indices from the [National Centers for Environmental Information](http://www.ncdc.noaa.gov/temp-and-precip/drought/historical-palmers/overview): the Palmer Drought Severity Index (PDSI) and the Palmer Z Index. The PDSI is an indicator of long-term drought that takes into account precipitation and temperature over several months, while the Z index measures short-term drought on a monthly scale, and can better reflect recent storms and soil moisture conditions.
 
 #### Palmer Drought Severity Index (PDSI)
-The PDSI for Central Coastal California entered drought conditions early in 2013, which persisted nearly 4 years until October 2016, including over two years of <b><font color='`r palette[7]`'>extreme drought</font></b> from June 2013 through November 2015. Despite returning to normal range for most of 2017, <b><font color='`r palette[6]`'>moderate drought</font></b> conditions returned in 2018.
+The PDSI for Central Coastal California entered drought conditions early in 2013, which persisted nearly 4 years until October 2016, including over two years of <b><font color='`r palette[7]`'>extreme drought</font></b> from June 2013 through November 2015. Despite returning to normal range for most of 2017, <b><font color='`r palette[5]`'>moderate drought</font></b> conditions returned in 2018.
 
 In comparison, conditions in Northern Coastal California were never quite as dry as Central Coastal California, and recovered almost a year earlier than Central Coastal California in December 2015. Southern Coastal California generally fared worse, and only briefly returned to normal range in January - March 2017.
 
