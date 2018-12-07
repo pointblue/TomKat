@@ -95,7 +95,7 @@ plot1 <- plot_ly(x = ~Year) %>%
          hovermode = 'x') %>%
   config(collaborate = FALSE, displaylogo = FALSE, showTips = FALSE,
          modeBarButtonsToRemove = list('zoom2d', 'select2d', 'lasso2d', 
-                                       'zoomIn2d', 'zoomOut2d', 'autoScale2d',
+                                       'zoomIn2d', 'zoomOut2d', 
                                        'pan2d', 'toggleSpikelines'))
 
 htmlwidgets::saveWidget(plot1,
