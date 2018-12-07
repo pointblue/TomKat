@@ -98,7 +98,6 @@ plot1 <- plot_ly(x = ~Year) %>%
                                        'zoomIn2d', 'zoomOut2d', 'autoScale2d',
                                        'pan2d', 'toggleSpikelines'))
 
-
 htmlwidgets::saveWidget(plot1,
                         here::here(graph1),
                         selfcontained = TRUE,
