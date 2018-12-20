@@ -46,7 +46,9 @@ dat <- read_csv(here::here(masterdat)) %>%
 
 mod = glm(Estimate ~ Year * species, dat, family = quasipoisson)
 mod2 = glm(Estimate ~ Year + species, dat, family = quasipoisson)
-#SAVS declining significantly; weak declining trend for GRSP
+
+summary(mod); summary(mod2)
+#in mod2, SAVS declining significantly; weak declining trend for GRSP
 
 plot1 <- plot_ly(x = ~Year) %>%
   add_trace(data = dat %>% filter(species == 'GRSP'), 
