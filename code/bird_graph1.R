@@ -48,7 +48,7 @@ mod = glm(Estimate ~ Year * species, dat, family = quasipoisson)
 mod2 = glm(Estimate ~ Year + species, dat, family = quasipoisson)
 
 summary(mod); summary(mod2)
-#in mod2, SAVS declining significantly; weak declining trend for GRSP
+#in mod2, SAVS & GRSP declining significantl
 
 plot1 <- plot_ly(x = ~Year) %>%
   add_trace(data = dat %>% filter(species == 'GRSP'), 
