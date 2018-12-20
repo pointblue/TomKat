@@ -8,7 +8,7 @@ library(pbdistance) # devtools::install_github('kdybala/pbdistance')
 library(sf)
 
 # input files
-rawdat <- 'data_raw/TOKA_PC_2010_2018.csv'
+rawdat <- 'data_raw/TOKA_HOCR_PC_2010_2018.csv'
 
 grasspc <- 'TOKA_point_count_grid_grass&hay' #surveys points in "grassland" only
 
@@ -17,7 +17,7 @@ grasspc <- 'TOKA_point_count_grid_grass&hay' #surveys points in "grassland" only
 masterdat <- 'data_master/TK_bird_master.csv'
 point_density <- 'data_master/TK_bird_density_by_point.csv'
 ranch_density <- 'data_master/TK_bird_density_by_year.csv'
-
+point_richness <- 'data_master/TK_richness_by_point.csv'
 
 # DATA SET UP-----------
 
@@ -66,10 +66,16 @@ fdat <- format_data_flat(sdat, strata = 'Point', dist = 'Distance Bin',
                          dist_bin_id = NULL)
 # 170 strata = 170 unique sampling locations (points), 1-14 visits per sampling location
 
-grsp <- fit_distance_models(data = fdat, spec = 'grsp', maxdist = 150,
-                            bins = c(0, 20, 40, 60, 80, 100, 150))
-savs <- fit_distance_models(data = fdat, spec = 'savs', maxdist = 150,
-                            bins = c(0, 30, 50, 70, 100, 150))
+# grsp <- fit_distance_models(data = fdat, spec = 'grsp', maxdist = 150,
+#                             bins = c(0, 20, 40, 60, 80, 100, 150))
+grsp <- fit_distance_models(data = fdat, spec = 'grsp', maxdist = 100,
+                            bins = c(0, 30, 50, 70, 80, 90, 100))
+
+# savs <- fit_distance_models(data = fdat, spec = 'savs', maxdist = 150,
+#                             bins = c(0, 30, 50, 70, 100, 150))
+savs <- fit_distance_models(data = fdat, spec = 'savs', maxdist = 100,
+                            bins = c(0, 30, 50, 70, 80, 90, 100))
+
 wcsp <- fit_distance_models(data = fdat, spec = 'wcsp', maxdist = 150, 
                             bins = c(0, 50, 80, 110, 150))
 
@@ -106,10 +112,16 @@ fdat2 <- format_data_flat(gdat, year = 'Year', dist = 'Distance Bin',
                           dist_bin_id = NULL) 
 # 8 strata (one for each year); 104 unique locations (points); 1-2 visits per point
 
-grsp2 <- fit_distance_models(data = fdat2, spec = 'grsp', maxdist = 150,
-                             bins = c(0, 20, 40, 60, 80, 100, 150))
-savs2 <- fit_distance_models(data = fdat2, spec = 'savs', maxdist = 150, 
-                             bins = c(0, 30, 50, 70, 100, 150))
+# grsp2 <- fit_distance_models(data = fdat2, spec = 'grsp', maxdist = 150,
+#                              bins = c(0, 20, 40, 60, 80, 100, 150))
+grsp2 <- fit_distance_models(data = fdat2, spec = 'grsp', maxdist = 100,
+                             bins = c(0, 30, 50, 70, 80, 90, 100))
+
+# savs2 <- fit_distance_models(data = fdat2, spec = 'savs', maxdist = 150, 
+#                              bins = c(0, 30, 50, 70, 100, 150))
+savs2 <- fit_distance_models(data = fdat2, spec = 'savs', maxdist = 100,
+                             bins = c(0, 30, 50, 70, 80, 90, 100))
+
 wcsp2 <- fit_distance_models(data = fdat2, spec = 'wcsp', maxdist = 150, 
                              bins = c(0, 50, 90, 120, 150))
 
@@ -126,4 +138,31 @@ density2 <- density2[-grep('Total', density2$Label),]
 
 ## save the results as a CSV file:
 write_csv(density2, here::here(ranch_density))
+
+
+# ANALYSIS 3: SPP RICHNESS PER POINT------------
+cdat <- dat %>% 
+  filter(`Distance Bin` <= 100 & substr(Spp, 1, 2) != 'XX' & Spp != 'SPHU') %>%
+  select(Point, Spp, Count) %>%
+  group_by(Point, Spp) %>%
+  summarize(Count = sum(Count)) %>%
+  spread(key = Spp, value = Count, fill = 0) %>%
+  as.data.frame()
+
+row.names(cdat) <- cdat$Point
+cdat$Point = NULL
+
+richest <- vegan::estimateR(cdat) %>% as.data.frame() %>%
+  mutate(method = row.names(.)) %>%
+  gather(`HOCR-001`:`TOKA-178`, key = 'Point', value = 'n') %>%
+  filter(method %in% c('S.obs', 'S.ACE')) %>%
+  spread(key = method, value = n) %>%
+  mutate(S.ACE = round(S.ACE, digits = 0),
+         prop = S.obs/S.ACE) %>%
+  # add number of visits per point
+  left_join(dat %>% select(Point, Visit) %>% distinct() %>% count(Point),
+            by = 'Point')
+
+write_csv(richest, here::here(point_richness))
+
 
