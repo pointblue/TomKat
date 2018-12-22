@@ -194,8 +194,12 @@ rdat$id = NULL
 richest2 <- vegan::estimateR(rdat) %>% as.data.frame() %>%
   mutate(method = row.names(.)) %>%
   gather(grassland_2011:riparian_2018, key = 'id', value = 'n') %>%
-  filter(method %in% c('S.obs', 'S.ACE')) %>%
+  filter(method %in% c('S.obs', 'S.ACE', 'se.ACE')) %>%
   spread(key = method, value = n) %>%
+  mutate(min = S.ACE - se.ACE,
+         max = S.ACE + se.ACE) %>%
+  select(id, S.ACE, min, max) %>%
+  mutate_at(vars(S.ACE:max), round, digits = 0)
   mutate(S.ACE = round(S.ACE, digits = 0),
          prop = S.obs/S.ACE)
 
