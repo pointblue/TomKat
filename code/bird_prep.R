@@ -18,6 +18,7 @@ masterdat <- 'data_master/TK_bird_master.csv'
 point_density <- 'data_master/TK_bird_density_by_point.csv'
 ranch_density <- 'data_master/TK_bird_density_by_year.csv'
 point_richness <- 'data_master/TK_richness_by_point.csv'
+ranch_richness <- 'data_master/TK_richness_by_year.csv'
 
 # DATA SET UP-----------
 
@@ -141,6 +142,7 @@ write_csv(density2, here::here(ranch_density))
 
 
 # ANALYSIS 3: SPP RICHNESS PER POINT------------
+
 cdat <- dat %>% 
   filter(`Distance Bin` <= 100 & substr(Spp, 1, 2) != 'XX' & Spp != 'SPHU') %>%
   select(Point, Spp, Count) %>%
@@ -166,3 +168,35 @@ richest <- vegan::estimateR(cdat) %>% as.data.frame() %>%
 write_csv(richest, here::here(point_richness))
 
 
+# ANALYSIS 4: SPP RICHNESS BY YEAR-------
+# compare grassland and riparian points
+
+shp <- read_sf(here::here('GIS'), grasspc)
+
+rdat <- dat %>%
+  filter(`Distance Bin` <= 100 & substr(Spp, 1, 2) != 'XX' & Spp != 'SPHU') %>%
+  mutate(year = format(Date, '%Y'),
+         habitat = case_when(substr(Point, 1, 4) == 'HOCR' ~ 'riparian',
+                             Point %in% shp$Name ~ 'grassland',
+                             TRUE ~ 'other')) %>%
+  filter(habitat != 'other') %>% #exclude these points from this analysis
+  unite('id', habitat, year) %>%
+  select(id, Spp, Count) %>%
+  group_by(id, Spp) %>%
+  summarize(Count = sum(Count)) %>%
+  spread(key = Spp, value = Count, fill = 0) %>%
+  as.data.frame()
+  
+
+row.names(rdat) <- rdat$id
+rdat$id = NULL
+
+richest2 <- vegan::estimateR(rdat) %>% as.data.frame() %>%
+  mutate(method = row.names(.)) %>%
+  gather(grassland_2011:riparian_2018, key = 'id', value = 'n') %>%
+  filter(method %in% c('S.obs', 'S.ACE')) %>%
+  spread(key = method, value = n) %>%
+  mutate(S.ACE = round(S.ACE, digits = 0),
+         prop = S.obs/S.ACE)
+
+write_csv(richest2, here::here(ranch_richness))
