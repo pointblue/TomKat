@@ -33,7 +33,7 @@ dat <- read_csv(here::here(masterdat)) %>%
 
 # ESTIMATE TRENDS---------------
 # assume relatively even effort, random selection of points per year
-# --> Note: this ignores error in density estimates, so is very rough
+# --> Note: this ignores error in richness estimates, so is very rough
 
 mod = glm(S.ACE ~ year * habitat, dat, family = quasipoisson)
 mod2 = glm(S.ACE ~ year + habitat, dat, family = quasipoisson)
@@ -65,9 +65,9 @@ plot2 <- plot_ly(x = ~year) %>%
                            symmetric = FALSE,
                            arrayminus = ~S.ACE - min,
                            array = ~max - S.ACE,
-                           color = pointblue.palette[3]),
-            line = list(color = pointblue.palette[3]),
-            marker = list(color = pointblue.palette[3], 
+                           color = pointblue.palette[4]),
+            line = list(color = pointblue.palette[4]),
+            marker = list(color = pointblue.palette[4], 
                           size = 10),
             text = ~text,
             hoverinfo = 'x+text', 
