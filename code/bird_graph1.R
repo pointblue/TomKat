@@ -25,10 +25,11 @@ pointblue.palette <-
 # DATA SET UP------------------
 
 dat <- read_csv(here::here(masterdat)) %>%
+  mutate(species = gsub('2', '', species)) %>%
   filter(species != 'WCSP') %>% #for now
   separate(Label, c('Project', 'Year')) %>%
   select(species, Year, Estimate, lcl, ucl) %>%
-  # mutate_at(vars(Estimate:ucl), funs(. / 2.47105)) %>% #optional: conver to acres
+  mutate_at(vars(Estimate:ucl), funs(. / 2.47105)) %>% #optional: conver to acres
   mutate(species = as.factor(species),
          Year = as.numeric(Year),
          fullname = recode(species,
@@ -81,12 +82,12 @@ plot1 <- plot_ly(x = ~Year) %>%
             text = ~text,
             hoverinfo = 'x+text', 
             name = 'Savannah Sparrow') %>%
-  layout(yaxis = list(title = 'Density (birds/ha)',
+  layout(yaxis = list(title = 'Density (birds/acre)',
                       font = list(size = 14),
                       showline = TRUE,
                       ticks = 'outside',
                       tick0 = 0,
-                      range = c(0,2),
+                      range = c(0,1),
                       showgrid = FALSE),
          xaxis = list(title = NA,
                       showline = TRUE,
