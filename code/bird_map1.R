@@ -36,7 +36,7 @@ pointblue.palette <-
 dat <- read_csv(here::here(masterdat)) %>%
   select(Label, Estimate, species) %>%
   filter(species != 'WCSP') %>% #for now
-  mutate(Estimate = Estimate * 2.47105) %>% #convert to birds/acre
+  mutate(Estimate = Estimate / 2.47105 * 10) %>% #optional: conver to birds per 10 acres
   spread(key = species, value = Estimate) %>%
   mutate(total = GRSP + SAVS) %>%
   gather(GRSP:total, key = species, value = abund) %>%
@@ -55,7 +55,7 @@ dat_lab <- dat %>%
   mutate(label_tot = map(Label, ~ dat %>%
                            filter(Label == .x) %>%
                            select(abund_round) %>%
-                           htmlTable(header = c('Density<br>(birds/acre)'),
+                           htmlTable(header = c('Density<br>(birds/10 acres)'),
                                      align = 'r',
                                      rnames = c('Grasshopper Sparrow', 
                                                 'Savannah Sparrow', 
@@ -125,7 +125,7 @@ boxplot(dat_lab$total, plot = F)$out %>% max()
 pal1 <- colorBin(
   palette = c('#ffffff', pointblue.palette[4]), 
   domain = dat_lab$total, 
-  bins = c(0, 0.001, 1, 3, 5, max(dat_lab$total)), 
+  bins = c(0, 0.001, 1, 5, 10, max(dat_lab$total)), 
   na.color = 'transparent')
 
 
@@ -179,11 +179,11 @@ map1 <- leaflet(shp_pts_map, height = 500) %>%
   
   # add legend & layer controls:
   addLegend(position = 'topright', 
-            colors = pal1(c(0, 0.5, 2, 4, 7.5)),
-            labels = c('0', '< 1', '1 - 3', '3 - 5', '> 5'),
+            colors = pal1(c(0, 0.5, 2, 7.5, 12)),
+            labels = c('0', '< 1', '1 - 5', '5 - 10', '> 10'),
             values = NULL,
             opacity = 1,
-            title = 'Density<br>(birds/acre)') %>%
+            title = 'Density<br>(birds/10 acres)') %>%
   
   addLayersControl(position = 'bottomleft', 
                    options = layersControlOptions(collapsed = F),
