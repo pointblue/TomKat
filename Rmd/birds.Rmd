@@ -1,0 +1,121 @@
+---
+title: ''
+output:
+  html_document:
+    theme: spacelab
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+## input files
+masterdat <- 'data_master/TK_bird_master.csv'
+
+library(tidyverse)
+
+dat <- read_csv(here::here(masterdat)) %>%
+  mutate(year = format(Date, '%Y'))
+
+nspecies <- dat %>%
+  ## exclude unidentified spp, SPHU since ALHU&RUHU are both in there
+  filter(!(substr(Spp, 1, 2) %in% c('UN', 'XX') | Spp == 'SPHU')) %>%
+  select(Spp) %>%
+  distinct() %>%
+  nrow()
+#91
+
+nsurveys <- dat %>% 
+  unite('id', Point, Visit) %>%
+  select(id) %>%
+  distinct() %>% 
+  nrow()
+#1035
+
+pointblue.palette <-
+  c('#4495d1',
+    '#74b743',
+    '#f7941d',
+    '#005baa',
+    '#bfd730',
+    '#a7a9ac',
+    '#666666')
+```
+
+<a id="top"></a>
+
+TomKat Ranch: Birds
+===============================
+Since 2010, Point Blue Conservation Science has conducted <b>`r format(nsurveys, big.mark=',')` bird surveys</b> across TomKat Ranch during May and June and detected a total of <b>`r nspecies` bird species</b>. Each year, biologists conduct point count surveys for birds at a random sample of points chosen from a grid across the ranch, as well as at 12 points in riparian vegetation along Honsinger Creek. We analyzed this data to examine spatial patterns in [grassland bird abundance](#distribution) and [species richness](#richness) across the ranch, as well as ranch-wide [trends in grassland bird abundance](#trends) and [trends in species richness](#richtrend).
+
+
+<a id='distribution'></a>
+
+### Average focal species abundance 
+
+The density of grassland focal species (Grasshopper Sparrow and Savannah Sparrow) varies across the ranch. We compiled  bird survey data across 2010-`r max(dat$year)` to estimate the overall average density (birds per 10 acres) of each species at each survey point across the ranch.
+
+
+<i>Choose a focal species at bottom left. Click on any of the grid cells for the density estimate.</i>
+
+
+<iframe src="bird_map1.html" style="border: none;" width = 90%; height = 550px;></iframe>
+
+
+[Back to top](#top)
+
+
+<a id='trends'></a>  
+
+### Focal species declines 
+  
+Since 2010, we have observed a slight ranch-wide decline in the density of <font color='`r pointblue.palette[3]`'><b>Savannah Sparrows</b></font> and <font color='`r pointblue.palette[2]`'><b>Grasshopper Sparrows</b></font>.
+
+
+<iframe src="bird_graph1.html" style="border: none;" width = 90%; height = 450px;></iframe>
+
+
+[Back to top](#top)
+
+
+</br></br>
+<a id='richness'></a>  
+
+### Species richness concentrated along Honsinger Creek  
+  
+The shading in this map shows the estimated number of species ever detected near a bird survey station, with darker colors representing more species. Honsinger Creek is a hotspot of bird species richness, with some of the highest numbers of species, but there are also some other hotspots across the ranch.
+
+<i>Click on any of the points or grid cells for the number of species detected.</i>
+
+
+<iframe src="bird_map2.html" style="border: none;" width = 90%; height = 550px;></iframe>
+
+
+[Back to top](#top)
+
+
+<a id='richtrend'></a>
+
+### Decline in grassland species richness  
+Ranch-wide, there were initially more total species in <font color='`r pointblue.palette[2]`'><b>grassland points</b></font> than in <font color='`r pointblue.palette[4]`'><b>riparian points</b></font>, but grassland species richness has declined in recent years while riparian richness has remained steady through the drought.
+
+<iframe src="bird_graph2.html" style="border: none;" width = 90%; height = 450px;></iframe>
+
+
+[Back to top](#top)
+
+
+-------------
+
+### About this page
+
+This interactive web page was produced in [R](https://www.R-project.org/) using [rmarkdown](https://rmarkdown.rstudio.com/) and the packages [leaflet](http://rstudio.github.io/leaflet/) and [plotly](https://plot.ly/r/). The code used to produce this web page is available on [Github](https://github.com/pointblue/tomkat).
+
+
+### For more information
+
+Please contact:  
+[Nat Seavy, Ph.D.](mailto:nseavy@pointblue.org)  
+Research Director  
+Pacific Coast and Central Valley Group  
+Point Blue Conservation Science  
+
