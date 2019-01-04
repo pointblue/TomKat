@@ -35,11 +35,10 @@ dat <- read_csv(here::here(masterdat)) %>%
 # assume relatively even effort, random selection of points per year
 # --> Note: this ignores error in richness estimates, so is very rough
 
-mod = glm(S.ACE ~ year * habitat, dat, family = quasipoisson)
-mod2 = glm(S.ACE ~ year + habitat, dat, family = quasipoisson)
-
+mod = glm(S.ACE ~ year * habitat, dat, family = poisson)
+mod2 = glm(S.ACE ~ year + habitat, dat, family = poisson)
 summary(mod); summary(mod2)
-#in mod2, SAVS & GRSP declining significantl
+# decline in grassland richness
 
 plot2 <- plot_ly(x = ~year) %>%
   add_trace(data = dat %>% filter(habitat == 'grassland'), 
