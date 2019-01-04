@@ -29,7 +29,7 @@ dat <- read_csv(here::here(masterdat)) %>%
   filter(species != 'WCSP') %>% #for now
   separate(Label, c('Project', 'Year')) %>%
   select(species, Year, Estimate, lcl, ucl) %>%
-  mutate_at(vars(Estimate:ucl), funs(. / 2.47105)) %>% #optional: conver to acres
+  mutate_at(vars(Estimate:ucl), funs(. / 2.47105 * 10)) %>% #optional: convert to birds per 10 acres
   mutate(species = as.factor(species),
          Year = as.numeric(Year),
          fullname = recode(species,
@@ -82,12 +82,12 @@ plot1 <- plot_ly(x = ~Year) %>%
             text = ~text,
             hoverinfo = 'x+text', 
             name = 'Savannah Sparrow') %>%
-  layout(yaxis = list(title = 'Density (birds/acre)',
+  layout(yaxis = list(title = 'Density (birds/10 acres)',
                       font = list(size = 14),
                       showline = TRUE,
                       ticks = 'outside',
                       tick0 = 0,
-                      range = c(0,1),
+                      range = c(0,10),
                       showgrid = FALSE),
          xaxis = list(title = NA,
                       showline = TRUE,
