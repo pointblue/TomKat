@@ -14,5 +14,5 @@ This page serves as an index to the individual ranch data pages. Links will be u
 * [DRAFT soil](soil.html)
 * [DRAFT vegetation](vegetation.html)
 * water
-* birds
+* [DRAFT birds](birds.html) (2019-01-04)
 * management
