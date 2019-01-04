@@ -114,7 +114,7 @@ shp_pts_hocr <- st_read(here::here('GIS'), pts_hocr, quiet = TRUE) %>%
 # set color scale for densities
 
 boxplot(dat_lab$value, plot = F)$stats
-boxplot(dat_lab$value, plot = F)$out
+boxplot(dat_lab$value, plot = F)$out %>% max()
 
 pal1 <- colorBin(
   palette = c('#ffffff', pointblue.palette[4]), 
