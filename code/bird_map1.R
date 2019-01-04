@@ -36,7 +36,7 @@ pointblue.palette <-
 dat <- read_csv(here::here(masterdat)) %>%
   select(Label, Estimate, species) %>%
   filter(species != 'WCSP') %>% #for now
-  mutate(Estimate = Estimate * 4) %>% #convert to birds/4 ha grid cell
+  mutate(Estimate = Estimate * 2.47105) %>% #convert to birds/acre
   spread(key = species, value = Estimate) %>%
   mutate(total = GRSP + SAVS) %>%
   gather(GRSP:total, key = species, value = abund) %>%
@@ -55,7 +55,7 @@ dat_lab <- dat %>%
   mutate(label_tot = map(Label, ~ dat %>%
                            filter(Label == .x) %>%
                            select(abund_round) %>%
-                           htmlTable(header = c('Average<br>Number'),
+                           htmlTable(header = c('Density<br>(birds/acre)'),
                                      align = 'r',
                                      rnames = c('Grasshopper Sparrow', 
                                                 'Savannah Sparrow', 
@@ -120,12 +120,12 @@ shp_ranch <- st_read(here::here('GIS'), ranch, quiet = TRUE) %>%
 # set color scale for densities
 
 boxplot(dat_lab$total, plot = F)$stats
-boxplot(dat_lab$total, plot = F)$out
+boxplot(dat_lab$total, plot = F)$out %>% max()
 
 pal1 <- colorBin(
   palette = c('#ffffff', pointblue.palette[4]), 
   domain = dat_lab$total, 
-  bins = c(0, 0.001, 1, 5, 10, max(dat_lab$total)), 
+  bins = c(0, 0.001, 1, 3, 5, max(dat_lab$total)), 
   na.color = 'transparent')
 
 
@@ -140,105 +140,60 @@ map1 <- leaflet(shp_pts_map, height = 500) %>%
   addProviderTiles("Stamen.Terrain",
                    options = providerTileOptions(minzoom = 14, maxzoom = 15)) %>%
   
-  ## add rasters (below polygon boundaries) showing densities by cell:
-  addRasterImage(
-    x = all_rast,
-    opacity = 0.8,
-    group = 'Combined',
-    colors = pal1,
-    project = F
-  ) %>%
-  
-  addRasterImage(
-    x = grsp_rast,
-    opacity = 0.8,
-    group = 'Grasshopper Sparrow',
-    colors = pal1,
-    project = F
-  ) %>%
-  
-  addRasterImage(
-    x = savs_rast,
-    opacity = 0.8,
-    group = 'Savannah Sparrow',
-    colors = pal1,
-    project = F
-  ) %>% 
+  ## add rasters (under polygon boundaries) showing densities by cell:
+  addRasterImage(x = all_rast, group = 'Combined', 
+                 colors = pal1, opacity = 0.8, project = F) %>%
+  addRasterImage(x = grsp_rast, group = 'Grasshopper Sparrow',
+                 colors = pal1, opacity = 0.8, project = F) %>%
+  addRasterImage(x = savs_rast, group = 'Savannah Sparrow',
+                 colors = pal1, opacity = 0.8, project = F) %>% 
   
   # pasture boundaries:
-  addPolygons(
-    data = shp_poly,
-    color = 'black',
-    fillColor = pointblue.palette[2],
-    fillOpacity = 0.1,
-    weight = 1
-  ) %>% 
+  addPolygons(data = shp_poly, fillColor = pointblue.palette[2], 
+              color = 'black', weight = 1, fillOpacity = 0.1) %>% 
   
   # ranch boundary
-  addPolygons(
-    data = shp_ranch,
-    color = 'black',
-    fill = FALSE,
-    weight = 3
-  ) %>%  
+  addPolygons(data = shp_ranch, fill = FALSE,
+              color = 'black', weight = 3) %>%  
   
   # add transparent circle markers for each species to show the popup tables
   # combined: 
-  addCircleMarkers(
-    radius = 11,
-    weight = 1.5,
-    popup = ~ label_tot,
-    options = popupOptions(maxWidth = 800),
-    color = 'transparent',
-    fillColor = 'transparent',
-    group = 'Combined'
-  ) %>% 
-  
+  addCircleMarkers(popup = ~ label_tot, group = 'Combined',
+                   radius = 11, weight = 1.5, 
+                   options = popupOptions(maxWidth = 800),
+                   color = 'transparent',
+                   fillColor = 'transparent') %>% 
   # GRSP:
-  addCircleMarkers(
-    radius = 11,
-    weight = 1.5,
-    popup = ~ label_tot,
-    options = popupOptions(maxWidth = 800),
-    color = 'transparent',
-    fillColor = 'transparent',
-    group = 'Grasshopper Sparrow'
-  ) %>% 
+  addCircleMarkers(popup = ~ label_tot, group = 'Grasshopper Sparrow',
+                   radius = 11, weight = 1.5,
+                   options = popupOptions(maxWidth = 800),
+                   color = 'transparent',
+                   fillColor = 'transparent') %>% 
   
   # SAVS:
-  addCircleMarkers(
-    radius = 11,
-    weight = 1.5,
-    popup = ~ label_tot,
-    options = popupOptions(maxWidth = 800),
-    color = 'transparent',
-    fillColor = 'transparent',
-    group = 'Savannah Sparrow'
-  ) %>% 
+  addCircleMarkers(popup = ~ label_tot, group = 'Savannah Sparrow',
+                   radius = 11, weight = 1.5,
+                   options = popupOptions(maxWidth = 800),
+                   color = 'transparent',
+                   fillColor = 'transparent') %>% 
   
   # add legend & layer controls:
-  addLegend(
-    position = 'topright', 
-    colors = pal1(c(0, 0.5, 2.5, 7.5, 15)),
-    labels = c('0', '< 1', '1 - 5', '5 - 10', '> 10'),
-    values = NULL,
-    opacity = 1,
-    title = 'Average<br>number') %>%
+  addLegend(position = 'topright', 
+            colors = pal1(c(0, 0.5, 2, 4, 7.5)),
+            labels = c('0', '< 1', '1 - 3', '3 - 5', '> 5'),
+            values = NULL,
+            opacity = 1,
+            title = 'Density<br>(birds/acre)') %>%
   
-  addLayersControl(
-    position = 'bottomleft', 
-    options = layersControlOptions(collapsed = F),
-    baseGroups = c('Combined', 'Grasshopper Sparrow', 'Savannah Sparrow')) %>%
+  addLayersControl(position = 'bottomleft', 
+                   options = layersControlOptions(collapsed = F),
+                   baseGroups = c('Combined', 
+                                  'Grasshopper Sparrow', 
+                                  'Savannah Sparrow')) %>%
   
   ## logo
-  addLogo(
-    img = logo,
-    src = 'remote',
-    url = 'http://www.pointblue.org',
-    width = 174,
-    height = 90,
-    offset.y = -5
-  )
+  addLogo(img = logo, src = 'remote', url = 'http://www.pointblue.org',
+          width = 174, height = 90, offset.y = -5)
 
 # add CSS
 map1$dependencies <- c(map1$dependencies,
