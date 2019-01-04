@@ -135,72 +135,44 @@ map2 <- leaflet(shp_pts_map, height = 500) %>%
                    options = providerTileOptions(minzoom = 14, maxzoom = 15)) %>%
   
   ## add rasters (below polygon boundaries) showing densities by cell:
-  addRasterImage(
-    x = rich_rast,
-    opacity = 0.8,
-    group = 'Combined',
-    colors = pal1,
-    project = F
-  ) %>%
+  addRasterImage(x = rich_rast, group = 'Combined',
+                 colors = pal1, opacity = 0.8, project = F) %>%
   
   # pasture boundaries:
-  addPolygons(
-    data = shp_poly,
-    color = 'black',
-    fillColor = pointblue.palette[2],
-    fillOpacity = 0.1,
-    weight = 1
-  ) %>% 
+  addPolygons(data = shp_poly, fillColor = pointblue.palette[2], 
+              color = 'black', weight = 1, fillOpacity = 0.1) %>% 
   
   # ranch boundary
-  addPolygons(
-    data = shp_ranch,
-    color = 'black',
-    fill = FALSE,
-    weight = 3
-  ) %>%  
+  addPolygons(data = shp_ranch, fill = FALSE,
+              color = 'black', weight = 3) %>%  
   
   # add transparent circle markers for TOKA points to show the popup tables
-  addCircleMarkers(
-    radius = 11,
-    weight = 1.5,
-    popup = ~ label_tot,
-    options = popupOptions(maxWidth = 800),
-    color = 'transparent',
-    fillColor = 'transparent',
-    group = 'Combined'
-  ) %>% 
+  addCircleMarkers(popup = ~ label_tot,
+                   radius = 11, weight = 1.5, 
+                   options = popupOptions(maxWidth = 800),
+                   color = 'transparent',
+                   fillColor = 'transparent') %>% 
   
   # add circle markers for HOCR points with popup tables
-  addCircleMarkers(
-    data = shp_pts_hocr,
-    radius = 8,
-    weight = 1.5,
-    popup = ~ label_tot,
-    options = popupOptions(maxWidth = 800),
-    color = 'black',
-    fillColor = ~pal1(value),
-    fillOpacity = 0.8
-  ) %>% 
-  
+  addCircleMarkers(data = shp_pts_hocr, popup = ~ label_tot,
+                   radius = 8, weight = 1.5, 
+                   options = popupOptions(maxWidth = 800),
+                   color = 'black',
+                   fillColor = ~pal1(value), 
+                   fillOpacity = 0.8) %>% 
+
   # add legend & layer controls:
-  addLegend(
-    position = 'topright', 
-    colors = pal1(c(10, 20, 30, 40, 50)),
-    labels = c('0 - 15', '16 - 25', '25 - 35', '35 - 45', '> 45'),
-    values = NULL,
-    opacity = 1,
-    title = 'Estimated<br>species<br>richness') %>%
+  addLegend(position = 'topright', 
+            colors = pal1(c(10, 20, 30, 40, 50)),
+            labels = c('0 - 15', '16 - 25', '25 - 35', '35 - 45', '> 45'),
+            values = NULL,
+            opacity = 1,
+            title = 'Estimated<br>species<br>richness') %>%
   
   ## logo
-  addLogo(
-    img = logo,
-    src = 'remote',
-    url = 'http://www.pointblue.org',
-    width = 174,
-    height = 90,
-    offset.y = -5
-  )
+  addLogo(img = logo, src = 'remote', url = 'http://www.pointblue.org',
+          width = 174, height = 90, offset.y = -5)
+
 
 # add CSS
 map2$dependencies <- c(map2$dependencies,
