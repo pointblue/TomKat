@@ -1,6 +1,6 @@
 # README----------------------
-# Script to produce vegetation map 2: change in veg cover since 2012
-# From RStudio Viewer: Export as webpage "docs/vegetation_map2.html"
+# Script to produce vegetation map 2: change in veg cover over time
+# New in 2018: average 2012-2014 and compare to average 2016-2018
 
 ## packages
 library(tidyverse)
@@ -31,141 +31,124 @@ pointblue.palette <-
     '#666666')
 
 # DATA SET UP-------------
+# calculate "baseline" (2012-14) and "recent" (2016-18) averages for each
+#  vegtype in each pasture
+
 dat <- read_csv(here::here(masterveg)) %>%
   filter(vegtype != 'Trees') %>% #inconsistent treatment; not included in map
-  mutate(
-    cover = round(cover, digits = 1),
-    vegtype = as.factor(vegtype),
-    Pasture = as.factor(Pasture)
-  ) 
+  mutate(vegtype = as.factor(vegtype),
+         Pasture = as.factor(Pasture),
+         group = case_when(Year<2015 ~ 'baseline',
+                           Year>2015 ~ 'recent')) %>%
+  filter(Year != 2011 & Year != 2015) %>%
+  group_by(Pasture, group, vegtype) %>%
+  summarize(cover = round(mean(cover, na.rm = T), digits = 0)) %>%
+  ungroup()
 
+# calculate net change between recent and baseline years
 net_change <- dat %>%
-  filter(Year == 2012 | Year == max(Year)) %>%
-  mutate(yr = case_when(Year == max(Year) ~ 'current',
-                        Year == 2012 ~ 'baseline'),
-         Year = NULL) %>%
-  spread(key = yr, value = cover) %>%
-  mutate(net = current - baseline) %>%
-  select(-baseline, -current) %>%
-  spread(key = vegtype, value = net)
+  spread(key = group, value = cover) %>%
+  mutate(net = recent - baseline,
+         prop = case_when(abs(net) >= 10 ~ (net/baseline) * 100,
+                          TRUE ~ 0),
+         prop = case_when(is.infinite(prop) ~ 1000,
+                          TRUE ~ prop),
+         text = case_when(net > 0 ~ paste0('+', round(net, digits = 0), '%'),
+                          net < 0 ~ paste0(round(net, digits = 0), '%'),
+                          net == 0 ~ '0%'),
+         text = case_when(prop < -90 ~ paste0(text, '<br>(reduced >90%)'),
+                          prop < -50 ~ paste0(text, '<br>(reduced >50%)'),
+                          prop < -10 ~ paste0(text, '<br>(reduced >10%)'),
+                          prop == 0 ~ paste0(text, '<br>(little change)'),
+                          prop >= 100 ~ paste0(text, '<br>(increased >100%)'),
+                          prop > 50 ~ paste0(text, '<br>(increased >50%)'),
+                          prop > 10 ~ paste0(text, '<br>(increased >10%)')))
 
+# format to include in pop-up tables
 net_change_long <- net_change %>%
-  gather(AnnualGr:Weeds, key = 'vegtype', value = 'netchange') %>%
-  mutate('Net change' = case_when(
-    netchange > 0 ~ paste0('+', round(netchange, digits = 0)),
-    netchange < 0 ~ as.character(round(netchange, digits = 0))
-  ))
-
-dat_long <- dat %>%
-  mutate(cover = round(cover, digits = 0)) %>%
-  spread(key = Year, value = cover) %>%
-  full_join(net_change_long %>% select(Pasture, vegtype, `Net change`),
-            by = c('Pasture', 'vegtype')) %>%
-  gather(`2011`:`Net change`, key = year, value = value) %>%
-  arrange(Pasture, vegtype, year)
+  select(-net, -prop) %>%
+  gather(baseline:text, key = group, value = cover) %>%
+  arrange(Pasture, vegtype, group)
 
 
 # POPUP HTML TABLES-------------
 
 dat_lab <- net_change %>%
+  select(-baseline, -recent, -net, -text) %>%
+  spread(key = vegtype, value = prop) %>%
   mutate(
-    label_PereGr = map(
-      net_change$Pasture,
-      ~ dat_long %>% filter(Pasture == .x & vegtype == 'PereGr') %>%
-        select(year, value) %>%
-        htmlTable(
-          header = c('Year', '% Cover'),
-          align = c('c', 'r'),
-          rnames = F,
-          total = T,
-          caption = paste0('<b>Pasture ', .x, '</b>: Perennial Grasses')
-        )
-    ),
-    label_AnnualGr = map(
-      net_change$Pasture,
-      ~ dat_long %>% filter(Pasture == .x & vegtype == 'AnnualGr') %>%
-        select(year, value) %>%
-        htmlTable(
-          header = c('Year', '% Cover'),
-          align = c('c', 'r'),
-          rnames = F,
-          total = T,
-          caption = paste0('<b>Pasture ', .x, '</b>: Annual Grasses')
-        )
-    ),
-    label_NativeGr = map(
-      net_change$Pasture,
-      ~ dat_long %>% filter(Pasture == .x & vegtype == 'NativeGr') %>%
-        select(year, value) %>%
-        htmlTable(
-          header = c('Year', '% Cover'),
-          align = c('c', 'r'),
-          rnames = F,
-          total = T,
-          caption = paste0('<b>Pasture ', .x, '</b>: Native Grasses')
-        )
-    ),
-    label_Grass = map(
-      net_change$Pasture,
-      ~ dat_long %>% filter(Pasture == .x & vegtype == 'Grass') %>%
-        select(year, value) %>%
-        htmlTable(
-          header = c('Year', '% Cover'),
-          align = c('c', 'r'),
-          rnames = F,
-          total = T,
-          caption = paste0('<b>Pasture ', .x, '</b>: All Grasses')
-        )
-    ),
-    label_Shrubs = map(
-      net_change$Pasture,
-      ~ dat_long %>% filter(Pasture == .x & vegtype == 'Shrubs') %>%
-        select(year, value) %>%
-        htmlTable(
-          header = c('Year', '% Cover'),
-          align = c('c', 'r'),
-          rnames = F,
-          total = T,
-          caption = paste0('<b>Pasture ', .x, '</b>: Shrubs')
-        )
-    ),
-    label_Forbs = map(
-      net_change$Pasture,
-      ~ dat_long %>% filter(Pasture == .x & vegtype == 'Forbs') %>%
-        select(year, value) %>%
-        htmlTable(
-          header = c('Year', '% Cover'),
-          align = c('c', 'r'),
-          rnames = F,
-          total = T,
-          caption = paste0('<b>Pasture ', .x, '</b>: Forbs')
-        )
-    ),
-    label_Weeds = map(
-      net_change$Pasture,
-      ~ dat_long %>% filter(Pasture == .x & vegtype == 'Weeds') %>%
-        select(year, value) %>%
-        htmlTable(
-          header = c('Year', '% Cover'),
-          align = c('c', 'r'),
-          rnames = F,
-          total = T,
-          caption = paste0('<b>Pasture ', .x, '</b>: Weeds')
-        )
-    ),
-    label_BareGround = map(
-      net_change$Pasture,
-      ~ dat_long %>% filter(Pasture == .x & vegtype == 'BareGround') %>%
-        select(year, value) %>%
-        htmlTable(
-          header = c('Year', '% Cover'),
-          align = c('c', 'r'),
-          rnames = F,
-          total = T,
-          caption = paste0('<b>Pasture ', .x, '</b>: Bare Ground')
-        )
-    )
-  )
+    label_PereGr = map(unique(net_change$Pasture),
+                       ~ net_change_long %>% 
+                         filter(Pasture == .x & vegtype == 'PereGr') %>%
+                         select(cover) %>%
+                         htmlTable(header = c('Average<br>% Cover'), 
+                                   rnames = c('2012-14', '2016-18', 'Difference'),
+                                   align = 'r', total = T,
+                                   caption = paste0('<b>Pasture ', .x, 
+                                                    '</b>: Perennial Grasses'))),
+    label_AnnualGr = map(unique(net_change$Pasture),
+                         ~ net_change_long %>% 
+                           filter(Pasture == .x & vegtype == 'AnnualGr') %>%
+                           select(cover) %>%
+                           htmlTable(header = c('Average<br>% Cover'), 
+                                     rnames = c('2012-14', '2016-18', 'Difference'),
+                                     align = 'r', total = T,
+                                     caption = paste0('<b>Pasture ', .x, 
+                                                      '</b>: Annual Grasses'))),
+    label_NativeGr = map(unique(net_change$Pasture),
+                         ~ net_change_long %>% 
+                           filter(Pasture == .x & vegtype == 'NativeGr') %>%
+                           select(cover) %>%
+                           htmlTable(header = c('Average<br>% Cover'), 
+                                     rnames = c('2012-14', '2016-18', 'Difference'),
+                                     align = 'r', total = T,
+                                     caption = paste0('<b>Pasture ', .x, 
+                                                      '</b>: Native Grasses'))),
+    label_Grass = map(unique(net_change$Pasture),
+                      ~ net_change_long %>% 
+                        filter(Pasture == .x & vegtype == 'Grass') %>%
+                        select(cover) %>%
+                        htmlTable(header = c('Average<br>% Cover'), 
+                                  rnames = c('2012-14', '2016-18', 'Difference'),
+                                  align = 'r', total = T,
+                                  caption = paste0('<b>Pasture ', .x, 
+                                                   '</b>: All Grasses'))),
+    label_Shrubs = map(unique(net_change$Pasture),
+                       ~ net_change_long %>% 
+                         filter(Pasture == .x & vegtype == 'Shrubs') %>%
+                         select(cover) %>%
+                         htmlTable(header = c('Average<br>% Cover'), 
+                                   rnames = c('2012-14', '2016-18', 'Difference'),
+                                   align = 'r', total = T,
+                                   caption = paste0('<b>Pasture ', .x, 
+                                                    '</b>: Shrubs'))),
+    label_Forbs = map(unique(net_change$Pasture),
+                      ~ net_change_long %>% 
+                        filter(Pasture == .x & vegtype == 'Forbs') %>%
+                        select(cover) %>%
+                        htmlTable(header = c('Average<br>% Cover'), 
+                                  rnames = c('2012-14', '2016-18', 'Difference'),
+                                  align = 'r', total = T,
+                                  caption = paste0('<b>Pasture ', .x, 
+                                                   '</b>: Forbs'))),
+    label_Weeds = map(unique(net_change$Pasture),
+                      ~ net_change_long %>% 
+                        filter(Pasture == .x & vegtype == 'Weeds') %>%
+                        select(cover) %>%
+                        htmlTable(header = c('Average<br>% Cover'), 
+                                  rnames = c('2012-14', '2016-18', 'Difference'),
+                                  align = 'r', total = T,
+                                  caption = paste0('<b>Pasture ', .x, 
+                                                   '</b>: Weeds'))),
+    label_BareGround = map(unique(net_change$Pasture),
+                           ~ net_change_long %>% 
+                             filter(Pasture == .x & vegtype == 'BareGround') %>%
+                             select(cover) %>%
+                             htmlTable(header = c('Average<br>% Cover'), 
+                                       rnames = c('2012-14', '2016-18', 'Difference'),
+                                       align = 'r', total = T,
+                                       caption = paste0('<b>Pasture ', .x, 
+                                                        '</b>: Bare Ground'))))
 
 
 # SHAPEFILES SET UP------
@@ -179,160 +162,111 @@ shp_ranch <- st_read(here::here('GIS'), ranch, quiet = TRUE) %>%
 
 
 # COLOR PALETTE-----------
-## Define color palette for % cover data, grouped into bins: <1%, 1-5%, 5-10%, 10-20%, and >20%
-## This one goes from white to Point Blue's dark blue, with dark gray as the NA color
+# ## Define color palette for % cover data, grouped into bins: <1%, 1-5%, 5-10%, 10-20%, and >20%
+# ## This one goes from white to Point Blue's dark blue, with dark gray as the NA color
+# pal <-
+#   colorBin(
+#     palette = colorRamp(colors = c(
+#       pointblue.palette[3], '#ffffff', pointblue.palette[4]
+#     )),
+#     domain = c(-100, 100),
+#     bins = c(-100, -75, -50, -25, -10, 10, 25, 50, 75, 100),
+#     na.color = pointblue.palette[7]
+#   )
+
+## Alternate palette for proportional change:
 pal <-
   colorBin(
     palette = colorRamp(colors = c(
       pointblue.palette[3], '#ffffff', pointblue.palette[4]
     )),
     domain = c(-100, 100),
-    bins = c(-100, -75, -50, -25, -10, 10, 25, 50, 75, 100),
+    bins = c(-100, -90, -50, -10, 10, 50, 100, max(net_change$prop)),
     na.color = pointblue.palette[7]
   )
 
-
 # MAP----------------------
 
-map2 <- leaflet(height = 500) %>% setView(lng = -122.3598,
-                                          lat = 37.26693,
-                                          zoom = 14) %>%
+map2 <- leaflet(shp_poly, height = 500) %>% 
+  setView(lng = -122.3598, lat = 37.26693, zoom = 14) %>%
+  
   ## background terrain
   addProviderTiles("Stamen.Terrain",
                    options = providerTileOptions(minzoom = 14, maxzoom = 15)) %>%
   
   # ranch boundary
-  addPolygons(
-    data = shp_ranch,
-    color = 'black',
-    fill = F,
-    weight = 3
-  ) %>%
+  addPolygons(data = shp_ranch, color = 'black', fill = F, weight = 3) %>%
   
   ## perennial grasses
-  addPolygons(
-    data = shp_poly,
-    color = 'black',
-    fillOpacity = 1,
-    weight = 1.5,
-    fillColor = ~ pal(PereGr),
-    group = 'Perennial Grasses',
-    popup = ~ label_PereGr
-  ) %>%
+  addPolygons(fillColor = ~ pal(PereGr),
+              group = 'Perennial Grasses',
+              popup = ~ label_PereGr,
+              color = 'black', fillOpacity = 1, weight = 1.5) %>%
   
   ## native grasses
-  addPolygons(
-    data = shp_poly,
-    color = 'black',
-    fillOpacity = 1,
-    weight = 1.5,
-    fillColor = ~ pal(NativeGr),
-    group = 'Native Grasses',
-    popup = ~ label_NativeGr
-  ) %>%
+  addPolygons(fillColor = ~ pal(NativeGr),
+              group = 'Native Grasses',
+              popup = ~ label_NativeGr,
+              color = 'black', fillOpacity = 1, weight = 1.5) %>%
   
   ## annual grasses
-  addPolygons(
-    data = shp_poly,
-    color = 'black',
-    fillOpacity = 1,
-    weight = 1.5,
-    fillColor = ~ pal(AnnualGr),
-    group = 'Annual Grasses',
-    popup = ~ label_AnnualGr
-  ) %>%
+  addPolygons(fillColor = ~ pal(AnnualGr),
+              group = 'Annual Grasses',
+              popup = ~ label_AnnualGr,
+              color = 'black', fillOpacity = 1, weight = 1.5) %>%
   
   ## all grasses
-  addPolygons(
-    data = shp_poly,
-    color = 'black',
-    fillOpacity = 1,
-    weight = 1.5,
-    fillColor = ~ pal(Grass),
-    group = 'All Grasses',
-    popup = ~ label_Grass
-  ) %>%
+  addPolygons(fillColor = ~ pal(Grass),
+              group = 'All Grasses',
+              popup = ~ label_Grass,
+              color = 'black', fillOpacity = 1, weight = 1.5) %>%
   
   ## shrubs
-  addPolygons(
-    data = shp_poly,
-    color = 'black',
-    fillOpacity = 1,
-    weight = 1.5,
-    fillColor = ~ pal(Shrubs),
-    group = 'Shrubs',
-    popup = ~ label_Shrubs
-  ) %>%
+  addPolygons(fillColor = ~ pal(Shrubs),
+              group = 'Shrubs',
+              popup = ~ label_Shrubs,
+              color = 'black', fillOpacity = 1, weight = 1.5) %>%
   
   ## forbs
-  addPolygons(
-    data = shp_poly,
-    color = 'black',
-    fillOpacity = 1,
-    weight = 1.5,
-    fillColor = ~ pal(Forbs),
-    group = 'Forbs',
-    popup = ~ label_Forbs
-  ) %>%
+  addPolygons(fillColor = ~ pal(Forbs),
+              group = 'Forbs',
+              popup = ~ label_Forbs,
+              color = 'black', fillOpacity = 1, weight = 1.5) %>%
   
   ## weeds
-  addPolygons(
-    data = shp_poly,
-    color = 'black',
-    fillOpacity = 1,
-    weight = 1.5,
-    fillColor = ~ pal(Weeds),
-    group = 'Invasive Weeds',
-    popup = ~ label_Weeds
-  ) %>%
+  addPolygons(fillColor = ~ pal(Weeds),
+              group = 'Invasive Weeds',
+              popup = ~ label_Weeds,
+              color = 'black', fillOpacity = 1, weight = 1.5) %>%
   
   ## bare ground
-  addPolygons(
-    data = shp_poly,
-    color = 'black',
-    fillOpacity = 1,
-    weight = 1.5,
-    fillColor = ~ pal(BareGround),
-    group = 'Bare Ground',
-    popup = ~ label_BareGround
-  ) %>%
+  addPolygons(fillColor = ~ pal(BareGround),
+              group = 'Bare Ground',
+              popup = ~ label_BareGround,
+              color = 'black', fillOpacity = 1, weight = 1.5) %>%
   
   ## legend
-  addLegend(
-    position = 'topright',
-    opacity = 1,
-    title = '% Cover',
-    pal = pal,
-    values = dat %>% filter(Year == max(Year)) %>% select(cover),
-    labFormat = labelFormat(suffix = '%'),
-    na.label = 'No data'
-  ) %>%
+  addLegend(position = 'topright',
+            title = 'Change relative<br>to 2012-14',
+            colors = pal(c(-95, -75, -25, 0, 25, 75, 1000)),
+            values = net_change %>% pull(prop),
+            labels = c('reduced >90%', 'reduced >50%', 'reduced >10%', 
+                       'little change', 'increased >10%', 'increased >50%', 
+                       'increased >100%'),
+            labFormat = labelFormat(suffix = '%'),
+            na.label = 'No data',
+            opacity = 1) %>%
   
   ## toggles
-  addLayersControl(
-    baseGroups = c(
-      'Perennial Grasses',
-      'Native Grasses',
-      'Annual Grasses',
-      'All Grasses',
-      'Shrubs',
-      'Forbs',
-      'Invasive Weeds',
-      'Bare Ground'
-    ),
-    options = layersControlOptions(collapsed = F),
-    position = 'bottomleft'
-  ) %>%
+  addLayersControl(baseGroups = c('Perennial Grasses', 'Native Grasses',
+                                  'Annual Grasses', 'All Grasses', 'Shrubs',
+                                  'Forbs', 'Invasive Weeds', 'Bare Ground'),
+                   options = layersControlOptions(collapsed = F),
+                   position = 'bottomleft') %>%
   
   ## logo
-  addLogo(
-    img = logo,
-    src = 'remote',
-    url = 'http://www.pointblue.org',
-    width = 174,
-    height = 90,
-    offset.y = -5
-  )
+  addLogo(img = logo, src = 'remote', url = 'http://www.pointblue.org',
+          width = 174, height = 90, offset.y = -5)
 
 # add CSS
 map2$dependencies <- c(map2$dependencies, 
@@ -345,7 +279,7 @@ map2$dependencies <- c(map2$dependencies,
                          )
                        ))
 
-title <- paste0('TomKat Vegetation Changes 2012-', max(dat$Year))
+title <- 'TomKat Vegetation Changes 2012-2018'
 
 htmlwidgets::saveWidget(map2,
                         here::here(output2),
