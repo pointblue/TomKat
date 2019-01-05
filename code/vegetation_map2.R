@@ -53,28 +53,28 @@ net_change <- dat %>%
                           TRUE ~ 0),
          prop = case_when(is.infinite(prop) ~ 1000,
                           TRUE ~ prop),
-         text = case_when(net > 0 ~ paste0('+', round(net, digits = 0), '%'),
-                          net < 0 ~ paste0(round(net, digits = 0), '%'),
-                          net == 0 ~ '0%'),
-         text = case_when(prop < -90 ~ paste0(text, '<br>(reduced >90%)'),
-                          prop < -50 ~ paste0(text, '<br>(reduced >50%)'),
-                          prop < -10 ~ paste0(text, '<br>(reduced >10%)'),
-                          prop == 0 ~ paste0(text, '<br>(little change)'),
-                          prop >= 100 ~ paste0(text, '<br>(increased >100%)'),
-                          prop > 50 ~ paste0(text, '<br>(increased >50%)'),
-                          prop > 10 ~ paste0(text, '<br>(increased >10%)')))
+         text = case_when(net > 0 ~ paste0('+', round(net, digits = 0)),
+                          net < 0 ~ paste0(round(net, digits = 0)),
+                          net == 0 ~ '0'),
+         text2 = case_when(prop < -90 ~ paste0('- >90%'),
+                          prop < -50 ~ paste0('- >50%'),
+                          prop < -10 ~ paste0('- >10%'),
+                          prop == 0 ~ paste0('~ 0'),
+                          prop >= 100 ~ paste0('+ >100%'),
+                          prop > 50 ~ paste0('+ >50%'),
+                          prop > 10 ~ paste0('+ >10%')))
 
 # format to include in pop-up tables
 net_change_long <- net_change %>%
   select(-net, -prop) %>%
-  gather(baseline:text, key = group, value = cover) %>%
+  gather(baseline:text2, key = group, value = cover) %>%
   arrange(Pasture, vegtype, group)
 
 
 # POPUP HTML TABLES-------------
 
 dat_lab <- net_change %>%
-  select(-baseline, -recent, -net, -text) %>%
+  select(-baseline, -recent, -net, -text, -text2) %>%
   spread(key = vegtype, value = prop) %>%
   mutate(
     label_PereGr = map(unique(net_change$Pasture),
@@ -82,7 +82,8 @@ dat_lab <- net_change %>%
                          filter(Pasture == .x & vegtype == 'PereGr') %>%
                          select(cover) %>%
                          htmlTable(header = c('Average<br>% Cover'), 
-                                   rnames = c('2012-14', '2016-18', 'Difference'),
+                                   rnames = c('2012-14', '2016-18', 'Difference',
+                                              '% Change relative<br>to 2012-14'),
                                    align = 'r', total = T,
                                    caption = paste0('<b>Pasture ', .x, 
                                                     '</b>: Perennial Grasses'))),
@@ -91,7 +92,8 @@ dat_lab <- net_change %>%
                            filter(Pasture == .x & vegtype == 'AnnualGr') %>%
                            select(cover) %>%
                            htmlTable(header = c('Average<br>% Cover'), 
-                                     rnames = c('2012-14', '2016-18', 'Difference'),
+                                     rnames = c('2012-14', '2016-18', 'Difference',
+                                                '% Change relative<br>to 2012-14'),
                                      align = 'r', total = T,
                                      caption = paste0('<b>Pasture ', .x, 
                                                       '</b>: Annual Grasses'))),
@@ -100,7 +102,8 @@ dat_lab <- net_change %>%
                            filter(Pasture == .x & vegtype == 'NativeGr') %>%
                            select(cover) %>%
                            htmlTable(header = c('Average<br>% Cover'), 
-                                     rnames = c('2012-14', '2016-18', 'Difference'),
+                                     rnames = c('2012-14', '2016-18', 'Difference',
+                                                '% Change relative<br>to 2012-14'),
                                      align = 'r', total = T,
                                      caption = paste0('<b>Pasture ', .x, 
                                                       '</b>: Native Grasses'))),
@@ -109,7 +112,8 @@ dat_lab <- net_change %>%
                         filter(Pasture == .x & vegtype == 'Grass') %>%
                         select(cover) %>%
                         htmlTable(header = c('Average<br>% Cover'), 
-                                  rnames = c('2012-14', '2016-18', 'Difference'),
+                                  rnames = c('2012-14', '2016-18', 'Difference',
+                                             '% Change relative<br>to 2012-14'),
                                   align = 'r', total = T,
                                   caption = paste0('<b>Pasture ', .x, 
                                                    '</b>: All Grasses'))),
@@ -118,7 +122,8 @@ dat_lab <- net_change %>%
                          filter(Pasture == .x & vegtype == 'Shrubs') %>%
                          select(cover) %>%
                          htmlTable(header = c('Average<br>% Cover'), 
-                                   rnames = c('2012-14', '2016-18', 'Difference'),
+                                   rnames = c('2012-14', '2016-18', 'Difference',
+                                              '% Change relative<br>to 2012-14'),
                                    align = 'r', total = T,
                                    caption = paste0('<b>Pasture ', .x, 
                                                     '</b>: Shrubs'))),
@@ -127,7 +132,8 @@ dat_lab <- net_change %>%
                         filter(Pasture == .x & vegtype == 'Forbs') %>%
                         select(cover) %>%
                         htmlTable(header = c('Average<br>% Cover'), 
-                                  rnames = c('2012-14', '2016-18', 'Difference'),
+                                  rnames = c('2012-14', '2016-18', 'Difference',
+                                             '% Change relative<br>to 2012-14'),
                                   align = 'r', total = T,
                                   caption = paste0('<b>Pasture ', .x, 
                                                    '</b>: Forbs'))),
@@ -136,7 +142,8 @@ dat_lab <- net_change %>%
                         filter(Pasture == .x & vegtype == 'Weeds') %>%
                         select(cover) %>%
                         htmlTable(header = c('Average<br>% Cover'), 
-                                  rnames = c('2012-14', '2016-18', 'Difference'),
+                                  rnames = c('2012-14', '2016-18', 'Difference',
+                                             '% Change relative<br>to 2012-14'),
                                   align = 'r', total = T,
                                   caption = paste0('<b>Pasture ', .x, 
                                                    '</b>: Weeds'))),
@@ -145,7 +152,8 @@ dat_lab <- net_change %>%
                              filter(Pasture == .x & vegtype == 'BareGround') %>%
                              select(cover) %>%
                              htmlTable(header = c('Average<br>% Cover'), 
-                                       rnames = c('2012-14', '2016-18', 'Difference'),
+                                       rnames = c('2012-14', '2016-18', 'Difference',
+                                                  '% Change relative<br>to 2012-14'),
                                        align = 'r', total = T,
                                        caption = paste0('<b>Pasture ', .x, 
                                                         '</b>: Bare Ground'))))
@@ -247,12 +255,12 @@ map2 <- leaflet(shp_poly, height = 500) %>%
   
   ## legend
   addLegend(position = 'topright',
-            title = 'Change relative<br>to 2012-14',
+            title = '% Change relative<br>to 2012-14',
             colors = pal(c(-95, -75, -25, 0, 25, 75, 1000)),
             values = net_change %>% pull(prop),
-            labels = c('reduced >90%', 'reduced >50%', 'reduced >10%', 
-                       'little change', 'increased >10%', 'increased >50%', 
-                       'increased >100%'),
+            labels = c('- >90%', '- >50%', '- >10%', 
+                       '~0%', '+ >10%', '+ >50%', 
+                       '+ >100%'),
             labFormat = labelFormat(suffix = '%'),
             na.label = 'No data',
             opacity = 1) %>%
