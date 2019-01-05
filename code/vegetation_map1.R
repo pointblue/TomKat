@@ -154,145 +154,85 @@ pal <-
 
 # MAP----------------------
 
-map1 <- leaflet(height = 500) %>% setView(lng = -122.3598,
-                                          lat = 37.26693,
-                                          zoom = 14) %>%
+map1 <- leaflet(shp_poly, height = 500) %>% 
+  setView(lng = -122.3598, lat = 37.26693, zoom = 14) %>%
+  
   ## background terrain
   addProviderTiles("Stamen.Terrain",
                    options = providerTileOptions(minzoom = 14, maxzoom = 15)) %>%
   
   # ranch boundary
-  addPolygons(
-    data = shp_ranch,
-    color = 'black',
-    fill = F,
-    weight = 3
-  ) %>%
+  addPolygons(data = shp_ranch, color = 'black', fill = F, weight = 3) %>%
   
   ## perennial grasses
-  addPolygons(
-    data = shp_poly,
-    color = 'black',
-    fillOpacity = 1,
-    weight = 1.5,
-    fillColor = ~ pal(PereGr),
-    group = 'Perennial Grasses',
-    popup = ~ label_PereGr
-  ) %>%
+  addPolygons(fillColor = ~ pal(PereGr),
+              group = 'Perennial Grasses',
+              popup = ~ label_PereGr,
+              color = 'black', fillOpacity = 1, weight = 1.5) %>%
   
   ## native grasses
-  addPolygons(
-    data = shp_poly,
-    color = 'black',
-    fillOpacity = 1,
-    weight = 1.5,
-    fillColor = ~ pal(NativeGr),
-    group = 'Native Grasses',
-    popup = ~ label_NativeGr
-  ) %>%
+  addPolygons(fillColor = ~ pal(NativeGr),
+              group = 'Native Grasses',
+              popup = ~ label_NativeGr,
+              color = 'black', fillOpacity = 1, weight = 1.5) %>%
+
   
   ## annual grasses
-  addPolygons(
-    data = shp_poly,
-    color = 'black',
-    fillOpacity = 1,
-    weight = 1.5,
-    fillColor = ~ pal(AnnualGr),
-    group = 'Annual Grasses',
-    popup = ~ label_AnnualGr
-  ) %>%
-  
+  addPolygons(fillColor = ~ pal(AnnualGr),
+              group = 'Annual Grasses',
+              popup = ~ label_AnnualGr,
+              color = 'black', fillOpacity = 1, weight = 1.5) %>%
+
   ## all grasses
-  addPolygons(
-    data = shp_poly,
-    color = 'black',
-    fillOpacity = 1,
-    weight = 1.5,
-    fillColor = ~ pal(Grass),
-    group = 'All Grasses',
-    popup = ~ label_Grass
-  ) %>%
+  addPolygons(fillColor = ~ pal(Grass),
+              group = 'All Grasses',
+              popup = ~ label_Grass,
+              color = 'black', fillOpacity = 1, weight = 1.5) %>%
   
   ## shrubs
-  addPolygons(
-    data = shp_poly,
-    color = 'black',
-    fillOpacity = 1,
-    weight = 1.5,
-    fillColor = ~ pal(Shrubs),
-    group = 'Shrubs',
-    popup = ~ label_Shrubs
-  ) %>%
-  
+  addPolygons(fillColor = ~ pal(Shrubs),
+              group = 'Shrubs',
+              popup = ~ label_Shrubs,
+              color = 'black', fillOpacity = 1, weight = 1.5) %>%
+
   ## forbs
-  addPolygons(
-    data = shp_poly,
-    color = 'black',
-    fillOpacity = 1,
-    weight = 1.5,
-    fillColor = ~ pal(Forbs),
-    group = 'Forbs',
-    popup = ~ label_Forbs
-  ) %>%
+  addPolygons(fillColor = ~ pal(Forbs),
+              group = 'Forbs',
+              popup = ~ label_Forbs,
+              color = 'black', fillOpacity = 1, weight = 1.5) %>%
   
   ## weeds
-  addPolygons(
-    data = shp_poly,
-    color = 'black',
-    fillOpacity = 1,
-    weight = 1.5,
-    fillColor = ~ pal(Weeds),
-    group = 'Invasive Weeds',
-    popup = ~ label_Weeds
-  ) %>%
-  
+  addPolygons(fillColor = ~ pal(Weeds),
+              group = 'Invasive Weeds',
+              popup = ~ label_Weeds,
+              color = 'black', fillOpacity = 1, weight = 1.5) %>%
+
   ## bare ground
-  addPolygons(
-    data = shp_poly,
-    color = 'black',
-    fillOpacity = 1,
-    weight = 1.5,
-    fillColor = ~ pal(BareGround),
-    group = 'Bare Ground',
-    popup = ~ label_BareGround
-  ) %>%
+  addPolygons(fillColor = ~ pal(BareGround),
+              group = 'Bare Ground',
+              popup = ~ label_BareGround,
+              color = 'black', fillOpacity = 1, weight = 1.5) %>%
   
   ## legend
-  addLegend(
-    position = 'topright',
-    opacity = 1,
-    title = '% Cover',
-    pal = pal,
-    values = dat %>% filter(Year == max(Year)) %>% select(cover),
-    labFormat = labelFormat(suffix = '%'),
-    na.label = 'No data'
-  ) %>%
+  addLegend(position = 'topright', 
+            pal = pal,
+            values = dat %>% filter(Year == max(Year)) %>% select(cover),
+            labFormat = labelFormat(suffix = '%'),
+            na.label = 'No data',
+            opacity = 1, 
+            title = '% Cover') %>%
   
   ## toggles
-  addLayersControl(
-    baseGroups = c(
-      'Perennial Grasses',
-      'Native Grasses',
-      'Annual Grasses',
-      'All Grasses',
-      'Shrubs',
-      'Forbs',
-      'Invasive Weeds',
-      'Bare Ground'
-    ),
+  addLayersControl(baseGroups = c('Perennial Grasses', 'Native Grasses', 
+                                  'Annual Grasses', 'All Grasses', 'Shrubs',
+                                  'Forbs', 'Invasive Weeds', 'Bare Ground'),
     options = layersControlOptions(collapsed = F),
     position = 'bottomleft'
   ) %>%
   
   ## logo
-  addLogo(
-    img = logo,
-    src = 'remote',
-    url = 'http://www.pointblue.org',
-    width = 174,
-    height = 90,
-    offset.y = -5
-  )
+  addLogo(img = logo, src = 'remote', url = 'http://www.pointblue.org',
+          width = 174, height = 90, offset.y = -5)
 
 # add CSS
 map1$dependencies <- c(map1$dependencies, 
