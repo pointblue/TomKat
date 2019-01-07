@@ -65,4 +65,4 @@ lab <- read_csv(here::here(labdat)) %>%
 
 # master data
 mdat <- full_join(sdat, lab, by = c('Point Name', 'Year'))
-write_csv(mdat, masterdat)
+write_csv(mdat, here::here(masterdat))
