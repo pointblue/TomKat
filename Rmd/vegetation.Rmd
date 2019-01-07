@@ -22,13 +22,13 @@ pointblue.palette <-
 
 TomKat Ranch: Vegetation
 ===============================
-Point Blue Conservation Science has surveyed grassland vegetation across TomKat Ranch each summer since 2011. We examined patterns in the [current distribution of vegetation](#distribution) across the ranch, [pasture-specific changes](#diff) in vegetation since 2012, and [ranch-wide vegetation trends](#trends). [Explore data](#table).
+Point Blue Conservation Science has surveyed grassland vegetation across TomKat Ranch each summer since 2011. We examined patterns in the [current distribution of vegetation](#distribution) across the ranch, [pasture-specific changes](#diff) in vegetation since 2012, and [ranch-wide vegetation trends](#trends).
 
 <a id='distribution'></a>
 
-### Current Vegetation Distribution 
+### Current vegetation 
 
-In 2018, <b>perennial grasses</b> were more common on the west side of the ranch, while <b>invasive weeds</b> are more prevalent on the central and eastern parts of the ranch.
+Vegetation cover varies across the ranch, likely reflecting the interaction between local soil conditions, management decisions, and weather. In 2018, <b>native grasses</b> were more common on the west side of the ranch, while <b>invasive weeds</b> were more prevalent on the central and eastern parts of the ranch.
 
 
 <i>Choose a vegetation type at bottom left. Click on any of the pastures to learn more.</i>
@@ -42,8 +42,9 @@ In 2018, <b>perennial grasses</b> were more common on the west side of the ranch
 
 <a id='diff'></a>
 
-### Pasture-specific changes  
-Pasture-specific changes in vegetation cover may reflect the interaction between weather, local soil conditions, and pasture-specific management decisions. Since 2012, <b>perennial</b> and <b>native grasses</b> have increased more on the west side of the ranch.
+### Vegetation changes over time  
+
+Vegetation cover changes over time, and the amount of change has varied by pasture. Again, these changes likely reflect the influences of both weather (drought) and management decisions, and depend on local soil conditions. Comparing 2016-2018 to 2012-2014, perennial and native grass cover has more than doubled in several pastures.
 
 
 <i>Choose a vegetation type at bottom left. Click on any of the pastures to learn more.</i>
@@ -59,7 +60,7 @@ Pasture-specific changes in vegetation cover may reflect the interaction between
 
 ### Ranch-wide vegetation trends
   
-Since 2012, <font color='`r pointblue.palette[1]`'><b>total grass cover</b></font> has remained fairly steady and is the dominant ground cover. We have not detected any strong trends in any vegetation type.
+Since 2012, <font color='`r pointblue.palette[1]`'><b>total grass cover</b></font> is the dominant ground cover and has remained fairly steady, with drop during the drought and a rebound in 2018. <font color='`r pointblue.palette[2]`'><b>Bare ground</b></font> has been declining since 2014, and in 2018, <font color='`r pointblue.palette[4]`'><b>invasive weeds</b></font> were at the lowest levels yet.
 
 
 <iframe src="vegetation_graph1.html" style="border: none;" width = 80%; height = 500px;></iframe>
@@ -70,7 +71,7 @@ Since 2012, <font color='`r pointblue.palette[1]`'><b>total grass cover</b></fon
 
 #### Grasses  
 
-Ranch-wide, we have detected a significant increase in <font color='`r pointblue.palette[2]`'><b>native grasses</b></font>, and a trend toward increasing <font color='`r pointblue.palette[3]`'><b>perennial grasses</b></font>.
+Among grasses, <font color='`r pointblue.palette[2]`'><b>native grasses</b></font> and <font color='`r pointblue.palette[3]`'><b>perennial grasses</b></font> are trending upward.
 
 
 <iframe src="vegetation_graph2.html" style="border: none;" width = 80%; height = 500px;></iframe>
@@ -93,7 +94,7 @@ Ranch-wide, we have detected a significant increase in <font color='`r pointblue
 -------------
 ### About this page
 
-This interactive web page was produced using [RStudio](https://www.rstudio.com) with the packages [leaflet](http://rstudio.github.io/leaflet/) for mapping, [plotly](https://plot.ly/ggplot2/) for graphs, and [DT](https://rstudio.github.io/DT/) for data tables. RStudio is a free and open-source software for programming in [R](https://www.R-project.org/), a programming language for statistical computing and graphics. The code used to produce this web page is available on [Github](https://github.com/pointblue/TomKat).
+This interactive web page was produced in [R](https://www.R-project.org/) using [rmarkdown](https://rmarkdown.rstudio.com/) and the packages [leaflet](http://rstudio.github.io/leaflet/) and [plotly](https://plot.ly/r/). The code used to produce this web page is available on [Github](https://github.com/pointblue/tomkat).
 
 
 ### For more information
