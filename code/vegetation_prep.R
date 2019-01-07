@@ -50,6 +50,19 @@ dat %>%
   ggplot(aes(x = Grass, y = grasstot)) + geom_point()
 ## but remaining diffs are few
 
+## PereGr should always be >> NativeGr?
+dat %>%
+  ggplot(aes(x = PereGr, y = NativeGr)) + geom_point() +
+  geom_abline(intercept = 0, slope = 1)
+dat %>% filter(NativeGr > PereGr)
+
+## assume Pasture 45 in 2018: Native & PereGr values are switched?
+dat <- dat %>%
+  mutate(NativeGr = case_when(Pasture == 45 & Year == 2018 ~ 3,
+                              TRUE ~ NativeGr),
+         PereGr = case_when(Pasture == 45 & Year == 2018 ~ 38,
+                            TRUE ~ PereGr))
+
 ## check for total cover:
 dat %>% 
   mutate(ground = Shrubs + Forbs + Weeds + Grass + BareGround + Misc) %>%

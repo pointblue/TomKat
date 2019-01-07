@@ -2934,7 +2934,7 @@ Pasture,Year,vegtype,cover
 45,2014,NativeGr,1
 45,2016,NativeGr,0
 45,2017,NativeGr,0
-45,2018,NativeGr,38
+45,2018,NativeGr,3
 46,2011,NativeGr,0
 46,2012,NativeGr,0
 46,2013,NativeGr,0
@@ -3457,7 +3457,7 @@ Pasture,Year,vegtype,cover
 45,2014,PereGr,2
 45,2016,PereGr,2
 45,2017,PereGr,1
-45,2018,PereGr,3
+45,2018,PereGr,38
 46,2011,PereGr,28
 46,2012,PereGr,9
 46,2013,PereGr,0
