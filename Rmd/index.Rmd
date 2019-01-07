@@ -12,7 +12,7 @@ This page serves as an index to the individual ranch data pages. Links will be u
 * [index](index.html)
 * [DRAFT weather](weather.html)
 * [DRAFT soil](soil.html)
-* [DRAFT vegetation](vegetation.html)
+* [DRAFT vegetation](vegetation.html) (2019-01-07)
 * water
 * [DRAFT birds](birds.html) (2019-01-04)
 * management
