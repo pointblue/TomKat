@@ -30,7 +30,7 @@ pointblue.palette <-
     '#666666')
 
 # DATA SET UP-------------
-dat <- read_csv(here::here(masterveg)) %>%
+dat <- read_csv(here::here(masterveg), col_types = cols()) %>%
   filter(vegtype != 'Trees') %>% #inconsistent treatment; not included in map
   mutate(
     cover = round(cover, digits = 1),
