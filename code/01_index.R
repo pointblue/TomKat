@@ -2,6 +2,33 @@
 # Master script file
 # Best practice: restart R after each call (ctrl+shift+F10)
 
+# INDEX------------------
+# render Rmd to html
+rmarkdown::render(here::here("Rmd/index.Rmd"), 
+                  output_file = here::here("index.html"))
+
+
+# BIRDS----------------
+# process & clean data (create master bird file and density estimates)
+# Note: this will take a while since it includes distance sampling analysis
+source('code/bird_prep.R')
+
+# produce map of ranch-wide focal species average abundance (bird map 1)
+source('code/bird_map1.R')
+
+# produce graph of ranch-wide focal species trends (bird graph 1)
+source('code/bird_graph1.R')
+
+# produce map of ranch-wide bird species richness (bird map 2)
+source('code/bird_map2.R')
+
+# produce graph of ranch-wide trends in bird species richness (bird graph 2)
+source('code/bird_graph2.R')
+
+# render Rmd to html
+rmarkdown::render(here::here("Rmd/birds.Rmd"), 
+                  output_file = here::here("birds.html"))
+
 
 # VEGETATION-----------
 # process & clean data (create master veg file)
@@ -16,13 +43,13 @@ source('code/vegetation_map2.R')
 # produce ranch-wide trend graphs
 source('code/vegetation_graphs.R')
 
+# produce species diversity map (veg map 3)
+source('code/vegetation_map3.R')
+
 # render Rmd to html
 rmarkdown::render(here::here("Rmd/vegetation.Rmd"), 
                   output_file = here::here("vegetation.html"))
 
-# wishlist/to do: 
-# - update with corrected data from Mel
-# - update net change to multi-year trends rather than simple difference
 
 # SOIL------------------
 # process & clean data (create master soil file)
@@ -70,7 +97,3 @@ rmarkdown::render(here::here("Rmd/weather.Rmd"),
                   output_file = here::here("weather.html"))
 
 
-# INDEX------------------
-# render Rmd to html
-rmarkdown::render(here::here("Rmd/index.Rmd"), 
-                  output_file = here::here("index.html"))
