@@ -22,11 +22,11 @@ pointblue.palette <-
 
 TomKat Ranch: Vegetation
 ===============================
-Point Blue Conservation Science has surveyed grassland vegetation across TomKat Ranch each summer since 2011. We examined patterns in the [current distribution of vegetation](#distribution) across the ranch, [pasture-specific changes](#diff) in vegetation since 2012, and [ranch-wide vegetation trends](#trends).
+Point Blue Conservation Science has surveyed grassland vegetation across TomKat Ranch each summer since 2011. We examined patterns in the [current vegetation cover](#cover) and [diversity](#diversity) in each pasture, [changes over time](#diff) in each pasture, and [ranch-wide vegetation trends](#trends).
 
-<a id='distribution'></a>
+<a id='cover'></a>
 
-### Current vegetation 
+### Current vegetation cover
 
 Vegetation cover varies across the ranch, likely reflecting the interaction between local soil conditions, management decisions, and weather. In 2018, <b>native grasses</b> were more common on the west side of the ranch, while <b>invasive weeds</b> were more prevalent on the central and eastern parts of the ranch.
 
@@ -60,7 +60,7 @@ Vegetation cover changes over time, and the amount of change has varied by pastu
 
 ### Ranch-wide vegetation trends
   
-Since 2012, <font color='`r pointblue.palette[1]`'><b>total grass cover</b></font> is the dominant ground cover and has remained fairly steady, with drop during the drought and a rebound in 2018. <font color='`r pointblue.palette[2]`'><b>Bare ground</b></font> has been declining since 2014, and in 2018, <font color='`r pointblue.palette[4]`'><b>invasive weeds</b></font> were at the lowest levels yet.
+Since 2012, <font color='`r pointblue.palette[1]`'><b>grass cover</b></font> dropped slightly during the drought and rebounded in 2018. <font color='`r pointblue.palette[2]`'><b>Bare ground</b></font> has been declining since 2014, and in 2018, <font color='`r pointblue.palette[4]`'><b>invasive weeds</b></font> were at their lowest levels yet.
 
 
 <iframe src="vegetation_graph1.html" style="border: none;" width = 80%; height = 500px;></iframe>
@@ -71,13 +71,26 @@ Since 2012, <font color='`r pointblue.palette[1]`'><b>total grass cover</b></fon
 
 #### Grasses  
 
-Among grasses, <font color='`r pointblue.palette[2]`'><b>native grasses</b></font> and <font color='`r pointblue.palette[3]`'><b>perennial grasses</b></font> are trending upward.
+Among grasses, <font color='`r pointblue.palette[3]`'><b>perennial grasses</b></font> and <font color='`r pointblue.palette[2]`'><b>native grasses</b></font> are trending upward.
 
 
 <iframe src="vegetation_graph2.html" style="border: none;" width = 80%; height = 500px;></iframe>
 
 
 [Back to top](#top)
+
+
+<a id='diversity'></a>
+
+### Current vegetation diversity
+
+The number of plant species in each pasture varies across the ranch. We summarized the average number of species detected in 2016-2018, excluding shrubs and trees.
+
+<iframe src="vegetation_map3.html" style="border: none;" width = 80%; height = 550px;></iframe>
+
+
+[Back to top](#top)
+
 
 
 ### Glossary
