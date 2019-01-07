@@ -34,7 +34,7 @@ pointblue.palette <-
 # calculate "baseline" (2012-14) and "recent" (2016-18) averages for each
 #  vegtype in each pasture
 
-dat <- read_csv(here::here(masterveg)) %>%
+dat <- read_csv(here::here(masterveg), col_types = cols()) %>%
   filter(vegtype != 'Trees') %>% #inconsistent treatment; not included in map
   mutate(vegtype = as.factor(vegtype),
          Pasture = as.factor(Pasture),
@@ -53,28 +53,27 @@ net_change <- dat %>%
                           TRUE ~ 0),
          prop = case_when(is.infinite(prop) ~ 1000,
                           TRUE ~ prop),
-         text = case_when(net > 0 ~ paste0('+', round(net, digits = 0)),
-                          net < 0 ~ paste0(round(net, digits = 0)),
-                          net == 0 ~ '0'),
-         text2 = case_when(prop < -90 ~ paste0('- >90%'),
-                          prop < -50 ~ paste0('- >50%'),
-                          prop < -10 ~ paste0('- >10%'),
-                          prop == 0 ~ paste0('~ 0'),
-                          prop >= 100 ~ paste0('+ >100%'),
-                          prop > 50 ~ paste0('+ >50%'),
-                          prop > 10 ~ paste0('+ >10%')))
+         text = case_when(net > 0 ~ paste0('+', round(net, digits = 0), '%'),
+                          net < 0 ~ paste0(round(net, digits = 0), '%'),
+                          net == 0 ~ '0%'))
+# ,
+#          text2 = case_when(prop < -90 ~ paste0('>90% decline'),
+#                           prop < -10 ~ paste0('>10% decline'),
+#                           prop == 0 ~ paste0('little change'),
+#                           prop >= 90 ~ paste0('>90% increase'),
+#                           prop > 10 ~ paste0('>10% increase')))
 
 # format to include in pop-up tables
 net_change_long <- net_change %>%
   select(-net, -prop) %>%
-  gather(baseline:text2, key = group, value = cover) %>%
+  gather(baseline:text, key = group, value = cover) %>%
   arrange(Pasture, vegtype, group)
 
 
 # POPUP HTML TABLES-------------
 
 dat_lab <- net_change %>%
-  select(-baseline, -recent, -net, -text, -text2) %>%
+  select(-baseline, -recent, -net, -text) %>%
   spread(key = vegtype, value = prop) %>%
   mutate(
     label_PereGr = map(unique(net_change$Pasture),
@@ -82,8 +81,7 @@ dat_lab <- net_change %>%
                          filter(Pasture == .x & vegtype == 'PereGr') %>%
                          select(cover) %>%
                          htmlTable(header = c('Average<br>% Cover'), 
-                                   rnames = c('2012-14', '2016-18', 'Difference',
-                                              '% Change relative<br>to 2012-14'),
+                                   rnames = c('2012-14', '2016-18', 'Difference'),
                                    align = 'r', total = T,
                                    caption = paste0('<b>Pasture ', .x, 
                                                     '</b>: Perennial Grasses'))),
@@ -92,8 +90,7 @@ dat_lab <- net_change %>%
                            filter(Pasture == .x & vegtype == 'AnnualGr') %>%
                            select(cover) %>%
                            htmlTable(header = c('Average<br>% Cover'), 
-                                     rnames = c('2012-14', '2016-18', 'Difference',
-                                                '% Change relative<br>to 2012-14'),
+                                     rnames = c('2012-14', '2016-18', 'Difference'),
                                      align = 'r', total = T,
                                      caption = paste0('<b>Pasture ', .x, 
                                                       '</b>: Annual Grasses'))),
@@ -102,8 +99,7 @@ dat_lab <- net_change %>%
                            filter(Pasture == .x & vegtype == 'NativeGr') %>%
                            select(cover) %>%
                            htmlTable(header = c('Average<br>% Cover'), 
-                                     rnames = c('2012-14', '2016-18', 'Difference',
-                                                '% Change relative<br>to 2012-14'),
+                                     rnames = c('2012-14', '2016-18', 'Difference'),
                                      align = 'r', total = T,
                                      caption = paste0('<b>Pasture ', .x, 
                                                       '</b>: Native Grasses'))),
@@ -112,8 +108,7 @@ dat_lab <- net_change %>%
                         filter(Pasture == .x & vegtype == 'Grass') %>%
                         select(cover) %>%
                         htmlTable(header = c('Average<br>% Cover'), 
-                                  rnames = c('2012-14', '2016-18', 'Difference',
-                                             '% Change relative<br>to 2012-14'),
+                                  rnames = c('2012-14', '2016-18', 'Difference'),
                                   align = 'r', total = T,
                                   caption = paste0('<b>Pasture ', .x, 
                                                    '</b>: All Grasses'))),
@@ -122,8 +117,7 @@ dat_lab <- net_change %>%
                          filter(Pasture == .x & vegtype == 'Shrubs') %>%
                          select(cover) %>%
                          htmlTable(header = c('Average<br>% Cover'), 
-                                   rnames = c('2012-14', '2016-18', 'Difference',
-                                              '% Change relative<br>to 2012-14'),
+                                   rnames = c('2012-14', '2016-18', 'Difference'),
                                    align = 'r', total = T,
                                    caption = paste0('<b>Pasture ', .x, 
                                                     '</b>: Shrubs'))),
@@ -132,8 +126,7 @@ dat_lab <- net_change %>%
                         filter(Pasture == .x & vegtype == 'Forbs') %>%
                         select(cover) %>%
                         htmlTable(header = c('Average<br>% Cover'), 
-                                  rnames = c('2012-14', '2016-18', 'Difference',
-                                             '% Change relative<br>to 2012-14'),
+                                  rnames = c('2012-14', '2016-18', 'Difference'),
                                   align = 'r', total = T,
                                   caption = paste0('<b>Pasture ', .x, 
                                                    '</b>: Forbs'))),
@@ -142,8 +135,7 @@ dat_lab <- net_change %>%
                         filter(Pasture == .x & vegtype == 'Weeds') %>%
                         select(cover) %>%
                         htmlTable(header = c('Average<br>% Cover'), 
-                                  rnames = c('2012-14', '2016-18', 'Difference',
-                                             '% Change relative<br>to 2012-14'),
+                                  rnames = c('2012-14', '2016-18', 'Difference'),
                                   align = 'r', total = T,
                                   caption = paste0('<b>Pasture ', .x, 
                                                    '</b>: Weeds'))),
@@ -152,8 +144,7 @@ dat_lab <- net_change %>%
                              filter(Pasture == .x & vegtype == 'BareGround') %>%
                              select(cover) %>%
                              htmlTable(header = c('Average<br>% Cover'), 
-                                       rnames = c('2012-14', '2016-18', 'Difference',
-                                                  '% Change relative<br>to 2012-14'),
+                                       rnames = c('2012-14', '2016-18', 'Difference'),
                                        align = 'r', total = T,
                                        caption = paste0('<b>Pasture ', .x, 
                                                         '</b>: Bare Ground'))))
@@ -183,15 +174,12 @@ shp_ranch <- st_read(here::here('GIS'), ranch, quiet = TRUE) %>%
 #   )
 
 ## Alternate palette for proportional change:
-pal <-
-  colorBin(
-    palette = colorRamp(colors = c(
-      pointblue.palette[3], '#ffffff', pointblue.palette[4]
-    )),
-    domain = c(-100, 100),
-    bins = c(-100, -90, -50, -10, 10, 50, 100, max(net_change$prop)),
-    na.color = pointblue.palette[7]
-  )
+pal <- colorBin(palette = colorRamp(colors = c(pointblue.palette[3], 
+                                              '#ffffff', 
+                                              pointblue.palette[4])),
+                domain = c(-100, 100),
+                bins = c(-100, -90, -10, 10, 90, max(net_change$prop)),
+                na.color = pointblue.palette[7])
 
 # MAP----------------------
 
@@ -256,11 +244,10 @@ map2 <- leaflet(shp_poly, height = 500) %>%
   ## legend
   addLegend(position = 'topright',
             title = '% Change relative<br>to 2012-14',
-            colors = pal(c(-95, -75, -25, 0, 25, 75, 1000)),
+            colors = pal(c(-95, -25, 0, 25, 95)),
             values = net_change %>% pull(prop),
-            labels = c('- >90%', '- >50%', '- >10%', 
-                       '~0%', '+ >10%', '+ >50%', 
-                       '+ >100%'),
+            labels = c('strong decline', 'decline', 
+                       'little change', 'increase', 'strong increase'),
             labFormat = labelFormat(suffix = '%'),
             na.label = 'No data',
             opacity = 1) %>%
