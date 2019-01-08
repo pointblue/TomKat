@@ -84,7 +84,7 @@ pplots <- map(dat$Name,
                 scale_y_continuous(expand = c(0, 0)) +
                 scale_fill_viridis_d(option = 'cividis'))
 
-popplots <- popupGraph(pplots, type = 'png', width = 250, height = 200)
+popplots <- popupGraph(pplots, type = 'png', width = 300, height = 200)
 
 
 # SHAPEFILES SET UP------
