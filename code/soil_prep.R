@@ -7,6 +7,7 @@ library(tidyverse)
 # input files
 rawdat <- 'data_raw/TOKA_soildata_CADC_2014to18.csv'
 labdat <- 'data_raw/TOKA_soildata_Lab_2015.csv'
+microbedat <- 'data_raw/Bacterial_Richness_For_SOTR.xlsx'
 
 # output files
 masterdat <- 'data_master/TK_soil_master.csv'
@@ -14,10 +15,10 @@ masterdat <- 'data_master/TK_soil_master.csv'
 
 # DATA SET UP----------------
 # main data set from CADC
-dat <- read_csv(here::here(rawdat)) %>%
+dat <- read_csv(here::here(rawdat), col_types = cols()) %>%
   mutate(Date = as.Date(Date, format = '%m/%d/%Y'),
-         Year = as.factor(format(Date, '%Y')),
-         Year = recode(Year, '2014' = '2015'), # treat Dec 2014 as same season
+         Year = format(Date, '%Y'),
+         Year = as.numeric(recode(Year, '2014' = '2015')), # treat Dec 2014 as same season
          # missing values: (not processed because of PO oil)
          `Bulk Density Dry Wt` = case_when(`Bulk Density Dry Wt` == 0 ~ NA_real_,
                                            TRUE ~ `Bulk Density Dry Wt`),
@@ -34,6 +35,7 @@ dat <- read_csv(here::here(rawdat)) %>%
          `Carbon 10-40 cm` = case_when(`Point Name` == 'TOKA-013' & Year == 2015 ~ NA_real_,
                                        TRUE ~ `Carbon 10-40 cm`))
 
+# SUMMARIZE-----------------
 # summarize values over 5 samples at each point in each sample year
 sdat <- dat %>%
   group_by(`Point Name`, Year) %>%
@@ -46,12 +48,14 @@ sdat <- dat %>%
             depth = mean(`Max Depth`),
             depth.sd = sd(`Max Depth`))
 
-# additional mineral data from lab
-lab <- read_csv(here::here(labdat)) %>%
+
+# LAB DATA--------------------
+# add additional mineral data from lab
+lab <- read_csv(here::here(labdat), col_types = cols()) %>%
   separate(PointID, into = c('Point Name', 'depth.group'), 6) %>%
   mutate(`Point Name` = gsub('TK', 'TOKA', `Point Name`),
          CollectDate = as.Date(CollectDate, format = '%d-%b-%y'), 
-         Year = as.factor(format(CollectDate, '%Y'))) %>%
+         Year = as.numeric(format(CollectDate, '%Y'))) %>%
   gather(c(`Olsen P`:`Total Nitrogen`), key = 'var', value = 'value') %>%
   mutate(value = case_when(value == '< 2.0' ~ '1',
                            value == '< 0.090' ~ '0.05',
@@ -63,6 +67,17 @@ lab <- read_csv(here::here(labdat)) %>%
   mutate_at(vars(CalciumA:SodiumB), as.numeric) %>%
   mutate_at(vars(`Total CarbonA`:`Total NitrogenB`), as.numeric)
 
-# master data
-mdat <- full_join(sdat, lab, by = c('Point Name', 'Year'))
+
+# BACTERIA RICHNESS--------------
+bdat <- readxl::read_excel(here::here(microbedat)) %>%
+  separate(`sample-id`, into = c('site', 'point', 'depth')) %>%
+  unite('point', site:point, sep = '-') %>%
+  mutate(depth = recode(depth, '10' = 'richA', '40' = 'richB'),
+         Year = 2015) %>%
+  spread(key = depth, value = Richness)
+
+
+# MASTER DATA---------------
+mdat <- full_join(sdat, lab, by = c('Point Name', 'Year')) %>%
+  full_join(bdat, by = c('Point Name' = 'point', 'Year'))
 write_csv(mdat, here::here(masterdat))
