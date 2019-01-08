@@ -16,9 +16,9 @@ tk_normals <- 'data_master/TK_weather_estimated_normals.csv'
 
 
 # MONTHLY DIFFERENCES, 2010-present-------------
-tk <- read_csv(here::here(tk_monthly))
+tk <- read_csv(here::here(tk_monthly), col_types = cols())
   
-hmb <- read_csv(here::here(hmb_monthly)) %>%
+hmb <- read_csv(here::here(hmb_monthly), col_types = cols()) %>%
   mutate(date = as.Date(date, format = '%Y-%m-%d') + 14) %>% # change to 15th of month
   select(date, datatype, value) %>%
   spread(key = datatype, value = value) %>%
