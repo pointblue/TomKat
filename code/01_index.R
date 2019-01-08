@@ -65,7 +65,7 @@ source('code/soil_map2.R')
 source('code/soil_map3.R')
 
 # produce soil microbes map (soil map 4?)
-## -->waiting on data from Chelsea
+source('code/soil_map4.R')
 
 # render Rmd to html
 rmarkdown::render(here::here("Rmd/soil.Rmd"), 
