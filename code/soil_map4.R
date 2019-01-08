@@ -58,6 +58,23 @@ pdat <- readxl::read_excel(here::here(microbephyla)) %>%
   mutate(phylum = factor(phylum, levels = unique(phylum)[c(1:6, 8:11, 7)]))
   
 
+# SHAPEFILES SET UP------
+shp_pts <- st_read(here::here('GIS'), pts, quiet = TRUE) %>%
+  st_transform('+proj=longlat +datum=WGS84') %>%
+  right_join(dat, by = 'Name')
+
+shp_poly <- st_read(here::here('GIS'), poly, quiet = TRUE) %>%
+  st_transform('+proj=longlat +datum=WGS84')
+
+shp_ranch <- st_read(here::here('GIS'), ranch, quiet = TRUE) %>%
+  st_transform('+proj=longlat +datum=WGS84')
+
+
+# COLOR PALETTE-----------
+## Define color palette for richness:
+pal <- colorNumeric(palette = colorRamp(colors = c('#ffffff', pointblue.palette[4])),
+                    domain = c(dat$richA, dat$richB))
+
 # POPUP PIE CHARTS----------------
 ## create list of pie charts for microbe popups showing proportion of each
 ## phylum present at each depth
@@ -77,32 +94,17 @@ blank_theme <- theme_minimal() +
 pplots <- map(dat$Name, 
               ~ pdat %>% filter(point == .x) %>%
                 ggplot(aes(x = depth, y = prop, fill = phylum)) +
-                geom_col(color = 'gray80') + 
+                geom_col(color = 'gray50', size = 0.4) + 
                 coord_polar(start = 0, theta = 'y') + 
                 blank_theme + 
                 ggtitle(.x) + 
                 scale_y_continuous(expand = c(0, 0)) +
                 scale_fill_viridis_d(option = 'cividis'))
 
-popplots <- popupGraph(pplots, type = 'png', width = 300, height = 200)
+popplots <- popupGraph(pplots, type = 'png', 
+                       width = 400, height = 267)
 
 
-# SHAPEFILES SET UP------
-shp_pts <- st_read(here::here('GIS'), pts, quiet = TRUE) %>%
-  st_transform('+proj=longlat +datum=WGS84') %>%
-  right_join(dat, by = 'Name')
-
-shp_poly <- st_read(here::here('GIS'), poly, quiet = TRUE) %>%
-  st_transform('+proj=longlat +datum=WGS84')
-
-shp_ranch <- st_read(here::here('GIS'), ranch, quiet = TRUE) %>%
-  st_transform('+proj=longlat +datum=WGS84')
-
-
-# COLOR PALETTE-----------
-## Define color palette for richness:
-pal <- colorNumeric(palette = colorRamp(colors = c('#ffffff', pointblue.palette[4])),
-                    domain = c(dat$richA, dat$richB))
 
 # MAP-----------
 
@@ -125,6 +127,7 @@ map4 <- leaflet(shp_pts, height = 500) %>%
   # bacterial richness: color=richness, composition=popup graphs
   addCircleMarkers(fillColor = ~pal(richB),
                    popup = ~popplots,
+                   popupOptions = c(maxWidth = 400),
                    radius = 9, 
                    color = 'black', 
                    fillOpacity = 1,
@@ -133,6 +136,7 @@ map4 <- leaflet(shp_pts, height = 500) %>%
   
   addCircleMarkers(fillColor = ~pal(richA),
                    popup = ~popplots,
+                   popupOptions = c(maxWidth = 400),
                    radius = 3.5,
                    color = 'black',
                    weight = 1,
