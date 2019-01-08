@@ -32,8 +32,12 @@ pointblue.palette <-
     '#666666',
     '#456d28', #add a few more complementary colors
     '#b74374', 
-    '#8643b7',
+    '#5e2a84',
     '#d2c921')
+
+tk.palette <- c('#3b4035', '#9c8755', '#61655c',
+                '#d1bc8b', '#40696f', '#2e5150',
+                '#5f5131', '#9e513a')
 
 # DATA SET UP-------------
 
@@ -118,32 +122,32 @@ shp_ranch <- st_read(here::here('GIS'), ranch, quiet = TRUE) %>%
 
 # COLOR PALETTE-----------
 ## Define color palette for each metric:
-pal0 <- colorBin(palette = colorRamp(colors = c('#ffffff', pointblue.palette[11])),
-                 domain = c(dat_lab$SodiumA, dat_lab$SodiumB),
-                 bins = c(0, 0.25, 0.5, 0.75, 1),
-                 na.color = pointblue.palette[6])
-
 pal1 <- colorBin(palette = colorRamp(colors = c('#ffffff', pointblue.palette[4])),
                  domain = c(dat_lab$`Total NitrogenA`, dat_lab$`Total NitrogenB`),
                  bins = c(0, 0.2, 0.3, 0.4, 0.7),
                  na.color = pointblue.palette[6])
 
-pal2 <- colorBin(palette = colorRamp(colors = c('#ffffff', pointblue.palette[8])),
+pal2 <- colorBin(palette = colorRamp(colors = c('#ffffff', pointblue.palette[3])),
                  domain = c(dat_lab$PotassiumA, dat_lab$PotassiumB),
                  bins = c(0, 0.5, 1, 1.5, 3),
                  na.color = pointblue.palette[6])
 
-pal3 <- colorBin(palette = colorRamp(colors = c('#ffffff', pointblue.palette[3])),
+pal0 <- colorBin(palette = colorRamp(colors = c('#ffffff', pointblue.palette[10])),
+                 domain = c(dat_lab$SodiumA, dat_lab$SodiumB),
+                 bins = c(0, 0.25, 0.5, 0.75, 1),
+                 na.color = pointblue.palette[6])
+
+pal3 <- colorBin(palette = colorRamp(colors = c('#ffffff', tk.palette[8])),
                  domain = c(dat_lab$MagnesiumA, dat_lab$MagnesiumB),
                  bins = c(0, 5, 8, 11, 15),
                  na.color = pointblue.palette[6])
 
-pal4 <- colorBin(palette = colorRamp(colors = c('#ffffff', pointblue.palette[10])),
+pal4 <- colorBin(palette = colorRamp(colors = c('#ffffff', tk.palette[6])),
                  domain = c(dat_lab$CalciumA, dat_lab$CalciumB),
                  bins = c(0, 10, 15, 20, 25),
                  na.color = pointblue.palette[6])
 
-pal5 <- colorBin(palette = colorRamp(colors = c('#ffffff', pointblue.palette[9])),
+pal5 <- colorBin(palette = colorRamp(colors = c('#ffffff', tk.palette[7])),
                  domain = c(dat_lab$pHA, dat_lab$pHB),
                  bins = c(5, 5.5, 6, 6.5),
                  na.color = pointblue.palette[6])
@@ -172,16 +176,18 @@ map3 <- leaflet(shp_pts, height = 500) %>%
                    popup =  ~ label_Nitrogen,
                    group = 'Total Nitrogen (N)',
                    radius = 9,
-                   weight = 1.5,
                    fillOpacity = 1,
-                   color = 'black') %>% 
+                   opacity = 1,
+                   color = 'black',
+                   weight = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 3, 1)) %>% 
   
   addCircleMarkers(fillColor =  ~ pal1(`Total NitrogenA`),
                    popup =  ~ label_Nitrogen,
                    group = 'Total Nitrogen (N)',
-                   radius = 4,
-                   weight = 1.5,
+                   radius = 3.5,
+                   weight = 1,
                    fillOpacity = 1,
+                   opacity = 1,
                    color = 'black') %>% 
   
   # potassium: (overlapping circles for two depths)
@@ -189,16 +195,18 @@ map3 <- leaflet(shp_pts, height = 500) %>%
                    popup =  ~ label_Potassium,
                    group = 'Potassium (K)',
                    radius = 9,
-                   weight = 1.5,
                    fillOpacity = 1,
-                   color = 'black') %>% 
+                   opacity = 1,
+                   color = 'black',
+                   weight = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 3, 1)) %>% 
   
   addCircleMarkers(fillColor =  ~ pal2(PotassiumA),
                    popup =  ~ label_Potassium,
                    group = 'Potassium (K)',
-                   radius = 4,
-                   weight = 1.5,
+                   radius = 3.5,
+                   weight = 1,
                    fillOpacity = 1,
+                   opacity = 1,
                    color = 'black') %>% 
   
   # sodium: (overlapping circles for two depths)
@@ -206,16 +214,18 @@ map3 <- leaflet(shp_pts, height = 500) %>%
                    popup =  ~ label_Sodium,
                    group = 'Sodium (Na)',
                    radius = 9,
-                   weight = 1.5,
                    fillOpacity = 1,
-                   color = 'black') %>% 
+                   opacity = 1,
+                   color = 'black',
+                   weight = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 3, 1)) %>% 
   
   addCircleMarkers(fillColor =  ~ pal0(SodiumA),
                    popup =  ~ label_Sodium,
                    group = 'Sodium (Na)',
-                   radius = 4,
-                   weight = 1.5,
+                   radius = 3.5,
+                   weight = 1,
                    fillOpacity = 1,
+                   opacity = 1,
                    color = 'black') %>% 
   
   # magnesium: (overlapping circles for two depths)
@@ -223,16 +233,18 @@ map3 <- leaflet(shp_pts, height = 500) %>%
                    popup =  ~ label_Magnesium,
                    group = 'Magnesium (Mg)',
                    radius = 9,
-                   weight = 1.5,
                    fillOpacity = 1,
-                   color = 'black') %>% 
+                   opacity = 1,
+                   color = 'black',
+                   weight = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 3, 1)) %>% 
   
   addCircleMarkers(fillColor =  ~ pal3(MagnesiumA),
                    popup =  ~ label_Magnesium,
                    group = 'Magnesium (Mg)',
-                   radius = 4,
-                   weight = 1.5,
+                   radius = 3.5,
+                   weight = 1,
                    fillOpacity = 1,
+                   opacity = 1,
                    color = 'black') %>% 
   
   # calcium: (overlapping circles for two depths)
@@ -240,16 +252,18 @@ map3 <- leaflet(shp_pts, height = 500) %>%
                    popup =  ~ label_Calcium,
                    group = 'Calcium (Ca)',
                    radius = 9,
-                   weight = 1.5,
                    fillOpacity = 1,
-                   color = 'black') %>% 
+                   opacity = 1,
+                   color = 'black',
+                   weight = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 3, 1)) %>% 
   
   addCircleMarkers(fillColor =  ~ pal4(CalciumA),
                    popup =  ~ label_Calcium,
                    group = 'Calcium (Ca)',
-                   radius = 4,
-                   weight = 1.5,
+                   radius = 3.5,
+                   weight = 1,
                    fillOpacity = 1,
+                   opacity = 1,
                    color = 'black') %>% 
   
   # pH: (overlapping circles for two depths)
@@ -257,16 +271,18 @@ map3 <- leaflet(shp_pts, height = 500) %>%
                    popup =  ~ label_pH,
                    group = 'pH',
                    radius = 9,
-                   weight = 1.5,
                    fillOpacity = 1,
-                   color = 'black') %>% 
+                   opacity = 1,
+                   color = 'black',
+                   weight = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 3, 1)) %>% 
   
   addCircleMarkers(fillColor =  ~ pal5(pHA),
                    popup =  ~ label_pH,
                    group = 'pH',
-                   radius = 4,
-                   weight = 1.5,
+                   radius = 3.5,
+                   weight = 1,
                    fillOpacity = 1,
+                   opacity = 1,
                    color = 'black') %>% 
   
   # legends (one per metric)
@@ -346,7 +362,7 @@ map3$dependencies <- c(map3$dependencies,
                          )
                        ))
 
-title <- paste0('TomKat Soil Nutrients ', max(dat$Year))
+title <- paste0('TomKat Soil Nutrients 2015')
 
 htmlwidgets::saveWidget(map3,
                         here::here(output3),
