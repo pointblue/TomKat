@@ -16,6 +16,7 @@ input[type="radio"] {
 	}
 
 .info {
+  font-family: Lato,Helvetica,Arial,Lucida,sans-serif;
 	font-size: 12px;
 	}
 
@@ -24,15 +25,19 @@ input[type="radio"] {
 	width: 16px;
 	height: 16px;
 	}
-	
+
+/* legend text*/
 .legend {
 	line-height: 16px;
+	font-family: Lato,Helvetica,Arial,Lucida,sans-serif;
 	}
 
 /* spacing inside pop-up tables */
-th, td {
-	padding-left: .25em; 
+table, th, td {
+  padding-left: .25em; 
 	padding-right: .25em;
+	font-family: 'Lato',Helvetica,Arial,Lucida,sans-serif;
+	font-size: 12px;
 }
 tfoot{
   text-align: right;
