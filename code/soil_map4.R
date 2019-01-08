@@ -82,7 +82,7 @@ pplots <- map(dat$Name,
                 blank_theme + 
                 ggtitle(.x) + 
                 scale_y_continuous(expand = c(0, 0)) +
-                scale_fill_viridis_d())
+                scale_fill_viridis_d(option = 'cividis'))
 
 popplots <- popupGraph(pplots, type = 'png', width = 250, height = 200)
 
@@ -126,20 +126,23 @@ map4 <- leaflet(shp_pts, height = 500) %>%
   addCircleMarkers(fillColor = ~pal(richB),
                    popup = ~popplots,
                    radius = 9, 
-                   color = 'black',
-                   weight = 1.5, 
-                   fillOpacity = 1) %>%
+                   color = 'black', 
+                   fillOpacity = 1,
+                   opacity = 1,
+                   weight = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 3, 1)) %>%
   
   addCircleMarkers(fillColor = ~pal(richA),
                    popup = ~popplots,
-                   radius = 4,
+                   radius = 3.5,
                    color = 'black',
-                   weight = 1.5,
+                   weight = 1,
+                   opacity = 1,
                    fillOpacity = 1) %>%
   
   addLegend(title = 'Bacterial<br>richness', 
             pal = pal,
             values = c(dat$richA, dat$richB),
+            bins = 4,
             position = 'topright', 
             opacity = 1) %>%
   
