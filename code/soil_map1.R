@@ -32,9 +32,12 @@ pointblue.palette <-
     '#666666',
     '#456d28', #add a few more complementary colors
     '#b74374', 
-    '#8643b7',
+    '#5e2a84',
     '#d2c921')
 
+tk.palette <- c('#3b4035', '#9c8755', '#61655c',
+                '#d1bc8b', '#40696f', '#2e5150',
+                '#5f5131', '#9e513a')
 # DATA SET UP-------------
 
 dat <- read_csv(here::here(masterdat), col_types = cols()) %>%
@@ -42,17 +45,14 @@ dat <- read_csv(here::here(masterdat), col_types = cols()) %>%
   select(Name, Year, bulk.dens.gcm3, water.infil, carbonA, carbonB)  %>%
   mutate(water.infil = water.infil/60) #convert to minutes
 
-dat_yr <- dat %>%
-  filter(Year == max(Year))
-  
-
 # percentile scores (based on all years combined to be able to show change in percentiles over years)
 f1 <- ecdf(dat$carbonA)
 f2 <- ecdf(dat$carbonB)
 f3 <- ecdf(max(dat$bulk.dens.gcm3, na.rm = T) - dat$bulk.dens.gcm3) #reverse so lower density = higher score
 f4 <- ecdf(max(dat$water.infil, na.rm = T) - dat$water.infil)
 
-dat_perc <- dat_yr %>%
+dat_perc <- dat %>%
+  filter(Year == max(Year)) %>%
   mutate(carbonA_perc = round(f1(carbonA) * 100, digits = 0),
          carbonB_perc = round(f2(carbonB) * 100, digits = 0),
          bulk.dens.gcm3_perc = round(f3(max(bulk.dens.gcm3, na.rm = T) - bulk.dens.gcm3) * 100, digits = 0),
@@ -76,7 +76,8 @@ mean_perc <- dat_perc %>%
 # POPUP HTML TABLES-------------
 # flag points 22 and 68 as having had compost applied
 
-dat_lab <- dat_yr %>%
+dat_lab <- dat %>%
+  filter(Year == max(Year)) %>%
   full_join(mean_perc %>% filter(var == 'mean') %>% 
               select(Name, Percentile) %>% rename('mean' = 'Percentile')) %>%
   mutate(
@@ -209,10 +210,10 @@ pal2 <- colorBin(
   na.color = pointblue.palette[6])
 
 pal3 <- colorBin(
-  palette = colorRamp(colors = c('#ffffff', pointblue.palette[9])),
+  palette = colorRamp(colors = c('#ffffff', tk.palette[8])),
   domain = c(dat_lab$carbonA, dat_lab$carbonB),
   bins = c(0, 2, 4, 6, 10),
-  na.color = pointblue.palette[6])
+  na.color = tk.palette[4])
 
 
 # MAP-----------
@@ -237,31 +238,31 @@ map1 <- leaflet(shp_pts, height = 500) %>%
   addCircleMarkers(fillColor =  ~ pal0(mean),
                    popup =  ~ label_overall,
                    group = 'Overall score',
-                   radius = 6,
+                   radius = 9,
                    color = 'black',
                    fillOpacity = 1,
-                   weight = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 3, 1.5),
-                   opacity = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 1, 0.5)) %>%
+                   opacity = 1,
+                   weight = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 3, 1)) %>%
   
   # bulk density:
   addCircleMarkers(fillColor =  ~ pal1(bulk.dens.gcm3),
                    popup =  ~ label_bulk.dens.gcm3,
                    group = 'Bulk density',
-                   radius = 6,
+                   radius = 9,
                    color = 'black',
                    fillOpacity = 1,
-                   weight = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 3, 1.5),
-                   opacity = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 1, 0.5)) %>%
+                   opacity = 1,
+                   weight = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 3, 1)) %>%
   
   # water infiltration:
   addCircleMarkers(fillColor =  ~ pal2(water.infil),
                    popup =  ~ label_water.infil,
                    group = 'Water infiltration',
-                   radius = 6,
+                   radius = 9,
                    color = 'black',
                    fillOpacity = 1,
-                   weight = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 3, 1.5),
-                   opacity = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 1, 0.5)) %>% 
+                   opacity = 1,
+                   weight = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 3, 1)) %>% 
   
   # carbon: (overlapping circles for two depths)
   addCircleMarkers(fillColor =  ~ pal3(carbonB),
@@ -270,17 +271,17 @@ map1 <- leaflet(shp_pts, height = 500) %>%
                    radius = 9,
                    color = 'black',
                    fillOpacity = 1,
-                   weight = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 3, 1.5),
-                   opacity = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 1, 0.5)) %>% 
+                   opacity = 1,
+                   weight = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 3, 1)) %>% 
   
   addCircleMarkers(fillColor =  ~ pal3(carbonA),
                    popup =  ~ label_carbon,
                    group = '% Carbon',
-                   radius = 4,
+                   radius = 3.5,
                    color = 'black',
                    fillOpacity = 1,
-                   weight = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 3, 1.5),
-                   opacity = ~ifelse(Name %in% c('TOKA-022', 'TOKA-068'), 1, 0.5)) %>% 
+                   opacity = 1,
+                   weight = 1) %>% 
   
   # legends (one per metric)
   addLegend(pal = pal0,
