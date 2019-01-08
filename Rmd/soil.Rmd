@@ -83,8 +83,11 @@ In 2015, we measured the pH and the concentrations soil nutrients important to p
 <a id="microbes"></a>
 
 ### Soil microbes
-
-In development
+We analyzed the richness and composition of soil bacterial communities by sequencing DNA. Click on any of the survey points to see a comparison of the proportion of [bacterial phyla](#bacteria) present at the surface and in deeper soils.</i>
+ 
+<center>
+<iframe src="soil_map4.html" style="border: none;" width = 80%; height = 550px;></iframe>
+</center>
 
 
 ### Glossary
@@ -101,6 +104,15 @@ In development
 <a id="overall"></a>  
 <b>Overall score:</b> To combine values of all 3 soil metrics above into one overall score, we first calculated a separate percentile score for each metric (including separate scores for surface and deeper soil carbon). These percentile scores represent how relatively good or poor each point scored for each metric compared to all the other TomKat soil sampling points, and they were based on fitting [empirical cumulative distribution functions](https://www.r-bloggers.com/exploratory-data-analysis-conceptual-foundations-of-empirical-cumulative-distribution-functions/) to each metric. We then calculated an overall percentile score as the mean of these individual percentile scores, so that points with a combination of high and low scores might fall in the "moderate" category.
 
+<b>Bacterial and fungal richness:</b> The number of bacterial and fungal species observed in each soil sample. (Species were determined using operational taxonomic units (OTUs) at 97% sequence similarity. An OTU is composed of a group of closely related individuals.) 
+
+<a id="bacteria"></a>  
+<b>Bacterial phyla:</b> A level of taxonomic classification that falls between kingdom and class. While birds and plants are often discussed at the genus or species level, bacteria are often discussed at the phylum level. Some ecological traits and life strategies are shared at this broad level, so that meaningful interpretations can be inferred. For example, differences in traits associated with an <b>oligotrophic</b> lifestyle (microbes that prefer low nutrient and carbon conditions) or <b>copiotrophic</b> lifestyle (microbes that prefer high nutrient and carbon conditions) can occur at the phylum level. 
+
+* Bacteroidetes, Actinobacteria, and Firmicutes are generally considered to be <b>copiotrophs</b>.  
+
+* Acidobacteria and Verrucomicrobia are generally considered to be <b>oligotrophs</b>.  
+  
 
 [Back to top](#top)
 
