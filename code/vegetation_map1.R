@@ -32,24 +32,20 @@ pointblue.palette <-
 # DATA SET UP-------------
 dat <- read_csv(here::here(masterveg), col_types = cols()) %>%
   filter(vegtype != 'Trees') %>% #inconsistent treatment; not included in map
-  mutate(
-    cover = round(cover, digits = 1),
-    vegtype = as.factor(vegtype),
-    Pasture = as.factor(Pasture)
-  )
-
-## current year's data
-dat_yr <- dat %>% filter(Year == max(Year)) %>%
+  mutate(cover = round(cover, digits = 1),
+         vegtype = as.factor(vegtype),
+         Pasture = as.factor(Pasture)) %>% 
+  filter(Year == max(Year)) %>%
   spread(key = vegtype, value = cover)
 
 
 # POPUP HTML TABLES-------------
 
-dat_yr_lab <- dat_yr %>%
+dat_lab <- dat %>%
   mutate(
     label_PereGr = map(
-      dat_yr$Pasture,
-      ~ dat_yr %>% filter(Pasture == .x) %>%
+      dat$Pasture,
+      ~ dat %>% filter(Pasture == .x) %>%
         select(PereGr) %>%
         htmlTable(
           header = '% Cover',
@@ -58,8 +54,8 @@ dat_yr_lab <- dat_yr %>%
         )
     ),
     label_AnnualGr = map(
-      dat_yr$Pasture,
-      ~ dat_yr %>% filter(Pasture == .x) %>%
+      dat$Pasture,
+      ~ dat %>% filter(Pasture == .x) %>%
         select(AnnualGr) %>%
         htmlTable(
           header = '% Cover',
@@ -68,8 +64,8 @@ dat_yr_lab <- dat_yr %>%
         )
     ),
     label_NativeGr = map(
-      dat_yr$Pasture,
-      ~ dat_yr %>% filter(Pasture == .x) %>%
+      dat$Pasture,
+      ~ dat %>% filter(Pasture == .x) %>%
         select(NativeGr) %>%
         htmlTable(
           header = '% Cover',
@@ -78,8 +74,8 @@ dat_yr_lab <- dat_yr %>%
         )
     ),
     label_Grass = map(
-      dat_yr$Pasture,
-      ~ dat_yr %>% filter(Pasture == .x) %>%
+      dat$Pasture,
+      ~ dat %>% filter(Pasture == .x) %>%
         select(Grass) %>%
         htmlTable(
           header = '% Cover',
@@ -88,8 +84,8 @@ dat_yr_lab <- dat_yr %>%
         )
     ),
     label_Shrubs = map(
-      dat_yr$Pasture,
-      ~ dat_yr %>% filter(Pasture == .x) %>%
+      dat$Pasture,
+      ~ dat %>% filter(Pasture == .x) %>%
         select(Shrubs) %>%
         htmlTable(
           header = '% Cover',
@@ -98,8 +94,8 @@ dat_yr_lab <- dat_yr %>%
         )
     ),
     label_Forbs = map(
-      dat_yr$Pasture,
-      ~ dat_yr %>% filter(Pasture == .x) %>%
+      dat$Pasture,
+      ~ dat %>% filter(Pasture == .x) %>%
         select(Forbs) %>%
         htmlTable(
           header = '% Cover',
@@ -108,8 +104,8 @@ dat_yr_lab <- dat_yr %>%
         )
     ),
     label_Weeds = map(
-      dat_yr$Pasture,
-      ~ dat_yr %>% filter(Pasture == .x) %>%
+      dat$Pasture,
+      ~ dat %>% filter(Pasture == .x) %>%
         select(Weeds) %>%
         htmlTable(
           header = '% Cover',
@@ -118,8 +114,8 @@ dat_yr_lab <- dat_yr %>%
         )
     ),
     label_BareGround = map(
-      dat_yr$Pasture,
-      ~ dat_yr %>% filter(Pasture == .x) %>%
+      dat$Pasture,
+      ~ dat %>% filter(Pasture == .x) %>%
         select(BareGround) %>%
         htmlTable(
           header = '% Cover',
@@ -134,7 +130,7 @@ dat_yr_lab <- dat_yr %>%
 
 shp_poly <- st_read(here::here('GIS'), poly, quiet = TRUE) %>%
   st_transform('+proj=longlat +datum=WGS84') %>%
-  full_join(dat_yr_lab, by = 'Pasture')
+  full_join(dat_lab, by = 'Pasture')
 
 shp_ranch <- st_read(here::here('GIS'), ranch, quiet = TRUE) %>%
   st_transform('+proj=longlat +datum=WGS84')
@@ -148,7 +144,7 @@ pal <-
     palette = colorRamp(colors = c('#ffffff', pointblue.palette[4])),
     domain = c(0, 100),
     bins = c(0, 1, 5, 10, 20, 50, 100),
-    na.color = pointblue.palette[7]
+    na.color = pointblue.palette[6]
   )
 
 
@@ -216,7 +212,7 @@ map1 <- leaflet(shp_poly, height = 500) %>%
   ## legend
   addLegend(position = 'topright', 
             pal = pal,
-            values = dat %>% filter(Year == max(Year)) %>% select(cover),
+            values = dat %>% gather(AnnualGr:Weeds, key = 'key', value = 'value') %>% pull(value),
             labFormat = labelFormat(suffix = '%'),
             na.label = 'No data',
             opacity = 1, 
