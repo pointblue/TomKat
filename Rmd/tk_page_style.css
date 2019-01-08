@@ -1,0 +1,40 @@
+h1 {
+  font-family: 'AlbertusNova-Light';
+  color: #9c8755;
+  font-size: 24px;
+  line-height: 32px;
+  text-align: center;
+}
+h3 {
+  font-family: Roboto,Helvetica,Arial,Lucida,sans-serif !important;
+	font-size: 18px;
+	font-weight: 400;
+	text-transform: uppercase !important;
+	color: #9D8957 !important;
+	letter-spacing: 3px;
+	margin-top: 30px;
+	margin-bottom: 24px;
+}
+h4 {
+  font-family: Lato,Helvetica,Arial,Lucida,sans-serif !important;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+}
+#intro {
+  padding: 0;
+  text-align: center;
+  display: table-cell;
+  vertical-align: middle;
+}
+a {
+  color: #40696F!important;
+  font-style: bold
+}
+body {
+  font-family: 'Lato',Helvetica,Arial,Lucida,sans-serif !important;
+	font-size: 14px;
+	font-weight: 500 !important;
+	line-height: 20px;
+	text-align: left;
+}
