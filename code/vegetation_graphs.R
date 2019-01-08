@@ -136,7 +136,9 @@ plot1 <- plot_ly(x = ~Year) %>%
                       ticks = 'outside',
                       showgrid = FALSE),
          legend = list(x = 0.01, xanchor = 'left', y = 1, yanchor = 'top',
-                       bordercolor = ~I('black'), borderwidth = 1),
+                       bordercolor = ~I('black'), borderwidth = 1,
+                       font = list(family = 'sans-serif',
+                                   size = 14)),
          hovermode = 'x') %>%
   config(collaborate = FALSE, displaylogo = FALSE, showTips = FALSE,
          modeBarButtonsToRemove = list('zoom2d', 'select2d', 'lasso2d', 
@@ -194,7 +196,9 @@ plot2 <- plot_ly(x = ~Year) %>%
                       ticks = 'outside',
                       showgrid = FALSE),
          legend = list(x = 0.01, xanchor = 'left', y = 1, yanchor = 'top',
-                       bordercolor = ~I('black'), borderwidth = 1),
+                       bordercolor = ~I('black'), borderwidth = 1,
+                       font = list(family = 'sans-serif',
+                                   size = 14)),
          hovermode = 'x') %>%
   config(collaborate = FALSE, displaylogo = FALSE, showTips = FALSE,
          modeBarButtonsToRemove = list('zoom2d', 'select2d', 'lasso2d', 
