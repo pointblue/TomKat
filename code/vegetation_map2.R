@@ -50,6 +50,7 @@ net_change <- dat %>%
   spread(key = group, value = cover) %>%
   mutate(net = recent - baseline,
          prop = case_when(abs(net) >= 10 ~ (net/baseline) * 100,
+                          abs(net) >= 5 & vegtype %in% c('PereGr', 'NativeGr') ~ (net/baseline) * 100,
                           TRUE ~ 0),
          prop = case_when(is.infinite(prop) ~ 1000,
                           TRUE ~ prop),
