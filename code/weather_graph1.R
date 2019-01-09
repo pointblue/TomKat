@@ -135,105 +135,12 @@ plot1 <- plot_ly(x = ~date) %>%
          dragmode = 'pan',
          margin = list(r = 80)) %>%
     rangeslider('2018-01-01', '2018-12-31', thickness = 0.05) %>%
-    config(collaborate = FALSE, displaylogo = FALSE)
-
+  config(collaborate = FALSE, displaylogo = FALSE, showTips = FALSE,
+         modeBarButtonsToRemove = list('zoom2d', 'select2d', 'lasso2d', 
+                                       'zoomIn2d', 'zoomOut2d', 
+                                       'pan2d', 'toggleSpikelines'))
 
 htmlwidgets::saveWidget(plot1,
                         here::here(graph1),
                         selfcontained = TRUE,
                         title = 'TomKat Daily Weather')
-
-
-## GGPLOTLY VERSION
-# dat <- read_csv(here::here(masterdat)) %>%
-#   rename(high = temp.max,
-#          low = temp.min,
-#          rain = rain.in) %>%
-#   mutate(day = format(date, '%m-%d')) %>%
-#   gather(high:rain, key = var, value = value) %>%
-#   # add record high/low values for each date
-#   group_by(var, day) %>%
-#   mutate(max = max(value, na.rm = T),
-#          min = min(value, na.rm = T)) %>%
-#   ungroup() 
-
-# p1 <- dat %>%
-#   ggplot(aes(x = date, y = value, ymin = min, ymax = max, group = var)) +
-#   geom_ribbon(aes(fill = var), alpha = 0.5) +
-#   geom_line(aes(col = var)) +
-#   # geom_point(aes(col = var)) +
-#   scale_fill_manual(values = pointblue.palette[c(3, 2, 1)]) +
-#   scale_color_manual(values = pointblue.palette[c(3, 2, 1)]) + 
-#   theme_minimal()
-
-## DYGRAPHS VERSION
-# datx <- xts(dat %>% select(-date), order.by = dat$date)
-# 
-# plot1 <- dygraph(datx) %>% 
-#   dyAxis('x', drawGrid = F, pixelsPerLabel = 75) %>%
-#   dyAxis(
-#     'y',
-#     drawGrid = F,
-#     valueRange = c(0, 95),
-#     label = 'Temperature (F)',
-#     valueFormatter = htmlwidgets::JS(getZero)
-#   ) %>%
-#   dyAxis(
-#     'y2',
-#     drawGrid = F,
-#     valueRange = c(0, 9.5),
-#     label = 'Precipitation (in)',
-#     valueFormatter = htmlwidgets::JS(getZero)
-#   ) %>%
-#   dyHighlight(
-#     highlightCircleSize = 4,
-#     highlightSeriesBackgroundAlpha = 1,
-#     hideOnMouseOut = F
-#   ) %>% 
-#   dyEvent('2017-12-31', color = pointblue.palette[7]) %>%
-#   dyEvent('2016-12-31', color = pointblue.palette[7]) %>%
-#   dyEvent('2015-12-31', color = pointblue.palette[7]) %>%
-#   dyEvent('2014-12-31', color = pointblue.palette[7]) %>%
-#   dyEvent('2013-12-31', color = pointblue.palette[7]) %>%
-#   dyEvent('2012-12-31', color = pointblue.palette[7]) %>%
-#   dyEvent('2011-12-31', color = pointblue.palette[7]) %>%
-#   dyEvent('2010-12-31', color = pointblue.palette[7]) %>%
-#   dySeries(
-#     names(datx)[c(3, 1, 2)],
-#     label = 'High temp',
-#     color = pointblue.palette[3],
-#     strokeWidth = 3
-#   ) %>%
-#   dySeries(
-#     names(datx)[c(6, 4, 5)],
-#     label = 'Low temp',
-#     color = pointblue.palette[2],
-#     strokeWidth = 3
-#   ) %>%
-#   dySeries(
-#     names(datx)[c(9, 7, 8)],
-#     label = 'Precipitation',
-#     color = pointblue.palette[1],
-#     strokeWidth = 3,
-#     axis = 'y2'
-#   ) %>%
-#   dyLegend(
-#     labelsSeparateLines = T,
-#     showZeroValues = T,
-#     show = 'follow'
-#   ) %>%
-#   dyRangeSelector(height = 20,
-#                   dateWindow = c(as.Date(max(zoo::index(
-#                     datx
-#                   )) - 540),
-#                   as.Date(max(zoo::index(
-#                     datx
-#                   )) + 2)))
-# 
-# htmlwidgets::saveWidget(plot1,
-#                         here::here(graph1),
-#                         selfcontained = TRUE,
-#                         title = 'TomKat Daily Weather')
-# 
-# 
-# 
