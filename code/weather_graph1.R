@@ -45,7 +45,7 @@ dat <- read_csv(here::here(masterdat), col_types = cols()) %>%
   mutate(var = gsub('_max|_min', '_record', var)) %>%
   separate(var, into = c('var', 'type')) %>%
   spread(key = type, value = measurement) %>%
-  mutate(text = paste0('<b>', var, ':</b> ', value, ' (record: ', record, ')')) %>%
+  mutate(text = paste0('<b>', var, ':</b> ', value)) %>%
   arrange(date, var)
 
 # TIME SERIES----------------
