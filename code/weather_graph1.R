@@ -12,14 +12,8 @@ masterdat <- 'data_master/TK_weather_master_daily.csv'
 graph1 <- 'weather_graph1.html'
 
 
-pointblue.palette <-
-  c('#4495d1',
-    '#74b743',
-    '#f7941d',
-    '#005baa',
-    '#bfd730',
-    '#a7a9ac',
-    '#666666')
+pointblue.palette <- c('#4495d1', '#74b743', '#f7941d', '#005baa',
+                       '#bfd730', '#a7a9ac', '#666666')
 
 tk.palette <- c('#3b4035', '#9c8755', '#61655c',
                 '#d1bc8b', '#40696f', '#2e5150',
@@ -37,7 +31,7 @@ dat <- read_csv(here::here(masterdat), col_types = cols()) %>%
   # fill in missing days
   complete(nesting(day), year) %>%
   mutate(date = as.Date(paste0(year, '-', day))) %>%
-  filter(date > '2010-09-08' & date < '2018-10-24') %>%
+  filter(date > '2010-09-08') %>%
   gather(high:rain, key = var, value = value) %>%
   # add record high/low values for each month (even those missing observations)
   group_by(var, day) %>%
@@ -57,14 +51,14 @@ dat <- read_csv(here::here(masterdat), col_types = cols()) %>%
 # TIME SERIES----------------
 
 plot1 <- plot_ly(x = ~date) %>%
-  add_lines(data = dat %>% filter(var == 'high'), y = ~record,
-            line = list(color = 'transparent'),
-            hoverinfo = 'none') %>%
-  add_lines(data = dat %>% filter(var == 'low'), y = ~record, 
-            line = list(color = 'transparent'),
-            fill = 'tonexty',
-            fillcolor = scales::alpha('gray80', alpha = 0.5),
-            hoverinfo = 'none') %>%
+  # add_lines(data = dat %>% filter(var == 'high'), y = ~record,
+  #           line = list(color = 'transparent'),
+  #           hoverinfo = 'none') %>%
+  # add_lines(data = dat %>% filter(var == 'low'), y = ~record, 
+  #           line = list(color = 'transparent'),
+  #           fill = 'tonexty',
+  #           fillcolor = scales::alpha('gray80', alpha = 0.5),
+  #           hoverinfo = 'none') %>%
   add_trace(data = dat %>% filter(var == 'high'), y = ~value, 
             type = 'scatter', mode = 'lines',
             line = list(color = pointblue.palette[3]),
@@ -77,12 +71,12 @@ plot1 <- plot_ly(x = ~date) %>%
             # marker = list(color = pointblue.palette[2]),
             text = ~text,
             hoverinfo = 'text') %>%
-  add_lines(data = dat %>% filter(var == 'rain'), y = ~record,
-            line = list(color = 'transparent'),
-            fill = 'tozeroy',
-            fillcolor = scales::alpha('gray80', alpha = 0.5),
-            hoverinfo = 'none',
-            yaxis = 'y2') %>%
+  # add_lines(data = dat %>% filter(var == 'rain'), y = ~record,
+  #           line = list(color = 'transparent'),
+  #           fill = 'tozeroy',
+  #           fillcolor = scales::alpha('gray80', alpha = 0.5),
+  #           hoverinfo = 'none',
+  #           yaxis = 'y2') %>%
   add_trace(data = dat %>% filter(var == 'rain'), y = ~value, 
             type = 'scatter', mode = 'lines',
             line = list(color = pointblue.palette[1]),
@@ -102,12 +96,14 @@ plot1 <- plot_ly(x = ~date) %>%
                               size = 14),
                   showarrow = FALSE,
                   visible = TRUE) %>%
-  layout(yaxis = list(title = 'Temperature (F)',
+  layout(yaxis = list(range = c(0, 90),
+                      title = 'Temperature (F)',
                       gridcolor = 'white',
                       font = list(family = 'sans-serif',
                                   size = 14)),
          yaxis2 = list(overlaying = 'y',
                        side = 'right',
+                       range = c(0, 8),
                        title = NA,
                        gridcolor = 'white',
                        font = list(family = 'sans-serif',
@@ -125,10 +121,6 @@ plot1 <- plot_ly(x = ~date) %>%
                                             step = "month",
                                             stepmode = "backward"),
                                        list(count = 1,
-                                            label = "1 yr",
-                                            step = "year",
-                                            stepmode = "backward"),
-                                       list(count = 1,
                                             label = "YTD",
                                             step = "year",
                                             stepmode = "todate"),
@@ -142,7 +134,7 @@ plot1 <- plot_ly(x = ~date) %>%
          hovermode = 'x',
          dragmode = 'pan',
          margin = list(r = 80)) %>%
-    rangeslider('2018-01-01', '2018-10-24', thickness = 0.05) %>%
+    rangeslider('2018-01-01', '2018-12-31', thickness = 0.05) %>%
     config(collaborate = FALSE, displaylogo = FALSE)
 
 
