@@ -21,10 +21,14 @@ pointblue.palette <-
     '#a7a9ac',
     '#666666')
 
+tk.palette <- c('#3b4035', '#9c8755', '#61655c',
+                '#d1bc8b', '#40696f', '#2e5150',
+                '#5f5131', '#9e513a')
+
 
 # DATA SET UP----------------
 
-dat <- read_csv(here::here(masterdat)) %>%
+dat <- read_csv(here::here(masterdat), col_types = cols()) %>%
   rename(high = temp.max,
          low = temp.min,
          rain = rain.in) %>%
@@ -59,7 +63,7 @@ plot1 <- plot_ly(x = ~date) %>%
   add_lines(data = dat %>% filter(var == 'low'), y = ~record, 
             line = list(color = 'transparent'),
             fill = 'tonexty',
-            fillcolor = scales::alpha(pointblue.palette[6], alpha = 0.3),
+            fillcolor = scales::alpha('gray80', alpha = 0.5),
             hoverinfo = 'none') %>%
   add_trace(data = dat %>% filter(var == 'high'), y = ~value, 
             type = 'scatter', mode = 'lines',
@@ -76,7 +80,7 @@ plot1 <- plot_ly(x = ~date) %>%
   add_lines(data = dat %>% filter(var == 'rain'), y = ~record,
             line = list(color = 'transparent'),
             fill = 'tozeroy',
-            fillcolor = scales::alpha(pointblue.palette[6], alpha = 0.3),
+            fillcolor = scales::alpha('gray80', alpha = 0.5),
             hoverinfo = 'none',
             yaxis = 'y2') %>%
   add_trace(data = dat %>% filter(var == 'rain'), y = ~value, 
@@ -94,18 +98,24 @@ plot1 <- plot_ly(x = ~date) %>%
                   xref = 'paper',
                   yref = 'paper',
                   yanchor = 'middle',
-                  font = list(size = 14),
+                  font = list(family = 'sans-serif',
+                              size = 14),
                   showarrow = FALSE,
                   visible = TRUE) %>%
   layout(yaxis = list(title = 'Temperature (F)',
                       gridcolor = 'white',
-                      font = list(size = 14)),
+                      font = list(family = 'sans-serif',
+                                  size = 14)),
          yaxis2 = list(overlaying = 'y',
                        side = 'right',
                        title = NA,
-                       gridcolor = 'white'),
+                       gridcolor = 'white',
+                       font = list(family = 'sans-serif',
+                                   size = 14)),
          xaxis = list(title = NA, 
                       type = 'date',
+                      font = list(family = 'sans-serif',
+                                  size = 14),
                       rangeselector = list(buttons = list(list(count = 3,
                                             label = "3 mo",
                                             step = "month",
@@ -123,9 +133,11 @@ plot1 <- plot_ly(x = ~date) %>%
                                             step = "year",
                                             stepmode = "todate"),
                                        list(step = "all")),
-                        font = list(color = 'white'),
-                        bgcolor = pointblue.palette[4],
-                        activecolor = pointblue.palette[1])),
+                                       font = list(family = 'sans-serif',
+                                                   size = 14,
+                                                   color = 'white'),
+                                       bgcolor = tk.palette[2],
+                                       activecolor = tk.palette[5])),
          showlegend = FALSE,
          hovermode = 'x',
          dragmode = 'pan',
