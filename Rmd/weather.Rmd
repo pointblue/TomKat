@@ -39,8 +39,6 @@ palette = pal(7)
 
 ```
 
-<a id="top"></a>
-
 Weather
 =========================
 ####Point Blue Conservation Science established a weather station at TomKat Ranch in September 2010. Since 2013, we have observed [consistently warm and dry weather](#diff) and [extreme drought](#drought) conditions.{#intro}
