@@ -97,3 +97,25 @@ rmarkdown::render(here::here("Rmd/weather.Rmd"),
                   output_file = here::here("weather.html"))
 
 
+# WATER-------------------
+# process & clean stream data; daily & monthly stats
+source('code/stream_prep.R')
+
+# produce daily timeseries (stream graph 1)
+source('code/stream_graph1.R')
+
+# produce monthly timeseries (stream graph 2)
+source('code/stream_graph2.R')
+
+
+## render Rmd to html
+rmarkdown::render(here::here("Rmd/stream.Rmd"),
+                  output_file = here::here("stream.html"))
+
+
+## Note: temperatures above 23 bad for adult steelhead trout; 
+##   optimal for juvenile growth is 15-18
+## Other ideas: Include daily precip in height plot; 
+##   Plot height/temp vs. days after rain? 
+##   Include map showing gauge location & topography/water catchment area?
+
