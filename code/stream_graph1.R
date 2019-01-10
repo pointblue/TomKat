@@ -70,8 +70,8 @@ p3 <- plot_ly(data = dat, x = ~date, y = ~stage.ft_mean,
 plot1 <- subplot(p1, p2, p3, nrows = 3, shareX = TRUE, titleY = TRUE) %>%
   layout(xaxis = list(title = NA, type = 'date',
                       font = list(family = 'sans-serif', size = 14),
-                      rangeselector = list(buttons = list(
-                                       list(count = 1,
+                      rangeselector = list(
+                        buttons = list(list(count = 1,
                                             label = "1 yr",
                                             step = "year",
                                             stepmode = "backward"),
@@ -85,8 +85,7 @@ plot1 <- subplot(p1, p2, p3, nrows = 3, shareX = TRUE, titleY = TRUE) %>%
                                        activecolor = tk.palette[5])),
          showlegend = FALSE,
          hovermode = 'x',
-         dragmode = 'pan',
-         margin = list(r = 80)) %>%
+         dragmode = 'pan') %>%
     rangeslider('2017-08-16', '2018-08-16', thickness = 0.05) %>%
   config(collaborate = FALSE, displaylogo = FALSE, showTips = FALSE,
          modeBarButtonsToRemove = list('zoom2d', 'select2d', 'lasso2d', 
