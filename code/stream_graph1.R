@@ -36,7 +36,8 @@ p1 <- plot_ly(data = dat, x = ~date, y = ~temp.C_mean,
               line = list(color = pointblue.palette[3]),
               text = paste0('Temp (C): ', 
                             htmlTable::txtRound(dat$temp.C_mean, digits = 2)),
-              hoverinfo = 'x+text') %>%
+              hoverinfo = 'x+text',
+              hoverlabel = standardfonts) %>%
   layout(yaxis = list(title = 'Temperature (C)',
                       range = c(0, 20),
                       gridcolor = 'white',
@@ -48,7 +49,8 @@ p2 <- plot_ly(data = dat, x = ~date, y = ~flow.cfs_mean,
               line = list(color = pointblue.palette[2]),
               text = paste0('Flow (cfs): ', 
                             htmlTable::txtRound(dat$flow.cfs_mean, digits = 2)),
-              hoverinfo = 'x+text') %>%
+              hoverinfo = 'x+text',
+              hoverlabel = standardfonts) %>%
   layout(yaxis = list(title = 'Flow (cfs)',
                       range = c(0, 100),
                       gridcolor = 'white',
@@ -60,7 +62,8 @@ p3 <- plot_ly(data = dat, x = ~date, y = ~stage.ft_mean,
               line = list(color = pointblue.palette[4]),
               text = paste0('Temp (C): ', 
                             htmlTable::txtRound(dat$stage.ft_mean, digits = 2)),
-              hoverinfo = 'x+text') %>%
+              hoverinfo = 'x+text',
+              hoverlabel = standardfonts) %>%
   layout(yaxis = list(title = 'Depth (ft)',
                       range = c(0, 5),
                       gridcolor = 'white',
@@ -69,7 +72,7 @@ p3 <- plot_ly(data = dat, x = ~date, y = ~stage.ft_mean,
 
 plot1 <- subplot(p1, p2, p3, nrows = 3, shareX = TRUE, titleY = TRUE) %>%
   layout(xaxis = list(title = NA, type = 'date',
-                      font = list(family = 'sans-serif', size = 14),
+                      tickfont = standardfonts,
                       rangeselector = list(
                         buttons = list(list(count = 1,
                                             label = "1 yr",

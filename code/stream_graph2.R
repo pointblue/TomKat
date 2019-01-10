@@ -36,7 +36,8 @@ p1 <- plot_ly(data = dat, x = ~date, y = ~diff_temp.C, type = 'bar',
               color = ~I(pointblue.palette[3]), 
               text = paste0('Temp (C): ', 
                             htmlTable::txtRound(dat$diff_temp.C, digits = 2)),
-              hoverinfo = 'x+text') %>%
+              hoverinfo = 'x+text',
+              hoverlabel = standardfonts) %>%
   layout(yaxis = list(title = 'Temperature (C)',
                       range = c(-5, 5),
                       gridcolor = 'white',
@@ -47,7 +48,8 @@ p2 <- plot_ly(data = dat, x = ~date, y = ~diff_flow.cfs, type = 'bar',
               color = ~I(pointblue.palette[2]),
               text = paste0('Flow (cfs): ', 
                             htmlTable::txtRound(dat$diff_flow.cfs, digits = 2)),
-              hoverinfo = 'x+text') %>%
+              hoverinfo = 'x+text',
+              hoverlabel = standardfonts) %>%
   layout(yaxis = list(title = 'Flow (cfs)',
                       range = c(-5, 10),
                       gridcolor = 'white',
@@ -58,7 +60,8 @@ p3 <- plot_ly(data = dat, x = ~date, y = ~diff_stage.ft, type = 'bar',
               color = ~I(pointblue.palette[4]),
               text = paste0('Temp (C): ', 
                             htmlTable::txtRound(dat$diff_stage.ft, digits = 2)),
-              hoverinfo = 'x+text') %>%
+              hoverinfo = 'x+text',
+              hoverlabel = standardfonts) %>%
   layout(yaxis = list(title = 'Depth (ft)',
                       range = c(-1, 1),
                       gridcolor = 'white',
