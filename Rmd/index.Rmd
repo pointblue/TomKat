@@ -20,4 +20,4 @@ This page serves as an index to the individual ranch data pages. Links will be u
 * [DRAFT vegetation](vegetation.html) (2019-01-07)
 * [DRAFT water](stream.html) 2019-01-09
 * [DRAFT birds](birds.html) (2019-01-04)
-* management
+* [DRAFT management](mgmt.html) (2019-01-15)
