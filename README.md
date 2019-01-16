@@ -11,7 +11,8 @@ All draft pages are still being refined and edited, but the latest versions are 
 
 #### Overall
 
--   Major structural overhaul, with each display piece produced independently \# Hosted on Github
+-   Major structural overhaul to work with new TomKat website, with each display piece produced independently
+-   Hosted on Github
 -   **TO DO:** Update text on all pages to provide context relative to SMART goals and region (e.g. grassland bird declines)
 
 #### Weather
@@ -43,7 +44,7 @@ All draft pages are still being refined and edited, but the latest versions are 
 
 -   All stream gauge data included through August 16, 2018
 -   Switch from dygraphs to plotly graphics
--   **Wishlist:** Add info about steelhead, water quality data
+-   **Future wishlist:** Add info about steelhead, water quality data
 
 #### Birds
 
