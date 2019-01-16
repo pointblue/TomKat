@@ -1,9 +1,8 @@
 ---
 title: ''
 output:
-  html_document:
-    theme: NULL
-    css: Rmd/tk_page_style.css
+  md_document:
+    variant: markdown_github
 ---
 
 TomKat State of the Ranch Data Pages
