@@ -119,3 +119,14 @@ rmarkdown::render(here::here("Rmd/stream.Rmd"),
 ##   Plot height/temp vs. days after rain? 
 ##   Include map showing gauge location & topography/water catchment area?
 
+
+# MANAGEMENT----------------
+# process & clean data from PastureMap
+source('code/mgmt_prep.R')
+
+# produce mgmt maps 1 & 2
+source('code/mgmt_maps1-2.R')
+
+## render Rmd to html
+rmarkdown::render(here::here("Rmd/mgmt.Rmd"),
+                  output_file = here::here("mgmt.html"))
