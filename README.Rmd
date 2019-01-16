@@ -14,6 +14,11 @@ All draft pages are still being refined and edited, but the latest versions are 
 
 ### CHANGES IN 2018:
 
+#### Overall
+* Major structural overhaul, with each display piece produced independently
+# Hosted on Github
+* __TO DO:__ Update text on all pages to provide context relative to SMART goals and region (e.g. grassland bird declines)
+
 #### Weather
 * All local weather station data included through December 17, 2018
 * Regional drought index data included through November 2018
@@ -53,8 +58,4 @@ All draft pages are still being refined and edited, but the latest versions are 
 * Summary statistics (ADA and total grazing days) recalculated with new data
 * __Future wishlist:__ Add map of ranch trials, mowing history, grazing chart
 
-#### Overall
-* Hosted on Github
-* Each display piece produced independently to facilitate hosting
-* __TO DO:__ Update text on all pages to provide context relative to SMART goals and region (e.g. grassland bird declines)
 
