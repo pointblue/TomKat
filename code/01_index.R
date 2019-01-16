@@ -2,11 +2,14 @@
 # Master script file
 # Best practice: restart R after each call (ctrl+shift+F10)
 
-# INDEX------------------
+
+# INDEX & README------------------
 # render Rmd to html
 rmarkdown::render(here::here("Rmd/index.Rmd"), 
                   output_file = here::here("index.html"))
 
+rmarkdown::render(here::here("README.Rmd"),
+                  output_file = here::here("README.html"))
 
 # BIRDS----------------
 # process & clean data (create master bird file and density estimates)
