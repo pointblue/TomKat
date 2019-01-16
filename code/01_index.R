@@ -8,7 +8,7 @@
 rmarkdown::render(here::here("Rmd/index.Rmd"), 
                   output_file = here::here("index.html"))
 
-rmarkdown::render(here::here("README.Rmd"),
+rmarkdown::render(here::here("Rmd/README.Rmd"),
                   output_file = here::here("README.md"))
 
 # BIRDS----------------
