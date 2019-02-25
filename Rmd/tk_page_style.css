@@ -1,9 +1,10 @@
 h1 {
   font-family: 'AlbertusNova-Light';
   color: #9c8755;
-  font-size: 24px;
-  line-height: 32px;
+  font-size: 40px;
+  line-height: 44px;
   text-align: center;
+  font-style: normal;
 }
 h3 {
   font-family: Roboto,Helvetica,Arial,Lucida,sans-serif !important;
