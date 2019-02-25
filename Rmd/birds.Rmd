@@ -38,10 +38,9 @@ nsurveys <- dat %>%
 
 Birds
 ===============================
-####Since 2010, Point Blue Conservation Science has conducted <b>`r format(nsurveys, big.mark=',')` bird surveys</b> across TomKat Ranch during May and June and detected a total of <b>`r nspecies` bird species</b>. Each year, biologists conduct point count surveys for birds at a random sample of points chosen from a grid across the ranch, as well as at 12 points in riparian vegetation along Honsinger Creek. We analyzed this data to examine spatial patterns in [grassland bird abundance](#distribution) and [species richness](#richness) across the ranch, as well as ranch-wide [trends in grassland bird abundance](#trends) and [trends in species richness](#richtrend). {#intro}
+####Since 2010, Point Blue Conservation Science has conducted <b>`r format(nsurveys, big.mark=',')` bird surveys</b> across TomKat Ranch during May and June and detected a total of <b>`r nspecies` bird species</b>. Each year, biologists conduct point count surveys for birds at a random sample of points chosen from a grid across the ranch, as well as at 12 points in riparian vegetation along Honsinger Creek. We analyzed this data to examine spatial patterns and trends in species richness and in grassland bird abundance across the ranch.{#intro}
 
 
-<a id='distribution'></a>
 
 ### Average focal species abundance 
 
@@ -51,22 +50,20 @@ The density of grassland focal species (Grasshopper Sparrow and Savannah Sparrow
 <i>Choose a focal species at bottom left. Click on any of the grid cells for the density estimate.</i>
 
 <center>
-<iframe src="bird_map1.html" style="border: none;" width = 80%; height = 550px;></iframe>
+<iframe src="bird_map1.html" style="border: none;" width = 90%; height = 550px;></iframe>
 </center>
 
 
-<a id='trends'></a>  
 
 ### Focal species declines 
   
 Since 2010, we have observed a slight ranch-wide decline in the density of Savannah Sparrows and Grasshopper Sparrows.
 
 <center>
-<iframe src="bird_graph1.html" style="border: none;" width = 80%; height = 450px;></iframe>
+<iframe src="bird_graph1.html" style="border: none;" width = 90%; height = 450px;></iframe>
 </center>
 
 
-<a id='richness'></a>  
 
 ### Species richness concentrated along Honsinger Creek  
   
@@ -75,24 +72,23 @@ The shading in this map shows the estimated number of species ever detected near
 <i>Click on any of the points or grid cells for the number of species detected.</i>
 
 <center>
-<iframe src="bird_map2.html" style="border: none;" width = 80%; height = 550px;></iframe>
+<iframe src="bird_map2.html" style="border: none;" width = 90%; height = 550px;></iframe>
 </center>
 
 
-<a id='richtrend'></a>
 
 ### Decline in grassland species richness  
 Ranch-wide, there were initially more total species in grassland point than in riparian points, but grassland species richness has declined in recent years while riparian richness has remained steady through the drought.
 
 <center>
-<iframe src="bird_graph2.html" style="border: none;" width = 80%; height = 450px;></iframe>
+<iframe src="bird_graph2.html" style="border: none;" width = 90%; height = 450px;></iframe>
 </center>
 
 -------------
 
 ### About this page
 
-This interactive web page was produced in [R](https://www.R-project.org/) using [rmarkdown](https://rmarkdown.rstudio.com/) and the packages [leaflet](http://rstudio.github.io/leaflet/) and [plotly](https://plot.ly/r/). The code used to produce this web page is available on [Github](https://github.com/pointblue/tomkat).
+This interactive web page was produced in [R](https://www.R-project.org/){target="_blank"} using [rmarkdown](https://rmarkdown.rstudio.com/){target="_blank"} and the packages [leaflet](http://rstudio.github.io/leaflet/){target="_blank"} and [plotly](https://plot.ly/r/){target="_blank"}. The code used to produce this web page is available on [Github](https://github.com/pointblue/tomkat){target="_blank"}.
 
 
 ### For more information
@@ -101,5 +97,4 @@ Please contact:
 [Nat Seavy, Ph.D.](mailto:nseavy@pointblue.org)  
 Research Director  
 Pacific Coast and Central Valley Group  
-Point Blue Conservation Science  
-
+[Point Blue Conservation Science](https://www.pointblue.org){target="_blank"}
