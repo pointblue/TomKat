@@ -96,7 +96,7 @@ plot1 <- plot_ly(x = ~Year) %>%
          legend = list(x = 0.01, xanchor = 'left', y = 1, yanchor = 'top',
                        bordercolor = ~I('black'), borderwidth = 1),
          hovermode = 'x',
-         margin = list(l = 25, r = 25, b = 25, t = 25, pad = 1)) %>%
+         margin = list(l = 0, r = 0, b = 10, t = 10)) %>%
   config(collaborate = FALSE, displaylogo = FALSE, showTips = FALSE,
          modeBarButtonsToRemove = list('zoom2d', 'select2d', 'lasso2d', 
                                        'zoomIn2d', 'zoomOut2d', 
