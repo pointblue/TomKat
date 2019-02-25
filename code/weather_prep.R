@@ -43,6 +43,7 @@ dat2 <- read_csv(here::here(olddat), skip = 2, col_types = cols()) %>%
          temp.F = as.numeric(temp.F),
          rain.in = as.numeric(rain.in)) %>%
   filter(time == '00') %>%  # drop to one hour time intervals for comparability
+  filter(temp.F >= 30) %>% # remove few very negative temps (appear to be errors)
   group_by(date) %>% #daily summary
   summarize(n.temp = sum(!is.na(temp.F)),
             temp.max = max(temp.F, na.rm = T),
