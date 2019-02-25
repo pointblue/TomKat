@@ -52,14 +52,14 @@ dat <- read_csv(here::here(masterdat), col_types = cols()) %>%
 
 p1 <- plot_ly(dat %>% filter(var == 'High'), x = ~date, y = ~diff, type = 'bar',
               color = ~I(color), text = ~text, hoverinfo = 'x+text') %>%
-  layout(yaxis = list(title = 'High (°F)',
+  layout(yaxis = list(title = 'High (F)',
                       font = list(size = 14, family = 'sans-serif')),
          xaxis = list(title = NA,
                       font = list(size = 14, family = 'sans-serif')))
 
 p2 <- plot_ly(dat %>% filter(var == 'Low'), x = ~date, y = ~diff, type = 'bar',
               color = ~I(color), text = ~text, hoverinfo = 'x+text') %>%
-  layout(yaxis = list(title = 'Low (°F)',
+  layout(yaxis = list(title = 'Low (F)',
                       font = list(size = 14, family = 'sans-serif')),
          xaxis = list(title = NA,
                       font = list(size = 14, family = 'sans-serif')))
