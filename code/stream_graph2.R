@@ -74,7 +74,8 @@ plot2 <- subplot(p1, p2, p3, nrows = 3, shareX = TRUE, titleY = TRUE) %>%
                       gridcolor = 'gray60'),
          showlegend = FALSE,
          hovermode = 'x',
-         dragmode = 'pan') %>%
+         dragmode = 'pan',
+         margin = list(l = 25, r = 25, b = 25, t = 25, pad = 1)) %>%
   config(collaborate = FALSE, displaylogo = FALSE, showTips = FALSE,
          modeBarButtonsToRemove = list('zoom2d', 'select2d', 'lasso2d', 
                                        'zoomIn2d', 'zoomOut2d', 

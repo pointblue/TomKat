@@ -88,7 +88,8 @@ plot1 <- subplot(p1, p2, p3, nrows = 3, shareX = TRUE, titleY = TRUE) %>%
                                        activecolor = tk.palette[5])),
          showlegend = FALSE,
          hovermode = 'x',
-         dragmode = 'pan') %>%
+         dragmode = 'pan',
+         margin = list(l = 25, r = 25, b = 25, t = 25, pad = 1)) %>%
     rangeslider('2017-08-16', '2018-08-16', thickness = 0.05) %>%
   config(collaborate = FALSE, displaylogo = FALSE, showTips = FALSE,
          modeBarButtonsToRemove = list('zoom2d', 'select2d', 'lasso2d', 
