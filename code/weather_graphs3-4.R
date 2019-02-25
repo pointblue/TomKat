@@ -133,7 +133,8 @@ plot3 <- plot_ly() %>%
                        bordercolor = I('black'), borderwidth = 1,
                        font = list(size = 14, family = 'sans-serif')),
          hovermode = 'x',
-         dragmode = 'pan') %>%
+         dragmode = 'pan',
+         margin = list(l = 25, r = 25, b = 25, t = 25)) %>%
   layout(annotations = list(xref = 'paper', x = 0.01, xanchor = 'left',
                            yref = 'y', y = 4, yanchor = 'bottom',
                            text = ~paste('Extremely moist'),
@@ -266,7 +267,8 @@ plot4 <- plot_ly(zdat, x = ~date) %>%
                        bordercolor = ~I('black'), borderwidth = 1,
                        font = list(family = 'sans-serif', size = 14)),
          hovermode = 'x',
-         dragmode = 'pan') %>%
+         dragmode = 'pan',
+         margin = list(l = 25, r = 25, b = 25, t = 25, pad = 1)) %>%
   layout(annotations = list(xref = 'paper', x = 0.01, xanchor = 'left',
                             yref = 'y', y = 3.5, yanchor = 'bottom',
                             text = ~paste('Extremely moist'),

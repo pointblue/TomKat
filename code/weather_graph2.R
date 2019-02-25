@@ -76,6 +76,7 @@ plot2 <- subplot(p1, p2, p3, nrows = 3, shareX = TRUE, titleY = TRUE) %>%
   layout(showlegend = FALSE,
          hovermode = 'x',
          dragmode = 'pan',
+         margin = list(l = 25, r = 25, b = 25, t = 25, pad = 1),
          xaxis = list(range = c('2010-10-01', '2018-12-31'),
                       rangeselector = list(buttons = list(list(count = 1,
                                                                label = "YTD",

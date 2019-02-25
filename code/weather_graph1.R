@@ -133,7 +133,7 @@ plot1 <- plot_ly(x = ~date) %>%
          showlegend = FALSE,
          hovermode = 'x',
          dragmode = 'pan',
-         margin = list(r = 80)) %>%
+         margin = list(l = 25, r = 50, b = 25, t = 25, pad = 1)) %>%
     rangeslider('2018-01-01', '2018-12-31', thickness = 0.05) %>%
   config(collaborate = FALSE, displaylogo = FALSE, showTips = FALSE,
          modeBarButtonsToRemove = list('zoom2d', 'select2d', 'lasso2d', 
