@@ -10,6 +10,11 @@ Management
 ===============================
 ####In 2016 and 2017, TomKat Ranch staff recorded the movement of animals in and out of fields to track grazing intensity in each field. Point Blue Conservation Science summarized these data as the total number of days grazed and the number of animal-days per acre (ADA) by season.{#intro}
 
+### Guiding Principle
+
+Manipulate timing, intensity and duration of grazing events in a way that supports livestock health while also improving ecological functioning on the landscape (as measured by our goals).
+
+
 ### Animal Days per Acre (ADA)
 
 <i>Choose a season at bottom left. Click on any of the fields to learn more.</i>

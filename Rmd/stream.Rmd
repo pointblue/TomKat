@@ -15,6 +15,11 @@ Water
 ================================
 ####Beginning July 2011, Point Blue Conservation Science installed a stream gauge on Honsinger Creek and began monitoring water temperature, stream flow, and stage, with assistance from Trout Unlimited. {#intro}
 
+### SMART Goal
+
+<b>Perennial flow:</b> Maintain year-round flow, even in drought years.
+
+
 ### Daily water temperature, flow, and stage
 Daily average <font color='`r pointblue.palette[3]`'><b>water temperature</b></font>, <font color='`r pointblue.palette[2]`'><b>stream flow </b></font>, and <font color='`r pointblue.palette[1]`'><b>stage</b></font> from the Honsinger Creek stream gauge, along with the daily range observed.
 
