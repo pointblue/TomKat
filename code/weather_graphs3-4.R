@@ -76,21 +76,6 @@ hline <- function(y = 0, color = "blue") {
 }
   
 plot3 <- plot_ly() %>%
-  # add_trace(data = dcat %>% filter(group %in% c('C','D')), 
-  #           x = ~xlimit, y = ~ylimit, color = ~group,
-  #           type = 'scatter', mode = 'lines', hoverinfo = 'none', showlegend = FALSE,
-  #           transforms = list(list(type = 'groupby', 
-  #                                  groups = dcat %>% 
-  #                                    filter(group %in% c('C', 'D')) %>% 
-  #                                    select(group),
-  #                                  styles = list(
-  #                                    list(target = 'A', value = list(line = list(color = palette[1], width = 0.4))),
-  #                                    list(target = 'B', value = list(line = list(color = palette[2], width = 0.4))),
-  #                                    list(target = 'C', value = list(line = list(color = palette[3], width = 0.4))),
-  #                                    list(target = 'D', value = list(line = list(color = palette[5], width = 0.4))),
-  #                                    list(target = 'E', value = list(line = list(color = palette[6], width = 0.4))),
-  #                                    list(target = 'F', value = list(line = list(color = palette[7], width = 0.4)))
-  #                                  )))) %>%
   add_trace(data = pdat %>% filter(label == 'North coast'), x = ~date, y = ~value,
             type = 'scatter', mode = 'lines+markers', name = 'North coast',
             text = ~text, hoverinfo = 'x+text',
@@ -112,29 +97,17 @@ plot3 <- plot_ly() %>%
   layout(shapes = list(hline(2, color = palette[3]),
                        hline(-2, color = palette[5])),
          yaxis = list(title = NA, showgrid = FALSE, zeroline = FALSE,
-                      font = list(family = 'sans-serif', size = 14)),
+                      font = list(family = 'sans-serif', size = 14),
+                      automargin = TRUE),
          xaxis = list(title = NA, type = 'date',
-                      font = list(family = 'sans-serif', size = 14)
-                      # rangeselector = list(buttons = list(list(count = 1,
-                      #                                          label = "YTD",
-                      #                                          step = "year",
-                      #                                          stepmode = "todate"),
-                      #                                     list(count = 2,
-                      #                                          label = "2 yrs",
-                      #                                          step = "year",
-                      #                                          stepmode = "todate"),
-                      #                                     list(step = "all")),
-                      #                      font = list(color = 'white', size = 12),
-                      #                      bgcolor = pointblue.palette[4],
-                      #                      activecolor = pointblue.palette[1])
-                      ),
+                      font = list(family = 'sans-serif', size = 14)),
          legend = list(x = 1, xanchor = 'right', y = 1, yanchor = 'top',
                        bgcolor = I('white'), 
                        bordercolor = I('black'), borderwidth = 1,
                        font = list(size = 14, family = 'sans-serif')),
          hovermode = 'x',
          dragmode = 'pan',
-         margin = list(l = 25, r = 25, b = 25, t = 25)) %>%
+         margin = list(r = 0, b = 10, t = 10)) %>%
   layout(annotations = list(xref = 'paper', x = 0.01, xanchor = 'left',
                            yref = 'y', y = 4, yanchor = 'bottom',
                            text = ~paste('Extremely moist'),
@@ -217,17 +190,6 @@ zcat <- tibble(group = c('A', 'A', 'B', 'B', 'C', 'C', 'D', 'D', 'E', 'E', 'F', 
 
 
 plot4 <- plot_ly(zdat, x = ~date) %>%
-  # add_trace(data = zcat, x = ~xlimit, y = ~ylimit, color = ~group,
-  #           type = 'scatter', mode = 'lines', hoverinfo = 'none', showlegend = FALSE,
-  #           transforms = list(list(type = 'groupby', groups = dcat$group,
-  #                                  styles = list(
-  #                                    list(target = 'A', value = list(line = list(color = palette[1], width = 0.4))),
-  #                                    list(target = 'B', value = list(line = list(color = palette[2], width = 0.4))),
-  #                                    list(target = 'C', value = list(line = list(color = palette[3], width = 0.4))),
-  #                                    list(target = 'D', value = list(line = list(color = palette[5], width = 0.4))),
-  #                                    list(target = 'E', value = list(line = list(color = palette[6], width = 0.4))),
-  #                                    list(target = 'F', value = list(line = list(color = palette[7], width = 0.4)))
-  #                                  )))) %>%
   add_trace(data = zdat %>% filter(division == 'PZI.01'), x = ~date, y = ~value,
             type = 'scatter', mode = 'lines+markers', name = 'North coast',
             text = ~text, hoverinfo = 'x+text',
@@ -250,25 +212,17 @@ plot4 <- plot_ly(zdat, x = ~date) %>%
                        hline(-1.25, color = palette[5])),
          yaxis = list(title = NA, showgrid = FALSE, zeroline = FALSE,
                       font = list(family = 'sans-serif',
-                                  size = 14)),
+                                  size = 14),
+                      automargin = TRUE),
          xaxis = list(title = NA, type = 'date',
-                      font = list(family = 'sans-serif', size = 14)
-                      # rangeselector = list(buttons = list(list(count = 365,
-                      #                                          label = "2018",
-                      #                                          step = "day",
-                      #                                          stepmode = "backward"),
-                      #                                     list(step = "all")),
-                      #                      font = list(color = 'white', size = 12),
-                      #                      bgcolor = tk.palette[2],
-                      #                      activecolor = tk.palette[5])
-                      ),
+                      font = list(family = 'sans-serif', size = 14)),
          legend = list(x = 1, xanchor = 'right', y = 1, yanchor = 'top',
                        bgcolor = ~I('white'), 
                        bordercolor = ~I('black'), borderwidth = 1,
                        font = list(family = 'sans-serif', size = 14)),
          hovermode = 'x',
          dragmode = 'pan',
-         margin = list(l = 25, r = 25, b = 25, t = 25, pad = 1)) %>%
+         margin = list(r = 0, b = 10, t = 10)) %>%
   layout(annotations = list(xref = 'paper', x = 0.01, xanchor = 'left',
                             yref = 'y', y = 3.5, yanchor = 'bottom',
                             text = ~paste('Extremely moist'),

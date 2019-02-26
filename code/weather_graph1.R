@@ -100,7 +100,8 @@ plot1 <- plot_ly(x = ~date) %>%
                       title = 'Temperature (F)',
                       gridcolor = 'white',
                       font = list(family = 'sans-serif',
-                                  size = 14)),
+                                  size = 14),
+                      automargin = TRUE),
          yaxis2 = list(overlaying = 'y',
                        side = 'right',
                        range = c(0, 8),
@@ -133,7 +134,7 @@ plot1 <- plot_ly(x = ~date) %>%
          showlegend = FALSE,
          hovermode = 'x',
          dragmode = 'pan',
-         margin = list(l = 25, r = 50, b = 25, t = 25, pad = 1)) %>%
+         margin = list(r = 0, b = 10, t = 10)) %>%
     rangeslider('2018-01-01', '2018-12-31', thickness = 0.05) %>%
   config(collaborate = FALSE, displaylogo = FALSE, showTips = FALSE,
          modeBarButtonsToRemove = list('zoom2d', 'select2d', 'lasso2d', 

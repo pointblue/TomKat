@@ -42,7 +42,8 @@ p1 <- plot_ly(data = dat, x = ~date, y = ~temp.C_mean,
                       range = c(0, 20),
                       gridcolor = 'white',
                       titlefont = standardfonts,
-                      tickfont = standardfonts))
+                      tickfont = standardfonts,
+                      automargin = TRUE))
 
 p2 <- plot_ly(data = dat, x = ~date, y = ~flow.cfs_mean, 
               type = 'scatter', mode = 'lines',
@@ -55,7 +56,8 @@ p2 <- plot_ly(data = dat, x = ~date, y = ~flow.cfs_mean,
                       range = c(0, 100),
                       gridcolor = 'white',
                       titlefont = standardfonts,
-                      tickfont = standardfonts))
+                      tickfont = standardfonts,
+                      automargin = TRUE))
 
 p3 <- plot_ly(data = dat, x = ~date, y = ~stage.ft_mean, 
               type = 'scatter', mode = 'lines',
@@ -68,7 +70,8 @@ p3 <- plot_ly(data = dat, x = ~date, y = ~stage.ft_mean,
                       range = c(0, 5),
                       gridcolor = 'white',
                       titlefont = standardfonts,
-                      tickfont = standardfonts))
+                      tickfont = standardfonts,
+                      automargin = TRUE))
 
 plot1 <- subplot(p1, p2, p3, nrows = 3, shareX = TRUE, titleY = TRUE) %>%
   layout(xaxis = list(title = NA, type = 'date',
@@ -89,7 +92,7 @@ plot1 <- subplot(p1, p2, p3, nrows = 3, shareX = TRUE, titleY = TRUE) %>%
          showlegend = FALSE,
          hovermode = 'x',
          dragmode = 'pan',
-         margin = list(l = 25, r = 25, b = 25, t = 25, pad = 1)) %>%
+         margin = list(r = 0, b = 10, t = 10)) %>%
     rangeslider('2017-08-16', '2018-08-16', thickness = 0.05) %>%
   config(collaborate = FALSE, displaylogo = FALSE, showTips = FALSE,
          modeBarButtonsToRemove = list('zoom2d', 'select2d', 'lasso2d', 

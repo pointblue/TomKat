@@ -130,7 +130,8 @@ plot1 <- plot_ly(x = ~Year) %>%
                       ticks = 'outside',
                       tick0 = 0,
                       range = c(0, 80),
-                      showgrid = FALSE),
+                      showgrid = FALSE,
+                      automargin = TRUE),
          xaxis = list(title = NA,
                       showline = TRUE,
                       ticks = 'outside',
@@ -139,7 +140,8 @@ plot1 <- plot_ly(x = ~Year) %>%
                        bordercolor = ~I('black'), borderwidth = 1,
                        font = list(family = 'sans-serif',
                                    size = 14)),
-         hovermode = 'x') %>%
+         hovermode = 'x',
+         margin = list(r = 0, b = 10, t = 10)) %>%
   config(collaborate = FALSE, displaylogo = FALSE, showTips = FALSE,
          modeBarButtonsToRemove = list('zoom2d', 'select2d', 'lasso2d', 
                                        'zoomIn2d', 'zoomOut2d', 
@@ -190,7 +192,8 @@ plot2 <- plot_ly(x = ~Year) %>%
                       ticks = 'outside',
                       tick0 = 0,
                       range = c(0, 80),
-                      showgrid = FALSE),
+                      showgrid = FALSE,
+                      automargin = TRUE),
          xaxis = list(title = NA,
                       showline = TRUE,
                       ticks = 'outside',
@@ -199,7 +202,8 @@ plot2 <- plot_ly(x = ~Year) %>%
                        bordercolor = ~I('black'), borderwidth = 1,
                        font = list(family = 'sans-serif',
                                    size = 14)),
-         hovermode = 'x') %>%
+         hovermode = 'x',
+         margin = list(r = 0, b = 10, t = 10)) %>%
   config(collaborate = FALSE, displaylogo = FALSE, showTips = FALSE,
          modeBarButtonsToRemove = list('zoom2d', 'select2d', 'lasso2d', 
                                        'zoomIn2d', 'zoomOut2d', 

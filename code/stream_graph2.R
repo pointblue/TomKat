@@ -42,7 +42,8 @@ p1 <- plot_ly(data = dat, x = ~date, y = ~diff_temp.C, type = 'bar',
                       range = c(-5, 5),
                       gridcolor = 'white',
                       titlefont = standardfonts,
-                      tickfont = standardfonts))
+                      tickfont = standardfonts,
+                      automargin = TRUE))
 
 p2 <- plot_ly(data = dat, x = ~date, y = ~diff_flow.cfs, type = 'bar', 
               color = ~I(pointblue.palette[2]),
@@ -54,7 +55,8 @@ p2 <- plot_ly(data = dat, x = ~date, y = ~diff_flow.cfs, type = 'bar',
                       range = c(-5, 10),
                       gridcolor = 'white',
                       titlefont = standardfonts,
-                      tickfont = standardfonts))
+                      tickfont = standardfonts,
+                      automargin = TRUE))
 
 p3 <- plot_ly(data = dat, x = ~date, y = ~diff_stage.ft, type = 'bar',
               color = ~I(pointblue.palette[4]),
@@ -66,7 +68,8 @@ p3 <- plot_ly(data = dat, x = ~date, y = ~diff_stage.ft, type = 'bar',
                       range = c(-1, 1),
                       gridcolor = 'white',
                       titlefont = standardfonts,
-                      tickfont = standardfonts))
+                      tickfont = standardfonts,
+                      automargin = TRUE))
 
 plot2 <- subplot(p1, p2, p3, nrows = 3, shareX = TRUE, titleY = TRUE) %>%
   layout(xaxis = list(title = NA, type = 'date',
@@ -75,7 +78,7 @@ plot2 <- subplot(p1, p2, p3, nrows = 3, shareX = TRUE, titleY = TRUE) %>%
          showlegend = FALSE,
          hovermode = 'x',
          dragmode = 'pan',
-         margin = list(l = 25, r = 25, b = 25, t = 25, pad = 1)) %>%
+         margin = list(r = 0, b = 10, t = 10)) %>%
   config(collaborate = FALSE, displaylogo = FALSE, showTips = FALSE,
          modeBarButtonsToRemove = list('zoom2d', 'select2d', 'lasso2d', 
                                        'zoomIn2d', 'zoomOut2d', 

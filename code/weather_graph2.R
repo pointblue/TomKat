@@ -53,21 +53,24 @@ dat <- read_csv(here::here(masterdat), col_types = cols()) %>%
 p1 <- plot_ly(dat %>% filter(var == 'High'), x = ~date, y = ~diff, type = 'bar',
               color = ~I(color), text = ~text, hoverinfo = 'x+text') %>%
   layout(yaxis = list(title = 'High (F)',
-                      font = list(size = 14, family = 'sans-serif')),
+                      font = list(size = 14, family = 'sans-serif'),
+                      automargin = TRUE),
          xaxis = list(title = NA,
                       font = list(size = 14, family = 'sans-serif')))
 
 p2 <- plot_ly(dat %>% filter(var == 'Low'), x = ~date, y = ~diff, type = 'bar',
               color = ~I(color), text = ~text, hoverinfo = 'x+text') %>%
   layout(yaxis = list(title = 'Low (F)',
-                      font = list(size = 14, family = 'sans-serif')),
+                      font = list(size = 14, family = 'sans-serif'),
+                      automargin = TRUE),
          xaxis = list(title = NA,
                       font = list(size = 14, family = 'sans-serif')))
 
 p3 <- plot_ly(dat %>% filter(var == 'Rain'), x = ~date, y = ~diff, type = 'bar',
               color = ~I(color), text = ~text, hoverinfo = 'x+text') %>%
   layout(yaxis = list(title = 'Precipitation (in)',
-                      font = list(size = 14, family = 'sans-serif')),
+                      font = list(size = 14, family = 'sans-serif'),
+                      automargin = TRUE),
          xaxis = list(title = NA,
                       font = list(size = 14, family = 'sans-serif')))
 
@@ -76,7 +79,7 @@ plot2 <- subplot(p1, p2, p3, nrows = 3, shareX = TRUE, titleY = TRUE) %>%
   layout(showlegend = FALSE,
          hovermode = 'x',
          dragmode = 'pan',
-         margin = list(l = 25, r = 25, b = 25, t = 25, pad = 1),
+         margin = list(r = 0, b = 10, t = 10),
          xaxis = list(range = c('2010-10-01', '2018-12-31'),
                       rangeselector = list(buttons = list(list(count = 1,
                                                                label = "YTD",

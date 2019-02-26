@@ -77,7 +77,8 @@ plot2 <- plot_ly(x = ~year) %>%
                       ticks = 'outside',
                       tick0 = 0,
                       range = c(0, 75),
-                      showgrid = FALSE),
+                      showgrid = FALSE,
+                      automargin = TRUE),
          xaxis = list(title = NA,
                       showline = TRUE,
                       ticks = 'outside',
@@ -85,7 +86,7 @@ plot2 <- plot_ly(x = ~year) %>%
          legend = list(x = 0.01, xanchor = 'left', y = 1, yanchor = 'top',
                        bordercolor = ~I('black'), borderwidth = 1),
          hovermode = 'x',
-         margin = list(l = 0, r = 0, b = 10, t = 10)) %>%
+         margin = list(r = 0, b = 10, t = 10)) %>%
   config(collaborate = FALSE, displaylogo = FALSE, showTips = FALSE,
          modeBarButtonsToRemove = list('zoom2d', 'select2d', 'lasso2d', 
                                        'zoomIn2d', 'zoomOut2d', 
