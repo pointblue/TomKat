@@ -13,7 +13,9 @@ All draft pages are still being refined and edited, but the latest versions are 
 
 -   Major structural overhaul to work with new TomKat website, with each display piece produced independently
 -   Hosted on Github
--   **TO DO:** Update text on all pages to provide context relative to SMART goals and region (e.g. grassland bird declines)
+-   Style/formatting matched to new TomKat Ranch website
+-   Added text describing SMART goals on each page
+-   **Future wishlist:** Add more context linking SMART goals to observations to date
 
 #### Weather
 
@@ -30,7 +32,7 @@ All draft pages are still being refined and edited, but the latest versions are 
 -   Marked soil sampling points where compost was added
 -   Made terrain easier to see
 -   **TO DO:** Add map showing soil fungal data
--   **Future wishlist:** Add soil nurients change map
+-   **Future wishlist:** Add soil nutrients change map
 
 #### Vegetation
 
