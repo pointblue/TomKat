@@ -5,7 +5,7 @@ TomKat State of the Ranch Data Pages
 
 ### CURRENT STATUS:
 
-All draft pages are still being refined and edited, but the latest versions are currently viewable at: [https://pointblue.github.io/TomKat](https://pointblue.github.io/TomKat/)
+All pages are currently viewable at: [https://pointblue.github.io/TomKat](https://pointblue.github.io/TomKat/)
 
 ### CHANGES IN 2018:
 
