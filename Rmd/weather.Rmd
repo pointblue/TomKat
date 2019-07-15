@@ -98,8 +98,8 @@ This interactive web page was produced in [R](https://www.R-project.org/){target
 ### For more information
 
 Please contact:  
-[Nat Seavy, Ph.D.](mailto:nseavy@pointblue.org)  
-Research Director  
-Pacific Coast and Central Valley Group  
-[Point Blue Conservation Science](https://www.pointblue.org){target="_blank"}  
+[Chelsea Carey, PhD](https://www.pointblue.org/employee_bios/chelsea-carey/){target="_blank"}
+Senior Soil Ecologist
+Working Lands Group  
+[Point Blue Conservation Science](https://www.pointblue.org){target="_blank"}
 
