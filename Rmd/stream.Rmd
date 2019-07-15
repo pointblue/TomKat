@@ -13,7 +13,7 @@ pointblue.palette = c("#3682C7", "#64AD34", "#F38118", "#00459A", "#B3D225",
 
 Water
 ================================
-####Beginning July 2011, Point Blue Conservation Science installed a stream gauge on Honsinger Creek and began monitoring water temperature, stream flow, and stage, with assistance from Trout Unlimited. {#intro}
+#### Beginning July 2011, Point Blue Conservation Science installed a stream gauge on Honsinger Creek and began monitoring water temperature, stream flow, and stage, with assistance from Trout Unlimited. {#intro}
 
 ### SMART Goal
 
