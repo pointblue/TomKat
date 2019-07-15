@@ -38,7 +38,7 @@ nsurveys <- dat %>%
 
 Birds
 ===============================
-####Since 2010, Point Blue Conservation Science has conducted <b>`r format(nsurveys, big.mark=',')` bird surveys</b> across TomKat Ranch during May and June and detected a total of <b>`r nspecies` bird species</b>. Each year, biologists conduct point count surveys for birds at a random sample of points chosen from a grid across the ranch, as well as at 12 points in riparian vegetation along Honsinger Creek. We analyzed this data to examine spatial patterns and trends in species richness and in grassland bird abundance across the ranch.{#intro}
+#### Since 2010, Point Blue Conservation Science has conducted <b>`r format(nsurveys, big.mark=',')` bird surveys</b> across TomKat Ranch during May and June and detected a total of <b>`r nspecies` bird species</b>. Each year, biologists conduct point count surveys for birds at a random sample of points chosen from a grid across the ranch, as well as at 12 points in riparian vegetation along Honsinger Creek. We analyzed this data to examine spatial patterns and trends in species richness and in grassland bird abundance across the ranch.{#intro}
 
 
 ### SMART Goals
