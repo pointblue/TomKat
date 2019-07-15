@@ -90,7 +90,7 @@ This interactive web page was produced in [R](https://www.R-project.org/){target
 ### For more information
 
 Please contact:  
-[Chelsea Carey, PhD](https://www.pointblue.org/employee_bios/chelsea-carey/){target="_blank"}
-Senior Soil Ecologist
+[Chelsea Carey, PhD](https://www.pointblue.org/employee_bios/chelsea-carey/){target="_blank"}  
+Senior Soil Ecologist  
 Working Lands Group  
 [Point Blue Conservation Science](https://www.pointblue.org){target="_blank"}
