@@ -218,7 +218,7 @@ pal3 <- colorBin(palette = colorRamp(colors = c(pointblue.palette[3],
                                                 '#ffffff', 
                                                 pointblue.palette[4])),
                  domain = c(dat_lab$carbonA, dat_lab$carbonB),
-                 bins = c(-5, -1, 1, 5),
+                 bins = c(-5, -0.0999, 0.0999, 5),
                  na.color = pointblue.palette[6])
 
 
