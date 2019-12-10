@@ -94,7 +94,7 @@ plot1 <- subplot(p1, p2, p3, nrows = 3, shareX = TRUE, titleY = TRUE) %>%
          dragmode = 'pan',
          margin = list(r = 0, b = 10, t = 10)) %>%
     rangeslider('2017-08-16', '2018-08-16', thickness = 0.05) %>%
-  config(collaborate = FALSE, displaylogo = FALSE, showTips = FALSE,
+  config(displaylogo = FALSE, showTips = FALSE,
          modeBarButtonsToRemove = list('zoom2d', 'select2d', 'lasso2d', 
                                        'zoomIn2d', 'zoomOut2d', 
                                        'pan2d', 'toggleSpikelines'))
