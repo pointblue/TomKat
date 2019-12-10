@@ -5,7 +5,7 @@
 library(tidyverse)
 
 # input files
-rawdat <- 'data_raw/Pe01 Honsinger Creek streamflow WY2011 - WY2018.xlsx'
+rawdat <- 'data_raw/Pe01 Honsinger Creek streamflow WY2011 - WY2019.xlsx'
 
 # output files
 masterdat <- 'data_master/TK_stream_master.csv'
@@ -34,7 +34,10 @@ sdat <- dat %>%
   gather(temp.C:flow.cfs, key = 'var', value = 'value') %>%
   mutate(date = as.character(date)) %>%
   group_by(date, var) %>%
-  summarize_all(funs(mean, max, min, sum(!is.na(.))), na.rm = T) %>%
+  summarize_all(list(~mean(., na.rm = T), 
+                     ~max(., na.rm = T), 
+                     ~min(., na.rm = T), 
+                     ~sum(!is.na(.)))) %>%
   ungroup() %>%
   ## for days with <72 readings (every 15 mins for 18 hours), consider max/min/avg values unknown
   mutate(max = case_when(is.infinite(max) ~ NA_real_,
