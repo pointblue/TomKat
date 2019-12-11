@@ -8,16 +8,16 @@ output:
 
 TomKat State of the Ranch Data Pages
 =========================
-####[Point Blue Conservation Science](http://www.pointblue.org) has partnered with [TomKat Ranch](https://tomkatranch.org) to collect many different types of data reflecting changing conditions on the ranch. Every year, we summarize these data and provide Ranch staff with an update. {#intro}
+#### [Point Blue Conservation Science](http://www.pointblue.org) has partnered with [TomKat Ranch](https://tomkatranch.org) to collect many different types of data reflecting changing conditions on the ranch. Every year, we summarize these data and provide Ranch staff with an update. {#intro}
 
-### 2018 update complete
+### 2019 udpate underway
 
-This page serves as an index to the individual ranch data pages (all recently revised Feb 25 2019):
+This page serves as an index to the individual ranch data pages (all revised Feb 25 2019 unless stated otherwise):
 
 * [index](index.html)
 * [weather](weather.html) 
 * [soil](soil.html) 
 * [vegetation](vegetation.html) 
-* [water](stream.html) 
+* [water](stream.html) - Updated December 2019
 * [birds](birds.html) 
 * [management](mgmt.html)
