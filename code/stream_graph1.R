@@ -93,7 +93,7 @@ plot1 <- subplot(p1, p2, p3, nrows = 3, shareX = TRUE, titleY = TRUE) %>%
          hovermode = 'x',
          dragmode = 'pan',
          margin = list(r = 0, b = 10, t = 10)) %>%
-    rangeslider('2017-08-16', '2018-08-16', thickness = 0.05) %>%
+    rangeslider(max(dat$date)-365, max(dat$date), thickness = 0.05) %>%
   config(displaylogo = FALSE, showTips = FALSE,
          modeBarButtonsToRemove = list('zoom2d', 'select2d', 'lasso2d', 
                                        'zoomIn2d', 'zoomOut2d', 
