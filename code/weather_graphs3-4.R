@@ -98,7 +98,7 @@ plot3 <- plot_ly() %>%
                        hline(-2, color = palette[5])),
          yaxis = list(title = NA, showgrid = FALSE, zeroline = FALSE,
                       font = list(family = 'sans-serif', size = 14),
-                      automargin = TRUE),
+                      automargin = TRUE, range = c(-10, 8)),
          xaxis = list(title = NA, type = 'date',
                       font = list(family = 'sans-serif', size = 14)),
          legend = list(x = 1, xanchor = 'right', y = 1, yanchor = 'top',
