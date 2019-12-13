@@ -15,7 +15,7 @@ TomKat State of the Ranch Data Pages
 This page serves as an index to the individual ranch data pages (all revised Feb 25 2019 unless stated otherwise):
 
 * [index](index.html)
-* [weather](weather.html) 
+* [weather](weather.html) - Update in progress
 * [soil](soil.html) 
 * [vegetation](vegetation.html) 
 * [water](stream.html) - Updated December 2019
