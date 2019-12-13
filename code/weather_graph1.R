@@ -19,7 +19,6 @@ tk.palette <- c('#3b4035', '#9c8755', '#61655c',
                 '#d1bc8b', '#40696f', '#2e5150',
                 '#5f5131', '#9e513a')
 
-
 # DATA SET UP----------------
 
 dat <- read_csv(here::here(masterdat), col_types = cols()) %>%
@@ -27,57 +26,80 @@ dat <- read_csv(here::here(masterdat), col_types = cols()) %>%
          low = temp.min,
          rain = rain.in) %>%
   mutate(day = format(date, '%m-%d'),
+         mo = format(date, '%m'),
          year = format(date, '%Y')) %>%
   # fill in missing days
-  complete(nesting(day), year) %>%
+  complete(nesting(day, mo), year) %>%
   mutate(date = as.Date(paste0(year, '-', day))) %>%
+  arrange(date) %>% 
   filter(date > '2010-09-08') %>%
-  gather(high:rain, key = var, value = value) %>%
-  # add record high/low values for each month (even those missing observations)
-  group_by(var, day) %>%
-  mutate(max = max(value, na.rm = T),
-         min = min(value, na.rm = T)) %>%
-  ungroup() %>%
-  select(-day) %>%
-  gather(value:min, key = type, value = measurement) %>%
-  unite(var, c(var, type)) %>%
-  filter(var %in% c('high_max', 'high_value', 'low_min', 'low_value', 'rain_max', 'rain_value')) %>%
-  mutate(var = gsub('_max|_min', '_record', var)) %>%
-  separate(var, into = c('var', 'type')) %>%
-  spread(key = type, value = measurement) %>%
-  mutate(text = paste0('<b>', var, ':</b> ', value)) %>%
+  gather(high:rain, key = var, value = observed) %>%
+  # # add record high/low values for each day (even those missing observations)
+  # group_by(var, day) %>%
+  # mutate(max = max(value, na.rm = T),
+  #        min = min(value, na.rm = T)) %>%
+  # ungroup() %>%
+  # select(-day) %>%
+  # gather(value:min, key = type, value = measurement) %>%
+  # unite(var, c(var, type)) %>%
+  # filter(var %in% c('high_max', 'high_value', 'low_min', 'low_value', 'rain_max', 'rain_value')) %>%
+  # mutate(var = gsub('_max|_min', '_record', var)) %>%
+  # separate(var, into = c('var', 'type')) %>%
+  # spread(key = type, value = measurement) %>%
+  mutate(text = paste0('<b>', var, ':</b> ', observed)) %>%
   arrange(date, var)
+
+# calculate monthly extreme values: calculate stats for rain differently?
+# (these don't work well for such non-normal distributions, just drop)
+stats <- dat %>% 
+  group_by(var, mo) %>% 
+  mutate(mean = case_when(var == 'rain' ~ NA_real_,
+                          TRUE ~ mean(observed, na.rm = T)),
+         sd = case_when(var == 'rain' ~ NA_real_,
+                        TRUE ~ sd(observed, na.rm = T)),
+         high = case_when(var == 'rain' ~ NA_real_,
+                          TRUE ~ mean + 2*sd),
+         low = case_when(var == 'rain' ~ NA_real_,
+                         TRUE ~ mean - 2*sd)) %>% 
+  ungroup() 
 
 # TIME SERIES----------------
 
 plot1 <- plot_ly(x = ~date) %>%
-  # add_lines(data = dat %>% filter(var == 'high'), y = ~record,
-  #           line = list(color = 'transparent'),
-  #           hoverinfo = 'none') %>%
-  # add_lines(data = dat %>% filter(var == 'low'), y = ~record, 
-  #           line = list(color = 'transparent'),
-  #           fill = 'tonexty',
-  #           fillcolor = scales::alpha('gray80', alpha = 0.5),
-  #           hoverinfo = 'none') %>%
-  add_trace(data = dat %>% filter(var == 'high'), y = ~value, 
+  add_lines(data = stats %>% filter(var == 'low'), y = ~high,
+            line = list(color = 'transparent'),
+            hoverinfo = 'none') %>%
+  add_lines(data = stats %>% filter(var == 'low'), y = ~low,
+            line = list(color = 'transparent'),
+            fill = 'tonexty',
+            fillcolor = scales::alpha(pointblue.palette[2], alpha = 0.2),
+            hoverinfo = 'none', name = 'spline') %>%
+  add_lines(data = stats %>% filter(var == 'high'), y = ~high,
+            line = list(color = 'transparent'),
+            hoverinfo = 'none') %>%
+  add_lines(data = stats %>% filter(var == 'high'), y = ~low,
+            line = list(color = 'transparent'),
+            fill = 'tonexty',
+            fillcolor = scales::alpha(pointblue.palette[3], alpha = 0.2),
+            hoverinfo = 'none', name = 'spline') %>%
+  add_trace(data = dat %>% filter(var == 'high'), y = ~observed, 
             type = 'scatter', mode = 'lines',
             line = list(color = pointblue.palette[3]),
             # marker = list(color = pointblue.palette[3]),
             text = ~text,
             hoverinfo = 'x+text') %>%
-  add_trace(data = dat %>% filter(var == 'low'), y = ~value, 
+  add_trace(data = dat %>% filter(var == 'low'), y = ~observed, 
             type = 'scatter', mode = 'lines',
             line = list(color = pointblue.palette[2]),
             # marker = list(color = pointblue.palette[2]),
             text = ~text,
             hoverinfo = 'text') %>%
-  # add_lines(data = dat %>% filter(var == 'rain'), y = ~record,
+  # add_lines(data = stats %>% filter(var == 'rain'), y = ~high,
   #           line = list(color = 'transparent'),
   #           fill = 'tozeroy',
-  #           fillcolor = scales::alpha('gray80', alpha = 0.5),
-  #           hoverinfo = 'none',
-  #           yaxis = 'y2') %>%
-  add_trace(data = dat %>% filter(var == 'rain'), y = ~value, 
+  #           fillcolor = scales::alpha(pointblue.palette[1], alpha = 0.2),
+  #           hoverinfo = 'none', yaxis = 'y2') %>%
+  add_trace(data = dat %>% filter(var == 'rain'), y = ~observed, 
             type = 'scatter', mode = 'lines',
             line = list(color = pointblue.palette[1]),
             # marker = list(color = pointblue.palette[1]),
