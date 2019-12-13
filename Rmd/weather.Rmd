@@ -34,6 +34,28 @@ dat <- read_csv(here::here(masterdat)) %>%
            value == max(value[var == 'rain'], na.rm = T)) %>%
   mutate(date = format(date, '%B %d, %Y'))
 
+dat_new <- read_csv(here::here(masterdat)) %>%
+  filter(date >= '2019-01-01') %>%
+  rename(high = temp.max,
+         low = temp.min,
+         rain = rain.in) %>%
+  gather(high:rain, key = var, value = value) %>%
+  filter(value == max(value[var == 'high'], na.rm = T) | 
+           value == min(value[var == 'low'], na.rm = T) | 
+           value == max(value[var == 'rain'], na.rm = T)) %>%
+  mutate(date = format(date, '%B %d, %Y'))
+
+dat_old <- read_csv(here::here(masterdat)) %>%
+  filter(date < '2019-01-01') %>%
+  rename(high = temp.max,
+         low = temp.min,
+         rain = rain.in) %>%
+  gather(high:rain, key = var, value = value) %>%
+  filter(value == max(value[var == 'high'], na.rm = T) | 
+           value == min(value[var == 'low'], na.rm = T) | 
+           value == max(value[var == 'rain'], na.rm = T)) %>%
+  mutate(date = format(date, '%B %d, %Y'))
+
 pal = colorRampPalette(c(pointblue.palette[4], '#ffffff', pointblue.palette[3]))
 palette = pal(7)
 
@@ -46,9 +68,9 @@ Weather
 
 ### Daily weather
 
-Daily <font color="`r pointblue.palette[3]`"><b>high temperature</b></font>, <font color="`r pointblue.palette[2]`"><b>low temperature</b></font>, and <font color="`r pointblue.palette[1]`"><b>precipitation</b></font> from the TomKat weather station, along with the <font color="`r pointblue.palette[7]`"><b>range of temperatures and precipitation</b></font> observed on each date since the weather station was established. <i>Note: Gaps in weather data occurred when the weather station was being upgraded.</i>
+Daily <font color="`r pointblue.palette[3]`"><b>high temperature</b></font>, <font color="`r pointblue.palette[2]`"><b>low temperature</b></font>, and <font color="`r pointblue.palette[1]`"><b>precipitation</b></font> from the TomKat weather station, along with the normal monthly range of temperatures observed since the weather station was established. <i>Note: Gaps in weather data occurred when the weather station was being upgraded.</i>
 
-The highest temperature yet recorded was <b>`r dat %>% filter(var == 'high') %>%select(value)`&deg;F</b> on `r dat %>% filter(var == 'high') %>% select(date)`. The lowest was <b>`r dat %>% filter(var == 'low') %>%select(value)`&deg;F</b> on `r dat %>% filter(var == 'low') %>%select(date)`. The single rainiest day was `r dat %>% filter(var == 'rain') %>%select(date)`, with a total of <b>`r dat %>% filter(var == 'rain') %>%select(value)` inches</b> recorded.
+In 2019, TomKat experienced a new record high temperature of <b>`r dat %>% filter(var == 'high') %>% select(value)`&deg;F</b> on `r dat %>% filter(var == 'high') %>% select(date)`, beating the previous record of `r dat_old %>% filter(var == 'high') %>% select(value)`&deg;F</b> on `r dat_old %>% filter(var == 'high') %>% select(date)`. High temperatures in 2019 also exceeded the normal range of high temperatures on several other dates. The lowest temperature recorded in 2019 was `r dat_new %>% filter(var == 'low') %>% select(value)`&deg;F on `r dat_new %>% filter(var == 'low') %>% select(date)`, missing the record low of <b>`r dat %>% filter(var == 'low') %>% select(value)`&deg;F</b> set on `r dat %>% filter(var == 'low') %>%select(date)`. The single rainiest day in 2019 (through November) was `r dat_new %>% filter(var == 'rain') %>% select(value)` inches on `r dat_new %>% filter(var == 'rain') %>% select(date)`. The rainiest day ever recorded was `r dat %>% filter(var == 'rain') %>%select(date)`, with a total of <b>`r dat %>% filter(var == 'rain') %>%select(value)` inches</b>.
 
 <i>Click & drag the slider at the bottom to view different dates.</i>
 <center>
@@ -57,8 +79,8 @@ The highest temperature yet recorded was <b>`r dat %>% filter(var == 'high') %>%
 
 
 
-### Consistently warm and dry weather  
-TomKat has been warmer and dryer than historic averages in almost every month since the spring of 2013, including during the <b>growing season</b> (March-June, shaded). Values greater than zero are above the estimated historic average (1980-2010)*, and values below zero are below average.
+### Consistently warm weather  
+TomKat has been warmer than historic averages in almost every month since the spring of 2013, including during the <b>growing season</b> (March-June, shaded). Values greater than zero are above the estimated historic average (1980-2010)*, and values below zero are below average.
 
 <center>
 <iframe src="weather_graph2.html" style="border: none;" width = 100%; height = 500px;></iframe>
@@ -67,14 +89,14 @@ TomKat has been warmer and dryer than historic averages in almost every month si
 
 
 
-### Drought conditions return  
+### Recovery from extended drought
 
 We examined two drought indices from the [National Centers for Environmental Information](http://www.ncdc.noaa.gov/temp-and-precip/drought/historical-palmers/overview){target="_blank"}: the Palmer Drought Severity Index (PDSI) and the Palmer Z Index. The PDSI is an indicator of long-term drought that takes into account precipitation and temperature over several months, while the Z index measures short-term drought on a monthly scale, and can better reflect recent storms and soil moisture conditions.
 
 ### Palmer Drought Severity Index (PDSI)
-The PDSI for Central Coastal California entered drought conditions early in 2013, which persisted nearly 4 years until October 2016, including over two years of <b><font color='`r palette[7]`'>extreme drought</font></b> from June 2013 through November 2015. Despite returning to normal range for most of 2017, <b><font color='`r palette[5]`'>moderate drought</font></b> conditions returned in 2018.
+The PDSI for Central Coastal California entered drought conditions early in 2013, which persisted nearly 4 years until October 2016, including over two years of <b><font color='`r palette[7]`'>extreme drought</font></b> from June 2013 through November 2015. Despite returning to normal range for most of 2017, <b><font color='`r palette[5]`'>moderate drought</font></b> conditions in 2018. However, since November 2018, Central Coastal California has been in the <b>normal</b> to <b><font color='`r palette[3]`'>moderately moist</font></b> range.
 
-In comparison, conditions in Northern Coastal California were never quite as dry as Central Coastal California, and recovered almost a year earlier than Central Coastal California in December 2015. Southern Coastal California generally fared worse, and only briefly returned to normal range in January - March 2017.
+In comparison, during the extended drought, conditions in Northern Coastal California were never quite as dry, and Southern Coastal California generally fared worse. Both Northern and Southern Coastal California have also recovered since January 2019.
 
 <center>
 <iframe src="weather_graph3.html" style="border: none;" width = 100%; height = 450px;></iframe>
@@ -82,7 +104,7 @@ In comparison, conditions in Northern Coastal California were never quite as dry
 
 ### Palmer Z Index (PZI)
 
-The PZI more readily shows the impact of big storms, such as the <b><font color='`r palette[1]`'>extremely moist</font></b> December 2014, October 2016, and January 2017. Northern and Central Coastal California had more frequent short-term relief from drought conditions through these storms than Southern Coastal California. 
+The PZI more readily shows the impact of big storms, such as the <b><font color='`r palette[1]`'>extremely moist</font></b> conditions in February and May 2019, January 2017, October 2016, and December 2014.
 
 <center>
 <iframe src="weather_graph4.html" style="border: none;" width = 100%; height = 450px;></iframe>
