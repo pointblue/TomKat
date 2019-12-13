@@ -107,7 +107,7 @@ plot3 <- plot_ly() %>%
                        font = list(size = 14, family = 'sans-serif')),
          hovermode = 'x',
          dragmode = 'pan',
-         margin = list(l = 0, r = 0, b = 10, t = 10)) %>%
+         margin = list(l = 0, r = 0, b = 50, t = 10)) %>%
   layout(annotations = list(xref = 'paper', x = 0.01, xanchor = 'left',
                            yref = 'y', y = 4, yanchor = 'bottom',
                            text = ~paste('Extremely moist'),
@@ -222,7 +222,7 @@ plot4 <- plot_ly(zdat, x = ~date) %>%
                        font = list(family = 'sans-serif', size = 14)),
          hovermode = 'x',
          dragmode = 'pan',
-         margin = list(l = 0, r = 0, b = 10, t = 10)) %>%
+         margin = list(l = 0, r = 0, b = 50, t = 10)) %>%
   layout(annotations = list(xref = 'paper', x = 0.01, xanchor = 'left',
                             yref = 'y', y = 3.5, yanchor = 'bottom',
                             text = ~paste('Extremely moist'),
