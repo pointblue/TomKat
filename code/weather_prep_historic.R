@@ -33,9 +33,9 @@ dat <- left_join(tk, hmb, by = 'date') %>%
          diff.TMIN = temp.min - TMIN,
          diff.PRCP = rain.in - PRCP)
 summary(dat)
-# diff.TMAX: mean = -1.78 (-6.6 to 5.1); TK max generally cooler
-# diff.TMIN: mean = +2.08 (-2.24-7.72); TK mins generally warmer
-# diff.PRCP: mean = +0.26 (-3.1 - 5.7); TK precip fairly similar?
+# diff.TMAX: mean = -0.89 (-5.9 to 5.8); TK max generally similar?
+# diff.TMIN: mean = +2.24 (-2.2 - 8.3); TK mins generally warmer
+# diff.PRCP: mean = +0.94 (-2.6 - 16.7); TK precip wetter?
 
 # seasonal patterns:
 dat %>% 
@@ -46,9 +46,9 @@ dat %>%
   facet_wrap(~var, scales = 'free_y', ncol = 1) + 
   geom_hline(aes(yintercept=0), color='red')
 
-## max temps: TK cooler than HMB much of year
+## max temps: TK cooler than HMB much of year (except ~Sept)
 ## min temps: TK warmer than HMB much of year, except Jul-Aug
-## precip: TK somewhat wetter, esp. in Dec-Jan
+## precip: TK somewhat wetter, esp. in Dec-Feb
 
 ## CONCLUSION: Half Moon Bay & TomKat have similar weather overall. TomKat 
 ## tends to get more precipitation and to have a narrower range of min/max 
