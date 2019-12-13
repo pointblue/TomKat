@@ -5,7 +5,7 @@
 library(tidyverse)
 
 # input files
-rawdat <- 'data_raw/TOKA_weatherwest_10.23.17_12.18.18_utf8.csv'
+rawdat_pattern <- 'TOKA_weatherwest_.*csv'
 olddat <- 'data_raw/TOKA_Weather_ALL_9.8.10_7.24.17.csv'
 # olddat <- 'data_raw/TK_weather_master_2017.csv' #data from old weather station
 
@@ -16,34 +16,36 @@ master_monthly <- 'data_master/TK_weather_master_monthly.csv'
 
 
 # DATA SET UP----------------
+# list files
+filelist <- list.files(path = here::here('data_raw'), pattern = rawdat_pattern,
+                       full.names = TRUE)
+
 # new data from WeatherWest (from October 2017): hourly data
 #  extract daily min/max temp and rain totals
-dat <- read_csv(here::here(rawdat), col_types = cols()) %>%
-  mutate(date = as.Date(Date, format = '%m/%d/%Y')) %>%
-  rename(temp.F = `Temp (°F)`,
-         temp.max = `Daily Max Temp (°F)`,
-         temp.min = `Daily Min Temp (°F)`,
-         rain.in = `Daily Rain (In)`) %>%
+dat <- purrr::map_df(filelist, ~read_csv(.x, col_types = cols())) %>% 
+  rename_all(make.names) %>% 
   filter(Time == 2300) %>% #last reading of the day = daily summary
+  mutate(date = as.Date(Date, format = '%m/%d/%Y')) %>%
+  rename(temp.max = `Daily.Max.Temp...U.00B0.F.`,
+         temp.min = `Daily.Min.Temp...U.00B0.F.`,
+         rain.in = `Daily.Rain..In.`) %>%
   select(date, temp.max, temp.min, rain.in) %>% 
   arrange(date) %>%
   filter(date > '2017-10-25') #drop first value (temp.min unusually high)
 
 # data from old weather station: half-hour data
 #   summarize to extract daily min/max temp and rain totals
-dat2 <- read_csv(here::here(olddat), skip = 2, col_types = cols()) %>%
-  filter(WindDir != 'Degree') %>% #drop row of units only
+dat2 <- read_csv(here::here(olddat), skip = 2, col_types = 'c----c--c') %>%
   rename('date.time' = `Date/Time`,
          'temp.F' = AirTemp,
          'rain.in' = DailyRain) %>%
-  select(date.time, temp.F, rain.in) %>%
+  filter(date.time != "\"m/d/y\"") %>% #drop row of units only
+  mutate_at(vars(temp.F, rain.in), as.numeric) %>% 
   mutate(date.time = as.POSIXct(date.time, format = '%m/%d/%Y %H:%M'),
          date = as.Date(date.time, '%Y-%m-%d'),
-         time = format(date.time, '%M'),
-         temp.F = as.numeric(temp.F),
-         rain.in = as.numeric(rain.in)) %>%
+         time = format(date.time, '%M')) %>%
   filter(time == '00') %>%  # drop to one hour time intervals for comparability
-  filter(temp.F >= 30) %>% # remove few very negative temps (appear to be errors)
+  filter(temp.F >= 0) %>% # remove few very negative temps (appear to be errors)
   group_by(date) %>% #daily summary
   summarize(n.temp = sum(!is.na(temp.F)),
             temp.max = max(temp.F, na.rm = T),
