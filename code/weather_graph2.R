@@ -79,8 +79,8 @@ plot2 <- subplot(p1, p2, p3, nrows = 3, shareX = TRUE, titleY = TRUE) %>%
   layout(showlegend = FALSE,
          hovermode = 'x',
          dragmode = 'pan',
-         margin = list(r = 0, b = 10, t = 10),
-         xaxis = list(range = c('2010-10-01', '2018-12-31'),
+         margin = list(r = 0, b = 50, t = 10),
+         xaxis = list(range = c('2010-10-01', '2019-12-31'),
                       rangeselector = list(buttons = list(list(count = 1,
                                                                label = "YTD",
                                                                step = "year",
@@ -94,6 +94,11 @@ plot2 <- subplot(p1, p2, p3, nrows = 3, shareX = TRUE, titleY = TRUE) %>%
                                            bgcolor = tk.palette[2],
                                            activecolor = tk.palette[5])),
          shapes = list(
+           list(type = "rect",
+                fillcolor = pointblue.palette[6], opacity = 1,
+                line = list(color = "transparent"), 
+                x0 = "2019-03-01", x1 = "2019-07-01", xref = "x",
+                y0 = 0, y1 = 1, yref = "paper"),
            list(type = "rect",
                 fillcolor = pointblue.palette[6], line = list(color = "transparent"), opacity = 0.3,
                 x0 = "2018-03-01", x1 = "2018-07-01", xref = "x",
@@ -126,7 +131,7 @@ plot2 <- subplot(p1, p2, p3, nrows = 3, shareX = TRUE, titleY = TRUE) %>%
                 fillcolor = pointblue.palette[6], line = list(color = "transparent"), opacity = 0.3,
                 x0 = "2011-03-01", x1 = "2011-07-01", xref = "x",
                 y0 = 0, y1 = 1, yref = "paper"))) %>%
-  config(collaborate = FALSE, displaylogo = FALSE, showTips = FALSE,
+  config(displaylogo = FALSE, showTips = FALSE,
          modeBarButtonsToRemove = list('zoom2d', 'select2d', 'lasso2d', 
                                        'zoomIn2d', 'zoomOut2d', 
                                        'pan2d', 'toggleSpikelines'))
