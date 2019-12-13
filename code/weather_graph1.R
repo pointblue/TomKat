@@ -96,7 +96,7 @@ plot1 <- plot_ly(x = ~date) %>%
                               size = 14),
                   showarrow = FALSE,
                   visible = TRUE) %>%
-  layout(yaxis = list(range = c(0, 90),
+  layout(yaxis = list(range = c(0, 100),
                       title = 'Temperature (F)',
                       gridcolor = 'white',
                       font = list(family = 'sans-serif',
