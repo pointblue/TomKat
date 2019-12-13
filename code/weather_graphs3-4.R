@@ -30,7 +30,7 @@ palette = pal(7)
 # PDSI----------------
 
 pdat <- read_csv(here::here(pdsi)) %>%
-  filter(date > '2010-07-01' & date < '2018-11-15') %>% #start with July 2010 as with other weather data
+  filter(date > '2010-07-01') %>% #start with July 2010 as with other weather data
   gather(PDSI.01:PDSI.07, key = 'division', value = 'value') %>%
   filter(division %in% c('PDSI.04', 'PDSI.01', 'PDSI.06')) %>%
   mutate(color = cut(value, breaks = c(-20, -4, -3, -2, 2, 3, 4, 20),
@@ -145,7 +145,7 @@ plot3 <- plot_ly() %>%
                                         color = palette[7]),
                             showarrow = FALSE)) %>%
   # rangeslider('2010-01-01', thickness = 0.1) %>%
-  config(collaborate = FALSE, displaylogo = FALSE, showTips = FALSE,
+  config(displaylogo = FALSE, showTips = FALSE,
          modeBarButtonsToRemove = list('zoom2d', 'select2d', 'lasso2d', 
                                        'zoomIn2d', 'zoomOut2d', 
                                        'pan2d', 'toggleSpikelines'))
@@ -156,8 +156,8 @@ htmlwidgets::saveWidget(plot3,
                         title = 'Palmer Drought Severity Index')
 
 # PZI---------------
-zdat <- read_csv(here::here(zndx)) %>%
-  filter(date > '2010-07-01' & date < '2018-11-15') %>% #start with July 2010 as with other weather data
+zdat <- read_csv(here::here(zndx), col_types = cols()) %>%
+  filter(date > '2010-07-01') %>% #start with July 2010 as with other weather data
   gather(PZI.01:PZI.07, key = 'division', value = 'value') %>%
   filter(division %in% c('PZI.04', 'PZI.01', 'PZI.06')) %>%
   mutate(color = cut(value, breaks = c(-20, -2.75, -2, -1.25, 1, 2.5, 3.5, 20),
@@ -260,7 +260,7 @@ plot4 <- plot_ly(zdat, x = ~date) %>%
                                         color = palette[7]),
                             showarrow = FALSE)) %>%
   # rangeslider('2010-01-01', thickness = 0.1) %>%
-  config(collaborate = FALSE, displaylogo = FALSE, showTips = FALSE,
+  config(displaylogo = FALSE, showTips = FALSE,
          modeBarButtonsToRemove = list('zoom2d', 'select2d', 'lasso2d', 
                                        'zoomIn2d', 'zoomOut2d', 
                                        'pan2d', 'toggleSpikelines'))
