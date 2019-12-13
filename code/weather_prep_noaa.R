@@ -14,8 +14,8 @@ olddaily <- 'data_master/HMB_daily_weather.csv'
 oldmonthly <- 'data_master/HMB_monthly_weather.csv'
 
 ## latest drought indices: download from ftp://ftp.ncdc.noaa.gov/pub/data/cirs/climdiv/
-pdsi <- 'data_raw/climdiv-pdsidv-v1.0.0-20181105.txt'
-zndx <- 'data_raw/climdiv-zndxdv-v1.0.0-20181105.txt'
+pdsi <- 'data_raw/climdiv-pdsidv-v1.0.0-20191205.txt'
+zndx <- 'data_raw/climdiv-zndxdv-v1.0.0-20191205.txt'
 
 
 # output files:
@@ -33,7 +33,7 @@ masterzndx <- 'data_master/CA_Palmer_Z_Index.csv'
 
 ## DAILY DATA 
 ## previously acquired:
-dat <- read_csv(here::here(olddaily))
+dat <- read_csv(here::here(olddaily), col_types = cols())
 
 ## add more recent data:
 ## max 1000 lines of data, and date range must be < 1 year (repeat as needed)
@@ -54,7 +54,7 @@ write_csv(dat, here::here(olddaily)) #CAREFUL: overwriting old data
 
 ## MONTHLY DATA:
 ## previously acquired:
-dat2 <- read_csv(here::here(oldmonthly))
+dat2 <- read_csv(here::here(oldmonthly), col_types = cols())
 
 ## add more recent data:
 ## max 1000 lines of data, and date range must be < 1 year (repeat as needed)
@@ -66,6 +66,9 @@ newdat2 <- rnoaa::ncdc(stationid = 'GHCND:USC00043714',
                        datatypeid = c('TMAX', 'TAVG', 'TMIN', 'PRCP'), 
                        limit = 1000)$data %>%
   mutate(date = as.POSIXct(date),
+         fl_a = as.numeric(fl_a),
+         fl_M = as.logical(fl_M),
+         fl_Q = as.logical(fl_Q),
          fl_S = as.integer(fl_S))
 
 dat2 <- bind_rows(dat2, newdat2)
@@ -89,7 +92,8 @@ write_csv(dat2, here::here(oldmonthly)) #CAREFUL: overwriting old data
 
 pdat <- read_table(here::here(pdsi), 
                   col_names = c('ID', 'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN',
-                                'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC')) %>%
+                                'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'),
+                  col_types = cols()) %>%
   mutate(state = substr(ID, 1, 2),
          climdiv = paste0('PDSI.', substr(ID, 3, 4)),
          year = substr(ID, 7, 10)) %>%
@@ -119,7 +123,8 @@ write_csv(pdat, here::here(masterpdsi))
 
 zdat <- read_table(here::here(zndx),
                    col_names = c('ID', 'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN',
-                                 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC')) %>%
+                                 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'),
+                   col_types = cols()) %>%
   mutate(state = substr(ID, 1, 2),
          climdiv = paste0('PZI.', substr(ID, 3, 4)),
          year = substr(ID, 7, 10)) %>%
