@@ -1,6 +1,6 @@
 # README----------------------
 # Script to produce vegetation map 2: change in veg cover over time
-# New in 2018: average 2012-2014 and compare to average 2016-2018
+# New in 2018: average 2012-2014 and compare to recent average (2017-2019)
 
 ## packages
 library(tidyverse)
@@ -31,16 +31,22 @@ pointblue.palette <-
     '#666666')
 
 # DATA SET UP-------------
-# calculate "baseline" (2012-14) and "recent" (2016-18) averages for each
+# calculate "baseline" (2012-14) and "recent" averages for each
 #  vegtype in each pasture
+
+## use most recent 3 years of data as "recent"
+maxyear = read_csv(here::here(masterveg), col_types = cols()) %>% 
+  pull(Year) %>% max()
+minyear = maxyear - 3
 
 dat <- read_csv(here::here(masterveg), col_types = cols()) %>%
   filter(vegtype != 'Trees') %>% #inconsistent treatment; not included in map
   mutate(vegtype = as.factor(vegtype),
          Pasture = as.factor(Pasture),
          group = case_when(Year<2015 ~ 'baseline',
-                           Year>2015 ~ 'recent')) %>%
-  filter(Year != 2011 & Year != 2015) %>%
+                           Year>minyear ~ 'recent')) %>%
+  filter(Year != 2011) %>%
+  filter(!is.na(group)) %>% 
   group_by(Pasture, group, vegtype) %>%
   summarize(cover = round(mean(cover, na.rm = T), digits = 0)) %>%
   ungroup()
@@ -82,7 +88,7 @@ dat_lab <- net_change %>%
                          filter(Pasture == .x & vegtype == 'PereGr') %>%
                          select(cover) %>%
                          htmlTable(header = c('Average<br>% Cover'), 
-                                   rnames = c('2012-14', '2016-18', 'Difference'),
+                                   rnames = c('2012-2014', paste0(minyear, '-', maxyear), 'Difference'),
                                    align = 'r', total = T,
                                    caption = paste0('<b>Pasture ', .x, 
                                                     '</b>: Perennial Grasses'))),
@@ -91,7 +97,7 @@ dat_lab <- net_change %>%
                            filter(Pasture == .x & vegtype == 'AnnualGr') %>%
                            select(cover) %>%
                            htmlTable(header = c('Average<br>% Cover'), 
-                                     rnames = c('2012-14', '2016-18', 'Difference'),
+                                     rnames = c('2012-2014', paste0(minyear, '-', maxyear), 'Difference'),
                                      align = 'r', total = T,
                                      caption = paste0('<b>Pasture ', .x, 
                                                       '</b>: Annual Grasses'))),
@@ -100,7 +106,7 @@ dat_lab <- net_change %>%
                            filter(Pasture == .x & vegtype == 'NativeGr') %>%
                            select(cover) %>%
                            htmlTable(header = c('Average<br>% Cover'), 
-                                     rnames = c('2012-14', '2016-18', 'Difference'),
+                                     rnames = c('2012-2014', paste0(minyear, '-', maxyear), 'Difference'),
                                      align = 'r', total = T,
                                      caption = paste0('<b>Pasture ', .x, 
                                                       '</b>: Native Grasses'))),
@@ -109,7 +115,7 @@ dat_lab <- net_change %>%
                         filter(Pasture == .x & vegtype == 'Grass') %>%
                         select(cover) %>%
                         htmlTable(header = c('Average<br>% Cover'), 
-                                  rnames = c('2012-14', '2016-18', 'Difference'),
+                                  rnames = c('2012-2014', paste0(minyear, '-', maxyear), 'Difference'),
                                   align = 'r', total = T,
                                   caption = paste0('<b>Pasture ', .x, 
                                                    '</b>: All Grasses'))),
@@ -118,7 +124,7 @@ dat_lab <- net_change %>%
                          filter(Pasture == .x & vegtype == 'Shrubs') %>%
                          select(cover) %>%
                          htmlTable(header = c('Average<br>% Cover'), 
-                                   rnames = c('2012-14', '2016-18', 'Difference'),
+                                   rnames = c('2012-2014', paste0(minyear, '-', maxyear), 'Difference'),
                                    align = 'r', total = T,
                                    caption = paste0('<b>Pasture ', .x, 
                                                     '</b>: Shrubs'))),
@@ -127,7 +133,7 @@ dat_lab <- net_change %>%
                         filter(Pasture == .x & vegtype == 'Forbs') %>%
                         select(cover) %>%
                         htmlTable(header = c('Average<br>% Cover'), 
-                                  rnames = c('2012-14', '2016-18', 'Difference'),
+                                  rnames = c('2012-2014', paste0(minyear, '-', maxyear), 'Difference'),
                                   align = 'r', total = T,
                                   caption = paste0('<b>Pasture ', .x, 
                                                    '</b>: Forbs'))),
@@ -136,7 +142,7 @@ dat_lab <- net_change %>%
                         filter(Pasture == .x & vegtype == 'Weeds') %>%
                         select(cover) %>%
                         htmlTable(header = c('Average<br>% Cover'), 
-                                  rnames = c('2012-14', '2016-18', 'Difference'),
+                                  rnames = c('2012-2014', paste0(minyear, '-', maxyear), 'Difference'),
                                   align = 'r', total = T,
                                   caption = paste0('<b>Pasture ', .x, 
                                                    '</b>: Weeds'))),
@@ -145,7 +151,7 @@ dat_lab <- net_change %>%
                              filter(Pasture == .x & vegtype == 'BareGround') %>%
                              select(cover) %>%
                              htmlTable(header = c('Average<br>% Cover'), 
-                                       rnames = c('2012-14', '2016-18', 'Difference'),
+                                       rnames = c('2012-2014', paste0(minyear, '-', maxyear), 'Difference'),
                                        align = 'r', total = T,
                                        caption = paste0('<b>Pasture ', .x, 
                                                         '</b>: Bare Ground'))))
@@ -261,7 +267,7 @@ map2 <- leaflet(shp_poly, height = 500) %>%
                    position = 'bottomleft') %>%
   
   ## logo
-  addLogo(img = logo, src = 'remote', url = 'http://www.pointblue.org',
+  leafem::addLogo(img = logo, src = 'remote', url = 'http://www.pointblue.org',
           width = 174, height = 90, offset.y = -5)
 
 # add CSS
