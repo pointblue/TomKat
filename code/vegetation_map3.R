@@ -1,6 +1,5 @@
 # README----------------------
-# Script to produce vegetation map 2: change in veg cover over time
-# New in 2018: average 2012-2014 and compare to average 2016-2018
+# Script to produce vegetation map 3: current vegetation species diversity
 
 ## packages
 library(tidyverse)
@@ -31,12 +30,16 @@ pointblue.palette <-
     '#666666')
 
 # DATA SET UP-------------
-# calculate "baseline" (2012-14) and "recent" (2016-18) averages for each
-#  vegtype in each pasture
+# calculate "recent" average
+
+## use most recent 3 years of data as "recent"
+maxyear = read_csv(here::here(masterveg), col_types = cols()) %>% 
+  pull(year) %>% max()
+minyear = maxyear - 3
 
 dat <- read_csv(here::here(masterveg), col_types = cols()) %>%
   filter(!(group %in% c('totaldiv', 'herbdiv'))) %>% 
-  filter(year >= 2016) %>%
+  filter(year > minyear) %>%
   group_by(pasture, group) %>%
   summarize(species = mean(species)) %>%
   group_by(pasture) %>%
@@ -85,7 +88,7 @@ shp_ranch <- st_read(here::here('GIS'), ranch, quiet = TRUE) %>%
 pal <- colorBin(palette = colorRamp(colors = c('#ffffff', pointblue.palette[4])),
                 domain = c(0, max(dat$species)),
                 na.color = pointblue.palette[7],
-                bins = c(0, 20, 40, 60, 85))
+                bins = c(0, 20, 40, 60, 80, 100, 110))
 
 # MAP----------------------
 
@@ -117,7 +120,7 @@ map3 <- leaflet(shp_poly, height = 500) %>%
             opacity = 1) %>%
 
   ## logo
-  addLogo(img = logo, src = 'remote', url = 'http://www.pointblue.org',
+  leafem::addLogo(img = logo, src = 'remote', url = 'http://www.pointblue.org',
           width = 174, height = 90, offset.y = -5)
 
 # add CSS
@@ -131,7 +134,7 @@ map3$dependencies <- c(map3$dependencies,
                          )
                        ))
 
-title <- 'TomKat Vegetation Diversity 2016-2018'
+title <- paste0('TomKat Vegetation Diversity ', minyear+1, '-', maxyear)
 
 htmlwidgets::saveWidget(map3,
                         here::here(output3),
