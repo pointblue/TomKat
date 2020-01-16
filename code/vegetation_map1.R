@@ -227,7 +227,7 @@ map1 <- leaflet(shp_poly, height = 500) %>%
   ) %>%
   
   ## logo
-  addLogo(img = logo, src = 'remote', url = 'http://www.pointblue.org',
+  leafem::addLogo(img = logo, src = 'remote', url = 'http://www.pointblue.org',
           width = 174, height = 90, offset.y = -5)
 
 # add CSS
