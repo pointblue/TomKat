@@ -281,7 +281,7 @@ map2$dependencies <- c(map2$dependencies,
                          )
                        ))
 
-title <- 'TomKat Vegetation Changes 2012-2018'
+title <- paste0('TomKat Vegetation Changes 2012-', maxyear)
 
 htmlwidgets::saveWidget(map2,
                         here::here(output2),
