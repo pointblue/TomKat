@@ -59,9 +59,9 @@ mod = lm(qlogis(Cover) ~ vegtype * Year,
 summary(mod)
 # no significant changes in any major veg class
 
-mod.alt = betareg::betareg(Cover ~ Year * vegtype, 
-                       dat %>% filter(!(vegtype %in% c('PereGr', 'NativeGr', 'AnnualGr')))) 
-summary(mod.alt)
+# mod.alt = betareg::betareg(Cover ~ Year * vegtype, 
+#                        dat %>% filter(!(vegtype %in% c('PereGr', 'NativeGr', 'AnnualGr')))) 
+# summary(mod.alt)
 
 # model ranch-wide trend over time within grasses:
 mod2 = lm(qlogis(Cover) ~ Year * vegtype, 
@@ -142,7 +142,7 @@ plot1 <- plot_ly(x = ~Year) %>%
                                    size = 14)),
          hovermode = 'x',
          margin = list(r = 0, b = 10, t = 10)) %>%
-  config(collaborate = FALSE, displaylogo = FALSE, showTips = FALSE,
+  config(displaylogo = FALSE, showTips = FALSE,
          modeBarButtonsToRemove = list('zoom2d', 'select2d', 'lasso2d', 
                                        'zoomIn2d', 'zoomOut2d', 
                                        'pan2d', 'toggleSpikelines'))
@@ -204,7 +204,7 @@ plot2 <- plot_ly(x = ~Year) %>%
                                    size = 14)),
          hovermode = 'x',
          margin = list(r = 0, b = 10, t = 10)) %>%
-  config(collaborate = FALSE, displaylogo = FALSE, showTips = FALSE,
+  config(displaylogo = FALSE, showTips = FALSE,
          modeBarButtonsToRemove = list('zoom2d', 'select2d', 'lasso2d', 
                                        'zoomIn2d', 'zoomOut2d', 
                                        'pan2d', 'toggleSpikelines'))
