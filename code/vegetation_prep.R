@@ -6,7 +6,7 @@ library(tidyverse)
 
 # input files
 rawdatpath <- 'data_raw'
-diversitydat <- 'data_raw/TOKA_pvegdiversity_2011to18.csv'
+diversitydat <- 'data_raw/TOKA_pvegdiversity_2011to19.csv'
 
 # output files
 masterdat <- 'data_master/TK_veg_master.csv'
@@ -17,7 +17,7 @@ masterdivdat <- 'data_master/TK_veg_master_div.csv'
 ## VEGDATA SET UP-----------
 # NOTE on native, perennial and annual grasses:
 # 	2012-2014: absolute %s
-# 	2016-2018: RELATIVE %s (need to be multiplied by Grass to make absolute) 
+# 	2016 to present: RELATIVE %s (need to be multiplied by Grass to make absolute) 
 
 # read in data, change '<1' to 0.5, and '999' to NA, correct relative values
 dat <- map_df(list.files(path = here::here(rawdatpath),
@@ -40,9 +40,9 @@ dat <- map_df(list.files(path = here::here(rawdatpath),
   spread(key = key, value = value) %>%
   # correct for relative numbers:
   mutate_at(.vars = vars(AnnualGr, NativeGr, PereGr), 
-            .funs = funs(case_when(
+            .funs = ~ case_when(
               Year >= 2016 ~ round(./100 * Grass/100 * 100, digits = 0),
-              TRUE ~ .)))
+              TRUE ~ .))
 
 ## check grass totals: "grasstot" doesn't always match "Grass" as reported
 dat %>% 
@@ -67,7 +67,7 @@ dat <- dat %>%
 dat %>% 
   mutate(ground = Shrubs + Forbs + Weeds + Grass + BareGround + Misc) %>%
   ggplot(aes(x = as.factor(Year), y = ground)) + geom_boxplot()
-## -->Note variation in veg protocol, with total values >>100% in 2016 and 2018
+## -->Note variation in veg protocol, with total values >>100% in 2016, 2018-19
 ## values <100% in 2013 & 2014 are apparently due to "thatch" which was 
 ##   recorded separately from "Misc" starting in 2013
 
@@ -79,7 +79,7 @@ dat_long <- dat %>%
 write_csv(dat_long, here::here(masterdat))
 
 # DIVERSITY DATA SET UP
-ddat <- read_csv(here::here(diversitydat)) %>%
+ddat <- read_csv(here::here(diversitydat), col_types = cols()) %>%
   mutate(herbdiv = totaldiv - shrubdiv - treediv) %>%
   gather(natgdiv:herbdiv, key = 'group', value = 'species')
 
