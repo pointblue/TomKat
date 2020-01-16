@@ -96,7 +96,7 @@ map3 <- leaflet(shp_poly, height = 500) %>%
   setView(lng = -122.3598, lat = 37.26693, zoom = 14) %>%
   
   ## background terrain
-  addProviderTiles("Stamen.Terrain",
+  addProviderTiles("Esri.WorldStreetMap",
                    options = providerTileOptions(minzoom = 14, maxzoom = 15)) %>%
   
   # ranch boundary
@@ -105,7 +105,7 @@ map3 <- leaflet(shp_poly, height = 500) %>%
   ## species richness
   addPolygons(fillColor = ~ pal(species),
               popup = ~ label,
-              color = 'black', fillOpacity = 1, weight = 1.5) %>%
+              color = 'black', fillOpacity = 0.9, weight = 1.5) %>%
   
   ## legend
   addLegend(position = 'topright',

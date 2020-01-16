@@ -194,7 +194,7 @@ map2 <- leaflet(shp_poly, height = 500) %>%
   setView(lng = -122.3598, lat = 37.26693, zoom = 14) %>%
   
   ## background terrain
-  addProviderTiles("Stamen.Terrain",
+  addProviderTiles("Esri.WorldStreetMap",
                    options = providerTileOptions(minzoom = 14, maxzoom = 15)) %>%
   
   # ranch boundary
@@ -204,49 +204,49 @@ map2 <- leaflet(shp_poly, height = 500) %>%
   addPolygons(fillColor = ~ pal(PereGr),
               group = 'Perennial Grasses',
               popup = ~ label_PereGr,
-              color = 'black', fillOpacity = 1, weight = 1.5) %>%
+              color = 'black', fillOpacity = 0.9, weight = 1.5) %>%
   
   ## native grasses
   addPolygons(fillColor = ~ pal(NativeGr),
               group = 'Native Grasses',
               popup = ~ label_NativeGr,
-              color = 'black', fillOpacity = 1, weight = 1.5) %>%
+              color = 'black', fillOpacity = 0.9, weight = 1.5) %>%
   
   ## annual grasses
   addPolygons(fillColor = ~ pal(AnnualGr),
               group = 'Annual Grasses',
               popup = ~ label_AnnualGr,
-              color = 'black', fillOpacity = 1, weight = 1.5) %>%
+              color = 'black', fillOpacity = 0.9, weight = 1.5) %>%
   
   ## all grasses
   addPolygons(fillColor = ~ pal(Grass),
               group = 'All Grasses',
               popup = ~ label_Grass,
-              color = 'black', fillOpacity = 1, weight = 1.5) %>%
+              color = 'black', fillOpacity = 0.9, weight = 1.5) %>%
   
   ## shrubs
   addPolygons(fillColor = ~ pal(Shrubs),
               group = 'Shrubs',
               popup = ~ label_Shrubs,
-              color = 'black', fillOpacity = 1, weight = 1.5) %>%
+              color = 'black', fillOpacity = 0.9, weight = 1.5) %>%
   
   ## forbs
   addPolygons(fillColor = ~ pal(Forbs),
               group = 'Forbs',
               popup = ~ label_Forbs,
-              color = 'black', fillOpacity = 1, weight = 1.5) %>%
+              color = 'black', fillOpacity = 0.9, weight = 1.5) %>%
   
   ## weeds
   addPolygons(fillColor = ~ pal(Weeds),
               group = 'Invasive Weeds',
               popup = ~ label_Weeds,
-              color = 'black', fillOpacity = 1, weight = 1.5) %>%
+              color = 'black', fillOpacity = 0.9, weight = 1.5) %>%
   
   ## bare ground
   addPolygons(fillColor = ~ pal(BareGround),
               group = 'Bare Ground',
               popup = ~ label_BareGround,
-              color = 'black', fillOpacity = 1, weight = 1.5) %>%
+              color = 'black', fillOpacity = 0.9, weight = 1.5) %>%
   
   ## legend
   addLegend(position = 'topright',
