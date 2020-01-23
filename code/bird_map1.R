@@ -33,7 +33,7 @@ pointblue.palette <-
 
 
 # DATA SET UP------------------
-dat <- read_csv(here::here(masterdat)) %>%
+dat <- read_csv(here::here(masterdat), col_types = cols()) %>%
   select(Label, Estimate, species) %>%
   filter(species != 'WCSP') %>% #for now
   mutate(Estimate = Estimate / 2.47105 * 10) %>% #optional: conver to birds per 10 acres
@@ -192,7 +192,7 @@ map1 <- leaflet(shp_pts_map, height = 500) %>%
                                   'Savannah Sparrow')) %>%
   
   ## logo
-  addLogo(img = logo, src = 'remote', url = 'http://www.pointblue.org',
+  leafem::addLogo(img = logo, src = 'remote', url = 'http://www.pointblue.org',
           width = 174, height = 90, offset.y = -5)
 
 # add CSS
@@ -206,7 +206,7 @@ map1$dependencies <- c(map1$dependencies,
                          )
                        ))
 
-title <- paste0('TomKat Bird Map 2018')
+title <- paste0('TomKat Bird Map 2019')
 
 htmlwidgets::saveWidget(map1,
                         here::here(output1),
