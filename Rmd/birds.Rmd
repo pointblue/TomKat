@@ -23,14 +23,12 @@ nspecies <- dat %>%
   select(Spp) %>%
   distinct() %>%
   nrow()
-#91
 
 nsurveys <- dat %>% 
   unite('id', Point, Visit) %>%
   select(id) %>%
   distinct() %>% 
   nrow()
-#1035
 
 ```
 
