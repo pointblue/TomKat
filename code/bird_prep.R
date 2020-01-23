@@ -8,8 +8,8 @@ library(pbdistance) # devtools::install_github('kdybala/pbdistance')
 library(sf)
 
 # input files
-rawdat <- 'data_raw/TOKA_HOCR_PC_2010_2018.csv'
-
+rawdat <- 'data_raw/TOKA_HOCR_PC_2010_2019.csv'
+olddat <- 'data_master/TK_bird_master.csv'
 grasspc <- 'TOKA_point_count_grid_grass&hay' #surveys points in "grassland" only
 
 
@@ -23,7 +23,7 @@ ranch_richness <- 'data_master/TK_richness_by_year.csv'
 # DATA SET UP-----------
 
 ## TOKA data
-dat <- read_csv(here::here(rawdat)) %>% #24752 (older data has more rows?)
+dat <- read_csv(here::here(rawdat), col_types = cols()) %>% #27299
   mutate(Date = as.Date(Date, format = '%m/%d/%Y'),
          Year = as.numeric(format(Date, '%Y'))) %>%
   unite('Visit', Year, Visit, sep = '-') %>%
@@ -60,19 +60,28 @@ nspecies <- dat %>%
   select(Spp) %>%
   distinct() %>% 
   nrow()
-#91
+#94
 
 nsurveys <- dat %>% 
   unite('id', Point, Visit) %>%
   select(id) %>%
   distinct() %>% 
   nrow()
-#1121
+#1250
 
-testthat::expect_gte(nspecies, 91)
-testthat::expect_gte(nsurveys, 11121)
+testthat::expect_gte(nspecies, 94)
+testthat::expect_gte(nsurveys, 1205)
 # Note: update these numbers with this year's current number to test it again
 #  next year!
+
+# # To check which new species have been added:
+# spplist <- read_csv(here::here(olddat), col_types = cols()) %>%
+#   pull(Spp) %>%
+#   unique()
+# dat %>% 
+#   filter(!(substr(Spp, 1, 2) %in% c('UN', 'XX') | Spp == 'SPHU')) %>%
+#   filter(!(Spp %in% spplist)) %>% 
+#   distinct()
 
 write_csv(dat, here::here(masterdat))
 
@@ -83,17 +92,28 @@ write_csv(dat, here::here(masterdat))
 
 sdat <- dat %>% 
   filter(Visit != '2011-3' & Transect == 'TOKA') %>% #drop points with an extra third visit
+  filter(`Detection Cue` != 'J') %>% #filter out juveniles
   as.data.frame()
 
 fdat <- format_data_flat(sdat, strata = 'Point', dist = 'Distance Bin', 
                          dist_bin_id = NULL)
-# 170 strata = 170 unique sampling locations (points)
+# 171 strata = 171 unique sampling locations (points)
 # 1-14 total visits per sampling location
 
 # check for consistent number of sampling points and at least the same max
 #  number of visits per sampling location as last year:
-testthat::expect_equal(fdat$Sample.Label %>% unique() %>% length, 170)
+testthat::expect_equal(fdat$Sample.Label %>% unique() %>% length, 171)
 testthat::expect_gte(fdat$Effort %>% max(), 14)
+
+# # To check which new points have been added:
+# pointlist <- read_csv(here::here(olddat)) %>%
+#   filter(Transect == 'TOKA') %>%
+#   pull(Point) %>%
+#   unique()
+# fdat %>% 
+#   filter(!(Sample.Label %in% pointlist)) %>% 
+#   pull(Sample.Label) %>% summary()
+
 
 # fit distance functions and estimate densities per sample point for each
 #  focal species:
@@ -133,17 +153,17 @@ gdat <- dat %>%
   mutate(Year = as.numeric(format(Date, '%Y'))) %>%
   as.data.frame()
 
-length(unique(gdat$Point)) #104
+length(unique(gdat$Point)) #105
 
 fdat2 <- format_data_flat(gdat, 
                           year = 'Year', 
                           dist = 'Distance Bin', 
                           dist_bin_id = NULL) 
-# 8 strata (one for each year); 104 unique locations (points); 1-2 visits per point
+# 9 strata (one for each year); 105 unique locations (points); 1-2 visits per point
 
 # check for consistent number of sampling points and at least the same max
 #  number of visits per sampling location as last year:
-testthat::expect_equal(fdat2$Sample.Label %>% unique() %>% length, 104)
+testthat::expect_equal(fdat2$Sample.Label %>% unique() %>% length, 105)
 testthat::expect_gte(fdat2$Effort %>% max(), 2)
 
 # fit distance functions and estimate densities per sample point for each
@@ -218,7 +238,7 @@ rdat <- dat %>%
 
 richest2 <- vegan::estimateR(rdat) %>% as.data.frame() %>%
   mutate(method = row.names(.)) %>%
-  gather(grassland_2011:riparian_2018, key = 'id', value = 'n') %>%
+  gather(-method, key = 'id', value = 'n') %>%
   filter(method %in% c('S.obs', 'S.ACE', 'se.ACE')) %>%
   spread(key = method, value = n) %>%
   mutate(min = S.ACE - se.ACE,
