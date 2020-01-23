@@ -22,13 +22,13 @@ ranch_richness <- 'data_master/TK_richness_by_year.csv'
 
 # DATA SET UP-----------
 
-## TOKA data
+## TOKA dat
 dat <- read_csv(here::here(rawdat), col_types = cols()) %>% #27299
   mutate(Date = as.Date(Date, format = '%m/%d/%Y'),
          Year = as.numeric(format(Date, '%Y'))) %>%
   unite('Visit', Year, Visit, sep = '-') %>%
   mutate_at(vars(Project:Visit, 
-                 Spp:`Distance Bin ID`,
+                 Spp:`Distance Bin`,
                  `Breeding Status`,
                  Researcher:`Data Status`), factor) %>%
   mutate_at(vars(Singing), as.logical) %>%
@@ -57,17 +57,17 @@ dat <- read_csv(here::here(rawdat), col_types = cols()) %>% #27299
 nspecies <- dat %>%
   ## exclude unidentified spp, SPHU since ALHU&RUHU are both in there
   filter(!(substr(Spp, 1, 2) %in% c('UN', 'XX') | Spp == 'SPHU')) %>%
-  select(Spp) %>%
-  distinct() %>% 
-  nrow()
+  pull(Spp) %>%
+  unique() %>% 
+  length()
 #94
 
 nsurveys <- dat %>% 
   unite('id', Point, Visit) %>%
-  select(id) %>%
-  distinct() %>% 
-  nrow()
-#1250
+  pull(id) %>%
+  unique() %>% 
+  length()
+#1205
 
 testthat::expect_gte(nspecies, 94)
 testthat::expect_gte(nsurveys, 1205)
