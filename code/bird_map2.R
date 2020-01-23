@@ -34,7 +34,7 @@ pointblue.palette <-
 
 
 # DATA SET UP------------------
-dat <- read_csv(here::here(masterdat)) %>%
+dat <- read_csv(here::here(masterdat), col_types = cols()) %>%
   select(Point, S.ACE, S.obs, n) %>%
   gather(S.ACE:n, key = variable, value = value) %>%
   mutate(variable = factor(variable, levels = c('S.ACE', 'S.obs', 'n'))) %>%
@@ -170,7 +170,7 @@ map2 <- leaflet(shp_pts_map, height = 500) %>%
             title = 'Estimated<br>species<br>richness') %>%
   
   ## logo
-  addLogo(img = logo, src = 'remote', url = 'http://www.pointblue.org',
+  leafem::addLogo(img = logo, src = 'remote', url = 'http://www.pointblue.org',
           width = 174, height = 90, offset.y = -5)
 
 
@@ -185,7 +185,7 @@ map2$dependencies <- c(map2$dependencies,
                          )
                        ))
 
-title <- paste0('TomKat Bird Richness Map 2018')
+title <- paste0('TomKat Bird Richness Map 2019')
 
 htmlwidgets::saveWidget(map2,
                         here::here(output2),
