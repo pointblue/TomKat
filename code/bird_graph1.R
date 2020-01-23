@@ -24,7 +24,7 @@ pointblue.palette <-
 
 # DATA SET UP------------------
 
-dat <- read_csv(here::here(masterdat)) %>%
+dat <- read_csv(here::here(masterdat), col_types = cols()) %>%
   mutate(species = gsub('2', '', species)) %>%
   filter(species != 'WCSP') %>% #for now
   separate(Label, c('Project', 'Year')) %>%
@@ -98,7 +98,7 @@ plot1 <- plot_ly(x = ~Year) %>%
                        bordercolor = ~I('black'), borderwidth = 1),
          hovermode = 'x',
          margin = list(r = 0, b = 10, t = 10)) %>%
-  config(collaborate = FALSE, displaylogo = FALSE, showTips = FALSE,
+  config(displaylogo = FALSE, showTips = FALSE,
          modeBarButtonsToRemove = list('zoom2d', 'select2d', 'lasso2d', 
                                        'zoomIn2d', 'zoomOut2d', 
                                        'pan2d', 'toggleSpikelines'))
