@@ -88,7 +88,7 @@ shp_ranch <- st_read(here::here('GIS'), ranch, quiet = TRUE) %>%
 pal <- colorBin(palette = colorRamp(colors = c('#ffffff', pointblue.palette[4])),
                 domain = c(0, max(dat$species)),
                 na.color = pointblue.palette[7],
-                bins = c(0, 20, 40, 60, 80, 100, 110))
+                bins = c(0, 20, 40, 60, 80))
 
 # MAP----------------------
 
