@@ -131,7 +131,7 @@ map2 <- leaflet(shp_pts_map, height = 500) %>%
           zoom = 14) %>% 
   
   # background terrain
-  addProviderTiles("Stamen.Terrain",
+  addProviderTiles("Esri.WorldStreetMap",
                    options = providerTileOptions(minzoom = 14, maxzoom = 15)) %>%
   
   ## add rasters (below polygon boundaries) showing densities by cell:
