@@ -15,6 +15,7 @@ masterdat <- 'data_master/TK_soil_master.csv'
 
 # DATA SET UP----------------
 # main data set from CADC
+
 dat <- read_csv(here::here(rawdat), col_types = cols()) %>%
   mutate(Date = as.Date(Date, format = '%m/%d/%Y'),
          Year = format(Date, '%Y'),
@@ -25,9 +26,15 @@ dat <- read_csv(here::here(rawdat), col_types = cols()) %>%
          # calculate bulk density
          bulk.density.gcm3 = `Bulk Density Dry Wt` / (`Bulk Density Height` * pi * (`Bulk Density Diameter` /
                                                                                    2) ^ 2 - `Bulk Density Rock Vol`),
-         # convert water infiltration time from h:m:s to seconds
-         water1 = as.numeric(`Water Infiltration Time 1`),
-         water2 = as.numeric(`Water Infiltration Time 2`),
+         # convert water infiltration time from h:m:s to minutes
+         water1 = as.numeric(`Water Infiltration Time 1`)/60,
+         water2 = as.numeric(`Water Infiltration Time 2`)/60,
+         
+         # NOTE: two water infiltration tests performed in 2015 (prefer second one); 
+         #  but only one performed in 2018 (convert these using an equation)
+         # select water infiltration metric based on year:
+         water.infil = case_when(Year == 2015 ~ water2,
+                                 Year == 2018 ~ exp(0.84 * log(water1) + 1.18)),
          
          # fix missing values reported as 0 (the only zeroes for carbon)
          `Carbon 0-10 cm` = case_when(`Point Name` == 'TOKA-013' & Year == 2015 ~ NA_real_,
@@ -35,14 +42,16 @@ dat <- read_csv(here::here(rawdat), col_types = cols()) %>%
          `Carbon 10-40 cm` = case_when(`Point Name` == 'TOKA-013' & Year == 2015 ~ NA_real_,
                                        TRUE ~ `Carbon 10-40 cm`))
 
+
+
 # SUMMARIZE-----------------
 # summarize values over 5 samples at each point in each sample year
 sdat <- dat %>%
   group_by(`Point Name`, Year) %>%
   summarize(bulk.dens.gcm3 = mean(bulk.density.gcm3, na.rm = T),
             bulk.dens.sd = sd(bulk.density.gcm3, na.rm = T),
-            water.infil = mean(water1),
-            water.infil.sd = sd(water1),
+            water.infil = mean(water.infil),
+            water.infil.sd = sd(water.infil),
             carbonA = mean(`Carbon 0-10 cm`), #only one bulk sample per point so no sd
             carbonB = mean(`Carbon 10-40 cm`),
             depth = mean(`Max Depth`),
