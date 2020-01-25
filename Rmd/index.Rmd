@@ -16,7 +16,7 @@ This page serves as an index to the individual ranch data pages (all revised Feb
 
 * [index](index.html)
 * [weather](weather.html) - Updated December 2019
-* [soil](soil.html) 
+* [soil](soil.html) - Updated January 2020
 * [vegetation](vegetation.html) - Updated January 2020
 * [water](stream.html) - Updated December 2019
 * [birds](birds.html) - Updated January 2020
