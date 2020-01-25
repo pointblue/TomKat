@@ -99,9 +99,9 @@ pplots <- map(dat$Name,
                 blank_theme + 
                 ggtitle(.x) + 
                 scale_y_continuous(expand = c(0, 0)) +
-                scale_fill_viridis_d(option = 'cividis'))
+                scale_fill_viridis_d(option = 'inferno'))
 
-popplots <- popupGraph(pplots, type = 'png', 
+popplots <- leafpop::popupGraph(pplots, type = 'png', 
                        width = 400, height = 267)
 
 
@@ -114,7 +114,7 @@ map4 <- leaflet(shp_pts, height = 500) %>%
           zoom = 14) %>% 
   
   # background terrain
-  addProviderTiles("Stamen.Terrain",
+  addProviderTiles("Esri.WorldStreetMap",
                    options = providerTileOptions(minzoom = 14, maxzoom = 15)) %>%
   
   # pasture boundaries:
@@ -151,7 +151,7 @@ map4 <- leaflet(shp_pts, height = 500) %>%
             opacity = 1) %>%
   
   ## logo
-  addLogo(img = logo, src = 'remote', url = 'http://www.pointblue.org',
+  leafem::addLogo(img = logo, src = 'remote', url = 'http://www.pointblue.org',
           width = 174, height = 90, offset.y = -5)
 
 # add CSS
