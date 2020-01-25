@@ -33,10 +33,9 @@ pointblue.palette <-
 
 # DATA SET UP-------------
 
-dat <- read_csv(here::here(masterdat)) %>%
+dat <- read_csv(here::here(masterdat), col_types = cols()) %>%
   rename(Name = 'Point Name') %>%
-  select(Name, Year, bulk.dens.gcm3, water.infil, carbonA, carbonB)  %>%
-  mutate(water.infil = water.infil/60) #convert to minutes
+  select(Name, Year, bulk.dens.gcm3, water.infil, carbonA, carbonB)
 
 # recalculate percentile scores based on all years combined 
 # (to be able to show change in percentiles over years)
@@ -211,7 +210,7 @@ pal2 <- colorBin(palette = colorRamp(colors = c(pointblue.palette[4],
                                                 '#ffffff', 
                                                 pointblue.palette[3])),
                  domain = dat_lab$water.infil,
-                 bins = c(-50, -1, 1, 50),
+                 bins = c(-70, -1, 1, 70),
                  na.color = pointblue.palette[6])
 
 pal3 <- colorBin(palette = colorRamp(colors = c(pointblue.palette[3], 
@@ -230,7 +229,7 @@ map2 <- leaflet(shp_pts, height = 500) %>%
           zoom = 14) %>% 
   
   # background terrain
-  addProviderTiles("Stamen.Terrain",
+  addProviderTiles("Esri.WorldStreetMap",
                    options = providerTileOptions(minzoom = 14, maxzoom = 15)) %>%
   
   # pasture boundaries:
@@ -307,7 +306,7 @@ map2 <- leaflet(shp_pts, height = 500) %>%
   hideGroup('% Carbon') %>%
   
   ## logo
-  addLogo(img = logo, src = 'remote', url = 'http://www.pointblue.org',
+  leafem::addLogo(img = logo, src = 'remote', url = 'http://www.pointblue.org',
           width = 174, height = 90, offset.y = -5)
 
 
