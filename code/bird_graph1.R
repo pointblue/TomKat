@@ -1,6 +1,7 @@
 # README----------------------
 # Script to produce bird graph 1: ranch-wide trend in focal species densities
 #  (for all TK grassland survey points combined)
+# Outputs: html for webpages and jpg for powerpoint
 
 ## packages
 library(tidyverse)
@@ -12,6 +13,7 @@ masterdat <- 'data_master/TK_bird_density_by_year.csv'
 
 ## output files
 graph1 <- 'bird_graph1.html'
+ppt1 <- 'figs/bird_graph1_ppt.jpg'
 
 pointblue.palette <-
   c('#4495d1',
@@ -21,6 +23,24 @@ pointblue.palette <-
     '#bfd730',
     '#a7a9ac',
     '#666666')
+
+# theme for presentation figs (larger font sizes)
+theme_presentation <- theme_classic() + 
+  theme(legend.background = element_blank(),
+        legend.position = c(0.01, 1), 
+        legend.justification = c(0, 1),
+        legend.title = element_text(size = 28),
+        legend.text = element_text(size = 24), 
+        plot.title = element_text(size = 36, face = 'bold', vjust = 1, hjust = 0.5),
+        axis.text = element_text(size = 24, color = 'black', face = 'plain'), 
+        axis.title = element_text(size = 28, face = 'plain', vjust = 0),
+        strip.text = element_text(size = 28, face = 'bold', hjust = 0), 
+        strip.background = element_blank())
+
+# formatting sizes for powerpoint template
+ppt.width = 10 #inches
+ppt.height = 7.5 #inches
+ppt.width.wide = 13.33 #inches
 
 # DATA SET UP------------------
 
@@ -107,3 +127,33 @@ htmlwidgets::saveWidget(plot1,
                         here::here(graph1),
                         selfcontained = TRUE,
                         title = 'Bird species trends')
+
+# POWERPOINT VERSION ------------------------------------------------------
+
+g1 <- ggplot(dat, aes(Year, color = fullname)) + 
+  stat_smooth(aes(y = lcl), method = "loess", se = FALSE, span = 0.65) +
+  stat_smooth(aes(y = ucl), method = "loess", se = FALSE, span = 0.65)
+# build plot object for rendering 
+gg1 <- ggplot_build(g1)
+
+# extract data for the loess lines from the 'data' slot
+dat2 <- data.frame(x = gg1$data[[1]]$x,
+                   smoothlcl = gg1$data[[1]]$y,
+                   smoothucl = gg1$data[[2]]$y,
+                   fullname = rep(unique(dat$fullname), each = 80)) 
+
+ggplot(dat, aes(Year, Estimate, color = fullname)) + 
+  geom_point(size = 3) + 
+  # geom_errorbar(aes(ymin = lcl, ymax = ucl)) +
+  geom_ribbon(data = dat2, aes(x, y = NULL, ymin = smoothlcl, ymax = smoothucl,
+                               fill = fullname, color = NULL), alpha = 0.5,
+              show.legend = FALSE) +
+  geom_smooth(size = 1.5, se = FALSE, level = 0.95, span = 0.65) +
+  scale_color_manual(values = pointblue.palette[2:3]) +
+  scale_fill_manual(values = pointblue.palette[2:3]) +
+  labs(x = NULL, y = "Density (birds / 10 acres)", color = NULL) +
+  scale_x_continuous(breaks = seq(2012, 2018, 2)) + ylim(0, 8) +
+  theme_presentation
+
+ggsave(ppt1, width = ppt.width, height = ppt.height, units = 'in')
+
