@@ -3,6 +3,7 @@
 # each pasture, total area of pastures surveyed each year, and some missing data)
 # 1: ranch-wide trend in % cover of major veg types
 # 2: comparison of native, annual, perennial grasses
+# Outputs: html for webpages and jpg for powerpoint
 
 ## packages
 library(tidyverse)
@@ -17,6 +18,9 @@ poly <- 'TK_veg_fields' ## shapefile
 graph1 <- 'vegetation_graph1.html'
 graph2 <- 'vegetation_graph2.html'
 
+ppt1 <- 'figs/vegetation_graph1_ppt.jpg'
+ppt2 <- 'figs/vegetation_graph2_ppt.jpg'
+
 pointblue.palette <-
   c('#4495d1',
     '#74b743',
@@ -25,6 +29,24 @@ pointblue.palette <-
     '#bfd730',
     '#a7a9ac',
     '#666666')
+
+# theme for presentation figs (larger font sizes)
+theme_presentation <- theme_classic() + 
+  theme(legend.background = element_blank(),
+        legend.position = c(0.01, 1), 
+        legend.justification = c(0, 1),
+        legend.title = element_text(size = 28),
+        legend.text = element_text(size = 24), 
+        plot.title = element_text(size = 36, face = 'bold', vjust = 1, hjust = 0.5),
+        axis.text = element_text(size = 24, color = 'black', face = 'plain'), 
+        axis.title = element_text(size = 28, face = 'plain', vjust = 0),
+        strip.text = element_text(size = 28, face = 'bold', hjust = 0), 
+        strip.background = element_blank())
+
+# formatting sizes for powerpoint template
+ppt.width = 10 #inches
+ppt.height = 7.5 #inches
+ppt.width.wide = 13.33 #inches
 
 # DATA SET UP-------------
 shp_poly <- st_read(here::here('GIS'), poly, quiet = TRUE) 
@@ -44,7 +66,12 @@ dat <- read_csv(here::here(masterveg), col_types = cols()) %>%
             Cover = cover.area / area_ha) %>%
   ungroup() %>%
   mutate(y_round = paste0(round(Cover * 100, digits = 0), '%'),
-         fullname = recode(vegtype, AnnualGr = 'Annual Grasses',
+         vegtype = factor(vegtype, levels = c('Grass', 'Shrubs', 'Forbs', 
+                                              'Weeds', 'BareGround', 'AnnualGr', 
+                                              'PereGr', 'NativeGr', 'Trees', 
+                                              'Misc')),
+         fullname = recode(vegtype, 
+                           AnnualGr = 'Annual Grasses',
                            BareGround = 'Bare Ground',
                            Grass = 'All Grasses',
                            NativeGr = 'Native Grasses',
@@ -152,6 +179,7 @@ htmlwidgets::saveWidget(plot1,
                         selfcontained = TRUE,
                         title = 'TomKat Vegetation Trends')
 
+
 # PLOT 2-------------
 # Native vs. Perennial vs. Annual Grasses
 
@@ -213,4 +241,46 @@ htmlwidgets::saveWidget(plot2,
                         here::here(graph2),
                         selfcontained = TRUE,
                         title = 'TomKat Grass Trends')
+
+
+# POWERPOINT FIGURES ------------------------------------------------------
+
+## overview plot
+
+dat %>% 
+  filter(vegtype %in% c('Grass', 'Shrubs', 'Forbs', 'BareGround', 'Weeds')) %>% 
+  select(fullname, vegtype, Year, Cover) %>% 
+  # nest(data = c(Year, Cover)) %>% 
+  # mutate(mod = purrr::map(data, loess, formula = qlogis(Cover) ~ Year, span = 0.99),
+  #        smooth = purrr::map(mod, `[[`, 'fitted')) %>% 
+  # select(-mod) %>% 
+  # unnest(cols = c(data, smooth)) %>% 
+  # mutate(smooth = plogis(smooth)) %>% 
+  mutate(Cover = Cover * 100) %>% 
+  ggplot(aes(Year, Cover, color = fullname)) + 
+  geom_point(size = 3) + 
+  geom_smooth(size = 1.5, se = FALSE, level = 0.5, span = 0.99) +
+  scale_color_manual(values = pointblue.palette[c(1, 6, 3, 4, 2)]) +
+  labs(x = NULL, y = "% Cover", color = NULL) +
+  ylim(0, 70) +
+  theme_presentation
+
+ggsave(ppt1, width = ppt.width, height = ppt.height, units = 'in')
+
+
+## grasses
+
+dat %>% 
+  filter(vegtype %in% c('PereGr', 'NativeGr', 'AnnualGr')) %>% 
+  select(fullname, vegtype, Year, Cover) %>% 
+  mutate(Cover = Cover * 100) %>% 
+  ggplot(aes(Year, Cover, color = fullname)) + 
+  geom_point(size = 3) + 
+  geom_smooth(size = 1.5, se = FALSE, level = 0.5, span = 0.99) +
+  scale_color_manual(values = pointblue.palette[c(1, 3, 2)]) +
+  labs(x = NULL, y = "% Cover", color = NULL) +
+  ylim(0, 50) +
+  theme_presentation
+
+ggsave(ppt2, width = ppt.width, height = ppt.height, units = 'in')
 
