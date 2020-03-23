@@ -30,7 +30,9 @@ Soil
 
 <b>Increase soil sponginess:</b> All RMN points surpass NRCS compaction and water infiltration targets by 2020.
 
-<b>Increase soil organic carbon (SOC):</b> All RMN points at 4% SOC in 0-10 cm by 2020.
+<b>Increase soil organic carbon (SOC):</b> All RMN points at 0.5% SOC in 0-10 cm by 2021.*
+
+&ast;*Of the points that gained soil carbon on TomKat Ranch between 2015-2018, 0.5% was the average magnitude of change. We therefore feel this goal is ambitious but achievable.*
 
 
 ### Soil productivity
