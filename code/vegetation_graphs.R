@@ -243,13 +243,15 @@ htmlwidgets::saveWidget(plot2,
                         title = 'TomKat Grass Trends')
 
 
-# POWERPOINT FIGURES ------------------------------------------------------
-
-## overview plot
+# POWERPOINT FIGURE ------------------------------------------------------
 
 dat %>% 
-  filter(vegtype %in% c('Grass', 'Shrubs', 'Forbs', 'BareGround', 'Weeds')) %>% 
+  filter(vegtype %in% c('PereGr', 'AnnualGr', 'Shrubs', 'Forbs', 'BareGround', 'Weeds')) %>% 
   select(fullname, vegtype, Year, Cover) %>% 
+  mutate(fullname = factor(fullname, 
+                           levels = c('Annual Grasses', 'Perennial Grasses',
+                                      'Shrubs', 'Forbs', 'Invasive Weeds', 
+                                      'Bare Ground'))) %>% 
   # nest(data = c(Year, Cover)) %>% 
   # mutate(mod = purrr::map(data, loess, formula = qlogis(Cover) ~ Year, span = 0.99),
   #        smooth = purrr::map(mod, `[[`, 'fitted')) %>% 
@@ -257,30 +259,29 @@ dat %>%
   # unnest(cols = c(data, smooth)) %>% 
   # mutate(smooth = plogis(smooth)) %>% 
   mutate(Cover = Cover * 100) %>% 
-  ggplot(aes(Year, Cover, color = fullname)) + 
-  geom_point(size = 3) + 
-  geom_smooth(size = 1.5, se = FALSE, level = 0.5, span = 0.99) +
-  scale_color_manual(values = pointblue.palette[c(1, 6, 3, 4, 2)]) +
-  labs(x = NULL, y = "% Cover", color = NULL) +
-  ylim(0, 70) +
-  theme_presentation
+  ggplot(aes(Year, Cover)) + 
+  geom_smooth(aes(color = fullname), size = 1.5,   
+              method="gam", se = FALSE, 
+              formula = y ~ s(x, k = 7),
+              method.args = list(family = 'quasipoisson')) +
+  # geom_point(aes(fill = fullname), size = 3, shape = 21, color = 'gray20') + 
+  scale_color_manual(values = pointblue.palette[c(5, 2, 4, 1, 3, 7)]) +
+  scale_fill_manual(values = pointblue.palette[c(5, 2, 4, 1, 3, 7)]) +
+  labs(x = NULL, y = "% Cover", color = NULL, fill = NULL) +
+  ylim(0, 40) + xlim(2012, 2020.5) +
+  annotate("text", x = 2019.1, y = 27, label = 'Annual\nGrasses', 
+           color = pointblue.palette[5], size = 7, hjust = 0) +
+  annotate("text", x = 2019.1, y = 19, label = 'Perennial\nGrasses',
+           color = pointblue.palette[2], size = 7, hjust = 0) +
+  annotate("text", x = 2019.1, y = 4, label = 'Invasive\nWeeds',
+           color = pointblue.palette[3], size = 7, hjust = 0) +
+  annotate("text", x = 2012, y = 24, label = 'Shrubs',
+           color = pointblue.palette[4], size = 7, hjust = 0) +
+  annotate("text", x = 2019.1, y = 14, label = 'Forbs',
+           color = pointblue.palette[1], size = 7, hjust = 0) +
+  annotate("text", x = 2012, y = 4, label = 'Bare Ground',
+           color = pointblue.palette[7], size = 7, hjust = 0) +
+  theme_presentation + theme(legend.position = 'none')
 
 ggsave(ppt1, width = ppt.width, height = ppt.height, units = 'in')
-
-
-## grasses
-
-dat %>% 
-  filter(vegtype %in% c('PereGr', 'NativeGr', 'AnnualGr')) %>% 
-  select(fullname, vegtype, Year, Cover) %>% 
-  mutate(Cover = Cover * 100) %>% 
-  ggplot(aes(Year, Cover, color = fullname)) + 
-  geom_point(size = 3) + 
-  geom_smooth(size = 1.5, se = FALSE, level = 0.5, span = 0.99) +
-  scale_color_manual(values = pointblue.palette[c(1, 3, 2)]) +
-  labs(x = NULL, y = "% Cover", color = NULL) +
-  ylim(0, 50) +
-  theme_presentation
-
-ggsave(ppt2, width = ppt.width, height = ppt.height, units = 'in')
 

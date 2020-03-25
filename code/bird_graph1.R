@@ -131,8 +131,12 @@ htmlwidgets::saveWidget(plot1,
 # POWERPOINT VERSION ------------------------------------------------------
 
 g1 <- ggplot(dat, aes(Year, color = fullname)) + 
-  stat_smooth(aes(y = lcl), method = "loess", se = FALSE, span = 0.65) +
-  stat_smooth(aes(y = ucl), method = "loess", se = FALSE, span = 0.65)
+  stat_smooth(aes(y = lcl), method="gam", se = FALSE, 
+              formula = y ~ s(x, k = 8),
+              method.args = list(family = 'quasipoisson')) +
+  stat_smooth(aes(y = ucl), method="gam", se = FALSE, 
+              formula = y ~ s(x, k = 8),
+              method.args = list(family = 'quasipoisson'))
 # build plot object for rendering 
 gg1 <- ggplot_build(g1)
 
@@ -145,15 +149,22 @@ dat2 <- data.frame(x = gg1$data[[1]]$x,
 ggplot(dat, aes(Year, Estimate, color = fullname)) + 
   geom_point(size = 3) + 
   # geom_errorbar(aes(ymin = lcl, ymax = ucl)) +
-  geom_ribbon(data = dat2, aes(x, y = NULL, ymin = smoothlcl, ymax = smoothucl,
-                               fill = fullname, color = NULL), alpha = 0.5,
-              show.legend = FALSE) +
-  geom_smooth(size = 1.5, se = FALSE, level = 0.95, span = 0.65) +
+  # geom_ribbon(data = dat2, aes(x, y = NULL, ymin = smoothlcl, ymax = smoothucl,
+  #                              fill = fullname, color = NULL), alpha = 0.5,
+  #             show.legend = FALSE) +
+  geom_smooth(size = 1.5, 
+              method="gam", se = FALSE, 
+              formula = y ~ s(x, k = 8),
+              method.args = list(family = 'quasipoisson')) +
   scale_color_manual(values = pointblue.palette[2:3]) +
   scale_fill_manual(values = pointblue.palette[2:3]) +
   labs(x = NULL, y = "Density (birds / 10 acres)", color = NULL) +
-  scale_x_continuous(breaks = seq(2012, 2018, 2)) + ylim(0, 8) +
-  theme_presentation
+  scale_x_continuous(breaks = seq(2012, 2018, 2), limits = c(2011, 2020.5)) + 
+  theme_presentation + theme(legend.position = "none") +
+  annotate("text", x = 2019.1, y = 1.9, label = 'Grasshopper\nSparrow', 
+           color = pointblue.palette[2], size = 7, hjust = 0) +
+  annotate("text", x = 2019.1, y = 0.5, label = 'Savannah\nSparrow',
+           color = pointblue.palette[3], size = 7, hjust = 0)
 
 ggsave(ppt1, width = ppt.width, height = ppt.height, units = 'in')
 

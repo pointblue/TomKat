@@ -1,6 +1,7 @@
 # README----------------------
 # Script to produce soil map 1: current soil map
 # - bulk density, carbon at 2 depths, water infiltration, & overall "soil health" score
+# Outputs: htmlwidget for webpage and jpg for powerpoint
 
 ## packages
 library(tidyverse)
@@ -14,6 +15,7 @@ masterdat <- 'data_master/TK_soil_master.csv'
 
 ## output files
 output1 <- 'soil_map1.html'
+ppt1 <- 'figs/soil_carbon_map_ppt.jpg'
 
 ## shapefiles
 poly <- 'TK_veg_fields'
@@ -347,3 +349,53 @@ htmlwidgets::saveWidget(map1,
                         here::here(output1),
                         selfcontained = TRUE,
                         title = title)
+
+
+# POWERPOINT FIGURE -------------------------------------------------------
+# theme for presentation figs (larger font sizes)
+theme_presentation <- theme_classic() + 
+  theme(legend.background = element_blank(),
+        legend.position = c(0.01, 1), 
+        legend.justification = c(0, 1),
+        legend.title = element_text(size = 28),
+        legend.text = element_text(size = 24), 
+        plot.title = element_text(size = 36, face = 'bold', vjust = 1, hjust = 0.5),
+        axis.text = element_text(size = 24, color = 'black', face = 'plain'), 
+        axis.title = element_text(size = 28, face = 'plain', vjust = 0),
+        strip.text = element_text(size = 28, face = 'bold', hjust = 0), 
+        strip.background = element_blank())
+
+# formatting sizes for powerpoint template
+ppt.width = 10 #inches
+ppt.height = 7.5 #inches
+ppt.width.wide = 13.33 #inches
+
+# carbon only - simplify to show whether any increase in carbon at either depth
+
+simplec <- dat %>% 
+  select(Name, Year, carbonA, carbonB) %>% 
+  pivot_longer(carbonA:carbonB) %>% 
+  pivot_wider(names_from = 'Year', values_from = 'value') %>% 
+  mutate(diff = `2018` - `2015`) %>% 
+  # find largest increase at either depth
+  group_by(Name) %>% 
+  summarize(diff = max(diff)) %>% 
+  mutate(change = case_when(diff > 0 ~ 'Increase',
+                              diff <= 0 ~ 'Decrease or no change'))
+
+shp_pts2 <- st_read(here::here('GIS'), pts, quiet = TRUE) %>%
+  st_transform('+proj=longlat +datum=WGS84') %>%
+  right_join(simplec, by = 'Name') %>% 
+  filter(!is.na(change))
+
+ggplot() +
+  geom_sf(data = shp_ranch, fill = NA) + 
+  geom_sf(data = shp_poly, fill = 'gray95', color = 'gray60') +
+  geom_sf(data = shp_pts2, aes(fill = change), size = 6, shape = 21, color = 'gray30') +
+  scale_fill_manual(values = c(pointblue.palette[c(6, 2)])) +
+  theme_minimal() + 
+  theme(legend.position = 'none',
+        axis.text = element_blank(),
+        panel.grid = element_blank())
+
+ggsave(ppt1, width = ppt.width, height = ppt.height, units = 'in')
