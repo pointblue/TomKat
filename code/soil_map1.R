@@ -14,7 +14,7 @@ library(mapview)
 masterdat <- 'data_master/TK_soil_master.csv'
 
 ## output files
-output1 <- 'soil_map1.html'
+output1 <- 'docs/widget/soil_map1.html'
 ppt1 <- 'figs/soil_carbon_map_ppt.jpg'
 
 ## shapefiles

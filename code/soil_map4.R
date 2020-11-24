@@ -13,7 +13,7 @@ masterdat <- 'data_master/TK_soil_master.csv'
 microbephyla <- 'data_raw/Bacterial_Phyla_For_SOTR.xlsx'
 
 ## output files
-output4 <- 'soil_map4.html'
+output4 <- 'docs/widget/soil_map4.html'
 
 ## shapefiles
 poly <- 'TK_veg_fields'

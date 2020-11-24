@@ -13,7 +13,7 @@ library(mapview)
 masterdat <- 'data_master/TK_soil_master.csv'
 
 ## output files
-output3 <- 'soil_map3.html'
+output3 <- 'docs/widget/soil_map3.html'
 
 ## shapefiles
 poly <- 'TK_veg_fields'
