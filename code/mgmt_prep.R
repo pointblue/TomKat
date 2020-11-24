@@ -9,7 +9,8 @@ library(tidyverse)
 library(sf)
 
 # input files
-rawdat <- 'data_raw/Tom Kat Ranch - Pastures 201810292309.xlsx'
+rawdat1 <- 'data_raw/Tom Kat Ranch - Pastures 201810292309.xlsx'
+rawdat2 <- 'data_raw/Tom Kat Ranch - Pastures 2019growingseason.xlsx'
 
 ## shapefiles
 poly <- 'TK_veg_fields'
@@ -20,18 +21,27 @@ season_stats <- 'data_master/TK_mgmt_stats.csv'
 
 # DATA SET UP----------------
 
-fields <- readxl::excel_sheets(here::here(rawdat)) 
+fields1 <- readxl::excel_sheets(here::here(rawdat1)) 
+fields2 <- readxl::excel_sheets(here::here(rawdat2)) 
 # PastureMap output has a separate sheet for each field, plus a summary report
 # --> skip summary report and lengthy header on each page
 # --> include sheet name as an ID
+
+fields1[-which(toupper(fields1) %in% toupper(fields2))]
+fields2[-which(toupper(fields2) %in% toupper(fields1))]
 
 # compare to pastures used for veg data:
 shp_poly <- st_read(here::here('GIS'), poly, quiet = TRUE) 
 
 # read in each excel sheet and rbind:
-dat <- map_dfr(fields[2:length(fields)],
-               ~ readxl::read_excel(path = here::here(rawdat), 
-                                    sheet = .x, skip = 14) %>%
+dat1 <- map_dfr(fields1[2:length(fields1)],
+                ~ readxl::read_excel(path = here::here(rawdat1), 
+                                     sheet = .x, skip = 14) %>%
+                  mutate(field = .x))
+
+dat2 <- map_dfr(fields2[2:length(fields2)],
+               ~ readxl::read_excel(path = here::here(rawdat2), 
+                                    sheet = .x, skip = 16) %>%
                    mutate(field = .x))
 
 # Note: field (excel sheet name) does not always equal recorded 'Pasture' 
@@ -39,12 +49,15 @@ dat <- map_dfr(fields[2:length(fields)],
 # --> assume these are generally subdivisions within each field
 
 # fields in PastureMap with no correspondence to veg fields: (drop these)
-dat %>% filter(!(toupper(field) %in% toupper(shp_poly$Pasture))) %>% 
+dat1 %>% filter(!(toupper(field) %in% toupper(shp_poly$Pasture))) %>% 
   pull(field) %>% as.factor() %>% summary()
 ##--> assume 4b is part of 4
+dat2 %>% filter(!(toupper(field) %in% toupper(shp_poly$Pasture))) %>% 
+  pull(field) %>% as.factor() %>% summary()
 
+# OLDER DATA: (NOTE: NEWER DATA IN A DIFFERENT FORMAT)
 # clean up column names, format, and filter:
-dat_filter <- dat %>%
+dat_filter1 <- dat1 %>%
   rename(date.time = `Date and time`, 
          area = Pasture,
          activity = Activity,
