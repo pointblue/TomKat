@@ -1,5 +1,5 @@
 ---
-title: ''
+title: 'Water'
 output:
   html_document:
     theme: NULL
@@ -11,8 +11,6 @@ pointblue.palette = c("#3682C7", "#64AD34", "#F38118", "#00459A", "#B3D225",
                       "#96999C", "#5A5B5E")
 ```
 
-Water
-================================
 #### Beginning July 2011, Point Blue Conservation Science installed a stream gauge on Honsinger Creek and began monitoring water temperature, stream flow, and stage, with assistance from Trout Unlimited. {#intro}
 
 ### SMART Goal
@@ -26,7 +24,7 @@ Daily average <font color='`r pointblue.palette[3]`'><b>water temperature</b></f
 <i>Click & drag the slider at the bottom to view different dates.</i>
 
 <center>
-<iframe src="stream_graph1.html" style="border: none;" width = 100%; height = 650px;></iframe>
+<iframe src="widget/stream_graph1.html" style="border: none;" width = 100%; height = 650px;></iframe>
 </center>
 
 
@@ -35,7 +33,7 @@ Daily average <font color='`r pointblue.palette[3]`'><b>water temperature</b></f
 Consistent with the warm weather at TomKat and the regional drought conditions, monthly average water temperatures were above the averages observed in Honsinger Creek throughout most of 2014-2017, while water depth was below average 2013-2017. In 2017, water depths increased and water temperatures began declining. 
 
 <center>
-<iframe src="stream_graph2.html" style="border: none;" width = 100%; height = 650px;></iframe>
+<iframe src="widget/stream_graph2.html" style="border: none;" width = 100%; height = 650px;></iframe>
 </center>
 
 ----------------------------------------------------------
