@@ -9,7 +9,7 @@ library(plotly)
 masterdat <- 'data_master/TK_stream_monthly_stats.csv'
 
 ## output files
-graph2 <- 'stream_graph2.html'
+graph2 <- 'docs/widget/stream_graph2.html'
 
 
 pointblue.palette <- c('#4495d1', '#74b743', '#f7941d', '#005baa',

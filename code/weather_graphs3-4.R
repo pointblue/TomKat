@@ -10,8 +10,8 @@ pdsi <- 'data_master/CA_Palmer_Drought_Severity_Index.csv'
 zndx <- 'data_master/CA_Palmer_Z_Index.csv'
 
 ## output files
-graph3 <- 'weather_graph3.html'
-graph4 <- 'weather_graph4.html'
+graph3 <- 'docs/widget/weather_graph3.html'
+graph4 <- 'docs/widget/weather_graph4.html'
 
 
 pointblue.palette <- c('#4495d1', '#74b743', '#f7941d', '#005baa',

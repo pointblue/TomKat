@@ -9,7 +9,7 @@ library(plotly)
 masterdat <- 'data_master/TK_weather_master_daily.csv'
 
 ## output files
-graph1 <- 'weather_graph1.html'
+graph1 <- 'docs/widget/weather_graph1.html'
 
 
 pointblue.palette <- c('#4495d1', '#74b743', '#f7941d', '#005baa',

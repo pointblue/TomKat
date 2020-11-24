@@ -10,7 +10,7 @@ masterdat <- 'data_master/TK_weather_master_monthly.csv'
 normals <- 'data_master/TK_weather_estimated_normals.csv'
 
 ## output files
-graph2 <- 'weather_graph2.html'
+graph2 <- 'docs/widget/weather_graph2.html'
 
 
 pointblue.palette <- c('#4495d1', '#74b743', '#f7941d', '#005baa',
