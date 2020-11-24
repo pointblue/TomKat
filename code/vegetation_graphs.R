@@ -15,8 +15,8 @@ masterveg <- 'data_master/TK_veg_master.csv'
 poly <- 'TK_veg_fields' ## shapefile
 
 ## output files
-graph1 <- 'vegetation_graph1.html'
-graph2 <- 'vegetation_graph2.html'
+graph1 <- 'docs/widget/vegetation_graph1.html'
+graph2 <- 'docs/widget/vegetation_graph2.html'
 
 ppt1 <- 'figs/vegetation_graph1_ppt.jpg'
 ppt2 <- 'figs/vegetation_graph2_ppt.jpg'

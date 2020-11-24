@@ -13,7 +13,7 @@ library(mapview)
 masterveg <- 'data_master/TK_veg_master.csv'
 
 ## output files
-output2 <- 'vegetation_map2.html'
+output2 <- 'docs/widget/vegetation_map2.html'
 
 ## shapefiles
 poly <- 'TK_veg_fields'
