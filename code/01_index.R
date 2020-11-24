@@ -6,7 +6,7 @@
 # INDEX & README------------------
 # render Rmd to html
 rmarkdown::render(here::here("Rmd/index.Rmd"), 
-                  output_file = here::here("index.html"))
+                  output_file = here::here("docs/index.html"))
 
 rmarkdown::render(here::here("Rmd/README.Rmd"),
                   output_file = here::here("README.md"))
