@@ -51,7 +51,7 @@ source('code/vegetation_map3.R')
 
 # render Rmd to html
 rmarkdown::render(here::here("Rmd/vegetation.Rmd"), 
-                  output_file = here::here("vegetation.html"))
+                  output_file = here::here("docs/vegetation.html"))
 
 
 # SOIL------------------
@@ -72,7 +72,7 @@ source('code/soil_map4.R')
 
 # render Rmd to html
 rmarkdown::render(here::here("Rmd/soil.Rmd"), 
-                  output_file = here::here("soil.html"))
+                  output_file = here::here("docs/soil.html"))
 
 
 # WEATHER----------------
@@ -132,4 +132,4 @@ source('code/mgmt_maps1-2.R')
 
 ## render Rmd to html
 rmarkdown::render(here::here("Rmd/mgmt.Rmd"),
-                  output_file = here::here("mgmt.html"))
+                  output_file = here::here("docs/mgmt.html"))
