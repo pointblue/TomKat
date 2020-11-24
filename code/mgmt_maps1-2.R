@@ -12,8 +12,8 @@ library(mapview)
 masterdat <- 'data_master/TK_mgmt_stats.csv'
 
 ## output files
-output1 <- 'mgmt_map1.html'
-output2 <- 'mgmt_map2.html'
+output1 <- 'docs/widget/mgmt_map1.html'
+output2 <- 'docs/widget/mgmt_map2.html'
 
 ## shapefiles
 poly <- 'TK_veg_fields'
@@ -104,7 +104,7 @@ map1 <- leaflet(shp_poly, height = 500) %>%
   setView(lng = -122.3598, lat = 37.26693, zoom = 14) %>%
   
   ## background terrain
-  addProviderTiles("Stamen.Terrain",
+  addProviderTiles("Esri.WorldStreetMap",
                    options = providerTileOptions(minzoom = 14, maxzoom = 15)) %>%
   
   # ranch boundary
@@ -146,7 +146,7 @@ map1 <- leaflet(shp_poly, height = 500) %>%
   ) %>%
   
   ## logo
-  addLogo(img = logo, src = 'remote', url = 'http://www.pointblue.org',
+  leafem::addLogo(img = logo, src = 'remote', url = 'https://www.pointblue.org',
           width = 174, height = 90, offset.y = -5)
 
 # add CSS
@@ -174,7 +174,7 @@ map2 <- leaflet(shp_poly, height = 500) %>%
   setView(lng = -122.3598, lat = 37.26693, zoom = 14) %>%
   
   ## background terrain
-  addProviderTiles("Stamen.Terrain",
+  addProviderTiles("Esri.WorldStreetMap",
                    options = providerTileOptions(minzoom = 14, maxzoom = 15)) %>%
   
   # ranch boundary
@@ -216,7 +216,7 @@ map2 <- leaflet(shp_poly, height = 500) %>%
   ) %>%
   
   ## logo
-  addLogo(img = logo, src = 'remote', url = 'http://www.pointblue.org',
+  leafem::addLogo(img = logo, src = 'remote', url = 'https://www.pointblue.org',
           width = 174, height = 90, offset.y = -5)
 
 # add CSS
