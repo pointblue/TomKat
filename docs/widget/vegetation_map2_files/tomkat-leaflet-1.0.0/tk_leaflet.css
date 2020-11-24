@@ -1,0 +1,44 @@
+/* toggle spacing & font size */
+.leaflet-control-layers-expanded {
+	line-height: 16px;
+	padding-bottom: 3px;
+	padding-top: 3px;
+	}
+	
+.leaflet-control-layers-expanded {
+	line-height: 16px;
+	padding-bottom: 3px;
+	padding-top: 3px;
+	}
+	
+input[type="radio"] {
+	margin: 0 0 0;
+	}
+
+.info {
+  font-family: Lato,Helvetica,Arial,Lucida,sans-serif;
+	font-size: 12px;
+	}
+
+/* legend markers*/
+.legend i {
+	width: 16px;
+	height: 16px;
+	}
+
+/* legend text*/
+.legend {
+	line-height: 16px;
+	font-family: Lato,Helvetica,Arial,Lucida,sans-serif;
+	}
+
+/* spacing inside pop-up tables */
+table, th, td {
+  padding-left: .25em; 
+	padding-right: .25em;
+	font-family: 'Lato',Helvetica,Arial,Lucida,sans-serif;
+	font-size: 12px;
+}
+tfoot{
+  text-align: right;
+}
