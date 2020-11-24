@@ -97,7 +97,7 @@ source('code/weather_graphs3-4.R')
 
 ## render Rmd to html
 rmarkdown::render(here::here("Rmd/weather.Rmd"),
-                  output_file = here::here("weather.html"))
+                  output_file = here::here("docs/weather.html"))
 
 
 # WATER-------------------
@@ -113,7 +113,7 @@ source('code/stream_graph2.R')
 
 ## render Rmd to html
 rmarkdown::render(here::here("Rmd/stream.Rmd"),
-                  output_file = here::here("stream.html"))
+                  output_file = here::here("docs/stream.html"))
 
 
 ## Note: temperatures above 23 bad for adult steelhead trout; 
