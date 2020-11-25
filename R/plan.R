@@ -1,4 +1,12 @@
 plan = drake_plan(
+  # INDEX & README----------
+  # "home" page for gitpages
+  index_page = render_Rmd(file_in("Rmd/index.Rmd"), 
+                          file_out("docs/index.html")),
+  # readme for git repo
+  readme_page = render_Rmd(file_in("Rmd/README.Rmd"),
+                           file_out("README.md")),
+  
   # BIRDS-------------
   
   # "grassland" points:
