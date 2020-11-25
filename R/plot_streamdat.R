@@ -1,4 +1,28 @@
-
+##'@title Plot stream data
+##'@description function for generating interacting plot_ly figures for TomKat
+##'  stream flow data, with subplots for temperature, flow, and depth. Used for
+##'  both daily stats (line graphs) and monthly differences from normal (bar
+##'  graphs).
+##'@param dat data frame containing stream flow stats. Expects fields "name"
+##'  (stat name), "date", and "value", with stats ordered as: temp, flow, depth.
+##'@param colors character vector of colors to be used for temp, flow, and
+##'  depth, respectively
+##'@param ytitle vector of strings to be used as y-axis titles for temp, flow,
+##'  and depth subplots, respectively
+##'@param ymin vector of minimum y-axis values to be used for subplots
+##'@param ymax vector of maximum y-axis values to be used for subplots
+##'@param type passed to plot_ly; defaults to "scatter"
+##'@param mode passed to plot_ly; defaults to "lines"
+##'@param selector logical, whether or not to include selector buttons at top
+##'  left for showing plot from last year, last 3 years, or all time; defaults
+##'  to FALSE
+##'@param slider logical, whether or not to include a range slider at the bottom
+##'  of the plot; defaults to FALSE
+##'
+##'@export
+##'@author Kristen Dybala
+##'
+##'  
 plot_streamdat = function(dat, colors, ytitle, ymin = 0, ymax,
                           type = 'scatter', mode = 'lines',
                           selector = FALSE, slider = FALSE) {

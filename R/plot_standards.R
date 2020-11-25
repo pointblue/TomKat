@@ -1,12 +1,21 @@
-##'@title plot_data
+##'@title plot_standards
 ##'@description functions for generating interacting plot_ly figures for TomKat
-##'  data, with supporting function to save widgets, render Rmds, and access
-##'  point blue logo & palette
+##'  trend data, with supporting function to save widgets, render Rmds, and
+##'  access point blue logo & palette
+##'@param dat data frame containing trend data. Expects fields "group"
+##'  (identifier for each trend line; ok if there's only one group), "year",
+##'  "value", "minus" and "plus" (negative and positive error differences from
+##'  value, passed to plot_ly's arrayminus and array). Optional: "label_text"
+##'  field containing string to be displayed when hovering over a data point.
+##'@param colors character vector of colors to be used for temp, flow, and
+##'  depth, respectively
+##'@param ytitle strings to be used as y-axis title
+##'@param yrange vector of min and max y-axis values to be shown 
 ##'
 ##'@export
 ##'@author Kristen Dybala
 ##'
-##'  # PLOTTING STANDARDS
+##'  
 
 tk.palette <- c('#3b4035', '#9c8755', '#61655c', '#d1bc8b', '#40696f', 
                 '#2e5150', '#5f5131', '#9e513a')
