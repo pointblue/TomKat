@@ -24,7 +24,7 @@ Daily average <font color='`r pointblue.palette[3]`'><b>water temperature</b></f
 <i>Click & drag the slider at the bottom to view different dates.</i>
 
 <center>
-<iframe src="widget/stream_graph1.html" style="border: none;" width = 100%; height = 650px;></iframe>
+<iframe src="widget/stream_plot_daily.html" style="border: none;" width = 100%; height = 650px;></iframe>
 </center>
 
 
@@ -33,7 +33,7 @@ Daily average <font color='`r pointblue.palette[3]`'><b>water temperature</b></f
 Consistent with the warm weather at TomKat and the regional drought conditions, monthly average water temperatures were above the averages observed in Honsinger Creek throughout most of 2014-2017, while water depth was below average 2013-2017. In 2017, water depths increased and water temperatures began declining. 
 
 <center>
-<iframe src="widget/stream_graph2.html" style="border: none;" width = 100%; height = 650px;></iframe>
+<iframe src="widget/stream_plot_monthly.html" style="border: none;" width = 100%; height = 650px;></iframe>
 </center>
 
 ----------------------------------------------------------
