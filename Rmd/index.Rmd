@@ -15,9 +15,9 @@ output:
 ### Page index
 
 * [index](index.html)
-* [weather](weather.html) - Updated December 2019
-* [soil](soil.html) - Updated March 2020
-* [vegetation](vegetation.html) - Updated January 2020
-* [water](stream.html) - Updated December 2019
-* [birds](birds.html) - Updated November 2020
+* [weather](weather.html) - updated Dec 2019
+* [soil](soil.html)
+* [vegetation](vegetation.html)
+* [water](stream.html) - updated Nov 2020
+* [birds](birds.html) - updated Nov 2020
 * [management](mgmt.html)
