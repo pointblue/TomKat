@@ -168,5 +168,46 @@ plan = drake_plan(
   # * WEBPAGE----------
   # report = knit(knitr_in("report.Rmd"), file_out("report.md"), quiet = TRUE)
   bird_page = render_Rmd(file_in("Rmd/birds.Rmd"), 
-                         file_out("docs/birds.html"))
+                         file_out("docs/birds.html")),
+  
+  # STREAM---------------
+  
+  streamdat = compile_stream_data(
+    path = file_in('data_raw/Pe01 Honsinger Creek streamflow WY2011 - WY2020.xlsx')) %>% 
+    write_csv(file_out('data_clean/TOKA_stream_main.csv')),
+  
+  # * daily------
+  streamdat_daily = calculate_stream_daily(streamdat) %>% 
+    write_csv(file_out('data_clean/TOKA_stream_daily_stats.csv')),
+  
+  streamdat_daily_plot = streamdat_daily %>% 
+    select(name, date, value = mean) %>% 
+    plot_streamdat(colors = pointblue.palette[c(3,2,4)],
+                   ytitle = c('Temperature (C)', 'Flow (cfs)', 'Depth (ft)'),
+                   ymax = c(20, 100, 4),
+                   ymin = c(0, 0, 0),
+                   type = 'scatter', mode = 'lines',
+                   selector = TRUE, slider = TRUE) %>%
+    save_widget(pathout = file_out('docs/widget/stream_plot_daily.html'),
+                title = 'Honsinger Creek Daily Stats'),
+
+  # * monthly---------
+  streamdat_monthly = calculate_stream_monthly(streamdat_daily) %>% 
+    write_csv(file_out('data_clean/TOKA_stream_monthly_stats.csv')),
+  
+  streamdat_monthly_plot = streamdat_monthly %>% 
+    select(name, date, value = diff) %>% 
+    plot_streamdat(colors = pointblue.palette[c(3,2,4)],
+                   ytitle = c('Temperature (C)', 'Flow (cfs)', 'Depth (ft)'),
+                   ymax = c(4, 5, 1),
+                   ymin = c(-4, -5, -1),
+                   type = 'bar', mode = NULL,
+                   selector = FALSE, slider = FALSE) %>%
+    save_widget(pathout = file_out('docs/widget/stream_plot_monthly.html'),
+                title = 'Honsinger Creek Monthly Stats'),
+  
+  # * WEBPAGE----------
+  # report = knit(knitr_in("report.Rmd"), file_out("report.md"), quiet = TRUE)
+  stream_page = render_Rmd(file_in("Rmd/stream.Rmd"), 
+                         file_out("docs/stream.html")),
 )
