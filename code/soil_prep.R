@@ -10,7 +10,7 @@ labdat <- 'data_raw/TOKA_soildata_Lab_2015.csv'
 microbedat <- 'data_raw/Bacterial_Richness_For_SOTR.xlsx'
 
 # output files
-masterdat <- 'data_master/TK_soil_master.csv'
+masterdat <- 'data_clean/TK_soil_main.csv'
 
 
 # DATA SET UP----------------

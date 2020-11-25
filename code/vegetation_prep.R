@@ -9,8 +9,8 @@ rawdatpath <- 'data_raw'
 diversitydat <- 'data_raw/TOKA_pvegdiversity_2011to19.csv'
 
 # output files
-masterdat <- 'data_master/TK_veg_master.csv'
-masterdivdat <- 'data_master/TK_veg_master_div.csv'
+masterdat <- 'data_clean/TK_veg_main.csv'
+masterdivdat <- 'data_clean/TK_veg_main_div.csv'
 
 
 

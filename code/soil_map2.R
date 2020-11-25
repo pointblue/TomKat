@@ -10,7 +10,7 @@ library(leaflet)
 library(mapview)
 
 ## input files
-masterdat <- 'data_master/TK_soil_master.csv'
+masterdat <- 'data_clean/TK_soil_clean.csv'
 
 ## output files
 output2 <- 'docs/widget/soil_map2.html'

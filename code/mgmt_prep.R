@@ -16,8 +16,8 @@ rawdat2 <- 'data_raw/Tom Kat Ranch - Pastures 2019growingseason.xlsx'
 poly <- 'TK_veg_fields'
 
 # output files
-masterdat <- 'data_master/TK_mgmt_master.csv'
-season_stats <- 'data_master/TK_mgmt_stats.csv'
+masterdat <- 'data_clean/TK_mgmt_main.csv'
+season_stats <- 'data_clean/TK_mgmt_stats.csv'
 
 # DATA SET UP----------------
 

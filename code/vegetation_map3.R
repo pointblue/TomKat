@@ -9,7 +9,7 @@ library(leaflet)
 library(mapview)
 
 ## input files
-masterveg <- 'data_master/TK_veg_master_div.csv'
+masterveg <- 'data_clean/TK_veg_main_div.csv'
 
 ## output files
 output3 <- 'docs/widget/vegetation_map3.html'

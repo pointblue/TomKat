@@ -9,7 +9,7 @@ library(leaflet)
 library(mapview)
 
 ## input files
-masterdat <- 'data_master/TK_soil_master.csv'
+masterdat <- 'data_clean/TK_soil_main.csv'
 microbephyla <- 'data_raw/Bacterial_Phyla_For_SOTR.xlsx'
 
 ## output files

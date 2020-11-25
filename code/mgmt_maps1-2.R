@@ -9,7 +9,7 @@ library(leaflet)
 library(mapview)
 
 ## input files
-masterdat <- 'data_master/TK_mgmt_stats.csv'
+masterdat <- 'data_clean/TK_mgmt_stats.csv'
 
 ## output files
 output1 <- 'docs/widget/mgmt_map1.html'
