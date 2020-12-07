@@ -69,6 +69,7 @@ plan = drake_plan(
              legend.title = 'Density<br>(birds/10 acres)',
              htmltab = birddens_point_tables) %>% 
     save_widget(pathout = file_out('docs/widget/bird_map_density.html'),
+                selfcontained = FALSE, libdir = 'lib',
                 title = 'TomKat Bird Density Map'),
   
   # * 2: PLOT avg density per year & trend--------------
@@ -105,6 +106,7 @@ plan = drake_plan(
                  yrange = c(0, 10),
                  ytitle = 'Density (birds/10 acres)') %>%
     save_widget(pathout = file_out('docs/widget/bird_trend_density.html'),
+                selfcontained = FALSE, libdir = 'lib',
                 title = 'TomKat Bird Density Trends'),
   # -> year x group model has no signiicant trends; but year + group model 
   #   shows overall decline for both groups, with SAVS significantly lower
@@ -143,7 +145,8 @@ plan = drake_plan(
              fields = file_in('GIS/TK_veg_fields.shp'),
              boundary = file_in('GIS/TomKat_ranch_boundary.shp')) %>% 
     save_widget(pathout = file_out('docs/widget/bird_map_richness.html'),
-                title = 'TomKat Bird Richness Map'),
+                title = 'TomKat Bird Richness Map',
+                selfcontained = FALSE, libdir = 'lib'),
   
   # * 4: PLOT spp richness per year-------
   # compare grassland and riparian points
@@ -169,6 +172,7 @@ plan = drake_plan(
                  yrange = c(0, 75),
                  ytitle = 'Estimated number of species') %>% 
     save_widget(pathout = file_out('docs/widget/bird_trend_richness.html'),
+                selfcontained = FALSE, libdir = 'lib',
                 title = 'TomKat Bird Richness Trends'),
   # -> year x group model shows declining trend for grassland birds, and 
   #  different trend (slightly increasing) for riparian birds)
@@ -197,6 +201,7 @@ plan = drake_plan(
                    type = 'scatter', mode = 'lines',
                    selector = TRUE, slider = TRUE) %>%
     save_widget(pathout = file_out('docs/widget/stream_plot_daily.html'),
+                selfcontained = FALSE, libdir = 'lib',
                 title = 'Honsinger Creek Daily Stats'),
 
   # * monthly---------
@@ -212,6 +217,7 @@ plan = drake_plan(
                    type = 'bar', mode = NULL,
                    selector = FALSE, slider = FALSE) %>%
     save_widget(pathout = file_out('docs/widget/stream_plot_monthly.html'),
+                selfcontained = FALSE, libdir = 'lib',
                 title = 'Honsinger Creek Monthly Stats'),
   
   # * WEBPAGE----------
@@ -244,6 +250,7 @@ plan = drake_plan(
     yrange = c(0, 100, 0, 8),
     selector = TRUE, slider = TRUE) %>%
     save_widget(pathout = file_out('docs/widget/weather_plot_daily.html'),
+                selfcontained = FALSE, libdir = 'lib',
                 title = 'TomKat Daily Weather'),
   
   # * Monthly----------
@@ -284,6 +291,7 @@ plan = drake_plan(
     colors = pointblue.palette[c(3, 2, 4)],
     selector = TRUE) %>%
     save_widget(pathout = file_out('docs/widget/weather_plot_monthly.html'),
+                selfcontained = FALSE, libdir = 'lib',
                 title = 'TomKat Monthly Weather'),
 
   # * Drought indices------------
@@ -297,6 +305,7 @@ plan = drake_plan(
     colors = c(pointblue.palette[3], '#ffffff', pointblue.palette[4]),
     yrange = c(-10, 8)) %>%
     save_widget(pathout = file_out('docs/widget/weather_plot_pdsi.html'),
+                selfcontained = FALSE, libdir = 'lib',
                 title = 'Palmer Drought Severity Index'),
   
   zndx_plot = plot_drought_index(
@@ -304,6 +313,7 @@ plan = drake_plan(
     colors = c(pointblue.palette[3], '#ffffff', pointblue.palette[4]),
     yrange = c(-6, 8)) %>%
     save_widget(pathout = file_out('docs/widget/weather_plot_zndx.html'),
+                selfcontained = FALSE, libdir = 'lib',
                 title = 'Palmer Z Index'),
   
   # * WEBPAGE----------
