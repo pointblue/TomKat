@@ -1,9 +1,9 @@
 plan = drake_plan(
   # INDEX & README----------
-  # "home" page for gitpages
+  # "home" page for https://pointblue.github.io/TomKat/
   index_page = render_Rmd(file_in("Rmd/index.Rmd"), 
                           file_out("docs/index.html")),
-  # readme for git repo
+  # readme for git repo https://github.com/pointblue/TomKat
   readme_page = render_Rmd(file_in("Rmd/README.Rmd"),
                            file_out("README.md")),
   
@@ -218,4 +218,94 @@ plan = drake_plan(
   # report = knit(knitr_in("report.Rmd"), file_out("report.md"), quiet = TRUE)
   stream_page = render_Rmd(file_in("Rmd/stream.Rmd"), 
                          file_out("docs/stream.html")),
+  
+  # WEATHER-------------------- 
+  # * Daily---------
+  # NOTE: orig Weather West file (Oct 17 through Dec 18) has an extra column
+  # (Offset) and the way degrees was included in column names was problematic;
+  # check subsequent files for consistent headings and order of columns. Also
+  # check date format. Orig file uses 4-digit year, latest file (through Sept
+  # 2020) uses 2-digit year. Code is currently set up to handle these two files
+  # correctly, but may need changes with future iterations.
+
+  # NOTE 2: Weather West data is listed in reverse order, with most recent
+  # readings at the top of the file
+  
+  #extract daily rain totals and max/min temps:
+  weatherdat = bind_rows(
+    compile_weather_old(path = file_in('data_raw/weather_station/TOKA_Weather_ALL_9.8.10_7.24.17.csv')),
+    compile_weather_west(dir = file_in('data_raw/weather_station'))) %>% 
+    write_csv(file_out('data_clean/TOKA_weather_main.csv')),
+  
+  # plot daily weather
+  weatherdat_daily_plot = plot_daily_weather(
+    weatherdat, colors = pointblue.palette[c(3,2,4)],
+    ytitle = c('Temperature (F)', 'Precipitation (in)'), 
+    yrange = c(0, 100, 0, 8),
+    selector = TRUE, slider = TRUE) %>%
+    save_widget(pathout = file_out('docs/widget/weather_plot_daily.html'),
+                title = 'TomKat Daily Weather'),
+  
+  # * Monthly----------
+  # show as differences from 1980-2010 "normals"
+  
+  weatherdat_monthly = calculate_weather_monthly(weatherdat) %>% 
+    write_csv(file_out('data_clean/TOKA_weather_monthly_stats.csv')),
+  
+  # GET HALF MOON BAY DATA FROM NOAA
+  # set up API:
+  # --> If not done already, get API key from NOAA (by submitting email address):
+  #       https://www.ncdc.noaa.gov/cdo-web/token
+  # The system will send an email address with a "token". Save token by:
+  #  1. add to .Renviron file in your home directory as: NOAA_KEY = 'token'
+  #  2. add to your .Rprofile file as: noaakey = 'token'
+  #  3. quickest option (but not permanent) is by running from the command line in
+  # R: options(noaakey = 'token')
+  # (replace 'token' with the character string NOAA sends you)
+  
+  # 10 year max per request: (add additional requests as needed)
+  hmb_monthly = bind_rows(
+    get_ncdc_weather(start.date = '2010-10-01',
+                     end.date = '2020-09-15'),
+    get_ncdc_weather(start.date = '2020-10-01',
+                     end.date = '2020-11-25')),
+  
+  # estimate TomKat monthly differences from historical "normals" based on 
+  #  estimates derived from Half Moon Bay normals and the current monthly
+  #  differences between TomKat and Half Moon Bay weather
+  weatherdat_monthly_diffnorm = calculate_weather_diffs(
+    localdat = weatherdat_monthly, 
+    hmbdat = hmb_monthly,
+    hmb_historic = file_in('data_clean/HMB_1981-2010_Normals.csv')),
+  
+  # plot monthly differences from normal
+  weatherdat_monthly_plot = plot_monthly_weather(
+    weatherdat_monthly_diffnorm, 
+    colors = pointblue.palette[c(3, 2, 4)],
+    selector = TRUE) %>%
+    save_widget(pathout = file_out('docs/widget/weather_plot_monthly.html'),
+                title = 'TomKat Monthly Weather'),
+
+  # * Drought indices------------
+  # get data from NOAA (requires API as described above)
+  pdsi = get_drought_indices(datname = 'pdsidv'),
+  zndx = get_drought_indices(datname = 'zndxdv'),
+  
+  # plot PDSI
+  pdsi_plot = plot_drought_index(
+    pdsi, valuebreaks = c(-20, -4, -3, -2, 2, 3, 4, 20),
+    colors = c(pointblue.palette[3], '#ffffff', pointblue.palette[4]),
+    yrange = c(-10, 8)) %>%
+    save_widget(pathout = file_out('docs/widget/weather_plot_pdsi.html'),
+                title = 'Palmer Drought Severity Index'),
+  
+  zndx_plot = plot_drought_index(
+    zndx, valuebreaks = c(-20, -2.75, -2, -1.25, 1, 2.5, 3.5, 20),
+    colors = c(pointblue.palette[3], '#ffffff', pointblue.palette[4]),
+    yrange = c(-6, 8)) %>%
+    save_widget(pathout = file_out('docs/widget/weather_plot_zndx.html'),
+                title = 'Palmer Z Index'),
+  
+  
+
 )
