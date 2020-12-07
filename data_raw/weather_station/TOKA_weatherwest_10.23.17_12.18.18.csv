@@ -1,4 +1,4 @@
-Date,Time,Offset,Min Bat (V),Dew Pt (°F),Latest Rain (In),Daily Rain (In),Pressure (inHg),RH (%),Temp (°F),Daily Max Temp (°F),Max Temp Time,Daily Min Temp (°F),Min Temp Time,Wind Dir (°),Wind Gust (mph),Wind Gst Dir (°),Wind Spd (mph)
+Date,Time,Offset,Min Bat (V),Dew Pt (°F),Latest Rain (In),Daily Rain (In),Pressure (inHg),RH (%),Temp (°F),Daily Max Temp (F),Max Temp Time,Daily Min Temp (F),Min Temp Time,Wind Dir (°),Wind Gust (mph),Wind Gst Dir (°),Wind Spd (mph)
 12/18/2018,1000,-08:00,12.61,48,0,0,30.37,85,52.3,55.4,1000,43.2,735,E | 94,9.8,E | 89,6.8
 12/18/2018,900,-08:00,12.61,44.9,0,0,30.35,90,47.6,49.7,859,43.2,735,E | 89,10.6,E | 82,9
 12/18/2018,800,-08:00,12.61,42.1,0,0,30.32,93,43.9,49,335,43.2,735,E | 88,11.3,E | 80,9.6
