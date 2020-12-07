@@ -306,6 +306,8 @@ plan = drake_plan(
     save_widget(pathout = file_out('docs/widget/weather_plot_zndx.html'),
                 title = 'Palmer Z Index'),
   
-  
+  # * WEBPAGE----------
+  weather_page = render_Rmd(file_in("Rmd/weather.Rmd"), 
+                            file_out("docs/weather.html"))
 
 )
