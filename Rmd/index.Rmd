@@ -15,7 +15,7 @@ output:
 ### Page index
 
 * [index](index.html)
-* [weather](weather.html) - updated Dec 2019
+* [weather](weather.html) - updated Dec 2020
 * [soil](soil.html)
 * [vegetation](vegetation.html)
 * [water](stream.html) - updated Nov 2020

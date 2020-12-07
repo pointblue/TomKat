@@ -18,6 +18,13 @@ website](https://tomkatranch.org/what-we-do/regenerative-ranching/management-dat
 
 Updates including data through fall 2020 are currently in progress.
 
+### CHANGES IN 2020:
+
+-   Updates to bird, weather, and stream flow data through Sept 2020.
+-   Introduce drake workflow for more reproducible & automated updating
+    of these 3 pages.
+-   Move web pages and widgets to docs directory and out of root.
+
 ### CHANGES IN 2018:
 
 #### Overall
