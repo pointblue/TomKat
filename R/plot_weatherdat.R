@@ -214,9 +214,9 @@ plot_monthly_weather = function(dat, colors,
     subplot(nrows = length(sdat), shareX = TRUE, titleY = TRUE,
             which_layout = 'merge') %>%
     layout(showlegend = FALSE,
-           hovermode = 'x',
+           # hovermode = 'x',
            dragmode = 'pan',
-           margin = list(r = 0, b = 10, t = 10)) %>%
+           margin = list(r = 0, b = 20, t = 10)) %>%
     config(displaylogo = FALSE, showTips = FALSE,
            modeBarButtonsToRemove = list('zoom2d', 'select2d', 'lasso2d',
                                          'zoomIn2d', 'zoomOut2d',
@@ -275,14 +275,15 @@ plot_drought_index = function(dat, colors, valuebreaks,
            yaxis = list(title = NA, showgrid = FALSE, zeroline = FALSE,
                         tickfont = standardfonts,
                         automargin = TRUE, range = yrange),
-           xaxis = list(title = NA, type = 'date', tickfont = standardfonts),
+           xaxis = list(title = NA, type = 'date', 
+                        tickfont = standardfonts),
            legend = list(x = 1, xanchor = 'right', y = 1, yanchor = 'top',
                          bgcolor = I('white'), 
                          bordercolor = I('black'), borderwidth = 1,
                          font = list(size = 14, family = 'sans-serif')),
            hovermode = 'x',
            dragmode = 'pan',
-           margin = list(l = 0, r = 0, b = 50, t = 10)) %>% 
+           margin = list(l = 0, r = 0, b = 20, t = 25)) %>% 
     config(displaylogo = FALSE, showTips = FALSE,
            modeBarButtonsToRemove = list('zoom2d', 'select2d', 'lasso2d', 
                                          'zoomIn2d', 'zoomOut2d', 
@@ -300,7 +301,9 @@ plot_drought_index = function(dat, colors, valuebreaks,
                               size = markersize[i], 
                               symbol = markersymbol[i],
                               line = list(color = linecolor[i], 
-                                          width = linewidth[i])))
+                                          width = linewidth[i])),
+                visible = ifelse(names(sdat)[i] == 'Central Coast',
+                                 TRUE, 'legendonly'))
   }
   
   # add drought category labels
@@ -313,16 +316,20 @@ plot_drought_index = function(dat, colors, valuebreaks,
                            'Extremely moist'),
                  color = pal[c(1:3,5:7)])
   
+  # initiate annotations
+  annotes <- list(x = 0.01, xref = 'paper', xanchor = 'left',
+                  yref = 'y', showarrow = FALSE)
+  
+  anno <- list()
   for (j in c(1:nrow(dcat))) {
-    p <- p %>% 
-      layout(annotations = list(
-        x = 0.01, y = dcat$ylimit[j], text = ~paste(dcat$label[j]),
-        xref = 'paper', x = 0.01, xanchor = 'left',
-        yref = 'y', yanchor = ifelse(dcat$ylimit[j]>0, 'bottom', 'top'),
-        font = list(family = 'sans-serif', size = 12, 
-                    color = dcat$color[j]),
-        showarrow = FALSE))
+    annotes[["y"]] <- dcat$ylimit[j]
+    annotes[['text']] <- paste(dcat$label[j])
+    annotes[["yanchor"]] <- ifelse(dcat$ylimit[j]>0, 'bottom', 'top')
+    annotes[['font']] <- list(family = 'sans-serif', size = 12, 
+                              color = dcat$color[j])
+    anno <- c(anno, list(annotes))
   }
+  p <- layout(p, annotations = anno)
   
   return(p)
 }
