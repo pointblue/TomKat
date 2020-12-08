@@ -9,8 +9,8 @@ library(tidyverse)
 library(sf)
 
 # input files
-rawdat1 <- 'data_raw/Tom Kat Ranch - Pastures 201810292309.xlsx'
-rawdat2 <- 'data_raw/Tom Kat Ranch - Pastures 2019growingseason.xlsx'
+rawdat1 <- 'data_raw/mgmt/Tom Kat Ranch - Pastures 201810292309.xlsx'
+rawdat2 <- 'data_raw/mgmt/Tom Kat Ranch - Pastures 2019growingseason.xlsx'
 
 ## shapefiles
 poly <- 'TK_veg_fields'
