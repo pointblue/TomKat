@@ -1,5 +1,5 @@
 # README--------------
-# Master script file
+# Main script file
 # Best practice: restart R after each call (ctrl+shift+F10)
 
 
@@ -12,7 +12,7 @@ rmarkdown::render(here::here("Rmd/README.Rmd"),
                   output_file = here::here("README.md"))
 
 # BIRDS----------------
-# process & clean data (create master bird file and density estimates)
+# process & clean data (create main bird file and density estimates)
 # Note: this will take a while since it includes distance sampling analysis
 source('code/bird_prep.R')
 
@@ -34,7 +34,7 @@ rmarkdown::render(here::here("Rmd/birds.Rmd"),
 
 
 # VEGETATION-----------
-# process & clean data (create master veg file)
+# process & clean data (create main veg file)
 source('code/vegetation_prep.R')
 
 # produce current veg map (veg map 1)
@@ -55,7 +55,7 @@ rmarkdown::render(here::here("Rmd/vegetation.Rmd"),
 
 
 # SOIL------------------
-# process & clean data (create master soil file)
+# process & clean data (create main soil file)
 source('code/soil_prep.R')
 
 # produce current soil map (soil map 1)
@@ -76,7 +76,7 @@ rmarkdown::render(here::here("Rmd/soil.Rmd"),
 
 
 # WEATHER----------------
-# process & clean local weather data (create master weather file)
+# process & clean local weather data (create main weather file)
 source('code/weather_prep.R')
 
 # process & clean NOAA weather data (some has to be manually downloaded first)
