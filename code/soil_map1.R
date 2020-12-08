@@ -11,7 +11,7 @@ library(leaflet)
 library(mapview)
 
 ## input files
-masterdat <- 'data_clean/TK_soil_clean.csv'
+maindat <- 'data_clean/TK_soil_main.csv'
 
 ## output files
 output1 <- 'docs/widget/soil_map1.html'
@@ -42,7 +42,7 @@ tk.palette <- c('#3b4035', '#9c8755', '#61655c',
                 '#5f5131', '#9e513a')
 # DATA SET UP-------------
 
-dat <- read_csv(here::here(masterdat), col_types = cols()) %>%
+dat <- read_csv(here::here(maindat), col_types = cols()) %>%
   rename(Name = 'Point Name') %>%
   select(Name, Year, bulk.dens.gcm3, water.infil, carbonA, carbonB)
 
@@ -347,7 +347,7 @@ title <- paste0('TomKat Soil Map ', max(dat$Year))
 
 htmlwidgets::saveWidget(map1,
                         here::here(output1),
-                        selfcontained = TRUE,
+                        selfcontained = FALSE, libdir = 'lib',
                         title = title)
 
 

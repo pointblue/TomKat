@@ -9,7 +9,7 @@ library(leaflet)
 library(mapview)
 
 ## input files
-masterdat <- 'data_clean/TK_soil_main.csv'
+main <- 'data_clean/TK_soil_main.csv'
 microbephyla <- 'data_raw/Bacterial_Phyla_For_SOTR.xlsx'
 
 ## output files
@@ -37,7 +37,7 @@ pointblue.palette <-
 
 # DATA SET UP-------------
 
-dat <- read_csv(here::here(masterdat), col_types = cols()) %>%
+dat <- read_csv(here::here(maindat), col_types = cols()) %>%
   rename(Name = 'Point Name') %>%
   filter(Year == 2015) %>%
   select(Name, richA, richB) %>%
@@ -169,5 +169,5 @@ title <- paste0('TomKat Soil Microbes')
 
 htmlwidgets::saveWidget(map4,
                         here::here(output4),
-                        selfcontained = TRUE,
+                        selfcontained = FALSE, libdir = 'lib',
                         title = title)

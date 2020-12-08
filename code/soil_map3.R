@@ -10,7 +10,7 @@ library(leaflet)
 library(mapview)
 
 ## input files
-masterdat <- 'data_clean/TK_soil_clean.csv'
+maindat <- 'data_clean/TK_soil_main.csv'
 
 ## output files
 output3 <- 'docs/widget/soil_map3.html'
@@ -41,7 +41,7 @@ tk.palette <- c('#3b4035', '#9c8755', '#61655c',
 
 # DATA SET UP-------------
 
-dat <- read_csv(here::here(masterdat), col_types = cols()) %>%
+dat <- read_csv(here::here(maindat), col_types = cols()) %>%
   rename(Name = 'Point Name') %>%
   select(Name, Year, `Total NitrogenA`:`Total NitrogenB`, PotassiumA:PotassiumB, 
          SodiumA:SodiumB, MagnesiumA:MagnesiumB, CalciumA:CalciumB, pHA:pHB) %>%
@@ -366,5 +366,5 @@ title <- paste0('TomKat Soil Nutrients 2015')
 
 htmlwidgets::saveWidget(map3,
                         here::here(output3),
-                        selfcontained = TRUE,
+                        selfcontained = FALSE, libdir = 'lib',
                         title = title)

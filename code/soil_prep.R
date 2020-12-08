@@ -10,7 +10,7 @@ labdat <- 'data_raw/TOKA_soildata_Lab_2015.csv'
 microbedat <- 'data_raw/Bacterial_Richness_For_SOTR.xlsx'
 
 # output files
-masterdat <- 'data_clean/TK_soil_main.csv'
+maindat <- 'data_clean/TK_soil_main.csv'
 
 
 # DATA SET UP----------------
@@ -86,7 +86,7 @@ bdat <- readxl::read_excel(here::here(microbedat)) %>%
   spread(key = depth, value = Richness)
 
 
-# MASTER DATA---------------
+# MAIN DATA---------------
 mdat <- full_join(sdat, lab, by = c('Point Name', 'Year')) %>%
   full_join(bdat, by = c('Point Name' = 'point', 'Year'))
-write_csv(mdat, here::here(masterdat))
+write_csv(mdat, here::here(maindat))
