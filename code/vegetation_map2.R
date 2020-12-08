@@ -10,7 +10,7 @@ library(leaflet)
 library(mapview)
 
 ## input files
-masterveg <- 'data_clean/TK_veg_main.csv'
+mainveg <- 'data_clean/TK_veg_main.csv'
 
 ## output files
 output2 <- 'docs/widget/vegetation_map2.html'
@@ -35,11 +35,11 @@ pointblue.palette <-
 #  vegtype in each pasture
 
 ## use most recent 3 years of data as "recent"
-maxyear = read_csv(here::here(masterveg), col_types = cols()) %>% 
+maxyear = read_csv(here::here(mainveg), col_types = cols()) %>% 
   pull(Year) %>% max()
 minyear = maxyear - 3
 
-dat <- read_csv(here::here(masterveg), col_types = cols()) %>%
+dat <- read_csv(here::here(mainveg), col_types = cols()) %>%
   filter(vegtype != 'Trees') %>% #inconsistent treatment; not included in map
   mutate(vegtype = as.factor(vegtype),
          Pasture = as.factor(Pasture),

@@ -9,7 +9,7 @@ library(leaflet)
 library(mapview)
 
 ## input files
-masterveg <- 'data_clean/TK_veg_main.csv'
+mainveg <- 'data_clean/TK_veg_main.csv'
 
 ## output files
 output1 <- 'docs/widget/vegetation_map1.html'
@@ -30,7 +30,7 @@ pointblue.palette <-
     '#666666')
 
 # DATA SET UP-------------
-dat <- read_csv(here::here(masterveg), col_types = cols()) %>%
+dat <- read_csv(here::here(mainveg), col_types = cols()) %>%
   filter(vegtype != 'Trees') %>% #inconsistent treatment; not included in map
   mutate(cover = round(cover, digits = 1),
          vegtype = as.factor(vegtype),
