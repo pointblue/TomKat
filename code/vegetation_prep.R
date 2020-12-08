@@ -5,8 +5,8 @@
 library(tidyverse)
 
 # input files
-rawdatpath <- 'data_raw'
-diversitydat <- 'data_raw/TOKA_pvegdiversity_2011to19.csv'
+rawdatpath <- 'data_raw/veg'
+diversitydat <- 'data_raw/veg/TOKA_pvegdiversity_2011to19.csv'
 
 # output files
 maindat <- 'data_clean/TK_veg_main.csv'
