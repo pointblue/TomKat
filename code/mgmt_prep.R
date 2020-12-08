@@ -16,7 +16,7 @@ rawdat2 <- 'data_raw/Tom Kat Ranch - Pastures 2019growingseason.xlsx'
 poly <- 'TK_veg_fields'
 
 # output files
-masterdat <- 'data_clean/TK_mgmt_main.csv'
+maindat <- 'data_clean/TK_mgmt_main.csv'
 season_stats <- 'data_clean/TK_mgmt_stats.csv'
 
 # DATA SET UP----------------
@@ -198,7 +198,7 @@ tmp %>% filter(total > 0 & dn < 0) %>% arrange(date) %>% as.data.frame()
 # no follow-up movements elsewhere before the end of this data set, are not 
 # included in summary stats
 
-write_csv(dat_proof, here::here(masterdat))
+write_csv(dat_proof, here::here(maindat))
 
 
 # CALCULATIONS--------------

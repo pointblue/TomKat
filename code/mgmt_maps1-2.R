@@ -9,7 +9,7 @@ library(leaflet)
 library(mapview)
 
 ## input files
-masterdat <- 'data_clean/TK_mgmt_stats.csv'
+maindat <- 'data_clean/TK_mgmt_stats.csv'
 
 ## output files
 output1 <- 'docs/widget/mgmt_map1.html'
@@ -35,7 +35,7 @@ pointblue.palette <-
 fields <- st_read(here::here('GIS'), poly, quiet = TRUE) %>%
   st_set_geometry(NULL)
 
-dat <- read_csv(here::here(masterdat), col_types = cols()) %>%
+dat <- read_csv(here::here(maindat), col_types = cols()) %>%
   select(field, season, ndays, ADA) %>%
   mutate(field = factor(field, levels = fields$Pasture),
          season = factor(season, levels = c('growing', 'dormant', 'total')),
@@ -164,7 +164,7 @@ title <- 'TomKat Grazing ADA Map 2018'
 
 htmlwidgets::saveWidget(map1,
                         here::here(output1),
-                        selfcontained = TRUE,
+                        selfcontained = FALSE, libdir = 'lib',
                         title = title)
 
 # MAP 2 --------------------------
@@ -234,5 +234,5 @@ title2 <- 'TomKat Grazing Days Map 2018'
 
 htmlwidgets::saveWidget(map2,
                         here::here(output2),
-                        selfcontained = TRUE,
+                        selfcontained = FALSE, libdir = 'lib',
                         title = title2)
