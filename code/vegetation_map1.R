@@ -245,5 +245,5 @@ title <- paste0('TomKat Vegetation Map ', max(dat$Year))
 
 htmlwidgets::saveWidget(map1,
                         here::here(output1),
-                        selfcontained = TRUE,
+                        selfcontained = FALSE, libdir = 'lib',
                         title = title)

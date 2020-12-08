@@ -11,7 +11,7 @@ library(sf)
 library(plotly)
 
 ## input files
-masterveg <- 'data_master/TK_veg_master.csv'
+mainveg <- 'data_clean/TK_veg_main.csv'
 poly <- 'TK_veg_fields' ## shapefile
 
 ## output files
@@ -51,7 +51,7 @@ ppt.width.wide = 13.33 #inches
 # DATA SET UP-------------
 shp_poly <- st_read(here::here('GIS'), poly, quiet = TRUE) 
 
-dat <- read_csv(here::here(masterveg), col_types = cols()) %>%
+dat <- read_csv(here::here(mainveg), col_types = cols()) %>%
   filter(Year > 2011) %>%
   mutate(Pasture = as.factor(Pasture)) %>%
   # get pasture area from polygons
@@ -176,7 +176,7 @@ plot1 <- plot_ly(x = ~Year) %>%
 
 htmlwidgets::saveWidget(plot1,
                         here::here(graph1),
-                        selfcontained = TRUE,
+                        selfcontained = FALSE, libdir = 'lib',
                         title = 'TomKat Vegetation Trends')
 
 
@@ -239,7 +239,7 @@ plot2 <- plot_ly(x = ~Year) %>%
 
 htmlwidgets::saveWidget(plot2,
                         here::here(graph2),
-                        selfcontained = TRUE,
+                        selfcontained = FALSE, libdir = 'lib',
                         title = 'TomKat Grass Trends')
 
 

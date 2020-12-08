@@ -9,7 +9,7 @@ library(leaflet)
 library(mapview)
 
 ## input files
-masterveg <- 'data_clean/TK_veg_main_div.csv'
+mainveg <- 'data_clean/TK_veg_main_div.csv'
 
 ## output files
 output3 <- 'docs/widget/vegetation_map3.html'
@@ -33,11 +33,11 @@ pointblue.palette <-
 # calculate "recent" average
 
 ## use most recent 3 years of data as "recent"
-maxyear = read_csv(here::here(masterveg), col_types = cols()) %>% 
+maxyear = read_csv(here::here(mainveg), col_types = cols()) %>% 
   pull(year) %>% max()
 minyear = maxyear - 3
 
-dat <- read_csv(here::here(masterveg), col_types = cols()) %>%
+dat <- read_csv(here::here(mainveg), col_types = cols()) %>%
   filter(!(group %in% c('totaldiv', 'herbdiv'))) %>% 
   filter(year > minyear) %>%
   group_by(pasture, group) %>%
@@ -138,5 +138,5 @@ title <- paste0('TomKat Vegetation Diversity ', minyear+1, '-', maxyear)
 
 htmlwidgets::saveWidget(map3,
                         here::here(output3),
-                        selfcontained = TRUE,
+                        selfcontained = FALSE, libdir = 'lib',
                         title = title)

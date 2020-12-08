@@ -285,5 +285,5 @@ title <- paste0('TomKat Vegetation Changes 2012-', maxyear)
 
 htmlwidgets::saveWidget(map2,
                         here::here(output2),
-                        selfcontained = TRUE,
+                        selfcontained = FALSE, libdir = 'lib',
                         title = title)
