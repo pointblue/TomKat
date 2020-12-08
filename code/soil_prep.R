@@ -5,9 +5,9 @@
 library(tidyverse)
 
 # input files
-rawdat <- 'data_raw/TOKA_soildata_CADC_2014to18.csv'
-labdat <- 'data_raw/TOKA_soildata_Lab_2015.csv'
-microbedat <- 'data_raw/Bacterial_Richness_For_SOTR.xlsx'
+rawdat <- 'data_raw/soil/TOKA_soildata_CADC_2014to18.csv'
+labdat <- 'data_raw/soil/TOKA_soildata_Lab_2015.csv'
+microbedat <- 'data_raw/soilBacterial_Richness_For_SOTR.xlsx'
 
 # output files
 maindat <- 'data_clean/TK_soil_main.csv'
