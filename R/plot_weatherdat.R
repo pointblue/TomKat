@@ -283,7 +283,7 @@ plot_drought_index = function(dat, colors, valuebreaks,
                          font = list(size = 14, family = 'sans-serif')),
            hovermode = 'x',
            dragmode = 'pan',
-           margin = list(l = 0, r = 0, b = 20, t = 25)) %>% 
+           margin = list(l = 0, r = 0, b = 30, t = 25)) %>% 
     config(displaylogo = FALSE, showTips = FALSE,
            modeBarButtonsToRemove = list('zoom2d', 'select2d', 'lasso2d', 
                                          'zoomIn2d', 'zoomOut2d', 
