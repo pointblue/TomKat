@@ -1,5 +1,5 @@
-##'@title plot_birdtrend
-##'@description functions for generating interacting plot_ly figures for TomKat
+##'@title Plot interactive trend
+##'@description functions for generating interactive plot_ly figures for TomKat
 ##'  trend data
 ##'@param dat data frame containing trend data. Expects fields "group"
 ##'  (identifier for each trend line; ok if there's only one group), "year",

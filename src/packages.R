@@ -1,9 +1,8 @@
 # Load all your packages before calling make().
 
 suppressPackageStartupMessages({
-  library(drake)
   library(tidyverse)
-  library(pbdistance) # devtools::install_github('kdybala/pbdistance')
+  library(pbdistance) # remotes::install_github('kdybala/pbdistance')
   library(sf)
   library(plotly)
   library(htmlTable)
