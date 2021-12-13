@@ -9,15 +9,16 @@
 ##' @author Kristen Dybala
 ##'
 ##'   
-compile_stream_data = function(path) {
-  readxl::read_excel(path, sheet = 2, skip = 4) %>%
-  rename(date.time = 'date/time',
-         temp.C = 'Water Temp',
-         stage.ft = 'Water Depth, ft',
-         flow.cfs = 'Streamflow, ft3/s') %>%
-  filter(!is.na(date.time)) %>%
-  mutate(date.time = format(date.time, format = '%Y-%m-%d %H:%M'),
-         date = as.Date(date.time))
+compile_stream_data = function(dir) {
+  fl = list.files(dir, '.csv', full.names = TRUE)
+  purrr::map_df(fl, read_csv, show_col_types = FALSE) %>% 
+    rename(date.time = 'date/time',
+           temp.C = 'Water Temp',
+           stage.ft = 'Water Depth, ft',
+           flow.cfs = 'Streamflow, ft3/s') %>%
+    filter(!is.na(date.time)) %>%
+    mutate(date.time = format(date.time, format = '%Y-%m-%d %H:%M'),
+           date = as.Date(date.time))
 }
 
 calculate_stream_daily = function(dat) {

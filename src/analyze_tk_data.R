@@ -207,9 +207,22 @@ bird_page = render_Rmd(pathin = "Rmd/birds.Rmd",
 source('src/process_stream_data.R')
 source('src/plot_stream_data.R')
 
-# data set up
-streamdat = compile_stream_data(
-  path = 'data_raw/Pe01 Honsinger Creek streamflow WY2011 - WY2020.xlsx') %>% 
+# create CSV for latest WY of data (Excel file too large to store on Github)
+streamdat_raw = readxl::read_excel(
+  path = 'data_raw/stream/Pe01 Honsinger Creek streamflow WY2011 - WY2020.xlsx',
+  sheet = 2, skip = 4) %>% 
+  rename(date.time = 'date/time') %>% 
+  mutate(year = format(date.time, '%Y') %>% as.numeric(),
+         mo = format(date.time, '%m') %>% as.numeric(),
+         WY = if_else(mo <= 9, year, year + 1))
+
+# UPDATE CODE ANNUALLY: filter to latest water year of data, and change file name
+streamdat_raw %>% filter(WY == 2020) %>% 
+  select('date/time' = date.time, `Water Temp`:`Streamflow, ft3/s`) %>% 
+  write_csv('data_raw/stream/WY2020.csv')
+
+# compile all raw data
+streamdat = compile_stream_data(dir = 'data_raw/stream') %>% 
   write_csv('data_clean/TOKA_stream_main.csv')
 
 ## 1. PLOT daily stats------
