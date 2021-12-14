@@ -81,7 +81,8 @@ birddens_point_tables = birddens_point_format %>%
                    table.header = NA)
 
 birddens_point_map = birddens_point_format %>% 
-  map_data(pts_toka = 'GIS/TOKA_point_count_grid.shp',
+  map_data(as_raster = TRUE,
+           pts_toka = 'GIS/TOKA_point_count_grid.shp',
            fields = 'GIS/TK_veg_fields.shp',
            boundary = 'GIS/TomKat_ranch_boundary.shp',
            bins = c(0, 0.001, 1, 5, 10, 50),
@@ -157,14 +158,15 @@ birdrich_point_tables = birdrich_point %>%
 birdrich_point_map = birdrich_point %>% 
   select(Point = id, value = boot) %>% 
   mutate(group = 'estimated') %>% #need to specify at least one group
-  map_data(pts_toka = 'GIS/TOKA_point_count_grid.shp',
+  map_data(as_raster = TRUE,
+           pts_toka = 'GIS/TOKA_point_count_grid.shp',
            pts_hocr = 'GIS/HOCR_point_count_riparian.shp',
            bins = c(0, 15, 25, 35, 45, 100),
            legend.labels = c('0 - 15', '16 - 25', '25 - 35', '35 - 45', '> 45'),
            legend.title = 'Estimated<br>species<br>richness',
            htmltab = birdrich_point_tables,
            fields = 'GIS/TK_veg_fields.shp',
-           boundary = 'GIS/TomKat_ranch_boundary.shp') %>% 
+           boundary = 'GIS/TomKat_ranch_boundary.shp')
   save_widget(pathout = 'docs/widget/bird_map_richness.html',
               title = 'TomKat Bird Richness Map',
               selfcontained = FALSE, libdir = 'lib')
