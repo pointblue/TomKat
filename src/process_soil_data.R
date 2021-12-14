@@ -115,20 +115,21 @@ calculate_percentiles = function(df) {
              digits = 0)) %>%
     pivot_longer(bulk.dens.gcm3:water.infil_perc) %>% 
     separate(name, into = c('var', 'type'), sep = '_', fill = 'right') %>%
-    mutate(type = case_when(is.na(type) ~ 'Value',
-                            TRUE ~ 'Percentile')) %>%
+    mutate(type = case_when(is.na(type) ~ 'value',
+                            TRUE ~ 'percentile')) %>%
     pivot_wider(names_from = 'type') 
   
   # add mean percentile info across all metrics at a point
   bind_rows(df,
             df %>% group_by(Point, SampleYear) %>%
               summarize(var = 'mean',
-                        Percentile = mean(Percentile, na.rm = T) %>% 
+                        percentile = mean(percentile, na.rm = T) %>% 
                           round(digits = 0),
-                        Value = NA,
+                        value = NA,
                         .groups = 'drop')) %>%
     mutate(var = factor(var, 
-                        levels = c('mean', 'bulk.dens.gcm3', 'water.infil', 
-                                   'carbonB', 'carbonA'))) %>%
+                        # the order they'll be in the pop up tables:
+                        levels = c('bulk.dens.gcm3', 'water.infil', 
+                                   'carbonA', 'carbonB', 'mean'))) %>%
     arrange(Point, var)
 }
