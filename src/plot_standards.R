@@ -16,7 +16,9 @@ tk.palette <- c('#3b4035', '#9c8755', '#61655c', '#d1bc8b', '#40696f',
                 '#2e5150', '#5f5131', '#9e513a')
 
 pointblue.palette <- c('#4495d1', '#74b743', '#f7941d', '#005baa', '#bfd730',
-                       '#a7a9ac', '#666666')
+                       '#a7a9ac', '#666666',
+                       #add a few more complementary colors:
+                       '#456d28', '#b74374', '#5e2a84', '#d2c921')
 
 logo <- 'https://data.pointblue.org/apps/assets/images/pb-logo-full.png'
 
