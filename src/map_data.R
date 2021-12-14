@@ -153,6 +153,13 @@ map_data = function(dat, as_raster = FALSE, maplayers = 'single', htmltab = NULL
     }
     
   } else if (!is.null(htmltab)) {
+    # regardless of how many maplayers or types of data will be mapped together,
+    # specify order of maplayers and split data by var (one set of points per data
+    # layer):
+    shp_pts_longlat <-  shp_pts_longlat %>% 
+      mutate(maplayer = factor(maplayer, levels = maplayers)) %>% 
+      split(.$group)
+    
     for (i in c(1:length(shp_pts_longlat))) {
       # match to correct palette for maplayer
       p = which(names(palette) == shp_pts_longlat[[i]]$maplayer[1])
@@ -171,14 +178,7 @@ map_data = function(dat, as_raster = FALSE, maplayers = 'single', htmltab = NULL
     
   # if more than one maplayers, add layers control and legends to match
   if (length(maplayers) > 1) {
-    
-    # regardless of how many maplayers or types of data will be mapped together,
-    # specify order of maplayers and split data by var (one set of points per data
-    # layer):
-    shp_pts_longlat <-  shp_pts_longlat %>% 
-      mutate(maplayer = factor(maplayer, levels = maplayers)) %>% 
-      split(.$var)
-    
+
     for (i in c(1:length(maplayers))) {
       m <- m %>% 
         addLegend(pal = palettes[[i]],
