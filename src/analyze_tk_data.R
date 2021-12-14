@@ -387,7 +387,7 @@ soildat_productivity_format = soildat %>%
   select(Point = 'Point Name', SampleYear, bulk.dens.gcm3, water.infil, 
          carbonA, carbonB) %>% 
   calculate_percentiles() %>% 
-  mutate(Value = if_else(var == 'mean', Percentile, Value),
+  mutate(Value = if_else(var == 'mean', percentile, value),
          # labels within popup tables
          group = recode(var,
                         bulk.dens.gcm3 = 'Bulk density (g/cm<sup>3</sup>)',
@@ -395,6 +395,13 @@ soildat_productivity_format = soildat %>%
                         carbonA = '% Carbon (0-10cm)', 
                         carbonB = '% Carbon (10-40cm)',
                         mean = 'Overall score'),
+         # the order they'll be plotted in (reverse carbon layers)
+         group = factor(group, 
+                        levels = c('Overall score',
+                                   'Bulk density (g/cm<sup>3</sup>)',
+                                   'Water Infiltration (min/in)',
+                                   '% Carbon (10-40cm)',
+                                   '% Carbon (0-10cm)')),
          # labels within map layer control
          maplayer = recode(var,
                            bulk.dens.gcm3 = 'Bulk density',
@@ -415,17 +422,17 @@ soildat_productivity_tables = bind_rows(
   bind_rows(
     soildat_productivity_format %>% 
       filter(Point %in% c('TOKA-022', 'TOKA-068')) %>%
-      mutate(Value = if_else(var == 'mean', '', 
-                             round(Value, digits = 2) %>% format(nsmall = 2))) %>% 
-      select(Point, group, Value, Percentile) %>% 
+      mutate(value = if_else(var == 'mean', '', 
+                             round(value, digits = 2) %>% format(nsmall = 2))) %>% 
+      select(Point, group, value, percentile) %>% 
       make_html_tables(table.total = TRUE,
                        table.header = NULL,
                        caption = ' (compost applied)'),
     soildat_productivity_format %>% 
       filter(!Point %in% c('TOKA-022', 'TOKA-068')) %>%
-      mutate(Value = if_else(var == 'mean', '', 
-                             round(Value, digits = 2) %>% format(nsmall = 2))) %>% 
-      select(Point, group, Value, Percentile) %>% 
+      mutate(value = if_else(var == 'mean', '', 
+                             round(value, digits = 2) %>% format(nsmall = 2))) %>% 
+      select(Point, group, value, percentile) %>% 
       make_html_tables(table.total = TRUE,
                        table.header = NULL)
   ) %>% arrange(Point) %>% 
@@ -435,17 +442,17 @@ soildat_productivity_tables = bind_rows(
   soildat_productivity_tables2 = bind_rows(
     soildat_productivity_format %>% 
       filter(Point %in% c('TOKA-022', 'TOKA-068') & var == 'bulk.dens.gcm3') %>%
-      mutate(Value = if_else(var == 'mean', '', 
-                             round(Value, digits = 2) %>% format(nsmall = 2))) %>% 
-      select(Point, group, Value, Percentile) %>% 
+      mutate(value = if_else(var == 'mean', '', 
+                             round(value, digits = 2) %>% format(nsmall = 2))) %>% 
+      select(Point, group, value, percentile) %>% 
       make_html_tables(table.total = FALSE,
                        table.header = NULL,
                        caption = ' (compost applied)'),
     soildat_productivity_format %>% 
       filter(!Point %in% c('TOKA-022', 'TOKA-068') & var == 'bulk.dens.gcm3') %>%
-      mutate(Value = if_else(var == 'mean', '', 
-                             round(Value, digits = 2) %>% format(nsmall = 2))) %>% 
-      select(Point, group, Value, Percentile) %>% 
+      mutate(value = if_else(var == 'mean', '', 
+                             round(value, digits = 2) %>% format(nsmall = 2))) %>% 
+      select(Point, group, value, percentile) %>% 
       make_html_tables(table.total = FALSE,
                        table.header = NULL)
   ) %>% arrange(Point) %>% 
@@ -455,17 +462,17 @@ soildat_productivity_tables = bind_rows(
   bind_rows(
     soildat_productivity_format %>% 
       filter(Point %in% c('TOKA-022', 'TOKA-068') & var == 'water.infil') %>%
-      mutate(Value = if_else(var == 'mean', '', 
-                             round(Value, digits = 2) %>% format(nsmall = 2))) %>% 
-      select(Point, group, Value, Percentile) %>% 
+      mutate(value = if_else(var == 'mean', '', 
+                             round(value, digits = 2) %>% format(nsmall = 2))) %>% 
+      select(Point, group, value, percentile) %>% 
       make_html_tables(table.total = FALSE,
                        table.header = NULL,
                        caption = ' (compost applied)'),
     soildat_productivity_format %>% 
       filter(!Point %in% c('TOKA-022', 'TOKA-068') & var == 'water.infil') %>%
-      mutate(Value = if_else(var == 'mean', '', 
-                             round(Value, digits = 2) %>% format(nsmall = 2))) %>% 
-      select(Point, group, Value, Percentile) %>% 
+      mutate(value = if_else(var == 'mean', '', 
+                             round(value, digits = 2) %>% format(nsmall = 2))) %>% 
+      select(Point, group, value, percentile) %>% 
       make_html_tables(table.total = FALSE,
                        table.header = NULL)
   ) %>% arrange(Point) %>% 
@@ -476,18 +483,18 @@ soildat_productivity_tables = bind_rows(
     soildat_productivity_format %>% 
       filter(Point %in% c('TOKA-022', 'TOKA-068') & 
                var %in% c('carbonA', 'carbonB')) %>%
-      mutate(Value = if_else(var == 'mean', '', 
-                             round(Value, digits = 2) %>% format(nsmall = 2))) %>% 
-      select(Point, group, Value, Percentile) %>% 
+      mutate(value = if_else(var == 'mean', '', 
+                             round(value, digits = 2) %>% format(nsmall = 2))) %>% 
+      select(Point, group, value, percentile) %>% 
       make_html_tables(table.total = FALSE,
                        table.header = NULL,
                        caption = ' (compost applied)'),
     soildat_productivity_format %>% 
       filter(!Point %in% c('TOKA-022', 'TOKA-068') & 
                var %in% c('carbonA', 'carbonB')) %>%
-      mutate(Value = if_else(var == 'mean', '', 
-                             round(Value, digits = 2) %>% format(nsmall = 2))) %>% 
-      select(Point, group, Value, Percentile) %>% 
+      mutate(value = if_else(var == 'mean', '', 
+                             round(value, digits = 2) %>% format(nsmall = 2))) %>% 
+      select(Point, group, value, percentile) %>% 
       make_html_tables(table.total = FALSE,
                        table.header = NULL)
   ) %>% arrange(Point) %>% 
@@ -501,28 +508,28 @@ soildat_productivity_palettes = list(
   'Overall score' = colorBin(
     palette = colorRamp(colors = c('#ffffff', pointblue.palette[4])),
     domain = soildat_productivity_format %>% 
-      filter(maplayer == 'Overall Score') %>% pull(Value),
+      filter(maplayer == 'Overall Score') %>% pull(value),
     bins = c(0, 20, 40, 60, 80, 100),
     na.color = pointblue.palette[6]),
   
   'Bulk density' = colorBin(
     palette = colorRamp(colors = c(pointblue.palette[3], '#ffffff')), #reverse
     domain = soildat_productivity_format %>% 
-      filter(maplayer == 'Bulk density') %>% pull(Value),
+      filter(maplayer == 'Bulk density') %>% pull(value),
     bins = c(0.7, 0.9, 1.1, 1.3, 1.5),
     na.color = pointblue.palette[6]),
   
   'Water infiltration' = colorBin(
     palette = colorRamp(colors = c(pointblue.palette[10], '#ffffff')), #reverse
     domain = soildat_productivity_format %>% 
-      filter(maplayer == 'Water infiltration') %>% pull(Value),
+      filter(maplayer == 'Water infiltration') %>% pull(value),
     bins = c(0, 1, 5, 10, 20, 75),
     na.color = pointblue.palette[6]),
   
   '% Carbon' = colorBin(
     palette = colorRamp(colors = c('#ffffff', tk.palette[8])),
     domain = soildat_productivity_format %>% 
-      filter(maplayer == '% Carbon') %>% pull(Value),
+      filter(maplayer == '% Carbon') %>% pull(value),
     bins = c(0, 2, 4, 6, 10),
     na.color = tk.palette[4])
 )
