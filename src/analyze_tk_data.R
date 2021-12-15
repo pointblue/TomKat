@@ -199,6 +199,8 @@ birdrich_trend_plot = birdrich_trend %>%
 #  different trend (slightly increasing) for riparian birds)
 
 ## update webpage----------
+# first review and update text in "Rmd/birds.Rmd"
+
 # once all of the plots and maps above are updated, use this to update the
 # corresponding bird page
 rmarkdown::render(input = 'Rmd/birds.Rmd',
@@ -261,6 +263,8 @@ streamdat_monthly_plot = streamdat_monthly %>%
               title = 'Honsinger Creek Monthly Stats')
 
 ## update webpage----------
+# first review and update text in "Rmd/stream.Rmd"
+
 # once the above plots are updated, use this to update the corresponding webpage
 rmarkdown::render(input = 'Rmd/stream.Rmd',
                   output_file = here::here('docs/stream.html'))
@@ -360,6 +364,8 @@ zndx_plot = plot_drought_index(
               title = 'Palmer Z Index')
 
 ## update webpage----------
+# first review and update text in "Rmd/weather.Rmd"
+
 rmarkdown::render(input = 'Rmd/weather.Rmd',
                   output_file = here::here('docs/weather.html'))
 
@@ -528,6 +534,8 @@ map_data(
     title =  paste0('TomKat Soil Microbes ', max(soildat_microbes$SampleYear)))
 
 ## update webpage------
+# first review and update text in "Rmd/soil.Rmd"
+
 rmarkdown::render(input = 'Rmd/soil.Rmd',
                   output_file = here::here('docs/soil.html'))
 
