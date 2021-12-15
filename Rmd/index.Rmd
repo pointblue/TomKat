@@ -16,7 +16,7 @@ output:
 
 * [index](index.html)
 * [weather](weather.html) - updated Dec 2020
-* [soil](soil.html)
+* [soil](soil.html) - in progress
 * [vegetation](vegetation.html)
 * [water](stream.html) - updated Nov 2020
 * [birds](birds.html) - updated Nov 2020
