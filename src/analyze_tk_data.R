@@ -6,6 +6,7 @@ source('src/packages.R')
 
 # LOAD FUNCTIONS
 source('src/plot_standards.R')
+source('src/plot_palettes.R')
 source('src/map_data.R')
 
 
@@ -56,39 +57,46 @@ birddens_point = calculate_focal_density(
 # -> 171 unique strata/sampling locations, 1-16 visits per sampling location
 
 # add totals and reformat:
-birddens_point_format = birddens_point %>% 
-  filter(species != 'WCSP') %>% 
-  # add totals
-  bind_rows(birddens_point %>% filter(species != 'WCSP') %>% 
-              group_by(Label) %>% 
-              summarize(species = 'total', 
-                        Estimate = sum(Estimate),
-                        .groups = 'drop')) %>% 
-  select(Point = Label, group = species, value = Estimate) %>%
+birddens_point_format = bind_rows(
+  # individual species densities
+  birddens_point %>% filter(species != 'WCSP'), 
+  # and totals
+  birddens_point %>% filter(species != 'WCSP') %>% 
+    group_by(Label) %>% 
+    summarize(species = 'total', 
+              Estimate = sum(Estimate),
+              .groups = 'drop')
+  ) %>% 
+  select(Point = Label, species, value = Estimate) %>%
   #optional: convert to birds per 10 acres (from birds/ha)
   mutate(value = value / 2.47105 * 10,
-         group = factor(group, levels = c('GRSP', 'SAVS', 'total')),
-         group = recode(group,
-                        GRSP = 'Grasshopper Sparrow',
-                        SAVS = 'Savannah Sparrow',
-                        total = 'Total'),
-         table_text = txtRound(value, digits = 1, txt.NA = 'NA')) %>% 
-  arrange(Point, group)
+         value_round = txtRound(value, digits = 1, txt.NA = 'NA'),
+         species = factor(species, levels = c('GRSP', 'SAVS', 'total')),
+         # labels within map layer control
+         maplayer = recode(species,
+                           GRSP = 'Grasshopper Sparrow',
+                           SAVS = 'Savannah Sparrow',
+                           total = 'Total'),
+         # rownames within popup tables (same)
+         rowname = maplayer) %>% 
+  arrange(Point, species)
 
 birddens_point_tables = birddens_point_format %>% 
-  select(Point, group, table_text) %>% 
+  select(Point, rowname, value_round) %>% 
   make_html_tables(table.total = TRUE,
                    table.header = NA)
 
-birddens_point_map = birddens_point_format %>% 
-  map_data(as_raster = TRUE,
-           pts_toka = 'GIS/TOKA_point_count_grid.shp',
-           fields = 'GIS/TK_veg_fields.shp',
-           boundary = 'GIS/TomKat_ranch_boundary.shp',
-           bins = c(0, 0.001, 1, 5, 10, 50),
-           legend.labels = c('0', '< 1', '1 - 5', '5 - 10', '> 10'),
-           legend.title = 'Density<br>(birds/10 acres)',
-           htmltab = birddens_point_tables) %>% 
+map_data(
+  dat = birddens_point_format,
+  as_raster = TRUE,
+  pts_toka = 'GIS/TOKA_point_count_grid.shp',
+  fields = 'GIS/TK_veg_fields.shp',
+  boundary = 'GIS/TomKat_ranch_boundary.shp',
+  bins = c(0, 0.001, 1, 5, 10, 50),
+  legend.labels = c('0', '< 1', '1 - 5', '5 - 10', '> 10'),
+  legend.title = 'Density<br>(birds/10 acres)',
+  htmltab = birddens_point_tables
+) %>% 
   save_widget(pathout = 'docs/widget/bird_map_density.html',
               selfcontained = FALSE, libdir = 'lib',
               title = 'TomKat Bird Density Map')
@@ -140,24 +148,15 @@ birdrich_point = birddat %>%
   write_csv('data_clean/TOKA_birds_richness_by_point.csv')
 
 # pop-up html tables for map:
-birdrich_point_tables = birdrich_point %>% 
-  select(Point = id, estimated = boot, observed = Species, n) %>%
-  pivot_longer(-Point, names_to = 'group', values_to = 'value') %>% 
-  mutate(group = factor(group, levels = c('estimated', 'observed', 'n')),
-         group = recode(group,
-                        estimated = 'Estimated species',
-                        observed = 'Observed species',
-                        n = 'Number of surveys'),
-         table_text = txtRound(value, digits = 0, txt.NA = 'NA')) %>% 
-  select(Point, group, table_text) %>% 
-  make_html_tables(table.total = FALSE,
-                   table.header = NA)
+birdrich_point_tables = create_html_tables(
+  dat = birdrich_point,
+  set = 'birdrich_point')
 
 # map only estimated richness (but include observed richness and # surveys in
 # pop-up tables)
-birdrich_point_map = birdrich_point %>% 
+birdrich_point %>% 
   select(Point = id, value = boot) %>% 
-  mutate(group = 'estimated') %>% #need to specify at least one group
+  mutate(maplayer = 'estimated') %>% #need to specify at least one maplayer
   map_data(as_raster = TRUE,
            pts_toka = 'GIS/TOKA_point_count_grid.shp',
            pts_hocr = 'GIS/HOCR_point_count_riparian.shp',
@@ -166,7 +165,7 @@ birdrich_point_map = birdrich_point %>%
            legend.title = 'Estimated<br>species<br>richness',
            htmltab = birdrich_point_tables,
            fields = 'GIS/TK_veg_fields.shp',
-           boundary = 'GIS/TomKat_ranch_boundary.shp')
+           boundary = 'GIS/TomKat_ranch_boundary.shp') %>% 
   save_widget(pathout = 'docs/widget/bird_map_richness.html',
               title = 'TomKat Bird Richness Map',
               selfcontained = FALSE, libdir = 'lib')
@@ -203,8 +202,9 @@ birdrich_trend_plot = birdrich_trend %>%
 ## update webpage----------
 # once all of the plots and maps above are updated, use this to update the
 # corresponding bird page
-render_Rmd(pathin = "Rmd/birds.Rmd", 
-           pathout = "docs/birds.html")
+rmarkdown::render(input = 'Rmd/birds.Rmd',
+                  output_file = here::here('docs/birds.html'))
+
 
 
 # STREAM---------------
@@ -263,9 +263,8 @@ streamdat_monthly_plot = streamdat_monthly %>%
 
 ## update webpage----------
 # once the above plots are updated, use this to update the corresponding webpage
-render_Rmd(pathin = "Rmd/stream.Rmd", 
-           pathout = "docs/stream.html")
-
+rmarkdown::render(input = 'Rmd/stream.Rmd',
+                  output_file = here::here('docs/stream.html'))
 
 # WEATHER-------------------- 
 source('src/process_weather_data.R')
@@ -362,8 +361,10 @@ zndx_plot = plot_drought_index(
               title = 'Palmer Z Index')
 
 ## update webpage----------
-render_Rmd(pathin = "Rmd/weather.Rmd", 
-           pathout = "docs/weather.html")
+rmarkdown::render(input = 'Rmd/weather.Rmd',
+                  output_file = here::here('docs/weather.html'))
+
+
 
 # SOIL--------
 source('src/process_soil_data.R')
@@ -378,7 +379,7 @@ soildat = compile_soil_fielddata('data_raw/soil/TOKA_soildata_CADC_2014to18.csv'
             by = c('Point', 'SampleYear')) %>% 
   left_join(compile_soil_microbedata('data_raw/soil/Bacterial_Richness_For_SOTR.xlsx'),
             by = c('Point', 'SampleYear')) %>% 
-  write_csv('data_clean/TK_soil_main.csv')
+  write_csv('data_clean/TOKA_soil_main.csv')
 
 ## 1. MAP soil productivity data-----
 
@@ -387,8 +388,14 @@ soildat_productivity = soildat %>%
   select(Point, SampleYear, bulk.dens.gcm3, water.infil, carbonA, carbonB) %>% 
   calculate_productivity_metrics()
 
+# create pop-up tables of data
 soildat_productivity_tables = create_html_tables(
   soildat_productivity, 
+  set = 'soil_productivity')
+
+# generate color palettes for range of each metric
+soildat_productivity_palettes = create_palettes(
+  soildat_productivity,
   set = 'soil_productivity')
 
 # create map
@@ -420,9 +427,12 @@ soildat_productivity_change = soildat_productivity %>%
   # relabel back with their corresponding years (as rownames in popup tables)
   mutate(rowname = recode(rowname, 'current' = '2018', 'baseline' = '2015'))
 
-
 # create pop-up html tables
 soildat_productivity_change_tables = create_html_tables(
+  soildat_productivity_change, 
+  set = 'soil_productivity_change')
+
+soildat_productivity_change_palettes = create_palettes(
   soildat_productivity_change, 
   set = 'soil_productivity_change')
 
@@ -458,6 +468,10 @@ soildat_nutrient_tables = create_html_tables(
   soildat_nutrients, 
   set = 'soil_nutrients')
 
+soildat_nutrient_palettes = create_palettes(
+  soildat_nutrients, 
+  set = 'soil_nutrients')
+
 # create map:
 map_data(
   dat = soildat_nutrients,
@@ -478,7 +492,7 @@ map_data(
 ## 4. MAP soil microbes----
 
 soildat_microbes = soildat %>% filter(SampleYear == 2015) %>% 
-  select(Point, richA, richB) %>%
+  select(Point, SampleYear, richA, richB) %>%
   filter(!is.na(richA)) %>% 
   pivot_longer(richA:richB, names_to = 'rowname') %>% 
   mutate(
@@ -492,6 +506,7 @@ soildat_microbes = soildat %>% filter(SampleYear == 2015) %>%
 # additional data on proportions by phylum (for pop-up graphs)
 soildat_phyla = compile_phyladat('data_raw/soil/Bacterial_Phyla_For_SOTR.xlsx')
 
+# create pop-up figures with phyladat
 soildat_phyla_popplots = tibble(
   Point = unique(soildat_phyla$Point),
   table_html = create_pop_plots(soildat_phyla) %>% 
@@ -503,7 +518,7 @@ map_data(
   pts_toka = 'GIS/TOKA_point_count_grid.shp',
   fields = 'GIS/TK_veg_fields.shp',
   boundary = 'GIS/TomKat_ranch_boundary.shp',
-  palette = soildat_microbe_palette,
+  palette = soildat_microbe_palette, bins = 4,
   maplayers = names(soildat_microbe_palette),
   legend.title = 'Bacterial<br>richness',
   htmltab = soildat_phyla_popplots
@@ -514,13 +529,21 @@ map_data(
     title =  paste0('TomKat Soil Microbes ', max(soildat_microbes$SampleYear)))
 
 ## update webpage------
-
+rmarkdown::render(input = 'Rmd/soil.Rmd',
+                  output_file = here::here('docs/soil.html'))
 
 
 # VEGETATION-------
 ## data set up
-## 1. MAP
-## 2. MAP
-## 3. MAP
-## 4. GRAPH
+## 1. MAP current veg cover
+## 2. MAP vegetation change
+## 3. GRAPH ranch-wide veg trends
+## 4. GRAPH ranch-wide grass trends
+## 5. MAP vegetation species diversity
+## update webpage
+
+# MANAGEMENT-------
+## data set up
+## 1. MAP animal days per acre
+## 2. MAP total grazing days
 ## update webpage
