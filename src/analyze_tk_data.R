@@ -132,7 +132,7 @@ birddens_trend_plot = birddens_trend %>%
   save_widget(pathout = 'docs/widget/bird_trend_density.html',
               selfcontained = FALSE, libdir = 'lib',
               title = 'TomKat Bird Density Trends')
-# -> year x group model has no signiicant trends; but year + group model 
+# -> year x group model has no significant trends; but year + group model 
 #   shows overall decline for both groups, with SAVS significantly lower
 
 ## 3. MAP spp richness per point------------
@@ -424,7 +424,7 @@ soildat_productivity_change = soildat_productivity %>%
   mutate(yr = case_when(SampleYear == max(SampleYear) ~ 'current',
                         SampleYear == 2015 ~ 'baseline')) %>% 
   # calculate change in each metric and change in overall percentile score
-  calculate_soildat_productivity_change() %>% 
+  calculate_productivity_change() %>% 
   # relabel back with their corresponding years (as rownames in popup tables)
   mutate(rowname = recode(rowname, 'current' = '2018', 'baseline' = '2015'))
 
