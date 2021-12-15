@@ -8,6 +8,21 @@
 ##'   
 
 create_html_tables = function(dat, set) {
+  if (set == 'birdrich_point') {
+    return(
+      dat %>% 
+        select(Point = id, estimated = boot, observed = Species, n) %>%
+        pivot_longer(-Point, names_to = 'rowname', values_to = 'value') %>% 
+        mutate(rowname = factor(rowname, levels = c('estimated', 'observed', 'n')),
+               rowname = recode(rowname,
+                                estimated = 'Estimated species',
+                                observed = 'Observed species',
+                                n = 'Number of surveys'),
+               value_round = txtRound(value, digits = 0, txt.NA = 'NA')) %>% 
+        select(Point, rowname, value_round) %>% 
+        make_html_tables(table.total = FALSE,
+                         table.header = NA))
+  }
   if (set == 'soil_productivity') {
     bind_rows(
       # overall:
@@ -76,7 +91,8 @@ create_html_tables = function(dat, set) {
       ) %>% arrange(Point) %>% 
         mutate(maplayer = '% Carbon')
     )
-  } else if (set == 'soil_productivity_change') { 
+  }
+  if (set == 'soil_productivity_change') { 
     bind_rows(
       # overall:
       bind_rows(
@@ -144,7 +160,8 @@ create_html_tables = function(dat, set) {
       ) %>% arrange(Point) %>% 
         mutate(maplayer = '% Carbon')
     )
-  } else if (set == 'soil_nutrients') {
+  } 
+  if (set == 'soil_nutrients') {
     bind_rows(
       # nitrogen
       bind_rows(
@@ -264,7 +281,7 @@ make_html_tables = function(dat, table.total = FALSE, table.header = NA,
 }
 
 create_pop_plots = function(df) {
-  map(unique(df$Point) %>% set_names(), 
+  map(unique(df$Point) %>% rlang::set_names(), 
       ~ df %>% filter(Point == .x) %>%
         ggplot(aes(x = Depth, y = prop, fill = phylum)) +
         geom_col(color = 'gray50', size = 0.4) + 
@@ -287,7 +304,7 @@ blank_theme <- theme_minimal() +
     panel.background = element_rect(fill = 'white', color = NA)
   )
 
-map_data = function(dat, as_raster = FALSE, maplayers, htmltab = NULL, 
+map_data = function(dat, as_raster = FALSE, maplayers = NULL, htmltab = NULL, 
                     pts_toka, fields = NULL, boundary = NULL,
                     palette = NULL, bins = NULL, legend.values, legend.labels = NULL, 
                     legend.title = NULL, multilegend = FALSE,
@@ -346,9 +363,9 @@ map_data = function(dat, as_raster = FALSE, maplayers, htmltab = NULL,
       # convert to long-lat
       raster::projectRaster(crs = st_crs(shp_pts_longlat)$proj4string)
     
-    # for each level of "group" in data, transfer richness values from point count
+    # for each maplayer in data, transfer richness values from point count
     # coordinates to corresponding raster cell:
-    rast = shp_pts_longlat %>% select(group, Point, value) %>% split(.$group) %>% 
+    rast = shp_pts_longlat %>% select(maplayer, Point, value) %>% split(.$maplayer) %>% 
       purrr::map(function(x) {
         df = as(x, 'Spatial')
         raster::rasterize(x = df, y = rtemplate, field = x$value)
@@ -446,7 +463,7 @@ map_data = function(dat, as_raster = FALSE, maplayers, htmltab = NULL,
   }
     
   # if more than one maplayers, add layers control and legends to match
-  if (length(maplayers) > 1) {
+  if (!is.null(maplayers) & length(maplayers) > 1) {
     
     if (multilegend) {
       # one legend for each maplayer
@@ -477,7 +494,7 @@ map_data = function(dat, as_raster = FALSE, maplayers, htmltab = NULL,
                        options = layersControlOptions(collapsed = F),
                        overlayGroups = maplayers) %>% 
       hideGroup(maplayers[2:length(maplayers)])
-  } else {
+  } else if (!is.null(maplayers)){
     # one legend only
     m <- m %>% 
       addLegend(pal = palette[[1]],
