@@ -7,6 +7,245 @@
 ##'
 ##'   
 
+create_html_tables = function(dat, set) {
+  if (set == 'soil_productivity') {
+    bind_rows(
+      # overall:
+      bind_rows(
+        dat %>% 
+          filter(SampleYear == 2018 & Point %in% c('TOKA-022', 'TOKA-068')) %>%
+          select(Point, rowname, value_round, percentile) %>% 
+          make_html_tables(table.total = TRUE,
+                           table.header = NULL,
+                           caption = ' (compost applied)'),
+        dat %>% 
+          filter(SampleYear == 2018 & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
+          select(Point, rowname, value_round, percentile) %>% 
+          make_html_tables(table.total = TRUE,
+                           table.header = NULL)
+      ) %>% arrange(Point) %>% 
+        mutate(maplayer = 'Overall score'),
+      
+      # bulk density:
+      dat_tables2 = bind_rows(
+        dat %>% 
+          filter(SampleYear == 2018 & Point %in% c('TOKA-022', 'TOKA-068') & var == 'bulk.dens.gcm3') %>%
+          select(Point, rowname, value_round, percentile) %>% 
+          make_html_tables(table.total = FALSE,
+                           table.header = NULL,
+                           caption = ' (compost applied)'),
+        dat %>% 
+          filter(SampleYear == 2018 & !Point %in% c('TOKA-022', 'TOKA-068') & var == 'bulk.dens.gcm3') %>%
+          select(Point, rowname, value_round, percentile) %>% 
+          make_html_tables(table.total = FALSE,
+                           table.header = NULL)
+      ) %>% arrange(Point) %>% 
+        mutate(maplayer = 'Bulk density'),
+      
+      # water infiltration
+      bind_rows(
+        dat %>% 
+          filter(SampleYear == 2018 & Point %in% c('TOKA-022', 'TOKA-068') & var == 'water.infil') %>%
+          select(Point, rowname, value_round, percentile) %>% 
+          make_html_tables(table.total = FALSE,
+                           table.header = NULL,
+                           caption = ' (compost applied)'),
+        dat %>% 
+          filter(SampleYear == 2018 & !Point %in% c('TOKA-022', 'TOKA-068') & var == 'water.infil') %>%
+          select(Point, rowname, value_round, percentile) %>% 
+          make_html_tables(table.total = FALSE,
+                           table.header = NULL)
+      ) %>% arrange(Point) %>% 
+        mutate(maplayer = 'Water infiltration'),
+      
+      # carbon
+      bind_rows(
+        dat %>% 
+          filter(SampleYear == 2018 & Point %in% c('TOKA-022', 'TOKA-068') & 
+                   var %in% c('carbonA', 'carbonB')) %>%
+          select(Point, rowname, value_round, percentile) %>% 
+          make_html_tables(table.total = FALSE,
+                           table.header = NULL,
+                           caption = ' (compost applied)'),
+        dat %>% 
+          filter(SampleYear == 2018 & !Point %in% c('TOKA-022', 'TOKA-068') & 
+                   var %in% c('carbonA', 'carbonB')) %>%
+          select(Point, rowname, value_round, percentile) %>% 
+          make_html_tables(table.total = FALSE,
+                           table.header = NULL)
+      ) %>% arrange(Point) %>% 
+        mutate(maplayer = '% Carbon')
+    )
+  } else if (set == 'soil_productivity_change') { 
+    bind_rows(
+      # overall:
+      bind_rows(
+        dat %>% 
+          filter(var == 'mean' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
+          select(Point, rowname, value_round) %>% 
+          make_html_tables(table.total = TRUE,
+                           table.header = 'Overall score<br>(percentile)',
+                           caption = ' (compost applied)'),
+        dat %>% 
+          filter(var == 'mean' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
+          select(Point, rowname, value_round) %>% 
+          make_html_tables(table.total = TRUE,
+                           table.header = 'Overall score<br>(percentile)')
+      ) %>% arrange(Point) %>% 
+        mutate(maplayer = 'Overall score'),
+      
+      # bulk density
+      bind_rows(
+        dat %>% 
+          filter(var == 'bulk.dens.gcm3' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
+          select(Point, rowname, value_round) %>% 
+          make_html_tables(table.total = TRUE,
+                           table.header = 'Bulk density<br>(g/cm<sup>3</sup>)',
+                           caption = ' (compost applied)'),
+        dat %>% 
+          filter(var == 'bulk.dens.gcm3' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
+          select(Point, rowname, value_round) %>% 
+          make_html_tables(table.total = TRUE,
+                           table.header = 'Bulk density<br>(g/cm<sup>3</sup>)')
+      ) %>% arrange(Point) %>% 
+        mutate(maplayer = 'Bulk density'),
+      
+      # water infiltration
+      bind_rows(
+        dat %>% 
+          filter(var == 'water.infil' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
+          select(Point, rowname, value_round) %>% 
+          make_html_tables(table.total = TRUE,
+                           table.header = 'Water infiltration<br>(min/in)',
+                           caption = ' (compost applied)'),
+        dat %>% 
+          filter(var == 'water.infil' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
+          select(Point, rowname, value_round) %>% 
+          make_html_tables(table.total = TRUE,
+                           table.header = 'Water infiltration<br>(min/in)')
+      ) %>% arrange(Point) %>% 
+        mutate(maplayer = 'Water infiltration'),
+      
+      # % carbon
+      bind_rows(
+        dat %>% 
+          filter(var %in% c('carbonB', 'carbonA') & Point %in% c('TOKA-022', 'TOKA-068')) %>%
+          select(Point, rowname, var, value_round) %>% 
+          pivot_wider(names_from = var, values_from = value_round) %>%
+          make_html_tables(table.total = TRUE,
+                           table.header = c('% Carbon<br>(0-10cm)', '% Carbon<br>(10-40cm)'),
+                           caption = ' (compost applied)'),
+        dat %>% 
+          filter(var %in% c('carbonB', 'carbonA') & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
+          select(Point, rowname, var, value_round) %>% 
+          pivot_wider(names_from = var, values_from = value_round) %>% 
+          make_html_tables(table.total = TRUE,
+                           table.header = c('% Carbon<br>(0-10cm)', '% Carbon<br>(10-40cm)'))
+      ) %>% arrange(Point) %>% 
+        mutate(maplayer = '% Carbon')
+    )
+  } else if (set == 'soil_nutrients') {
+    bind_rows(
+      # nitrogen
+      bind_rows(
+        dat %>% 
+          filter(var == 'Total Nitrogen' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
+          select(Point, rowname, value_round) %>% 
+          make_html_tables(table.total = FALSE,
+                           table.header = 'Total<br>Nitrogen',
+                           caption = ' (compost applied)'),
+        dat %>% 
+          filter(var == 'Total Nitrogen' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
+          select(Point, rowname, value_round) %>% 
+          make_html_tables(table.total = FALSE,
+                           table.header = 'Total<br>Nitrogen')
+      ) %>% arrange(Point) %>% 
+        mutate(maplayer = 'Total Nitrogen (N)'),
+      
+      # potassium:
+      bind_rows(
+        dat %>% 
+          filter(var == 'Potassium' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
+          select(Point, rowname, value_round) %>% 
+          make_html_tables(table.total = FALSE,
+                           table.header = 'Potassium',
+                           caption = ' (compost applied)'),
+        dat %>% 
+          filter(var == 'Potassium' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
+          select(Point, rowname, value_round) %>% 
+          make_html_tables(table.total = FALSE,
+                           table.header = 'Potassium')
+      ) %>% arrange(Point) %>% 
+        mutate(maplayer = 'Potassium (K)'),
+      
+      # sodium
+      bind_rows(
+        dat %>% 
+          filter(var == 'Sodium' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
+          select(Point, rowname, value_round) %>% 
+          make_html_tables(table.total = FALSE,
+                           table.header = 'Sodium',
+                           caption = ' (compost applied)'),
+        dat %>% 
+          filter(var == 'Sodium' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
+          select(Point, rowname, value_round) %>% 
+          make_html_tables(table.total = FALSE,
+                           table.header = 'Sodium')
+      ) %>% arrange(Point) %>% 
+        mutate(maplayer = 'Sodium (Na)'),
+      
+      # magnesium
+      bind_rows(
+        dat %>% 
+          filter(var == 'Magnesium' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
+          select(Point, rowname, value_round) %>% 
+          make_html_tables(table.total = FALSE,
+                           table.header = 'Magnesium',
+                           caption = ' (compost applied)'),
+        dat %>% 
+          filter(var == 'Magnesium' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
+          select(Point, rowname, value_round) %>% 
+          make_html_tables(table.total = FALSE,
+                           table.header = 'Magnesium')
+      ) %>% arrange(Point) %>% 
+        mutate(maplayer = 'Magnesium (Mg)'),
+      
+      # calcium
+      bind_rows(
+        dat %>% 
+          filter(var == 'Calcium' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
+          select(Point, rowname, value_round) %>% 
+          make_html_tables(table.total = FALSE,
+                           table.header = 'Calcium',
+                           caption = ' (compost applied)'),
+        dat %>% 
+          filter(var == 'Calcium' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
+          select(Point, rowname, value_round) %>% 
+          make_html_tables(table.total = FALSE,
+                           table.header = 'Calcium')
+      ) %>% arrange(Point) %>% 
+        mutate(maplayer = 'Calcium (Ca)'),
+      
+      # pH
+      bind_rows(
+        dat %>% 
+          filter(var == 'pH' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
+          select(Point, rowname, value_round) %>% 
+          make_html_tables(table.total = FALSE,
+                           table.header = 'pH',
+                           caption = ' (compost applied)'),
+        dat %>% 
+          filter(var == 'pH' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
+          select(Point, rowname, value_round) %>% 
+          make_html_tables(table.total = FALSE,
+                           table.header = 'pH')
+      ) %>% arrange(Point) %>% 
+        mutate(maplayer = 'pH')
+    )
+  }
+}
+
+# internal function
 make_html_tables = function(dat, table.total = FALSE, table.header = NA,
                             caption = '') {
   dat %>% select(Point) %>% distinct() %>% 
@@ -14,8 +253,7 @@ make_html_tables = function(dat, table.total = FALSE, table.header = NA,
       table_html = purrr::map(
         Point, 
         function(x) {
-          sdat = dat %>% filter(Point == x) %>% 
-            column_to_rownames('group')
+          sdat = dat %>% filter(Point == x) %>% column_to_rownames('rowname')
           htmlTable(x = sdat %>% select(-Point),
                     header = table.header, 
                     align = 'r',
@@ -25,11 +263,34 @@ make_html_tables = function(dat, table.total = FALSE, table.header = NA,
       ))
 }
 
-# "dat" should have field "var"
-map_data = function(dat, as_raster = FALSE, maplayers = 'single', htmltab = NULL, 
+create_pop_plots = function(df) {
+  map(unique(df$Point) %>% set_names(), 
+      ~ df %>% filter(Point == .x) %>%
+        ggplot(aes(x = Depth, y = prop, fill = phylum)) +
+        geom_col(color = 'gray50', size = 0.4) + 
+        coord_polar(start = 0, theta = 'y') + 
+        blank_theme + 
+        ggtitle(.x) + 
+        scale_y_continuous(expand = c(0, 0)) +
+        scale_fill_viridis_d(option = 'inferno'))
+}
+
+blank_theme <- theme_minimal() +
+  theme(
+    axis.title.x = element_blank(), axis.title.y = element_blank(),
+    axis.text.x = element_blank(), axis.text.y = element_blank(),
+    panel.border = element_blank(), panel.grid = element_blank(),
+    axis.ticks = element_blank(), legend.position = 'right',
+    legend.key.size = unit(0.75, 'lines'),
+    plot.margin = unit(c(0.25, 0.25, 0.25, 0.25),'pt'),
+    plot.background = element_rect(fill = 'white', color = NA),
+    panel.background = element_rect(fill = 'white', color = NA)
+  )
+
+map_data = function(dat, as_raster = FALSE, maplayers, htmltab = NULL, 
                     pts_toka, fields = NULL, boundary = NULL,
-                    palette = NULL, bins = NULL, legend.labels = NULL, 
-                    legend.title = NULL, 
+                    palette = NULL, bins = NULL, legend.values, legend.labels = NULL, 
+                    legend.title = NULL, multilegend = FALSE,
                     pts_hocr = NULL) {
   
   # all field data are based on grid of point count stations:
@@ -153,15 +414,23 @@ map_data = function(dat, as_raster = FALSE, maplayers = 'single', htmltab = NULL
     }
     
   } else if (!is.null(htmltab)) {
-    # regardless of how many maplayers or types of data will be mapped together,
-    # specify order of maplayers and split data by var (one set of points per data
-    # layer):
-    shp_pts_longlat <-  shp_pts_longlat %>% 
-      mutate(maplayer = factor(maplayer, levels = maplayers)) %>% 
-      split(.$group)
+    # define point layer order by combination of maplayer and descending point
+    # radius, then split data by point layer:
+    if (length(maplayers) == 1) {
+      # default
+      shp_pts_longlat <-  shp_pts_longlat %>% arrange(desc(radius), Point)
+    } else {
+      shp_pts_longlat <-  shp_pts_longlat %>% 
+        mutate(maplayer = factor(maplayer, levels = maplayers)) %>%
+        arrange(maplayer, desc(radius), Point)
+    }
+
+    shp_pts_longlat <- shp_pts_longlat %>% 
+      mutate(pointlayer = factor(pointlayer, levels = unique(shp_pts_longlat$pointlayer))) %>% 
+      split(.$pointlayer)
     
     for (i in c(1:length(shp_pts_longlat))) {
-      # match to correct palette for maplayer
+      # match to correct palette by maplayer
       p = which(names(palette) == shp_pts_longlat[[i]]$maplayer[1])
       m <- m %>% 
         addCircleMarkers(data = shp_pts_longlat[[i]],
@@ -169,7 +438,7 @@ map_data = function(dat, as_raster = FALSE, maplayers = 'single', htmltab = NULL
                          group = ~maplayer,
                          radius = ~radius, 
                          color = 'black', opacity = 1,
-                         fillColor =  ~palette[[p]](Value), 
+                         fillColor =  ~palette[[p]](value), 
                          fillOpacity = 1, 
                          weight = ~weight,
                          options = popupOptions(maxWidth = 800))
@@ -178,23 +447,46 @@ map_data = function(dat, as_raster = FALSE, maplayers = 'single', htmltab = NULL
     
   # if more than one maplayers, add layers control and legends to match
   if (length(maplayers) > 1) {
-
-    for (i in c(1:length(maplayers))) {
+    
+    if (multilegend) {
+      # one legend for each maplayer
+      for (i in c(1:length(maplayers))) {
+        m <- m %>% 
+          addLegend(pal = palette[[i]],
+                    values = dat %>% filter(maplayer == maplayers[[i]]) %>% 
+                      pull(value),
+                    title = maplayers[i],
+                    group = maplayers[i],
+                    position = 'topright',
+                    opacity = 1,
+                    na.label = 'No data') 
+      }
+    } else {
+      # one legend for all maplayers
       m <- m %>% 
-        addLegend(pal = palettes[[i]],
-                  values = dat %>% filter(maplayer == maplayers[[i]]) %>% 
-                    pull(Value),
-                  title = maplayers[i],
-                  group = maplayers[i],
+        addLegend(colors = palette[[1]](legend.values),
+                  labels = legend.labels,
+                  title = legend.title,
                   position = 'topright',
                   opacity = 1,
                   na.label = 'No data') 
     }
+    # add legend last (so hideGroup applies to legends as well)
     m <- m %>% 
       addLayersControl(position = 'bottomleft', 
                        options = layersControlOptions(collapsed = F),
                        overlayGroups = maplayers) %>% 
       hideGroup(maplayers[2:length(maplayers)])
+  } else {
+    # one legend only
+    m <- m %>% 
+      addLegend(pal = palette[[1]],
+                values = dat %>% pull(value),
+                bins = bins,
+                title = legend.title,
+                position = 'topright',
+                opacity = 1,
+                na.label = 'No data')
   }
   
   # add HOCR points--------------
