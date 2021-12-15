@@ -10,16 +10,15 @@ source('src/map_data.R')
 
 
 # INDEX & README----------
-# edit Rmd files as needed, then use these to render html
+# edit Rmd files as needed, then use these to render corresponding html
 
 # "home" page for https://pointblue.github.io/TomKat/
-index_page = render_Rmd(pathin = "Rmd/index.Rmd", 
-                        pathout = "docs/index.html")
+rmarkdown::render(input = 'Rmd/index.Rmd',
+                  output_file = here::here('docs/index.html'))
 
 # readme for git repo https://github.com/pointblue/TomKat
-readme_page = render_Rmd(pathin = "Rmd/README.Rmd",
-                         pathout = "README.md")
-
+rmarkdown::render(input = 'Rmd/README.Rmd',
+                  output_file = here::here('README.Rmd')) # store in top-level directory
 
 # BIRDS-------------
 source('src/process_bird_data.R')
