@@ -26,15 +26,11 @@ source('src/process_bird_data.R')
 source('src/plot_bird_data.R')
 
 ## data set up--------
-# "grassland" points:
-pcgrid = read_sf('GIS/TOKA_point_count_grid_grass&hay.shp')
-
 # bird data (update filepath to most recent one):
 birddat = compile_bird_data('data_raw/TOKA_HOCR_PC_2010_2020.csv') %>%
   # add simplistic habitat classifications:
-  mutate(habitat = case_when(substr(Point, 1, 4) == 'HOCR' ~ 'riparian',
-                             Point %in% pcgrid$Name ~ 'grassland',
-                             TRUE ~ 'other')) %>% 
+  left_join(read_csv('data_clean/sample_point_habitat.csv'), by = 'Point') %>% 
+  mutate(habitat = if_else(is.na(habitat), 'other', NA_character_)) %>% 
   write_csv('data_clean/TOKA_birds_main.csv')
 # Note: birddat does include all distances <300 and juveniles, but not flyovers
 
