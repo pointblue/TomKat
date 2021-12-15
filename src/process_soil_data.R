@@ -11,6 +11,7 @@
 #' @examples
 compile_soil_fielddata = function(path) {
   read_csv(path, show_col_types = FALSE) %>% 
+    rename(Point = 'Point Name') %>% 
     mutate(Date = as.Date(Date, format = '%m/%d/%Y'),
            Year = format(Date, '%Y') %>% as.numeric(),
            Month = format(Date, '%m') %>% as.numeric(),
@@ -24,10 +25,10 @@ compile_soil_fielddata = function(path) {
     # fix missing carbon values reported as 0 (the only zeroes for carbon)
     mutate(
       `Carbon 0-10 cm` = case_when(
-        `Point Name` == 'TOKA-013' & Year == 2015 ~ NA_real_,
+        Point == 'TOKA-013' & Year == 2015 ~ NA_real_,
         TRUE ~ `Carbon 0-10 cm`),
       `Carbon 10-40 cm` = case_when(
-        `Point Name` == 'TOKA-013' & Year == 2015 ~ NA_real_,
+        Point == 'TOKA-013' & Year == 2015 ~ NA_real_,
         TRUE ~ `Carbon 10-40 cm`)
       )
 }
@@ -53,7 +54,7 @@ calculate_water_infiltration = function(df) {
 
 summarize_soil_fielddata = function(df) {
   df %>%
-    group_by(`Point Name`, SampleYear) %>%
+    group_by(Point, SampleYear) %>%
     summarize(bulk.dens.gcm3 = mean(bulk.density.gcm3, na.rm = T),
               bulk.dens.sd = sd(bulk.density.gcm3, na.rm = T),
               water.infil = mean(water.infiltration),
@@ -67,8 +68,8 @@ summarize_soil_fielddata = function(df) {
 
 compile_soil_labdata = function(path) {
   read_csv(path, show_col_types = FALSE) %>%
-    separate(PointID, into = c('Point Name', 'depth.group'), 6) %>%
-    mutate(`Point Name` = gsub('TK', 'TOKA', `Point Name`),
+    separate(PointID, into = c('Point', 'depth.group'), 6) %>%
+    mutate(Point = gsub('TK', 'TOKA', Point),
            CollectDate = as.Date(CollectDate, format = '%d-%b-%y'), 
            SampleYear = as.numeric(format(CollectDate, '%Y'))) %>%
     gather(c(`Olsen P`:`Total Nitrogen`), key = 'var', value = 'value') %>%
@@ -86,13 +87,28 @@ compile_soil_labdata = function(path) {
 compile_soil_microbedata = function(path) {
   readxl::read_excel(path) %>%
     separate(`sample-id`, into = c('site', 'point', 'depth')) %>%
-    unite('Point Name', site:point, sep = '-') %>%
+    unite('Point', site:point, sep = '-') %>%
     mutate(depth = recode(depth, '10' = 'richA', '40' = 'richB'),
            SampleYear = 2015) %>%
     spread(key = depth, value = Richness)
 }
 
-calculate_percentiles = function(df) {
+compile_phyladat = function(path) {
+  readxl::read_excel(path) %>%
+    filter(Sample_ID != 'avg') %>% #get rid of last line
+    gather(-Sample_ID, key = 'phylum', value = 'prop') %>%
+    separate(Sample_ID, into = c('Site', 'Point', 'Depth')) %>%
+    unite('Point', Site:Point, sep = '-') %>%
+    mutate(depth = recode(Depth, '10' = 'richA', '40' = 'richB'),
+           group = case_when(phylum %in% c('Bacteroidetes', 'Actinobacteria', 'Firmicutes') ~ 'copiotrophs',
+                             phylum %in% c('Acidobacteria', 'Verrucomicrobia') ~ 'oligotrophs',
+                             TRUE ~ 'other'),
+           group = factor(group, levels = c('copiotrophs', 'other', 'oligotrophs'))) %>%
+    arrange(Point, Depth, group, phylum) %>%
+    mutate(phylum = factor(phylum, levels = unique(phylum)[c(1:6, 8:11, 7)]))
+}
+
+calculate_productivity_metrics = function(df) {
   # create cumulative distribution functions for each metric based on all years
   # combined (to be able to show change in percentiles over years)
   f1 <- ecdf(df$carbonA)
@@ -104,7 +120,7 @@ calculate_percentiles = function(df) {
   
   # calculate percentile scores from these functions:
   df = df %>%
-    filter(SampleYear == max(SampleYear)) %>%
+    # filter(SampleYear == max(SampleYear)) %>%
     mutate(carbonA_perc = round(f1(carbonA) * 100, digits = 0),
            carbonB_perc = round(f2(carbonB) * 100, digits = 0),
            bulk.dens.gcm3_perc = round(
@@ -131,5 +147,72 @@ calculate_percentiles = function(df) {
                         # the order they'll be in the pop up tables:
                         levels = c('bulk.dens.gcm3', 'water.infil', 
                                    'carbonA', 'carbonB', 'mean'))) %>%
-    arrange(Point, var)
+    arrange(Point, var) %>% 
+    mutate(value = if_else(var == 'mean', percentile, value),
+           value_round = if_else(var == 'mean', '', txtRound(value, digits = 2)),
+           # labels within map layer control
+           maplayer = recode(var,
+                             bulk.dens.gcm3 = 'Bulk density',
+                             water.infil = 'Water infiltration',
+                             carbonA = '% Carbon',
+                             carbonB = '% Carbon',
+                             mean = 'Overall score'),
+           # each set of distinct points to be plotted:
+           pointlayer = var,
+           # rownames within popup tables
+           rowname = recode(var,
+                            bulk.dens.gcm3 = 'Bulk density (g/cm<sup>3</sup>)',
+                            water.infil = 'Water Infiltration (min/in)',
+                            carbonA = '% Carbon (0-10cm)', 
+                            carbonB = '% Carbon (10-40cm)',
+                            mean = 'Overall score'),
+           # additional formatting for specific points/layers
+           weight = if_else(Point %in% c('TOKA-022', 'TOKA-068') & 
+                              var != 'carbonA', 3, 1),
+           radius = if_else(var == 'carbonA', 3.5, 9))
+}
+
+calculate_productivity_change = function(df) {
+  df %>% select(Point, var, yr, value, maplayer, pointlayer, weight, radius) %>% 
+    pivot_wider(names_from = yr, values_from = value) %>% 
+    mutate(Difference = current - baseline) %>% 
+    pivot_longer(baseline:Difference, names_to = 'rowname') %>% 
+    mutate(rowname = factor(rowname, levels = c('current', 'baseline', 'Difference'))) %>% 
+    arrange(Point, var, rowname) %>% 
+    mutate(
+      value_round = if_else(
+        var == 'mean',
+        txtRound(value, digits = 0, txt.NA = 'NA'),
+        txtRound(value, digits = 2, txt.NA = 'NA')),
+      value_round = case_when(
+        rowname == 'Difference' & value > 0 ~ paste0('+', value_round),
+        TRUE ~ value_round))
+}
+
+format_soil_nutrients = function(df) {
+  df %>% pivot_longer(`Total NitrogenA`:pHB, names_to = 'var') %>%
+    filter(!is.na(value)) %>%
+    filter(SampleYear == max(SampleYear)) %>%
+    separate(var, into = c('var', 'layer'), sep = -1) %>% 
+    mutate(value_round = if_else(var %in% c('pHA', 'pHB'),
+                                 txtRound(value, digits = 1, txt.NA = 'NA'),
+                                 txtRound(value, digits = 2, txt.NA = 'NA')),
+           # labels within map layer control
+           maplayer = case_when(
+             grepl('Nitrogen', var) ~ 'Total Nitrogen (N)',
+             grepl('Potassium', var) ~ 'Potassium (K)',
+             grepl('Sodium', var) ~ 'Sodium (Na)',
+             grepl('Magnesium', var) ~ 'Magnesium (Mg)',
+             grepl('Calcium', var) ~ 'Calcium (Ca)',
+             grepl('pH', var) ~ 'pH'),
+           # each set of distinct points to be plotted:
+           pointlayer = paste(var, layer),
+           # rownames within popup tables
+           rowname = recode(layer,
+                            A = '0-10 cm',
+                            B = '10-40 cm'),
+           # additional formatting for specific points/layers
+           weight = if_else(Point %in% c('TOKA-022', 'TOKA-068') & 
+                              rowname != '0-10 cm', 3, 1),
+           radius = if_else(rowname == '0-10 cm', 3.5, 9))
 }
