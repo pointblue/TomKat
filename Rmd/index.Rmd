@@ -19,5 +19,5 @@ output:
 * [soil](soil.html)
 * [vegetation](vegetation.html)
 * [water](stream.html) - updated Nov 2020
-* [birds](birds.html) - updated Nov 2020
+* [birds](birds.html) - 2021 update underway
 * [management](mgmt.html)
