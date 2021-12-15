@@ -194,7 +194,7 @@ format_soil_nutrients = function(df) {
     filter(!is.na(value)) %>%
     filter(SampleYear == max(SampleYear)) %>%
     separate(var, into = c('var', 'layer'), sep = -1) %>% 
-    mutate(value_round = if_else(var %in% c('pHA', 'pHB'),
+    mutate(value_round = if_else(var == 'pH',
                                  txtRound(value, digits = 1, txt.NA = 'NA'),
                                  txtRound(value, digits = 2, txt.NA = 'NA')),
            # labels within map layer control
