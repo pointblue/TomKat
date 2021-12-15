@@ -14,11 +14,6 @@ compile_bird_data = function(path) {
   mutate(Date = as.Date(Date, format = '%m/%d/%Y'),
          Year = as.numeric(format(Date, '%Y'))) %>%
   unite('Visit', Year, Visit, sep = '-', remove = FALSE) %>%
-  # mutate_at(vars(Project:Visit, 
-  #                Spp:`Distance Bin`,
-  #                `Breeding Status`,
-  #                Researcher:`Data Status`), factor) %>%
-  # mutate_at(vars(Singing), as.logical) %>%
   filter(!(`Distance Bin ID` %in% c('FLO', 'B30'))) %>%
   mutate_at(vars(`Distance Bin`, `Distance Bin ID`), as.numeric) %>%
   filter(!is.na(`Distance Bin`)) %>%
