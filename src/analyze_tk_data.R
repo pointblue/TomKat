@@ -6,7 +6,6 @@ source('src/packages.R')
 
 # LOAD FUNCTIONS
 source('src/plot_standards.R')
-source('src/plot_palettes.R')
 source('src/map_data.R')
 
 
