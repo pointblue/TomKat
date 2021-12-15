@@ -375,189 +375,147 @@ soildat = compile_soil_fielddata('data_raw/soil/TOKA_soildata_CADC_2014to18.csv'
   calculate_water_infiltration() %>% 
   summarize_soil_fielddata() %>% 
   left_join(compile_soil_labdata('data_raw/soil/TOKA_soildata_Lab_2015.csv'),
-            by = c('Point Name', 'SampleYear')) %>% 
+            by = c('Point', 'SampleYear')) %>% 
   left_join(compile_soil_microbedata('data_raw/soil/Bacterial_Richness_For_SOTR.xlsx'),
-            by = c('Point Name', 'SampleYear')) %>% 
+            by = c('Point', 'SampleYear')) %>% 
   write_csv('data_clean/TK_soil_main.csv')
 
 ## 1. MAP soil productivity data-----
 
 # assign percentile values to each metric at each point:
-soildat_productivity_format = soildat %>% 
-  select(Point = 'Point Name', SampleYear, bulk.dens.gcm3, water.infil, 
-         carbonA, carbonB) %>% 
-  calculate_percentiles() %>% 
-  mutate(Value = if_else(var == 'mean', percentile, value),
-         # labels within popup tables
-         group = recode(var,
-                        bulk.dens.gcm3 = 'Bulk density (g/cm<sup>3</sup>)',
-                        water.infil = 'Water Infiltration (min/in)',
-                        carbonA = '% Carbon (0-10cm)', 
-                        carbonB = '% Carbon (10-40cm)',
-                        mean = 'Overall score'),
-         # the order they'll be plotted in (reverse carbon layers)
-         group = factor(group, 
-                        levels = c('Overall score',
-                                   'Bulk density (g/cm<sup>3</sup>)',
-                                   'Water Infiltration (min/in)',
-                                   '% Carbon (10-40cm)',
-                                   '% Carbon (0-10cm)')),
-         # labels within map layer control
-         maplayer = recode(var,
-                           bulk.dens.gcm3 = 'Bulk density',
-                           water.infil = 'Water infiltration',
-                           carbonA = '% Carbon',
-                           carbonB = '% Carbon',
-                           mean = 'Overall score'),
-         # additional formatting for specific points/layers
-         weight = if_else(Point %in% c('TOKA-022', 'TOKA-068') & 
-                            var != 'carbonA', 3, 1),
-         radius = if_else(var == 'carbonA', 3.5, 9))
+soildat_productivity = soildat %>% 
+  select(Point, SampleYear, bulk.dens.gcm3, water.infil, carbonA, carbonB) %>% 
+  calculate_productivity_metrics()
 
-# popup html tables: separate one for each metric, and one "overall"
-# (also flag points 22 and 68 as having had compost applied)
+soildat_productivity_tables = create_html_tables(
+  soildat_productivity, 
+  set = 'soil_productivity')
 
-soildat_productivity_tables = bind_rows(
-  # overall:
-  bind_rows(
-    soildat_productivity_format %>% 
-      filter(Point %in% c('TOKA-022', 'TOKA-068')) %>%
-      mutate(value = if_else(var == 'mean', '', 
-                             round(value, digits = 2) %>% format(nsmall = 2))) %>% 
-      select(Point, group, value, percentile) %>% 
-      make_html_tables(table.total = TRUE,
-                       table.header = NULL,
-                       caption = ' (compost applied)'),
-    soildat_productivity_format %>% 
-      filter(!Point %in% c('TOKA-022', 'TOKA-068')) %>%
-      mutate(value = if_else(var == 'mean', '', 
-                             round(value, digits = 2) %>% format(nsmall = 2))) %>% 
-      select(Point, group, value, percentile) %>% 
-      make_html_tables(table.total = TRUE,
-                       table.header = NULL)
-  ) %>% arrange(Point) %>% 
-    mutate(maplayer = 'Overall score'),
-  
-  # bulk density:
-  soildat_productivity_tables2 = bind_rows(
-    soildat_productivity_format %>% 
-      filter(Point %in% c('TOKA-022', 'TOKA-068') & var == 'bulk.dens.gcm3') %>%
-      mutate(value = if_else(var == 'mean', '', 
-                             round(value, digits = 2) %>% format(nsmall = 2))) %>% 
-      select(Point, group, value, percentile) %>% 
-      make_html_tables(table.total = FALSE,
-                       table.header = NULL,
-                       caption = ' (compost applied)'),
-    soildat_productivity_format %>% 
-      filter(!Point %in% c('TOKA-022', 'TOKA-068') & var == 'bulk.dens.gcm3') %>%
-      mutate(value = if_else(var == 'mean', '', 
-                             round(value, digits = 2) %>% format(nsmall = 2))) %>% 
-      select(Point, group, value, percentile) %>% 
-      make_html_tables(table.total = FALSE,
-                       table.header = NULL)
-  ) %>% arrange(Point) %>% 
-    mutate(maplayer = 'Bulk density'),
-  
-  # water infiltration
-  bind_rows(
-    soildat_productivity_format %>% 
-      filter(Point %in% c('TOKA-022', 'TOKA-068') & var == 'water.infil') %>%
-      mutate(value = if_else(var == 'mean', '', 
-                             round(value, digits = 2) %>% format(nsmall = 2))) %>% 
-      select(Point, group, value, percentile) %>% 
-      make_html_tables(table.total = FALSE,
-                       table.header = NULL,
-                       caption = ' (compost applied)'),
-    soildat_productivity_format %>% 
-      filter(!Point %in% c('TOKA-022', 'TOKA-068') & var == 'water.infil') %>%
-      mutate(value = if_else(var == 'mean', '', 
-                             round(value, digits = 2) %>% format(nsmall = 2))) %>% 
-      select(Point, group, value, percentile) %>% 
-      make_html_tables(table.total = FALSE,
-                       table.header = NULL)
-  ) %>% arrange(Point) %>% 
-    mutate(maplayer = 'Water infiltration'),
-  
-  # carbon
-  bind_rows(
-    soildat_productivity_format %>% 
-      filter(Point %in% c('TOKA-022', 'TOKA-068') & 
-               var %in% c('carbonA', 'carbonB')) %>%
-      mutate(value = if_else(var == 'mean', '', 
-                             round(value, digits = 2) %>% format(nsmall = 2))) %>% 
-      select(Point, group, value, percentile) %>% 
-      make_html_tables(table.total = FALSE,
-                       table.header = NULL,
-                       caption = ' (compost applied)'),
-    soildat_productivity_format %>% 
-      filter(!Point %in% c('TOKA-022', 'TOKA-068') & 
-               var %in% c('carbonA', 'carbonB')) %>%
-      mutate(value = if_else(var == 'mean', '', 
-                             round(value, digits = 2) %>% format(nsmall = 2))) %>% 
-      select(Point, group, value, percentile) %>% 
-      make_html_tables(table.total = FALSE,
-                       table.header = NULL)
-  ) %>% arrange(Point) %>% 
-    mutate(maplayer = '% Carbon')
-)
-
-## Define color palette for each metric:
-# very important that the names of these palettes are identical to levels of
-# 'maplayers' in soildat_productivity_format
-soildat_productivity_palettes = list(
-  'Overall score' = colorBin(
-    palette = colorRamp(colors = c('#ffffff', pointblue.palette[4])),
-    domain = soildat_productivity_format %>% 
-      filter(maplayer == 'Overall Score') %>% pull(value),
-    bins = c(0, 20, 40, 60, 80, 100),
-    na.color = pointblue.palette[6]),
-  
-  'Bulk density' = colorBin(
-    palette = colorRamp(colors = c(pointblue.palette[3], '#ffffff')), #reverse
-    domain = soildat_productivity_format %>% 
-      filter(maplayer == 'Bulk density') %>% pull(value),
-    bins = c(0.7, 0.9, 1.1, 1.3, 1.5),
-    na.color = pointblue.palette[6]),
-  
-  'Water infiltration' = colorBin(
-    palette = colorRamp(colors = c(pointblue.palette[10], '#ffffff')), #reverse
-    domain = soildat_productivity_format %>% 
-      filter(maplayer == 'Water infiltration') %>% pull(value),
-    bins = c(0, 1, 5, 10, 20, 75),
-    na.color = pointblue.palette[6]),
-  
-  '% Carbon' = colorBin(
-    palette = colorRamp(colors = c('#ffffff', tk.palette[8])),
-    domain = soildat_productivity_format %>% 
-      filter(maplayer == '% Carbon') %>% pull(value),
-    bins = c(0, 2, 4, 6, 10),
-    na.color = tk.palette[4])
-)
-
-soildat_productivity_map = soildat_productivity_format %>% 
-  map_data(pts_toka = 'GIS/TOKA_point_count_grid.shp',
-           fields = 'GIS/TK_veg_fields.shp',
-           boundary = 'GIS/TomKat_ranch_boundary.shp',
-           # the order of maplayers determines the order they're mapped in:
-           maplayers = c('Overall score', 'Bulk density', 'Water infiltration', 
-                         '% Carbon'),
-           palette = soildat_productivity_palettes,
-           htmltab = soildat_productivity_tables) %>% 
-  save_widget(pathout = 'docs/widget/soil_map1.html',
+# create map
+map_data(
+  dat = soildat_productivity %>% filter(SampleYear == 2018),
+  pts_toka = 'GIS/TOKA_point_count_grid.shp',
+  fields = 'GIS/TK_veg_fields.shp',
+  boundary = 'GIS/TomKat_ranch_boundary.shp',
+  palette = soildat_productivity_palettes,
+  maplayers = names(soildat_productivity_palettes),
+  multilegend = TRUE,
+  htmltab = soildat_productivity_tables
+) %>% 
+  save_widget(pathout = 'docs/widget/soil_map_productivity.html',
               selfcontained = FALSE, libdir = 'lib',
               title =  paste0('TomKat Soil Map ', max(soildat$SampleYear)))
 
 
 ## 2. MAP change in soil productivity-----
+# building on soildat_productivity_format from previous section
+
+
+soildat_productivity_change = soildat_productivity %>%
+  # identify which years are considered current and baseline:
+  mutate(yr = case_when(SampleYear == max(SampleYear) ~ 'current',
+                        SampleYear == 2015 ~ 'baseline')) %>% 
+  # calculate change in each metric and change in overall percentile score
+  calculate_soildat_productivity_change() %>% 
+  # relabel back with their corresponding years (as rownames in popup tables)
+  mutate(rowname = recode(rowname, 'current' = '2018', 'baseline' = '2015'))
+
+
+# create pop-up html tables
+soildat_productivity_change_tables = create_html_tables(
+  soildat_productivity_change, 
+  set = 'soil_productivity_change')
+
+map_data(
+  dat = soildat_productivity_change,
+  pts_toka = 'GIS/TOKA_point_count_grid.shp',
+  fields = 'GIS/TK_veg_fields.shp',
+  boundary = 'GIS/TomKat_ranch_boundary.shp',
+  palette = soildat_productivity_change_palettes,
+  maplayers = names(soildat_productivity_change_palettes),
+  multilegend = FALSE, 
+  legend.values = c(-20, 0, 20, NA),
+  legend.labels = c('declining', 'little change', 'improving', 'no data'),
+  legend.title = 'Direction of change',
+  htmltab = soildat_productivity_change_tables
+) %>% 
+  save_widget(pathout = 'docs/widget/soil_map_productivity_change.html',
+              selfcontained = FALSE, libdir = 'lib',
+              title =  paste0('TomKat Soil Changes 2014-', max(soildat$SampleYear)))
 
 
 ## 3. MAP soil nutrient concentrations------
+# most recent year of data only (2015)
+
+soildat_nutrients = soildat %>%
+  select(Point, SampleYear, `Total NitrogenA`:`Total NitrogenB`, 
+         PotassiumA:PotassiumB, SodiumA:SodiumB, MagnesiumA:MagnesiumB, 
+         CalciumA:CalciumB, pHA:pHB) %>%
+  format_soil_nutrients()
+
+# pop-up html tables
+soildat_nutrient_tables = create_html_tables(
+  soildat_nutrients, 
+  set = 'soil_nutrients')
+
+# create map:
+map_data(
+  dat = soildat_nutrients,
+  pts_toka = 'GIS/TOKA_point_count_grid.shp',
+  fields = 'GIS/TK_veg_fields.shp',
+  boundary = 'GIS/TomKat_ranch_boundary.shp',
+  maplayers = names(soildat_nutrient_palettes),
+  palette = soildat_nutrient_palettes,
+  multilegend = TRUE, 
+  htmltab = soildat_nutrient_tables
+) %>% 
+  save_widget(
+    pathout = 'docs/widget/soil_map_nutrients.html',
+    selfcontained = FALSE, libdir = 'lib',
+    title =  paste0('TomKat Soil Nutrients ', max(soildat_nutrients$SampleYear)))
 
 
 ## 4. MAP soil microbes----
 
+soildat_microbes = soildat %>% filter(SampleYear == 2015) %>% 
+  select(Point, richA, richB) %>%
+  filter(!is.na(richA)) %>% 
+  pivot_longer(richA:richB, names_to = 'rowname') %>% 
+  mutate(
+    maplayer = 'Richness',
+    pointlayer = rowname,
+    # additional formatting for specific points/layers
+    weight = if_else(Point %in% c('TOKA-022', 'TOKA-068') & 
+                       rowname != 'richA', 3, 1),
+    radius = if_else(rowname == 'richA', 3.5, 9))
 
-## update webpage
+# additional data on proportions by phylum (for pop-up graphs)
+soildat_phyla = compile_phyladat('data_raw/soil/Bacterial_Phyla_For_SOTR.xlsx')
+
+soildat_phyla_popplots = tibble(
+  Point = unique(soildat_phyla$Point),
+  table_html = create_pop_plots(soildat_phyla) %>% 
+    leafpop::popupGraph(type = 'png', width = 400, height = 267))
+
+# create map:
+map_data(
+  dat = soildat_microbes,
+  pts_toka = 'GIS/TOKA_point_count_grid.shp',
+  fields = 'GIS/TK_veg_fields.shp',
+  boundary = 'GIS/TomKat_ranch_boundary.shp',
+  palette = soildat_microbe_palette,
+  maplayers = names(soildat_microbe_palette),
+  legend.title = 'Bacterial<br>richness',
+  htmltab = soildat_phyla_popplots
+) %>% 
+  save_widget(
+    pathout = 'docs/widget/soil_map_microbes.html',
+    selfcontained = FALSE, libdir = 'lib',
+    title =  paste0('TomKat Soil Microbes ', max(soildat_microbes$SampleYear)))
+
+## update webpage------
+
+
 
 # VEGETATION-------
 ## data set up
