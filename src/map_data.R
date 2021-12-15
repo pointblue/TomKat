@@ -24,240 +24,246 @@ create_html_tables = function(dat, set) {
                          table.header = NA))
   }
   if (set == 'soil_productivity') {
-    bind_rows(
-      # overall:
+    return(
       bind_rows(
-        dat %>% 
-          filter(SampleYear == 2018 & Point %in% c('TOKA-022', 'TOKA-068')) %>%
-          select(Point, rowname, value_round, percentile) %>% 
-          make_html_tables(table.total = TRUE,
-                           table.header = NULL,
-                           caption = ' (compost applied)'),
-        dat %>% 
-          filter(SampleYear == 2018 & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
-          select(Point, rowname, value_round, percentile) %>% 
-          make_html_tables(table.total = TRUE,
-                           table.header = NULL)
-      ) %>% arrange(Point) %>% 
-        mutate(maplayer = 'Overall score'),
-      
-      # bulk density:
-      dat_tables2 = bind_rows(
-        dat %>% 
-          filter(SampleYear == 2018 & Point %in% c('TOKA-022', 'TOKA-068') & var == 'bulk.dens.gcm3') %>%
-          select(Point, rowname, value_round, percentile) %>% 
-          make_html_tables(table.total = FALSE,
-                           table.header = NULL,
-                           caption = ' (compost applied)'),
-        dat %>% 
-          filter(SampleYear == 2018 & !Point %in% c('TOKA-022', 'TOKA-068') & var == 'bulk.dens.gcm3') %>%
-          select(Point, rowname, value_round, percentile) %>% 
-          make_html_tables(table.total = FALSE,
-                           table.header = NULL)
-      ) %>% arrange(Point) %>% 
-        mutate(maplayer = 'Bulk density'),
-      
-      # water infiltration
-      bind_rows(
-        dat %>% 
-          filter(SampleYear == 2018 & Point %in% c('TOKA-022', 'TOKA-068') & var == 'water.infil') %>%
-          select(Point, rowname, value_round, percentile) %>% 
-          make_html_tables(table.total = FALSE,
-                           table.header = NULL,
-                           caption = ' (compost applied)'),
-        dat %>% 
-          filter(SampleYear == 2018 & !Point %in% c('TOKA-022', 'TOKA-068') & var == 'water.infil') %>%
-          select(Point, rowname, value_round, percentile) %>% 
-          make_html_tables(table.total = FALSE,
-                           table.header = NULL)
-      ) %>% arrange(Point) %>% 
-        mutate(maplayer = 'Water infiltration'),
-      
-      # carbon
-      bind_rows(
-        dat %>% 
-          filter(SampleYear == 2018 & Point %in% c('TOKA-022', 'TOKA-068') & 
-                   var %in% c('carbonA', 'carbonB')) %>%
-          select(Point, rowname, value_round, percentile) %>% 
-          make_html_tables(table.total = FALSE,
-                           table.header = NULL,
-                           caption = ' (compost applied)'),
-        dat %>% 
-          filter(SampleYear == 2018 & !Point %in% c('TOKA-022', 'TOKA-068') & 
-                   var %in% c('carbonA', 'carbonB')) %>%
-          select(Point, rowname, value_round, percentile) %>% 
-          make_html_tables(table.total = FALSE,
-                           table.header = NULL)
-      ) %>% arrange(Point) %>% 
-        mutate(maplayer = '% Carbon')
+        # overall:
+        bind_rows(
+          dat %>% 
+            filter(SampleYear == 2018 & Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            select(Point, rowname, value_round, percentile) %>% 
+            make_html_tables(table.total = TRUE,
+                             table.header = c('value', 'percentile'),
+                             caption = ' (compost applied)'),
+          dat %>% 
+            filter(SampleYear == 2018 & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            select(Point, rowname, value_round, percentile) %>% 
+            make_html_tables(table.total = TRUE,
+                             table.header = c('value', 'percentile'))
+        ) %>% arrange(Point) %>% 
+          mutate(maplayer = 'Overall score'),
+        
+        # bulk density:
+        dat_tables2 = bind_rows(
+          dat %>% 
+            filter(SampleYear == 2018 & Point %in% c('TOKA-022', 'TOKA-068') & var == 'bulk.dens.gcm3') %>%
+            select(Point, rowname, value_round, percentile) %>% 
+            make_html_tables(table.total = FALSE,
+                             table.header = c('value', 'percentile'),
+                             caption = ' (compost applied)'),
+          dat %>% 
+            filter(SampleYear == 2018 & !Point %in% c('TOKA-022', 'TOKA-068') & var == 'bulk.dens.gcm3') %>%
+            select(Point, rowname, value_round, percentile) %>% 
+            make_html_tables(table.total = FALSE,
+                             table.header = c('value', 'percentile'))
+        ) %>% arrange(Point) %>% 
+          mutate(maplayer = 'Bulk density'),
+        
+        # water infiltration
+        bind_rows(
+          dat %>% 
+            filter(SampleYear == 2018 & Point %in% c('TOKA-022', 'TOKA-068') & var == 'water.infil') %>%
+            select(Point, rowname, value_round, percentile) %>% 
+            make_html_tables(table.total = FALSE,
+                             table.header = c('value', 'percentile'),
+                             caption = ' (compost applied)'),
+          dat %>% 
+            filter(SampleYear == 2018 & !Point %in% c('TOKA-022', 'TOKA-068') & var == 'water.infil') %>%
+            select(Point, rowname, value_round, percentile) %>% 
+            make_html_tables(table.total = FALSE,
+                             table.header = c('value', 'percentile'),)
+        ) %>% arrange(Point) %>% 
+          mutate(maplayer = 'Water infiltration'),
+        
+        # carbon
+        bind_rows(
+          dat %>% 
+            filter(SampleYear == 2018 & Point %in% c('TOKA-022', 'TOKA-068') & 
+                     var %in% c('carbonA', 'carbonB')) %>%
+            select(Point, rowname, value_round, percentile) %>% 
+            make_html_tables(table.total = FALSE,
+                             table.header = c('value', 'percentile'),
+                             caption = ' (compost applied)'),
+          dat %>% 
+            filter(SampleYear == 2018 & !Point %in% c('TOKA-022', 'TOKA-068') & 
+                     var %in% c('carbonA', 'carbonB')) %>%
+            select(Point, rowname, value_round, percentile) %>% 
+            make_html_tables(table.total = FALSE,
+                             table.header = c('value', 'percentile'))
+        ) %>% arrange(Point) %>% 
+          mutate(maplayer = '% Carbon')
+      )
     )
   }
   if (set == 'soil_productivity_change') { 
-    bind_rows(
-      # overall:
+    return(
       bind_rows(
-        dat %>% 
-          filter(var == 'mean' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
-          select(Point, rowname, value_round) %>% 
-          make_html_tables(table.total = TRUE,
-                           table.header = 'Overall score<br>(percentile)',
-                           caption = ' (compost applied)'),
-        dat %>% 
-          filter(var == 'mean' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
-          select(Point, rowname, value_round) %>% 
-          make_html_tables(table.total = TRUE,
-                           table.header = 'Overall score<br>(percentile)')
-      ) %>% arrange(Point) %>% 
-        mutate(maplayer = 'Overall score'),
-      
-      # bulk density
-      bind_rows(
-        dat %>% 
-          filter(var == 'bulk.dens.gcm3' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
-          select(Point, rowname, value_round) %>% 
-          make_html_tables(table.total = TRUE,
-                           table.header = 'Bulk density<br>(g/cm<sup>3</sup>)',
-                           caption = ' (compost applied)'),
-        dat %>% 
-          filter(var == 'bulk.dens.gcm3' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
-          select(Point, rowname, value_round) %>% 
-          make_html_tables(table.total = TRUE,
-                           table.header = 'Bulk density<br>(g/cm<sup>3</sup>)')
-      ) %>% arrange(Point) %>% 
-        mutate(maplayer = 'Bulk density'),
-      
-      # water infiltration
-      bind_rows(
-        dat %>% 
-          filter(var == 'water.infil' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
-          select(Point, rowname, value_round) %>% 
-          make_html_tables(table.total = TRUE,
-                           table.header = 'Water infiltration<br>(min/in)',
-                           caption = ' (compost applied)'),
-        dat %>% 
-          filter(var == 'water.infil' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
-          select(Point, rowname, value_round) %>% 
-          make_html_tables(table.total = TRUE,
-                           table.header = 'Water infiltration<br>(min/in)')
-      ) %>% arrange(Point) %>% 
-        mutate(maplayer = 'Water infiltration'),
-      
-      # % carbon
-      bind_rows(
-        dat %>% 
-          filter(var %in% c('carbonB', 'carbonA') & Point %in% c('TOKA-022', 'TOKA-068')) %>%
-          select(Point, rowname, var, value_round) %>% 
-          pivot_wider(names_from = var, values_from = value_round) %>%
-          make_html_tables(table.total = TRUE,
-                           table.header = c('% Carbon<br>(0-10cm)', '% Carbon<br>(10-40cm)'),
-                           caption = ' (compost applied)'),
-        dat %>% 
-          filter(var %in% c('carbonB', 'carbonA') & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
-          select(Point, rowname, var, value_round) %>% 
-          pivot_wider(names_from = var, values_from = value_round) %>% 
-          make_html_tables(table.total = TRUE,
-                           table.header = c('% Carbon<br>(0-10cm)', '% Carbon<br>(10-40cm)'))
-      ) %>% arrange(Point) %>% 
-        mutate(maplayer = '% Carbon')
+        # overall:
+        bind_rows(
+          dat %>% 
+            filter(var == 'mean' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            select(Point, rowname, value_round) %>% 
+            make_html_tables(table.total = TRUE,
+                             table.header = 'Overall score<br>(percentile)',
+                             caption = ' (compost applied)'),
+          dat %>% 
+            filter(var == 'mean' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            select(Point, rowname, value_round) %>% 
+            make_html_tables(table.total = TRUE,
+                             table.header = 'Overall score<br>(percentile)')
+        ) %>% arrange(Point) %>% 
+          mutate(maplayer = 'Overall score'),
+        
+        # bulk density
+        bind_rows(
+          dat %>% 
+            filter(var == 'bulk.dens.gcm3' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            select(Point, rowname, value_round) %>% 
+            make_html_tables(table.total = TRUE,
+                             table.header = 'Bulk density<br>(g/cm<sup>3</sup>)',
+                             caption = ' (compost applied)'),
+          dat %>% 
+            filter(var == 'bulk.dens.gcm3' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            select(Point, rowname, value_round) %>% 
+            make_html_tables(table.total = TRUE,
+                             table.header = 'Bulk density<br>(g/cm<sup>3</sup>)')
+        ) %>% arrange(Point) %>% 
+          mutate(maplayer = 'Bulk density'),
+        
+        # water infiltration
+        bind_rows(
+          dat %>% 
+            filter(var == 'water.infil' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            select(Point, rowname, value_round) %>% 
+            make_html_tables(table.total = TRUE,
+                             table.header = 'Water infiltration<br>(min/in)',
+                             caption = ' (compost applied)'),
+          dat %>% 
+            filter(var == 'water.infil' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            select(Point, rowname, value_round) %>% 
+            make_html_tables(table.total = TRUE,
+                             table.header = 'Water infiltration<br>(min/in)')
+        ) %>% arrange(Point) %>% 
+          mutate(maplayer = 'Water infiltration'),
+        
+        # % carbon
+        bind_rows(
+          dat %>% 
+            filter(var %in% c('carbonB', 'carbonA') & Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            select(Point, rowname, var, value_round) %>% 
+            pivot_wider(names_from = var, values_from = value_round) %>%
+            make_html_tables(table.total = TRUE,
+                             table.header = c('% Carbon<br>(0-10cm)', '% Carbon<br>(10-40cm)'),
+                             caption = ' (compost applied)'),
+          dat %>% 
+            filter(var %in% c('carbonB', 'carbonA') & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            select(Point, rowname, var, value_round) %>% 
+            pivot_wider(names_from = var, values_from = value_round) %>% 
+            make_html_tables(table.total = TRUE,
+                             table.header = c('% Carbon<br>(0-10cm)', '% Carbon<br>(10-40cm)'))
+        ) %>% arrange(Point) %>% 
+          mutate(maplayer = '% Carbon')
+      )
     )
   } 
   if (set == 'soil_nutrients') {
-    bind_rows(
-      # nitrogen
+    return(
       bind_rows(
-        dat %>% 
-          filter(var == 'Total Nitrogen' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
-          select(Point, rowname, value_round) %>% 
-          make_html_tables(table.total = FALSE,
-                           table.header = 'Total<br>Nitrogen',
-                           caption = ' (compost applied)'),
-        dat %>% 
-          filter(var == 'Total Nitrogen' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
-          select(Point, rowname, value_round) %>% 
-          make_html_tables(table.total = FALSE,
-                           table.header = 'Total<br>Nitrogen')
-      ) %>% arrange(Point) %>% 
-        mutate(maplayer = 'Total Nitrogen (N)'),
-      
-      # potassium:
-      bind_rows(
-        dat %>% 
-          filter(var == 'Potassium' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
-          select(Point, rowname, value_round) %>% 
-          make_html_tables(table.total = FALSE,
-                           table.header = 'Potassium',
-                           caption = ' (compost applied)'),
-        dat %>% 
-          filter(var == 'Potassium' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
-          select(Point, rowname, value_round) %>% 
-          make_html_tables(table.total = FALSE,
-                           table.header = 'Potassium')
-      ) %>% arrange(Point) %>% 
-        mutate(maplayer = 'Potassium (K)'),
-      
-      # sodium
-      bind_rows(
-        dat %>% 
-          filter(var == 'Sodium' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
-          select(Point, rowname, value_round) %>% 
-          make_html_tables(table.total = FALSE,
-                           table.header = 'Sodium',
-                           caption = ' (compost applied)'),
-        dat %>% 
-          filter(var == 'Sodium' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
-          select(Point, rowname, value_round) %>% 
-          make_html_tables(table.total = FALSE,
-                           table.header = 'Sodium')
-      ) %>% arrange(Point) %>% 
-        mutate(maplayer = 'Sodium (Na)'),
-      
-      # magnesium
-      bind_rows(
-        dat %>% 
-          filter(var == 'Magnesium' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
-          select(Point, rowname, value_round) %>% 
-          make_html_tables(table.total = FALSE,
-                           table.header = 'Magnesium',
-                           caption = ' (compost applied)'),
-        dat %>% 
-          filter(var == 'Magnesium' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
-          select(Point, rowname, value_round) %>% 
-          make_html_tables(table.total = FALSE,
-                           table.header = 'Magnesium')
-      ) %>% arrange(Point) %>% 
-        mutate(maplayer = 'Magnesium (Mg)'),
-      
-      # calcium
-      bind_rows(
-        dat %>% 
-          filter(var == 'Calcium' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
-          select(Point, rowname, value_round) %>% 
-          make_html_tables(table.total = FALSE,
-                           table.header = 'Calcium',
-                           caption = ' (compost applied)'),
-        dat %>% 
-          filter(var == 'Calcium' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
-          select(Point, rowname, value_round) %>% 
-          make_html_tables(table.total = FALSE,
-                           table.header = 'Calcium')
-      ) %>% arrange(Point) %>% 
-        mutate(maplayer = 'Calcium (Ca)'),
-      
-      # pH
-      bind_rows(
-        dat %>% 
-          filter(var == 'pH' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
-          select(Point, rowname, value_round) %>% 
-          make_html_tables(table.total = FALSE,
-                           table.header = 'pH',
-                           caption = ' (compost applied)'),
-        dat %>% 
-          filter(var == 'pH' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
-          select(Point, rowname, value_round) %>% 
-          make_html_tables(table.total = FALSE,
-                           table.header = 'pH')
-      ) %>% arrange(Point) %>% 
-        mutate(maplayer = 'pH')
+        # nitrogen
+        bind_rows(
+          dat %>% 
+            filter(var == 'Total Nitrogen' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            select(Point, rowname, value_round) %>% 
+            make_html_tables(table.total = FALSE,
+                             table.header = 'Total<br>Nitrogen',
+                             caption = ' (compost applied)'),
+          dat %>% 
+            filter(var == 'Total Nitrogen' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            select(Point, rowname, value_round) %>% 
+            make_html_tables(table.total = FALSE,
+                             table.header = 'Total<br>Nitrogen')
+        ) %>% arrange(Point) %>% 
+          mutate(maplayer = 'Total Nitrogen (N)'),
+        
+        # potassium:
+        bind_rows(
+          dat %>% 
+            filter(var == 'Potassium' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            select(Point, rowname, value_round) %>% 
+            make_html_tables(table.total = FALSE,
+                             table.header = 'Potassium',
+                             caption = ' (compost applied)'),
+          dat %>% 
+            filter(var == 'Potassium' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            select(Point, rowname, value_round) %>% 
+            make_html_tables(table.total = FALSE,
+                             table.header = 'Potassium')
+        ) %>% arrange(Point) %>% 
+          mutate(maplayer = 'Potassium (K)'),
+        
+        # sodium
+        bind_rows(
+          dat %>% 
+            filter(var == 'Sodium' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            select(Point, rowname, value_round) %>% 
+            make_html_tables(table.total = FALSE,
+                             table.header = 'Sodium',
+                             caption = ' (compost applied)'),
+          dat %>% 
+            filter(var == 'Sodium' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            select(Point, rowname, value_round) %>% 
+            make_html_tables(table.total = FALSE,
+                             table.header = 'Sodium')
+        ) %>% arrange(Point) %>% 
+          mutate(maplayer = 'Sodium (Na)'),
+        
+        # magnesium
+        bind_rows(
+          dat %>% 
+            filter(var == 'Magnesium' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            select(Point, rowname, value_round) %>% 
+            make_html_tables(table.total = FALSE,
+                             table.header = 'Magnesium',
+                             caption = ' (compost applied)'),
+          dat %>% 
+            filter(var == 'Magnesium' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            select(Point, rowname, value_round) %>% 
+            make_html_tables(table.total = FALSE,
+                             table.header = 'Magnesium')
+        ) %>% arrange(Point) %>% 
+          mutate(maplayer = 'Magnesium (Mg)'),
+        
+        # calcium
+        bind_rows(
+          dat %>% 
+            filter(var == 'Calcium' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            select(Point, rowname, value_round) %>% 
+            make_html_tables(table.total = FALSE,
+                             table.header = 'Calcium',
+                             caption = ' (compost applied)'),
+          dat %>% 
+            filter(var == 'Calcium' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            select(Point, rowname, value_round) %>% 
+            make_html_tables(table.total = FALSE,
+                             table.header = 'Calcium')
+        ) %>% arrange(Point) %>% 
+          mutate(maplayer = 'Calcium (Ca)'),
+        
+        # pH
+        bind_rows(
+          dat %>% 
+            filter(var == 'pH' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            select(Point, rowname, value_round) %>% 
+            make_html_tables(table.total = FALSE,
+                             table.header = 'pH',
+                             caption = ' (compost applied)'),
+          dat %>% 
+            filter(var == 'pH' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            select(Point, rowname, value_round) %>% 
+            make_html_tables(table.total = FALSE,
+                             table.header = 'pH')
+        ) %>% arrange(Point) %>% 
+          mutate(maplayer = 'pH')
+      )
     )
   }
 }
