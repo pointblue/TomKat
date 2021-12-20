@@ -370,16 +370,21 @@ rmarkdown::render(input = 'Rmd/weather.Rmd',
 source('src/process_soil_data.R')
 
 ## data set up---------
+# Download data from CADC; save as CSV to avoid Excel auto-formatting water
+# infiltration times 
+
 # Note: these functions may need updating with additional sample years!
-soildat = compile_soil_fielddata('data_raw/soil/TOKA_soildata_CADC_2014to18.csv') %>% 
+
+soildat = compile_soil_fielddata('data_raw/soil/TOKA_cadcsoil2014to21.csv') %>% 
   calculate_bulk_density() %>% 
   calculate_water_infiltration() %>% 
   summarize_soil_fielddata() %>% 
-  left_join(compile_soil_labdata('data_raw/soil/TOKA_soildata_Lab_2015.csv'),
+  left_join(compile_soil_labdata('data_raw/soil/TKR_SoilData_2015to2021_Lab.csv'),
             by = c('Point', 'SampleYear')) %>% 
   left_join(compile_soil_microbedata('data_raw/soil/Bacterial_Richness_For_SOTR.xlsx'),
-            by = c('Point', 'SampleYear')) %>% 
-  write_csv('data_clean/TOKA_soil_main.csv')
+            by = c('Point', 'SampleYear'))
+
+write_csv(soildat, 'data_clean/TOKA_soil_main.csv')
 
 ## 1. MAP soil productivity data-----
 
