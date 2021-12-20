@@ -388,24 +388,24 @@ write_csv(soildat, 'data_clean/TOKA_soil_main.csv')
 
 ## 1. MAP soil productivity data-----
 
-# assign percentile values to each metric at each point:
+# assign percentile values to each metric at each point for all years of data:
 soildat_productivity = soildat %>% 
   select(Point, SampleYear, bulk.dens.gcm3, water.infil, carbonA, carbonB) %>% 
   calculate_productivity_metrics()
 
-# create pop-up tables of data
+# create pop-up tables of data (most recent year only)
 soildat_productivity_tables = create_html_tables(
-  soildat_productivity, 
+  soildat_productivity %>% filter(SampleYear == max(soildat$SampleYear)), 
   set = 'soil_productivity')
 
-# generate color palettes for range of each metric
+# generate color palettes for range of each metric (most recent year only)
 soildat_productivity_palettes = create_palettes(
-  soildat_productivity,
+  soildat_productivity %>% filter(SampleYear == max(soildat$SampleYear)),
   set = 'soil_productivity')
 
 # create map
-map_data(
-  dat = soildat_productivity %>% filter(SampleYear == 2018),
+soil_productivity_map = map_data(
+  dat = soildat_productivity %>% filter(SampleYear == max(soildat$SampleYear)),
   pts_toka = 'GIS/TOKA_point_count_grid.shp',
   fields = 'GIS/TK_veg_fields.shp',
   boundary = 'GIS/TomKat_ranch_boundary.shp',
@@ -413,10 +413,11 @@ map_data(
   maplayers = names(soildat_productivity_palettes),
   multilegend = TRUE,
   htmltab = soildat_productivity_tables
-) %>% 
-  save_widget(pathout = 'docs/widget/soil_map_productivity.html',
-              selfcontained = FALSE, libdir = 'lib',
-              title =  paste0('TomKat Soil Map ', max(soildat$SampleYear)))
+)
+save_widget(soil_productivity_map,
+            pathout = 'docs/widget/soil_map_productivity.html',
+            selfcontained = FALSE, libdir = 'lib',
+            title =  paste0('TomKat Soil Map ', max(soildat$SampleYear)))
 
 
 ## 2. MAP change in soil productivity-----
