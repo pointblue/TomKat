@@ -29,13 +29,13 @@ create_html_tables = function(dat, set) {
         # overall:
         bind_rows(
           dat %>% 
-            filter(SampleYear == 2018 & Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            filter(Point %in% c('TOKA-022', 'TOKA-068')) %>%
             select(Point, rowname, value_round, percentile) %>% 
             make_html_tables(table.total = TRUE,
                              table.header = c('value', 'percentile'),
                              caption = ' (compost applied)'),
           dat %>% 
-            filter(SampleYear == 2018 & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            filter(!Point %in% c('TOKA-022', 'TOKA-068')) %>%
             select(Point, rowname, value_round, percentile) %>% 
             make_html_tables(table.total = TRUE,
                              table.header = c('value', 'percentile'))
@@ -45,13 +45,13 @@ create_html_tables = function(dat, set) {
         # bulk density:
         dat_tables2 = bind_rows(
           dat %>% 
-            filter(SampleYear == 2018 & Point %in% c('TOKA-022', 'TOKA-068') & var == 'bulk.dens.gcm3') %>%
+            filter(Point %in% c('TOKA-022', 'TOKA-068') & var == 'bulk.dens.gcm3') %>%
             select(Point, rowname, value_round, percentile) %>% 
             make_html_tables(table.total = FALSE,
                              table.header = c('value', 'percentile'),
                              caption = ' (compost applied)'),
           dat %>% 
-            filter(SampleYear == 2018 & !Point %in% c('TOKA-022', 'TOKA-068') & var == 'bulk.dens.gcm3') %>%
+            filter(!Point %in% c('TOKA-022', 'TOKA-068') & var == 'bulk.dens.gcm3') %>%
             select(Point, rowname, value_round, percentile) %>% 
             make_html_tables(table.total = FALSE,
                              table.header = c('value', 'percentile'))
@@ -61,13 +61,13 @@ create_html_tables = function(dat, set) {
         # water infiltration
         bind_rows(
           dat %>% 
-            filter(SampleYear == 2018 & Point %in% c('TOKA-022', 'TOKA-068') & var == 'water.infil') %>%
+            filter(Point %in% c('TOKA-022', 'TOKA-068') & var == 'water.infil') %>%
             select(Point, rowname, value_round, percentile) %>% 
             make_html_tables(table.total = FALSE,
                              table.header = c('value', 'percentile'),
                              caption = ' (compost applied)'),
           dat %>% 
-            filter(SampleYear == 2018 & !Point %in% c('TOKA-022', 'TOKA-068') & var == 'water.infil') %>%
+            filter(!Point %in% c('TOKA-022', 'TOKA-068') & var == 'water.infil') %>%
             select(Point, rowname, value_round, percentile) %>% 
             make_html_tables(table.total = FALSE,
                              table.header = c('value', 'percentile'),)
@@ -77,14 +77,14 @@ create_html_tables = function(dat, set) {
         # carbon
         bind_rows(
           dat %>% 
-            filter(SampleYear == 2018 & Point %in% c('TOKA-022', 'TOKA-068') & 
+            filter(Point %in% c('TOKA-022', 'TOKA-068') & 
                      var %in% c('carbonA', 'carbonB')) %>%
             select(Point, rowname, value_round, percentile) %>% 
             make_html_tables(table.total = FALSE,
                              table.header = c('value', 'percentile'),
                              caption = ' (compost applied)'),
           dat %>% 
-            filter(SampleYear == 2018 & !Point %in% c('TOKA-022', 'TOKA-068') & 
+            filter(!Point %in% c('TOKA-022', 'TOKA-068') & 
                      var %in% c('carbonA', 'carbonB')) %>%
             select(Point, rowname, value_round, percentile) %>% 
             make_html_tables(table.total = FALSE,
