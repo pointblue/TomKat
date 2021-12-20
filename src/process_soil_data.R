@@ -46,9 +46,9 @@ calculate_water_infiltration = function(df) {
   # performed in 2018 (convert these using an equation)
   df %>% 
     mutate(
-      water.infiltration = case_when(
-        SampleYear == 2015 ~ `Water Infiltration Time 2`,
-        SampleYear == 2018 ~ exp(0.84 * log(`Water Infiltration Time 1`) + 1.18)
+      water.infiltration = if_else(
+        SampleYear == 2015, `Water Infiltration Time 2`, 
+        exp(0.84 * log(`Water Infiltration Time 1`) + 1.18)
       ))
 }
 
@@ -67,21 +67,21 @@ summarize_soil_fielddata = function(df) {
 }
 
 compile_soil_labdata = function(path) {
-  read_csv(path, show_col_types = FALSE) %>%
+  read_csv(path, col_types = c('ccccccccccccc')) %>% #read everything in as text and convert later
     separate(PointID, into = c('Point', 'depth.group'), 6) %>%
     mutate(Point = gsub('TK', 'TOKA', Point),
-           CollectDate = as.Date(CollectDate, format = '%d-%b-%y'), 
+           CollectDate = as.Date(CollectDate, format = '%m/%d/%Y'), 
            SampleYear = as.numeric(format(CollectDate, '%Y'))) %>%
-    gather(c(`Olsen P`:`Total Nitrogen`), key = 'var', value = 'value') %>%
-    mutate(value = case_when(value == '< 2.0' ~ '1',
+    select(Point, SampleYear, depth.group, starts_with('Olsen'):last_col()) %>% 
+    pivot_longer(c(starts_with('Olsen'):last_col())) %>%
+    mutate(name = gsub(' ', '_', name),
+           value = case_when(value == '< 2.0' ~ '1',
                              value == '< 0.090' ~ '0.05',
                              value == 'QNS' ~ NA_character_,
-                             TRUE ~ value)) %>%
-    unite('var', var, depth.group, sep='') %>%
-    select(-CollectDate, -County, -Ranch, -Depth) %>%
-    spread(key = 'var', value = 'value') %>%
-    mutate_at(vars(CalciumA:SodiumB), as.numeric) %>%
-    mutate_at(vars(`Total CarbonA`:`Total NitrogenB`), as.numeric)
+                             TRUE ~ value),
+           value = as.numeric(value)) %>%
+    unite('name', name, depth.group, sep='_') %>%
+    pivot_wider()
 }
 
 compile_soil_microbedata = function(path) {
