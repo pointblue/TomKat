@@ -464,15 +464,13 @@ save_widget(soil_productivity_change_map,
 ## 3. MAP soil nutrient concentrations------
 # most recent year of data only (2015)
 
-soildat_nutrients = soildat %>%
-  select(Point, SampleYear, `Total NitrogenA`:`Total NitrogenB`, 
-         PotassiumA:PotassiumB, SodiumA:SodiumB, MagnesiumA:MagnesiumB, 
-         CalciumA:CalciumB, pHA:pHB) %>%
+soildat_nutrients = soildat %>% filter(SampleYear == max(SampleYear)) %>%
+  select(Point, SampleYear, ends_with(c('_A', '_B'))) %>%
   format_soil_nutrients()
 
 # pop-up html tables
 soildat_nutrient_tables = create_html_tables(
-  soildat_nutrients, 
+  soildat_nutrients %>% filter(!is.na(maplayer)),  #exclude Olsen P, CEC
   set = 'soil_nutrients')
 
 soildat_nutrient_palettes = create_palettes(
@@ -480,8 +478,8 @@ soildat_nutrient_palettes = create_palettes(
   set = 'soil_nutrients')
 
 # create map:
-map_data(
-  dat = soildat_nutrients,
+soil_nutrient_map = map_data(
+  dat = soildat_nutrients %>% filter(!is.na(maplayer)),
   pts_toka = 'GIS/TOKA_point_count_grid.shp',
   fields = 'GIS/TK_veg_fields.shp',
   boundary = 'GIS/TomKat_ranch_boundary.shp',
@@ -489,14 +487,17 @@ map_data(
   palette = soildat_nutrient_palettes,
   multilegend = TRUE, 
   htmltab = soildat_nutrient_tables
-) %>% 
-  save_widget(
-    pathout = 'docs/widget/soil_map_nutrients.html',
-    selfcontained = FALSE, libdir = 'lib',
-    title =  paste0('TomKat Soil Nutrients ', max(soildat_nutrients$SampleYear)))
+)
+save_widget(
+  soil_nutrient_map,
+  pathout = 'docs/widget/soil_map_nutrients.html',
+  selfcontained = FALSE, libdir = 'lib',
+  title =  paste0('TomKat Soil Nutrients ', max(soildat_nutrients$SampleYear)))
+
+## 4. MAP soil nutrient change----
 
 
-## 4. MAP soil microbes----
+## 5. MAP soil microbes----
 
 soildat_microbes = soildat %>% filter(SampleYear == 2015) %>% 
   select(Point, SampleYear, richA, richB) %>%
