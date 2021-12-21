@@ -266,11 +266,136 @@ create_html_tables = function(dat, set) {
       )
     )
   }
+  if (set == 'soil_nutrient_change') {
+    return(
+      bind_rows(
+        # nitrogen
+        bind_rows(
+          dat %>% 
+            filter(maplayer == 'Total Nitrogen (N)' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            select(Point, rowname, pointlayer, value_round) %>% 
+            pivot_wider(names_from = pointlayer, values_from = value_round) %>%
+            make_html_tables(table.total = TRUE,
+                             row.label = 'Total<br>Nitrogen (%)',
+                             table.header = c('0-10cm', '10-40cm'),
+                             caption = ' (compost applied)'),
+          dat %>% 
+            filter(maplayer == 'Total Nitrogen (N)' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            select(Point, rowname, pointlayer, value_round) %>% 
+            pivot_wider(names_from = pointlayer, values_from = value_round) %>%
+            make_html_tables(table.total = TRUE,
+                             row.label = 'Total<br>Nitrogen (%)',
+                             table.header = c('0-10cm', '10-40cm'))
+        ) %>% arrange(Point) %>% 
+          mutate(maplayer = 'Total Nitrogen (N)'),
+        
+        # potassium:
+        bind_rows(
+          dat %>% 
+            filter(maplayer == 'Potassium (K)' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            select(Point, rowname, pointlayer, value_round) %>% 
+            pivot_wider(names_from = pointlayer, values_from = value_round) %>%
+            make_html_tables(table.total = TRUE,
+                             row.label = 'Potassium<br>(cmol (+)/kg)',
+                             table.header = c('0-10cm', '10-40cm'),
+                             caption = ' (compost applied)'),
+          dat %>% 
+            filter(maplayer == 'Potassium (K)' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            select(Point, rowname, pointlayer, value_round) %>% 
+            pivot_wider(names_from = pointlayer, values_from = value_round) %>%
+            make_html_tables(table.total = TRUE,
+                             row.label = 'Potassium<br>(cmol (+)/kg)',
+                             table.header = c('0-10cm', '10-40cm'))
+        ) %>% arrange(Point) %>% 
+          mutate(maplayer = 'Potassium (K)'),
+        
+        # sodium
+        bind_rows(
+          dat %>% 
+            filter(maplayer == 'Sodium (Na)' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            select(Point, rowname, pointlayer, value_round) %>% 
+            pivot_wider(names_from = pointlayer, values_from = value_round) %>%
+            make_html_tables(table.total = TRUE,
+                             row.label = 'Sodium<br>(cmol (+)/kg)',
+                             table.header = c('0-10cm', '10-40cm'),
+                             caption = ' (compost applied)'),
+          dat %>% 
+            filter(maplayer == 'Sodium (Na)' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            select(Point, rowname, pointlayer, value_round) %>% 
+            pivot_wider(names_from = pointlayer, values_from = value_round) %>%
+            make_html_tables(table.total = TRUE,
+                             row.label = 'Sodium<br>(cmol (+)/kg)',
+                             table.header = c('0-10cm', '10-40cm'))
+        ) %>% arrange(Point) %>% 
+          mutate(maplayer = 'Sodium (Na)'),
+        
+        # magnesium
+        bind_rows(
+          dat %>% 
+            filter(maplayer == 'Magnesium (Mg)' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            select(Point, rowname, pointlayer, value_round) %>% 
+            pivot_wider(names_from = pointlayer, values_from = value_round) %>%
+            make_html_tables(table.total = TRUE,
+                             row.label = 'Magnesium<br>(cmol (+)/kg)',
+                             table.header = c('0-10cm', '10-40cm'),
+                             caption = ' (compost applied)'),
+          dat %>% 
+            filter(maplayer == 'Magnesium (Mg)' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            select(Point, rowname, pointlayer, value_round) %>% 
+            pivot_wider(names_from = pointlayer, values_from = value_round) %>%
+            make_html_tables(table.total = TRUE,
+                             row.label = 'Magnesium<br>(cmol (+)/kg)',
+                             table.header = c('0-10cm', '10-40cm'))
+        ) %>% arrange(Point) %>% 
+          mutate(maplayer = 'Magnesium (Mg)'),
+        
+        # calcium
+        bind_rows(
+          dat %>% 
+            filter(maplayer == 'Calcium (Ca)' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            select(Point, rowname, pointlayer, value_round) %>% 
+            pivot_wider(names_from = pointlayer, values_from = value_round) %>%
+            make_html_tables(table.total = TRUE,
+                             row.label = 'Calcium<br>(cmol (+)/kg)',
+                             table.header = c('0-10cm', '10-40cm'),
+                             caption = ' (compost applied)'),
+          dat %>% 
+            filter(maplayer == 'Calcium' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            select(Point, rowname, pointlayer, value_round) %>% 
+            pivot_wider(names_from = pointlayer, values_from = value_round) %>%
+            make_html_tables(table.total = TRUE,
+                             row.label = 'Calcium<br>(cmol (+)/kg)',
+                             table.header = c('0-10cm', '10-40cm'))
+        ) %>% arrange(Point) %>% 
+          mutate(maplayer = 'Calcium (Ca)'),
+        
+        # pH
+        bind_rows(
+          dat %>% 
+            filter(maplayer == 'pH' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            select(Point, rowname, pointlayer, value_round) %>% 
+            pivot_wider(names_from = pointlayer, values_from = value_round) %>%
+            make_html_tables(table.total = TRUE,
+                             row.label = 'pH',
+                             table.header = c('0-10cm', '10-40cm'),
+                             caption = ' (compost applied)'),
+          dat %>% 
+            filter(maplayer == 'pH' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            select(Point, rowname, pointlayer, value_round) %>% 
+            pivot_wider(names_from = pointlayer, values_from = value_round) %>%
+            make_html_tables(table.total = TRUE,
+                             row.label = 'pH',
+                             table.header = c('0-10cm', '10-40cm'))
+        ) %>% arrange(Point) %>% 
+          mutate(maplayer = 'pH')
+      )
+    )
+  }
 }
 
 # internal function
-make_html_tables = function(dat, table.total = FALSE, table.header = NA,
-                            caption = '') {
+make_html_tables = function(dat, table.total = FALSE, table.header = NULL,
+                            row.label = NULL, caption = '') {
   dat %>% select(Point) %>% distinct() %>% 
     mutate(
       table_html = purrr::map(
@@ -279,6 +404,7 @@ make_html_tables = function(dat, table.total = FALSE, table.header = NA,
           sdat = dat %>% filter(Point == x) %>% column_to_rownames('rowname')
           htmlTable(x = sdat %>% select(-Point),
                     header = table.header, 
+                    rowlabel = row.label,
                     align = 'r',
                     total = table.total,
                     caption = paste0('<b>', x, '</b>', caption))
