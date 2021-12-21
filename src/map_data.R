@@ -264,7 +264,7 @@ map_data = function(dat, as_raster = FALSE, maplayers = NULL, htmltab = NULL,
     # one layer for each set of pop-ups to go with any layer in rast
     for (i in c(1:length(rast))) {
       m <- m %>% 
-        addCircleMarkers(data = shp_pts_longlat,
+        addCircleMarkers(data = shp_pts_longlat %>% filter(maplayer == names(rast)[i]),
                          popup = ~table_html,
                          group = names(rast)[i],
                          # make them large to cover most of the cell:
