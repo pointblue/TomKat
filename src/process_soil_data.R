@@ -172,21 +172,27 @@ calculate_productivity_metrics = function(df) {
            radius = if_else(var == 'carbonA', 3.5, 9))
 }
 
-calculate_productivity_change = function(df) {
-  df %>% select(Point, var, yr, value, maplayer, pointlayer, weight, radius) %>% 
+calculate_productivity_change = function(df, current, baseline, difflabel = 'Difference') {
+  df %>% 
+    mutate(yr = case_when(SampleYear == current ~ 'current',
+                          SampleYear == baseline ~ 'baseline',
+                          TRUE ~ as.character(SampleYear))) %>% 
+    select(Point, var, yr, value, maplayer, pointlayer, weight, radius) %>% 
     pivot_wider(names_from = yr, values_from = value) %>% 
-    mutate(Difference = current - baseline) %>% 
-    pivot_longer(baseline:Difference, names_to = 'rowname') %>% 
-    mutate(rowname = factor(rowname, levels = c('current', 'baseline', 'Difference'))) %>% 
-    arrange(Point, var, rowname) %>% 
-    mutate(
-      value_round = if_else(
-        var == 'mean',
-        txtRound(value, digits = 0, txt.NA = 'NA'),
-        txtRound(value, digits = 2, txt.NA = 'NA')),
-      value_round = case_when(
-        rowname == 'Difference' & value > 0 ~ paste0('+', value_round),
-        TRUE ~ value_round))
+    mutate(diff = current - baseline) %>% 
+    pivot_longer(!(Point:radius), names_to = 'rowname') %>% 
+    # relabel back with their corresponding years (as rownames in popup tables)
+    mutate(rowname = recode(rowname, 
+                            'current' = as.character(current), 
+                            'baseline' = as.character(baseline),
+                            'diff' = difflabel),
+           value_round = if_else(
+             var == 'mean',
+             txtRound(value, digits = 0, txt.NA = 'NA'),
+             txtRound(value, digits = 2, txt.NA = 'NA')),
+           value_round = case_when(
+             rowname == 'Difference' & value > 0 ~ paste0('+', value_round),
+             TRUE ~ value_round))
 }
 
 format_soil_nutrients = function(df) {
