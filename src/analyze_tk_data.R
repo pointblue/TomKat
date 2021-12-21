@@ -452,8 +452,8 @@ soil_productivity_change_map = map_data(
   palette = soildat_productivity_change_palettes,
   maplayers = names(soildat_productivity_change_palettes),
   multilegend = FALSE, 
-  legend.values = c(-20, 0, 20, NA),
-  legend.labels = c('declining', 'little change', 'improving', 'no data'),
+  legend.values = c(20, 0, -20, NA),
+  legend.labels = c('improving', 'little change', 'declining', 'no data'),
   legend.title = 'Direction of change',
   htmltab = soildat_productivity_change_tables
 )
