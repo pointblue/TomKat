@@ -8,6 +8,24 @@
 ##'   
 
 create_html_tables = function(dat, set) {
+  if (set == 'birddens_point') {
+    return(
+      bind_rows(
+        # one for Total
+        dat %>%
+          select(maplayer, Point, table_rowheader, table_rowname, table_header,
+                 value = value_round) %>% 
+          make_html_tables(table.total = TRUE) %>% 
+          mutate(maplayer = 'Total'),
+        # and one for each species separately
+        dat %>% filter(maplayer != 'Total') %>% 
+          select(maplayer, Point, table_rowheader, table_rowname, table_header,
+                 value = value_round) %>% 
+          split(.$maplayer) %>% 
+          purrr::map_df(make_html_tables, table.total = FALSE, .id = 'maplayer')
+      )
+    )
+  }
   if (set == 'birdrich_point') {
     return(
       dat %>% 
