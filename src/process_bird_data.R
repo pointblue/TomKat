@@ -97,3 +97,30 @@ calculate_species_richness = function(dat) {
     rownames_to_column('id')
 }
 
+format_bird_density = function(dat) {
+  bind_rows(
+    # individual species densities
+    dat %>% filter(species != 'WCSP'), 
+    # and totals
+    dat %>% filter(species != 'WCSP') %>% 
+      group_by(Label) %>% 
+      summarize(species = 'total', 
+                Estimate = sum(Estimate),
+                .groups = 'drop')
+  ) %>% 
+    select(Point = Label, species, value = Estimate) %>%
+    #optional: convert to birds per 10 acres (from birds/ha)
+    mutate(value = value / 2.47105 * 10,
+           value_round = txtRound(value, digits = 1, txt.NA = 'NA'),
+           species = factor(species, levels = c('GRSP', 'SAVS', 'total')),
+           # labels within map layer control
+           maplayer = recode(species,
+                             GRSP = 'Grasshopper Sparrow',
+                             SAVS = 'Savannah Sparrow',
+                             total = 'Total'),
+           # rownames within popup tables (same)
+           table_rowname = maplayer,
+           table_header = '(birds/10 acres)',
+           table_rowheader = 'Density') %>% 
+    arrange(Point, species)
+}
