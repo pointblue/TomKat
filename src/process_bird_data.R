@@ -124,3 +124,18 @@ format_bird_density = function(dat) {
            table_rowheader = 'Density') %>% 
     arrange(Point, species)
 }
+
+format_bird_richness = function(dat) {
+  dat %>% 
+    select(Point = id, estimated = boot, observed = Species, n) %>%
+    pivot_longer(-Point, names_to = 'var', values_to = 'value') %>% 
+    mutate(var = factor(var, levels = c('estimated', 'observed', 'n')),
+           table_rowname = recode(var,
+                                  estimated = 'Estimated species',
+                                  observed = 'Observed species',
+                                  n = 'Number of surveys'),
+           value_round = txtRound(value, digits = 0, txt.NA = 'NA'),
+           # default (only one layer for this map, but need to specify one)
+           maplayer = 'default',
+           table_header = '')
+}
