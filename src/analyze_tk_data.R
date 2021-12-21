@@ -51,36 +51,13 @@ birddens_point = calculate_focal_density(
 # -> 171 unique strata/sampling locations, 1-16 visits per sampling location
 
 # add totals and reformat:
-birddens_point_format = bind_rows(
-  # individual species densities
-  birddens_point %>% filter(species != 'WCSP'), 
-  # and totals
-  birddens_point %>% filter(species != 'WCSP') %>% 
-    group_by(Label) %>% 
-    summarize(species = 'total', 
-              Estimate = sum(Estimate),
-              .groups = 'drop')
-  ) %>% 
-  select(Point = Label, species, value = Estimate) %>%
-  #optional: convert to birds per 10 acres (from birds/ha)
-  mutate(value = value / 2.47105 * 10,
-         value_round = txtRound(value, digits = 1, txt.NA = 'NA'),
-         species = factor(species, levels = c('GRSP', 'SAVS', 'total')),
-         # labels within map layer control
-         maplayer = recode(species,
-                           GRSP = 'Grasshopper Sparrow',
-                           SAVS = 'Savannah Sparrow',
-                           total = 'Total'),
-         # rownames within popup tables (same)
-         rowname = maplayer) %>% 
-  arrange(Point, species)
+birddens_point_format = format_bird_density(birddens_point)
 
-birddens_point_tables = birddens_point_format %>% 
-  select(Point, rowname, value_round) %>% 
-  make_html_tables(table.total = TRUE,
-                   table.header = NA)
+birddens_point_tables = create_html_tables(
+  birddens_point_format, 
+  set = 'birddens_point')
 
-map_data(
+birddens_point_map = map_data(
   dat = birddens_point_format,
   as_raster = TRUE,
   pts_toka = 'GIS/TOKA_point_count_grid.shp',
@@ -90,10 +67,11 @@ map_data(
   legend.labels = c('0', '< 1', '1 - 5', '5 - 10', '> 10'),
   legend.title = 'Density<br>(birds/10 acres)',
   htmltab = birddens_point_tables
-) %>% 
-  save_widget(pathout = 'docs/widget/bird_map_density.html',
-              selfcontained = FALSE, libdir = 'lib',
-              title = 'TomKat Bird Density Map')
+)
+save_widget(birddens_point_map,
+            pathout = 'docs/widget/bird_map_density.html',
+            selfcontained = FALSE, libdir = 'lib',
+            title = 'TomKat Bird Density Map')
 
 ## 2. PLOT avg density per year & trend--------------
 # distance sampling to fit detection curves for each focal species (GRSP,
