@@ -69,38 +69,48 @@ create_palettes = function(df, set) {
   if (set == 'soil_productivity_change') {
     return(
       list(
-        # same scale of declining/little change/improving, but bins are different for
-        # each metric
+        # same scale of improving/little change/declining, but bins identifying
+        # what counts as "little change" are different for each metric
         'Overall score' = colorBin(
           palette = colorRamp(
             colors = c(pointblue.palette[3], '#ffffff', pointblue.palette[4])),
           domain = df %>% 
-            filter(maplayer == 'Overall score' & rowname == 'Difference') %>% pull(value),
-          bins = c(-40, -10, 10, 40),
+            filter(maplayer == 'Overall score' & 
+                     grepl('diff', rowname, ignore.case = TRUE)) %>% 
+            pull(value),
+          bins = c(-200, -10, 10, 200),
           na.color = pointblue.palette[6]),
         
         'Bulk density' = colorBin(
           palette = colorRamp(
-            colors = c(pointblue.palette[4], '#ffffff', pointblue.palette[3])), #reverse
+            #reverse order so lower values = improving
+            colors = c(pointblue.palette[4], '#ffffff', pointblue.palette[3])), 
           domain = df %>% 
-            filter(maplayer == 'Bulk density' & rowname == 'Difference') %>% pull(value),
-          bins = c(-0.25, -0.05, 0.05, 0.25),
+            filter(maplayer == 'Bulk density' & 
+                     grepl('diff', rowname, ignore.case = TRUE)) %>% 
+            pull(value),
+          bins = c(-5, -0.05, 0.05, 5), 
           na.color = pointblue.palette[6]),
         
         'Water infiltration' = colorBin(
           palette = colorRamp(
-            colors = c(pointblue.palette[4], '#ffffff', pointblue.palette[3])), #reverse
+            #reverse order so lower values = improving
+            colors = c(pointblue.palette[4], '#ffffff', pointblue.palette[3])), 
           domain = df %>% 
-            filter(maplayer == 'Water infiltration' & rowname == 'Difference') %>% pull(value),
-          bins = c(-70, -1, 1, 70),
+            filter(maplayer == 'Water infiltration' & 
+                     grepl('diff', rowname, ignore.case = TRUE)) %>% 
+            pull(value),
+          bins = c(-200, -1, 1, 200), 
           na.color = pointblue.palette[6]),
         
         '% Carbon' = colorBin(
           palette = colorRamp(
             colors = c(pointblue.palette[3], '#ffffff', pointblue.palette[4])),
           domain = df %>% 
-            filter(maplayer == '% Carbon' & rowname == 'Difference') %>% pull(value),
-          bins = c(-5, -0.0999, 0.0999, 5),
+            filter(maplayer == '% Carbon' & 
+                     grepl('diff', rowname, ignore.case = TRUE)) %>% 
+            pull(value),
+          bins = c(-100, -0.0999, 0.0999, 100),
           na.color = pointblue.palette[6])
       ))
   }
