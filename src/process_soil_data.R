@@ -146,8 +146,13 @@ calculate_productivity_metrics = function(df) {
     mutate(var = factor(var, 
                         # the order they'll be in the pop up tables:
                         levels = c('bulk.dens.gcm3', 'water.infil', 
-                                   'carbonA', 'carbonB', 'mean'))) %>%
-    arrange(Point, var) %>% 
+                                   'carbonA', 'carbonB', 'mean')),
+           depth = if_else(var == 'carbonB', 'B', 'A')) %>%
+    arrange(Point, var)
+}
+
+format_soil_productivity_metrics = function(df) {
+  df %>% 
     mutate(value = if_else(var == 'mean', percentile, value),
            value_round = if_else(var == 'mean', '', txtRound(value, digits = 2)),
            # labels within map layer control
@@ -159,39 +164,47 @@ calculate_productivity_metrics = function(df) {
                              mean = 'Overall score'),
            # each set of distinct points to be plotted:
            pointlayer = var,
+           # default 
+           point_weight = 1,
+           # smaller point size for surface carbon points
+           point_radius = if_else(var == 'carbonA', 3.5, 9),
            # rownames within popup tables
-           rowname = recode(var,
-                            bulk.dens.gcm3 = 'Bulk density (g/cm<sup>3</sup>)',
-                            water.infil = 'Water Infiltration (min/in)',
-                            carbonA = '% Carbon (0-10cm)', 
-                            carbonB = '% Carbon (10-40cm)',
-                            mean = 'Overall score'),
-           # additional formatting for specific points/layers
-           weight = if_else(Point %in% c('TOKA-022', 'TOKA-068') & 
-                              var != 'carbonA', 3, 1),
-           radius = if_else(var == 'carbonA', 3.5, 9))
+           table_rowname = recode(var,
+                                  bulk.dens.gcm3 = 'Bulk density (g/cm<sup>3</sup>)',
+                                  water.infil = 'Water Infiltration (min/in)',
+                                  carbonA = '% Carbon (0-10cm)', 
+                                  carbonB = '% Carbon (10-40cm)',
+                                  mean = 'Overall score'),
+           # default:
+           table_caption = ''
+           )
+    
 }
+
 
 calculate_productivity_change = function(df, current, baseline, difflabel = 'Difference') {
   df %>% 
     mutate(yr = case_when(SampleYear == current ~ 'current',
                           SampleYear == baseline ~ 'baseline',
                           TRUE ~ as.character(SampleYear))) %>% 
-    select(Point, var, yr, value, maplayer, pointlayer, weight, radius) %>% 
+    select(Point, var, depth, yr, value, maplayer, starts_with('point'), 
+           starts_with('table')) %>% 
     pivot_wider(names_from = yr, values_from = value) %>% 
     mutate(diff = current - baseline) %>% 
-    pivot_longer(!(Point:radius), names_to = 'rowname') %>% 
+    select(-table_rowname) %>% # replace old table rowname
+    pivot_longer(!(Point:table_caption), names_to = 'table_rowname') %>% 
     # relabel back with their corresponding years (as rownames in popup tables)
-    mutate(rowname = recode(rowname, 
-                            'current' = as.character(current), 
-                            'baseline' = as.character(baseline),
-                            'diff' = difflabel),
+    mutate(table_rowname = recode(table_rowname, 
+                                  'current' = as.character(current), 
+                                  'baseline' = as.character(baseline),
+                                  'diff' = difflabel),
            value_round = if_else(
              var == 'mean',
              txtRound(value, digits = 0, txt.NA = 'NA'),
              txtRound(value, digits = 2, txt.NA = 'NA')),
            value_round = case_when(
-             rowname == 'Difference' & value > 0 ~ paste0('+', value_round),
+             grepl('diff', table_rowname, ignore.case = TRUE) & 
+               value > 0 ~ paste0('+', value_round),
              TRUE ~ value_round))
 }
 
@@ -200,6 +213,7 @@ format_soil_nutrients = function(df) {
     filter(!is.na(value)) %>%
     separate(pointlayer, into = c('var', 'depth'), sep = -1, remove = FALSE) %>% 
     mutate(var = gsub('_$', '', var),
+           var = gsub('_', ' ', var),
            value_round = if_else(var == 'pH',
                                  txtRound(value, digits = 1, txt.NA = 'NA'),
                                  txtRound(value, digits = 2, txt.NA = 'NA')),
@@ -210,13 +224,35 @@ format_soil_nutrients = function(df) {
              grepl('Sodium', var) ~ 'Sodium (Na)',
              grepl('Magnesium', var) ~ 'Magnesium (Mg)',
              grepl('Calcium', var) ~ 'Calcium (Ca)',
-             grepl('pH', var) ~ 'pH'),
+             grepl('pH', var) ~ 'pH',
+             grepl('CEC', var) ~ 'Cation Exchange Capacity (CEC)',
+             grepl('Olsen', var) ~ 'Phosphorus (Olsen P)'),
+           # default
+           point_weight = 1,
+           # additional point size formatting for surface vs. deeper layers
+           point_radius = if_else(depth == 'A', 3.5, 9),
+           # pop up table header (units)
+           table_header = case_when(
+             grepl('Nitrogen', var) ~ '(%)',
+             grepl('Potassium|Sodium|Calcium|Magnesium', var) ~ '(cmol (+)/kg)',
+             grepl('pH', var) ~ 'pH',
+             grepl('CEC', var) ~ '(Sum of Cations<br>me/100g)',
+             grepl('Olsen', var) ~ '(ppm)'),
            # rownames within popup tables
-           rowname = recode(depth,
-                            A = '0-10 cm',
-                            B = '10-40 cm'),
-           # additional formatting for specific points/layers
-           weight = if_else(Point %in% c('TOKA-022', 'TOKA-068') & 
-                              rowname != '0-10 cm', 3, 1),
-           radius = if_else(rowname == '0-10 cm', 3.5, 9))
+           table_rowname = recode(depth,
+                                  A = '0-10 cm',
+                                  B = '10-40 cm'),
+           # label above rownames:
+           table_rowheader = case_when(
+             grepl('Nitrogen', var) ~ 'Total Nitrogen',
+             grepl('Potassium', var) ~ 'Potassium',
+             grepl('Sodium', var) ~ 'Sodium',
+             grepl('Magnesium', var) ~ 'Magnesium',
+             grepl('Calcium', var) ~ 'Calcium',
+             grepl('pH', var) ~ '',
+             grepl('CEC', var) ~ 'Cation Exchange<br>Capacity',
+             grepl('Olsen', var) ~ 'Phosphorus'),
+           # default:
+           table_caption = ''
+           )
 }
