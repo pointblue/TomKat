@@ -171,93 +171,93 @@ create_html_tables = function(dat, set) {
         # nitrogen
         bind_rows(
           dat %>% 
-            filter(var == 'Total Nitrogen' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            filter(maplayer == 'Total Nitrogen (N)' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
             select(Point, rowname, value_round) %>% 
             make_html_tables(table.total = FALSE,
-                             table.header = 'Total<br>Nitrogen',
+                             table.header = 'Total<br>Nitrogen<br>(%)',
                              caption = ' (compost applied)'),
           dat %>% 
-            filter(var == 'Total Nitrogen' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            filter(maplayer == 'Total Nitrogen (N)' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
             select(Point, rowname, value_round) %>% 
             make_html_tables(table.total = FALSE,
-                             table.header = 'Total<br>Nitrogen')
+                             table.header = 'Total<br>Nitrogen<br>(%)')
         ) %>% arrange(Point) %>% 
           mutate(maplayer = 'Total Nitrogen (N)'),
         
         # potassium:
         bind_rows(
           dat %>% 
-            filter(var == 'Potassium' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            filter(maplayer == 'Potassium (K)' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
             select(Point, rowname, value_round) %>% 
             make_html_tables(table.total = FALSE,
-                             table.header = 'Potassium',
+                             table.header = 'Potassium<br>(cmol (+)/kg)',
                              caption = ' (compost applied)'),
           dat %>% 
-            filter(var == 'Potassium' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            filter(maplayer == 'Potassium (K)' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
             select(Point, rowname, value_round) %>% 
             make_html_tables(table.total = FALSE,
-                             table.header = 'Potassium')
+                             table.header = 'Potassium<br>(cmol (+)/kg)')
         ) %>% arrange(Point) %>% 
           mutate(maplayer = 'Potassium (K)'),
         
         # sodium
         bind_rows(
           dat %>% 
-            filter(var == 'Sodium' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            filter(maplayer == 'Sodium (Na)' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
             select(Point, rowname, value_round) %>% 
             make_html_tables(table.total = FALSE,
-                             table.header = 'Sodium',
+                             table.header = 'Sodium<br>(cmol (+)/kg)',
                              caption = ' (compost applied)'),
           dat %>% 
-            filter(var == 'Sodium' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            filter(maplayer == 'Sodium (Na)' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
             select(Point, rowname, value_round) %>% 
             make_html_tables(table.total = FALSE,
-                             table.header = 'Sodium')
+                             table.header = 'Sodium<br>(cmol (+)/kg)')
         ) %>% arrange(Point) %>% 
           mutate(maplayer = 'Sodium (Na)'),
         
         # magnesium
         bind_rows(
           dat %>% 
-            filter(var == 'Magnesium' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            filter(maplayer == 'Magnesium (Mg)' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
             select(Point, rowname, value_round) %>% 
             make_html_tables(table.total = FALSE,
-                             table.header = 'Magnesium',
+                             table.header = 'Magnesium<br>(cmol (+)/kg)',
                              caption = ' (compost applied)'),
           dat %>% 
-            filter(var == 'Magnesium' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            filter(maplayer == 'Magnesium (Mg)' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
             select(Point, rowname, value_round) %>% 
             make_html_tables(table.total = FALSE,
-                             table.header = 'Magnesium')
+                             table.header = 'Magnesium<br>(cmol (+)/kg)')
         ) %>% arrange(Point) %>% 
           mutate(maplayer = 'Magnesium (Mg)'),
         
         # calcium
         bind_rows(
           dat %>% 
-            filter(var == 'Calcium' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            filter(maplayer == 'Calcium (Ca)' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
             select(Point, rowname, value_round) %>% 
             make_html_tables(table.total = FALSE,
-                             table.header = 'Calcium',
+                             table.header = 'Calcium<br>(cmol (+)/kg)',
                              caption = ' (compost applied)'),
           dat %>% 
-            filter(var == 'Calcium' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            filter(maplayer == 'Calcium' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
             select(Point, rowname, value_round) %>% 
             make_html_tables(table.total = FALSE,
-                             table.header = 'Calcium')
+                             table.header = 'Calcium<br>(cmol (+)/kg)')
         ) %>% arrange(Point) %>% 
           mutate(maplayer = 'Calcium (Ca)'),
         
         # pH
         bind_rows(
           dat %>% 
-            filter(var == 'pH' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            filter(maplayer == 'pH' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
             select(Point, rowname, value_round) %>% 
             make_html_tables(table.total = FALSE,
                              table.header = 'pH',
                              caption = ' (compost applied)'),
           dat %>% 
-            filter(var == 'pH' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
+            filter(maplayer == 'pH' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
             select(Point, rowname, value_round) %>% 
             make_html_tables(table.total = FALSE,
                              table.header = 'pH')
