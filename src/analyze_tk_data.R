@@ -396,7 +396,13 @@ samplepts = soildat %>% filter(SampleYear == max(SampleYear)) %>%
 # assign percentile values to each metric at each point for all years of data:
 soildat_productivity = soildat %>% 
   select(Point, SampleYear, bulk.dens.gcm3, water.infil, carbonA, carbonB) %>% 
-  calculate_productivity_metrics()
+  calculate_productivity_metrics() %>% 
+  format_soil_productivity_metrics() %>% 
+  # additional formatting for specific points/layers
+  mutate(point_weight = if_else(Point %in% c('TOKA-022', 'TOKA-068') & 
+                                  var != 'carbonA', 3, 1),
+         table_caption = if_else(Point %in% c('TOKA-022', 'TOKA-068'), 
+                                 ' (compost applied)', ''))
 
 # create pop-up tables of data (most recent year only)
 soildat_productivity_tables = create_html_tables(
@@ -433,7 +439,14 @@ soildat_productivity_change = calculate_productivity_change(
   df = soildat_productivity,
   current = max(soildat_productivity$SampleYear),
   baseline = 2018,
-  difflabel = 'Difference<br>(2021-2018)') 
+  difflabel = 'Difference<br>(2021-2018)') %>% 
+  mutate(
+    table_rowheader = maplayer,
+    table_header = case_when(
+      maplayer == 'Bulk density' ~ '(g/cm<sup>3</sup>)',
+      maplayer == 'Water infiltration' ~ '(minutes)',
+      maplayer == 'Overall score' ~ '(percentile)'))
+
 
 # create pop-up html tables only for points sampled in most recent year
 soildat_productivity_change_tables = create_html_tables(
@@ -468,12 +481,16 @@ save_widget(soil_productivity_change_map,
 
 soildat_nutrients = soildat %>% 
   select(Point, SampleYear, ends_with(c('_A', '_B'))) %>%
-  format_soil_nutrients()
+  format_soil_nutrients() %>% 
+  # additional formatting for specific points:
+  mutate(point_weight = if_else(Point %in% c('TOKA-022', 'TOKA-068') & 
+                                  depth != 'A', 3, 1),
+         table_caption = if_else(Point %in% c('TOKA-022', 'TOKA-068'), 
+                                 ' (compost applied)', ''))
 
-# pop-up html tables for most recent year only
+# pop-up html tables for each variable and point; most recent year only
 soildat_nutrient_tables = create_html_tables(
-  #exclude Olsen P, CEC for now
-  soildat_nutrients %>% filter(SampleYear == max(SampleYear) & !is.na(maplayer)),  
+  soildat_nutrients %>% filter(SampleYear == max(SampleYear)),  
   set = 'soil_nutrients')
 
 soildat_nutrient_palettes = create_palettes(
@@ -503,7 +520,11 @@ soildat_nutrient_change = calculate_productivity_change(
   df = soildat_nutrients,
   current = max(soildat_nutrients$SampleYear),
   baseline = 2018,
-  difflabel = 'Difference<br>(2021-2018)')
+  difflabel = 'Difference<br>(2021-2018)') %>% 
+  mutate(table_rowheader = if_else(table_header == 'pH', 'pH', 
+                                   paste(gsub('<br>', ' ', table_rowheader),
+                                         '<br>',
+                                         gsub('<br>', ' ', table_header))))
 
 # create pop-up html tables only for points sampled in most recent year
 soildat_nutrient_change_tables = create_html_tables(
@@ -522,8 +543,8 @@ soil_nutrient_change_map = map_data(
   palette = soildat_nutrient_change_palettes,
   maplayers = names(soildat_nutrient_change_palettes),
   multilegend = FALSE, 
-  legend.values = c(-0.5, 0, 0.5, NA),
-  legend.labels = c('declining', 'little change', 'improving', 'no data'),
+  legend.values = c(0.5, 0, -0.5, NA),
+  legend.labels = c('increasing', 'little change', 'decreasing', 'no data'),
   legend.title = 'Direction of change',
   htmltab = soildat_nutrient_change_tables
 )
