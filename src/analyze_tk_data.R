@@ -386,6 +386,11 @@ soildat = compile_soil_fielddata('data_raw/soil/TOKA_cadcsoil2014to21.csv') %>%
 
 write_csv(soildat, 'data_clean/TOKA_soil_main.csv')
 
+# list of points sampled in the most recent year:
+samplepts = soildat %>% filter(SampleYear == max(SampleYear)) %>% 
+  pull(Point) %>% unique()
+
+
 ## 1. MAP soil productivity data-----
 
 # assign percentile values to each metric at each point for all years of data:
@@ -431,9 +436,6 @@ soildat_productivity_change = calculate_productivity_change(
   difflabel = 'Difference<br>(2021-2018)') 
 
 # create pop-up html tables only for points sampled in most recent year
-samplepts = soildat_productivity %>% filter(SampleYear == max(SampleYear)) %>% 
-  pull(Point) %>% unique()
-
 soildat_productivity_change_tables = create_html_tables(
   dat = soildat_productivity_change %>% filter(Point %in% samplepts), 
   set = 'soil_productivity_change')
@@ -458,28 +460,29 @@ soil_productivity_change_map = map_data(
 save_widget(soil_productivity_change_map,
             pathout = 'docs/widget/soil_map_productivity_change.html',
             selfcontained = FALSE, libdir = 'lib',
-            title =  paste0('TomKat Soil Changes 2015-', max(soildat$SampleYear)))
+            title =  paste0('TomKat Soil Changes 2018-', max(soildat$SampleYear)))
 
 
 ## 3. MAP soil nutrient concentrations------
 # most recent year of data only (2015)
 
-soildat_nutrients = soildat %>% filter(SampleYear == max(SampleYear)) %>%
+soildat_nutrients = soildat %>% 
   select(Point, SampleYear, ends_with(c('_A', '_B'))) %>%
   format_soil_nutrients()
 
-# pop-up html tables
+# pop-up html tables for most recent year only
 soildat_nutrient_tables = create_html_tables(
-  soildat_nutrients %>% filter(!is.na(maplayer)),  #exclude Olsen P, CEC
+  #exclude Olsen P, CEC for now
+  soildat_nutrients %>% filter(SampleYear == max(SampleYear) & !is.na(maplayer)),  
   set = 'soil_nutrients')
 
 soildat_nutrient_palettes = create_palettes(
-  soildat_nutrients, 
+  soildat_nutrients %>% filter(SampleYear == max(SampleYear)), 
   set = 'soil_nutrients')
 
 # create map:
 soil_nutrient_map = map_data(
-  dat = soildat_nutrients %>% filter(!is.na(maplayer)),
+  dat = soildat_nutrients %>% filter(SampleYear == max(SampleYear) & !is.na(maplayer)),
   pts_toka = 'GIS/TOKA_point_count_grid.shp',
   fields = 'GIS/TK_veg_fields.shp',
   boundary = 'GIS/TomKat_ranch_boundary.shp',
@@ -488,6 +491,7 @@ soil_nutrient_map = map_data(
   multilegend = TRUE, 
   htmltab = soildat_nutrient_tables
 )
+
 save_widget(
   soil_nutrient_map,
   pathout = 'docs/widget/soil_map_nutrients.html',
@@ -495,7 +499,38 @@ save_widget(
   title =  paste0('TomKat Soil Nutrients ', max(soildat_nutrients$SampleYear)))
 
 ## 4. MAP soil nutrient change----
+soildat_nutrient_change = calculate_productivity_change(
+  df = soildat_nutrients,
+  current = max(soildat_nutrients$SampleYear),
+  baseline = 2018,
+  difflabel = 'Difference<br>(2021-2018)')
 
+# create pop-up html tables only for points sampled in most recent year
+soildat_nutrient_change_tables = create_html_tables(
+  dat = soildat_nutrient_change %>% filter(Point %in% samplepts), 
+  set = 'soil_nutrient_change')
+
+soildat_nutrient_change_palettes = create_palettes(
+  soildat_nutrient_change %>% filter(Point %in% samplepts), 
+  set = 'soil_nutrient_change')
+
+soil_nutrient_change_map = map_data(
+  dat = soildat_nutrient_change %>% filter(Point %in% samplepts & !is.na(maplayer)),
+  pts_toka = 'GIS/TOKA_point_count_grid.shp',
+  fields = 'GIS/TK_veg_fields.shp',
+  boundary = 'GIS/TomKat_ranch_boundary.shp',
+  palette = soildat_nutrient_change_palettes,
+  maplayers = names(soildat_nutrient_change_palettes),
+  multilegend = FALSE, 
+  legend.values = c(-0.5, 0, 0.5, NA),
+  legend.labels = c('declining', 'little change', 'improving', 'no data'),
+  legend.title = 'Direction of change',
+  htmltab = soildat_nutrient_change_tables
+)
+save_widget(soil_nutrient_change_map,
+            pathout = 'docs/widget/soil_map_nutrient_change.html',
+            selfcontained = FALSE, libdir = 'lib',
+            title =  paste0('TomKat Soil Changes 2018-', max(soildat$SampleYear)))
 
 ## 5. MAP soil microbes----
 
