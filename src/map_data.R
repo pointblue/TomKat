@@ -103,13 +103,15 @@ create_html_tables = function(dat, set) {
             filter(var == 'mean' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
             select(Point, rowname, value_round) %>% 
             make_html_tables(table.total = TRUE,
-                             table.header = 'Overall score<br>(percentile)',
+                             row.label = 'Overall score',
+                             table.header = '(percentile)',
                              caption = ' (compost applied)'),
           dat %>% 
             filter(var == 'mean' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
             select(Point, rowname, value_round) %>% 
             make_html_tables(table.total = TRUE,
-                             table.header = 'Overall score<br>(percentile)')
+                             row.label = 'Overall score',
+                             table.header = '(percentile)')
         ) %>% arrange(Point) %>% 
           mutate(maplayer = 'Overall score'),
         
@@ -119,13 +121,15 @@ create_html_tables = function(dat, set) {
             filter(var == 'bulk.dens.gcm3' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
             select(Point, rowname, value_round) %>% 
             make_html_tables(table.total = TRUE,
-                             table.header = 'Bulk density<br>(g/cm<sup>3</sup>)',
+                             row.label = 'Bulk density',
+                             table.header = '(g/cm<sup>3</sup>)',
                              caption = ' (compost applied)'),
           dat %>% 
             filter(var == 'bulk.dens.gcm3' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
             select(Point, rowname, value_round) %>% 
             make_html_tables(table.total = TRUE,
-                             table.header = 'Bulk density<br>(g/cm<sup>3</sup>)')
+                             row.label = 'Bulk density',
+                             table.header = '(g/cm<sup>3</sup>)')
         ) %>% arrange(Point) %>% 
           mutate(maplayer = 'Bulk density'),
         
@@ -135,13 +139,15 @@ create_html_tables = function(dat, set) {
             filter(var == 'water.infil' & Point %in% c('TOKA-022', 'TOKA-068')) %>%
             select(Point, rowname, value_round) %>% 
             make_html_tables(table.total = TRUE,
-                             table.header = 'Water infiltration<br>(min/in)',
+                             row.label = 'Water infiltration',
+                             table.header = '(minutes)',
                              caption = ' (compost applied)'),
           dat %>% 
             filter(var == 'water.infil' & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
             select(Point, rowname, value_round) %>% 
             make_html_tables(table.total = TRUE,
-                             table.header = 'Water infiltration<br>(min/in)')
+                             row.label = 'Water infiltration',
+                             table.header = '(minutes)')
         ) %>% arrange(Point) %>% 
           mutate(maplayer = 'Water infiltration'),
         
@@ -152,14 +158,16 @@ create_html_tables = function(dat, set) {
             select(Point, rowname, var, value_round) %>% 
             pivot_wider(names_from = var, values_from = value_round) %>%
             make_html_tables(table.total = TRUE,
-                             table.header = c('% Carbon<br>(0-10cm)', '% Carbon<br>(10-40cm)'),
+                             row.label = 'Carbon (%)',
+                             table.header = c('0-10cm', '10-40cm'),
                              caption = ' (compost applied)'),
           dat %>% 
             filter(var %in% c('carbonB', 'carbonA') & !Point %in% c('TOKA-022', 'TOKA-068')) %>%
             select(Point, rowname, var, value_round) %>% 
             pivot_wider(names_from = var, values_from = value_round) %>% 
             make_html_tables(table.total = TRUE,
-                             table.header = c('% Carbon<br>(0-10cm)', '% Carbon<br>(10-40cm)'))
+                             row.label = 'Carbon (%)',
+                             table.header = c('0-10cm', '10-40cm'))
         ) %>% arrange(Point) %>% 
           mutate(maplayer = '% Carbon')
       )
@@ -424,16 +432,19 @@ create_pop_plots = function(df) {
         scale_fill_viridis_d(option = 'inferno'))
 }
 
-blank_theme <- theme_minimal() +
-  theme(
-    axis.title.x = element_blank(), axis.title.y = element_blank(),
-    axis.text.x = element_blank(), axis.text.y = element_blank(),
-    panel.border = element_blank(), panel.grid = element_blank(),
-    axis.ticks = element_blank(), legend.position = 'right',
-    legend.key.size = unit(0.75, 'lines'),
-    plot.margin = unit(c(0.25, 0.25, 0.25, 0.25),'pt'),
-    plot.background = element_rect(fill = 'white', color = NA),
-    panel.background = element_rect(fill = 'white', color = NA)
+blank_theme <- ggplot2::theme_minimal() +
+  ggplot2::theme(
+    axis.title.x = ggplot2::element_blank(), 
+    axis.title.y = ggplot2::element_blank(),
+    axis.text.x = ggplot2::element_blank(), 
+    axis.text.y = ggplot2::element_blank(),
+    panel.border = ggplot2::element_blank(), 
+    panel.grid = ggplot2::element_blank(),
+    axis.ticks = ggplot2::element_blank(), legend.position = 'right',
+    legend.key.size = ggplot2::unit(0.75, 'lines'),
+    plot.margin = ggplot2::unit(c(0.25, 0.25, 0.25, 0.25),'pt'),
+    plot.background = ggplot2::element_rect(fill = 'white', color = NA),
+    panel.background = ggplot2::element_rect(fill = 'white', color = NA)
   )
 
 map_data = function(dat, as_raster = FALSE, maplayers = NULL, htmltab = NULL, 
