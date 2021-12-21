@@ -148,6 +148,66 @@ create_palettes = function(df, set) {
           na.color = pointblue.palette[6])
       ))
   }
+  if (set == 'soil_nutrient_change') {
+    return(
+      list(
+        # same scale of declining/little change/improving, but bins are different for
+        # each metric
+        'Total Nitrogen (N)' = colorBin(
+          palette = colorRamp(
+            colors = c(pointblue.palette[3], '#ffffff', pointblue.palette[4])),
+          domain = df %>% 
+            filter(maplayer == 'Total Nitrogen (N)' & 
+                     grepl('diff', rowname, ignore.case = TRUE)) %>% pull(value),
+          bins = c(-1, -0.01, 0.01, 1),
+          na.color = pointblue.palette[6]),
+        
+        'Potassium (K)' = colorBin(
+          palette = colorRamp(
+            colors = c(pointblue.palette[3], '#ffffff', pointblue.palette[4])),
+          domain = df %>% 
+            filter(maplayer == 'Potassium (K)' & 
+                     grepl('diff', rowname, ignore.case = TRUE)) %>% pull(value),
+          bins = c(-1, -0.05, 0.05, 1),
+          na.color = pointblue.palette[6]),
+        
+        'Sodium (Na)' = colorBin(
+          palette = colorRamp(
+            colors = c(pointblue.palette[3], '#ffffff', pointblue.palette[4])),
+          domain = df %>% 
+            filter(maplayer == 'Sodium (Na)' & 
+                     grepl('diff', rowname, ignore.case = TRUE)) %>% pull(value),
+          bins = c(-70, -1, 1, 70),
+          na.color = pointblue.palette[6]),
+        
+        'Magnesium (Mg)' = colorBin(
+          palette = colorRamp(
+            colors = c(pointblue.palette[3], '#ffffff', pointblue.palette[4])),
+          domain = df %>% 
+            filter(maplayer == 'Magnesium (Mg)' & 
+                     grepl('diff', rowname, ignore.case = TRUE)) %>% pull(value),
+          bins = c(-10, -0.05, 0.05, 10),
+          na.color = pointblue.palette[6]),
+        
+        'Calcium (Ca)' = colorBin(
+          palette = colorRamp(
+            colors = c(pointblue.palette[3], '#ffffff', pointblue.palette[4])),
+          domain = df %>% 
+            filter(maplayer == 'Calcium (Ca)' & 
+                     grepl('diff', rowname, ignore.case = TRUE)) %>% pull(value),
+          bins = c(-10, -0.05, 0.05, 10),
+          na.color = pointblue.palette[6]),
+        
+        'pH' = colorBin(
+          palette = colorRamp(
+            colors = c(pointblue.palette[3], '#ffffff', pointblue.palette[4])),
+          domain = df %>% 
+            filter(maplayer == 'pH' & 
+                     grepl('diff', rowname, ignore.case = TRUE)) %>% pull(value),
+          bins = c(-1, -0.05, 0.05, 1),
+          na.color = pointblue.palette[6])
+      ))
+  }
   if (set == 'soil_microbes') {
     return(
       list(
