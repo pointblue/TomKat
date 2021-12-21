@@ -68,6 +68,7 @@ birddens_point_map = map_data(
   legend.title = 'Density<br>(birds/10 acres)',
   htmltab = birddens_point_tables
 )
+
 save_widget(birddens_point_map,
             pathout = 'docs/widget/bird_map_density.html',
             selfcontained = FALSE, libdir = 'lib',
@@ -105,10 +106,12 @@ birddens_trend_plot = birddens_trend %>%
                         SAVS = 'Savannah Sparrow')) %>%
   plotly_trend(colors = pointblue.palette[c(2, 3)],
                yrange = c(0, 10),
-               ytitle = 'Density (birds/10 acres)') %>%
-  save_widget(pathout = 'docs/widget/bird_trend_density.html',
-              selfcontained = FALSE, libdir = 'lib',
-              title = 'TomKat Bird Density Trends')
+               ytitle = 'Density (birds/10 acres)')
+
+save_widget(birddens_trend_plot,
+            pathout = 'docs/widget/bird_trend_density.html',
+            selfcontained = FALSE, libdir = 'lib',
+            title = 'TomKat Bird Density Trends')
 # -> year x group model has no significant trends; but year + group model 
 #   shows overall decline for both groups, with SAVS significantly lower
 
@@ -119,28 +122,32 @@ birdrich_point = birddat %>%
   calculate_species_richness() %>% 
   write_csv('data_clean/TOKA_birds_richness_by_point.csv')
 
+birdrich_point_format = format_bird_richness(birdrich_point)
+
 # pop-up html tables for map:
 birdrich_point_tables = create_html_tables(
-  dat = birdrich_point,
+  dat = birdrich_point_format,
   set = 'birdrich_point')
 
 # map only estimated richness (but include observed richness and # surveys in
 # pop-up tables)
-birdrich_point %>% 
-  select(Point = id, value = boot) %>% 
-  mutate(maplayer = 'estimated') %>% #need to specify at least one maplayer
-  map_data(as_raster = TRUE,
-           pts_toka = 'GIS/TOKA_point_count_grid.shp',
-           pts_hocr = 'GIS/HOCR_point_count_riparian.shp',
-           bins = c(0, 15, 25, 35, 45, 100),
-           legend.labels = c('0 - 15', '16 - 25', '25 - 35', '35 - 45', '> 45'),
-           legend.title = 'Estimated<br>species<br>richness',
-           htmltab = birdrich_point_tables,
-           fields = 'GIS/TK_veg_fields.shp',
-           boundary = 'GIS/TomKat_ranch_boundary.shp') %>% 
-  save_widget(pathout = 'docs/widget/bird_map_richness.html',
-              title = 'TomKat Bird Richness Map',
-              selfcontained = FALSE, libdir = 'lib')
+
+birdrich_point_map = map_data(
+    dat = birdrich_point_format %>% filter(var == 'estimated'),
+    as_raster = TRUE,
+    pts_toka = 'GIS/TOKA_point_count_grid.shp',
+    pts_hocr = 'GIS/HOCR_point_count_riparian.shp',
+    bins = c(0, 15, 25, 35, 45, 100),
+    legend.labels = c('0 - 15', '16 - 25', '25 - 35', '35 - 45', '> 45'),
+    legend.title = 'Estimated<br>species<br>richness',
+    htmltab = birdrich_point_tables,
+    fields = 'GIS/TK_veg_fields.shp',
+    boundary = 'GIS/TomKat_ranch_boundary.shp')
+
+save_widget(birdrich_point_map,
+            pathout = 'docs/widget/bird_map_richness.html',
+            title = 'TomKat Bird Richness Map',
+            selfcontained = FALSE, libdir = 'lib')
 
 ## 4. PLOT spp richness per year-------
 # compare grassland and riparian points
