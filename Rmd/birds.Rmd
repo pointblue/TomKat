@@ -79,6 +79,5 @@ This interactive web page was produced in [R](https://www.R-project.org/){target
 
 Please contact:  
 [Chelsea Carey, PhD](https://www.pointblue.org/employee_bios/chelsea-carey/){target="_blank"}  
-Senior Soil Ecologist  
-Working Lands Group  
+Working Lands Research Director
 [Point Blue Conservation Science](https://www.pointblue.org){target="_blank"}
