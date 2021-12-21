@@ -29,17 +29,10 @@ create_html_tables = function(dat, set) {
   if (set == 'birdrich_point') {
     return(
       dat %>% 
-        select(Point = id, estimated = boot, observed = Species, n) %>%
-        pivot_longer(-Point, names_to = 'rowname', values_to = 'value') %>% 
-        mutate(rowname = factor(rowname, levels = c('estimated', 'observed', 'n')),
-               rowname = recode(rowname,
-                                estimated = 'Estimated species',
-                                observed = 'Observed species',
-                                n = 'Number of surveys'),
-               value_round = txtRound(value, digits = 0, txt.NA = 'NA')) %>% 
-        select(Point, rowname, value_round) %>% 
-        make_html_tables(table.total = FALSE,
-                         table.header = NA))
+        select(maplayer, Point, table_rowname, table_header, value = value_round) %>% 
+        split(.$maplayer) %>% 
+        purrr::map_df(make_html_tables, table.total = FALSE, .id = 'maplayer')
+      )
   }
   if (set == 'soil_productivity') {
     return(
