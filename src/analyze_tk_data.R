@@ -423,27 +423,27 @@ save_widget(soil_productivity_map,
 ## 2. MAP change in soil productivity-----
 # building on soildat_productivity_format from previous section
 
+# calculate change in each metric and change in overall percentile score
+soildat_productivity_change = calculate_productivity_change(
+  df = soildat_productivity,
+  current = max(soildat_productivity$SampleYear),
+  baseline = 2018,
+  difflabel = 'Difference<br>(2021-2018)') 
 
-soildat_productivity_change = soildat_productivity %>%
-  # identify which years are considered current and baseline:
-  mutate(yr = case_when(SampleYear == max(SampleYear) ~ 'current',
-                        SampleYear == 2015 ~ 'baseline')) %>% 
-  # calculate change in each metric and change in overall percentile score
-  calculate_productivity_change() %>% 
-  # relabel back with their corresponding years (as rownames in popup tables)
-  mutate(rowname = recode(rowname, 'current' = '2018', 'baseline' = '2015'))
+# create pop-up html tables only for points sampled in most recent year
+samplepts = soildat_productivity %>% filter(SampleYear == max(SampleYear)) %>% 
+  pull(Point) %>% unique()
 
-# create pop-up html tables
 soildat_productivity_change_tables = create_html_tables(
-  soildat_productivity_change, 
+  dat = soildat_productivity_change %>% filter(Point %in% samplepts), 
   set = 'soil_productivity_change')
 
 soildat_productivity_change_palettes = create_palettes(
-  soildat_productivity_change, 
+  soildat_productivity_change %>% filter(Point %in% samplepts), 
   set = 'soil_productivity_change')
 
-map_data(
-  dat = soildat_productivity_change,
+soil_productivity_change_map = map_data(
+  dat = soildat_productivity_change %>% filter(Point %in% samplepts),
   pts_toka = 'GIS/TOKA_point_count_grid.shp',
   fields = 'GIS/TK_veg_fields.shp',
   boundary = 'GIS/TomKat_ranch_boundary.shp',
@@ -454,10 +454,11 @@ map_data(
   legend.labels = c('declining', 'little change', 'improving', 'no data'),
   legend.title = 'Direction of change',
   htmltab = soildat_productivity_change_tables
-) %>% 
-  save_widget(pathout = 'docs/widget/soil_map_productivity_change.html',
-              selfcontained = FALSE, libdir = 'lib',
-              title =  paste0('TomKat Soil Changes 2014-', max(soildat$SampleYear)))
+)
+save_widget(soil_productivity_change_map,
+            pathout = 'docs/widget/soil_map_productivity_change.html',
+            selfcontained = FALSE, libdir = 'lib',
+            title =  paste0('TomKat Soil Changes 2015-', max(soildat$SampleYear)))
 
 
 ## 3. MAP soil nutrient concentrations------
