@@ -196,11 +196,11 @@ calculate_productivity_change = function(df, current, baseline, difflabel = 'Dif
 }
 
 format_soil_nutrients = function(df) {
-  df %>% pivot_longer(`Total NitrogenA`:pHB, names_to = 'var') %>%
+  df %>% pivot_longer(!(Point:SampleYear), names_to = 'pointlayer') %>%
     filter(!is.na(value)) %>%
-    filter(SampleYear == max(SampleYear)) %>%
-    separate(var, into = c('var', 'layer'), sep = -1) %>% 
-    mutate(value_round = if_else(var == 'pH',
+    separate(pointlayer, into = c('var', 'depth'), sep = -1, remove = FALSE) %>% 
+    mutate(var = gsub('_$', '', var),
+           value_round = if_else(var == 'pH',
                                  txtRound(value, digits = 1, txt.NA = 'NA'),
                                  txtRound(value, digits = 2, txt.NA = 'NA')),
            # labels within map layer control
@@ -211,10 +211,8 @@ format_soil_nutrients = function(df) {
              grepl('Magnesium', var) ~ 'Magnesium (Mg)',
              grepl('Calcium', var) ~ 'Calcium (Ca)',
              grepl('pH', var) ~ 'pH'),
-           # each set of distinct points to be plotted:
-           pointlayer = paste(var, layer),
            # rownames within popup tables
-           rowname = recode(layer,
+           rowname = recode(depth,
                             A = '0-10 cm',
                             B = '10-40 cm'),
            # additional formatting for specific points/layers
