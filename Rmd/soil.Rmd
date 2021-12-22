@@ -30,7 +30,7 @@ nsites <- readr::read_csv(here::here('data_clean/TOKA_soil_main.csv')) %>%
 
 ### Soil productivity
 
-In 2018, we measured three indicators of soil productivity: organic carbon content at two depths (0-10cm and 10-40cm), surface soil bulk density, and water infiltration rates. We also produced an overall score combining all three indicators. 
+In 2021, we measured three indicators of soil productivity: organic carbon content at two depths (0-10cm and 10-40cm), surface soil bulk density, and water infiltration rates. We also produced an overall score combining all three indicators. 
 
 In the map below, each point represents a soil sample location, with colors representing the score for each indicator. For carbon, the inner circle represents the surface soil sample (0-10 cm deep), and the outer circle represents the deeper soil sample (10-40 cm). Two locations where compost was applied are marked with a heavy black border.  
 
@@ -44,7 +44,7 @@ In the map below, each point represents a soil sample location, with colors repr
 
 ### Changes in soil productivity
 
-We compared data collected in 2018 to data collected in 2014 to identify locations where each productivity indicator have improved or declined. Locations where compost was applied are marked with a heavy black border. Note that lower values in bulk density and water infiltration represent improvements.
+We compared data collected in 2021 to data collected in 2018 to identify locations where each productivity indicator have improved or declined. Locations where compost was applied are marked with a heavy black border. Note that lower values in bulk density and water infiltration represent improvements.
 
 <i>Choose one metric at a time at bottom left. Click on any of the survey points to learn more.</i>
 
@@ -55,12 +55,24 @@ We compared data collected in 2018 to data collected in 2014 to identify locatio
 
 
 ### Soil nutrient concentrations
-In 2015, we measured the pH and the concentrations soil nutrients important to plant growth at two soil depths. In the map below, the inner circle represents the surface soil sample (0-10 cm deep), and the outer circle represents the deeper soil sample (10-40 cm). 
+In 2021, we also measured the pH and the concentrations soil nutrients important to plant growth at two soil depths. In the map below, the inner circle represents the surface soil sample (0-10 cm deep), and the outer circle represents the deeper soil sample (10-40 cm). 
 
 <i>Choose one metric at a time at bottom left. Click on any of the survey points to learn more.</i>
 
 <center>
 <iframe src="widget/soil_map_nutrients.html" data-external="1" style="border: none;" width = 100%; height = 550px;></iframe>
+</center>
+
+
+
+### Changes in soil nutrient concentrations
+
+We compared data collected in 2021 to data collected in 2018 to identify locations where each soil nutrient concentration has increased or decreased. Locations where compost was applied are marked with a heavy black border. In the map below, the inner circle represents the change in surface soil (0-10 cm deep), and the outer circle represents the change in deeper soil (10-40 cm).
+
+<i>Choose one metric at a time at bottom left. Click on any of the survey points to learn more.</i>
+
+<center>
+<iframe src="widget/soil_map_nutrient_change.html" data-external="1" style="border: none;" width = 100%; height = 550px;></iframe>
 </center>
 
 
