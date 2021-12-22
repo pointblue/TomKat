@@ -502,10 +502,10 @@ save_widget(
 
 ## 4. MAP soil nutrient change----
 soildat_nutrient_change = calculate_productivity_change(
-  df = soildat_nutrients,
+  df = soildat_nutrients %>% filter(SampleYear >= 2018), #exclude 2015 data
   current = max(soildat_nutrients$SampleYear),
   baseline = 2018,
-  difflabel = 'Difference<br>(2021-2018)') %>% 
+  difflabel = 'Difference') %>% 
   mutate(table_rowheader = if_else(table_header == 'pH', 'pH', 
                                    paste(gsub('<br>', ' ', table_rowheader),
                                          '<br>',
