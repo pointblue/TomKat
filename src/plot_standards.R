@@ -239,7 +239,7 @@ create_palettes = function(df, set) {
   if (set == 'soil_microbes') {
     return(
       list(
-        'Richness' = colorNumeric(
+        'default' = colorNumeric(
           palette = colorRamp(colors = c('#ffffff', pointblue.palette[4])),
           domain = df %>% pull(value)))
     )

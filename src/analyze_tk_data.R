@@ -543,14 +543,13 @@ save_widget(soil_nutrient_change_map,
 soildat_microbes = soildat %>% filter(SampleYear == 2015) %>% 
   select(Point, SampleYear, richA, richB) %>%
   filter(!is.na(richA)) %>% 
-  pivot_longer(richA:richB, names_to = 'rowname') %>% 
+  pivot_longer(richA:richB, names_to = 'pointlayer') %>% 
   mutate(
-    maplayer = 'Richness',
-    pointlayer = rowname,
+    maplayer = 'default',
     # additional formatting for specific points/layers
-    weight = if_else(Point %in% c('TOKA-022', 'TOKA-068') & 
-                       rowname != 'richA', 3, 1),
-    radius = if_else(rowname == 'richA', 3.5, 9))
+    point_weight = if_else(Point %in% c('TOKA-022', 'TOKA-068') & 
+                             pointlayer != 'richA', 3, 1),
+    point_radius = if_else(pointlayer == 'richA', 3.5, 9))
 
 # additional data on proportions by phylum (for pop-up graphs)
 soildat_phyla = compile_phyladat('data_raw/soil/Bacterial_Phyla_For_SOTR.xlsx')
@@ -561,8 +560,13 @@ soildat_phyla_popplots = tibble(
   table_html = create_pop_plots(soildat_phyla) %>% 
     leafpop::popupGraph(type = 'png', width = 400, height = 267))
 
+# create color palette
+soildat_microbe_palette = create_palettes(
+  soildat_microbes, 
+  set = 'soil_microbes')
+
 # create map:
-map_data(
+soil_microbe_map = map_data(
   dat = soildat_microbes,
   pts_toka = 'GIS/TOKA_point_count_grid.shp',
   fields = 'GIS/TK_veg_fields.shp',
@@ -571,11 +575,13 @@ map_data(
   maplayers = names(soildat_microbe_palette),
   legend.title = 'Bacterial<br>richness',
   htmltab = soildat_phyla_popplots
-) %>% 
-  save_widget(
-    pathout = 'docs/widget/soil_map_microbes.html',
-    selfcontained = FALSE, libdir = 'lib',
-    title =  paste0('TomKat Soil Microbes ', max(soildat_microbes$SampleYear)))
+)
+
+save_widget(
+  soil_microbe_map,
+  pathout = 'docs/widget/soil_map_microbes.html',
+  selfcontained = FALSE, libdir = 'lib',
+  title =  paste0('TomKat Soil Microbes ', max(soildat_microbes$SampleYear)))
 
 ## update webpage------
 # first review and update text in "Rmd/soil.Rmd"
