@@ -134,7 +134,8 @@ create_palettes = function(df, set) {
           palette = colorRamp(colors = c('#ffffff', pointblue.palette[10])),
           domain = df %>% filter(maplayer == 'Sodium (Na)') %>% 
             pull(value),
-          bins = c(0, 0.25, 0.5, 0.75, 1),
+          bins = c(0, 50, 75, 100, 125, 175),
+          # bins = c(0, 0.25, 0.5, 0.75, 1),
           na.color = pointblue.palette[6]),
         
         'Magnesium (Mg)' = colorBin(
@@ -155,6 +156,20 @@ create_palettes = function(df, set) {
           palette = colorRamp(colors = c('#ffffff', tk.palette[7])),
           domain = df %>% filter(maplayer == 'pH') %>% pull(value),
           bins = c(5, 5.5, 6, 6.5),
+          na.color = pointblue.palette[6]),
+        
+        'Phosphorus (Olsen P)' = colorBin(
+          palette = colorRamp(colors = c('#ffffff', tk.palette[7])),
+          domain = df %>% filter(maplayer == 'Phosphorus (Olsen P)') %>% 
+            pull(value),
+          bins = c(0, 5, 10, 15, 20),
+          na.color = pointblue.palette[6]),
+        
+        'Cation Exchange Capacity (CEC)' = colorBin(
+          palette = colorRamp(colors = c('#ffffff', pointblue.palette[9])),
+          domain = df %>% filter(maplayer == 'Cation Exchange Capacity (CEC)') %>% 
+            pull(value),
+          bins = c(0, 20, 25, 30, 35),
           na.color = pointblue.palette[6])
       ))
   }
