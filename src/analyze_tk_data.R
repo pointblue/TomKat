@@ -46,8 +46,8 @@ birdtest2 = testthat::expect_gte(count_surveys(birddat), 1205)
 
 birddens_point = calculate_focal_density(
   dat = birddat %>% filter(Transect == 'TOKA'),
-  strata = 'Point', dist = 'Distance Bin', dist_bin_id = NULL) %>%
-  write_csv('data_clean/TOKA_birds_density_by_point.csv')
+  strata = 'Point', dist = 'Distance Bin', dist_bin_id = NULL)
+write_csv(birddens_point, 'data_clean/TOKA_birds_density_by_point.csv')
 # -> 171 unique strata/sampling locations, 1-16 visits per sampling location
 
 # add totals and reformat:
@@ -83,8 +83,8 @@ save_widget(birddens_point_map,
 birddens_trend = calculate_focal_density(
   dat = birddat %>% filter(Transect == 'TOKA' & habitat == 'grassland'),
   strata = 'Transect', year = 'Year', 
-  dist = 'Distance Bin', dist_bin_id = NULL) %>%
-  write_csv('data_clean/TOKA_birds_density_by_year.csv')
+  dist = 'Distance Bin', dist_bin_id = NULL)
+write_csv(birddens_trend, 'data_clean/TOKA_birds_density_by_year.csv')
 # -> 10 strata (one per year), 105 unique sampling locations, 1-2 visits each
 
 # plot trend
@@ -119,8 +119,8 @@ save_widget(birddens_trend_plot,
 
 birdrich_point = birddat %>% 
   rename(id = Point) %>% 
-  calculate_species_richness() %>% 
-  write_csv('data_clean/TOKA_birds_richness_by_point.csv')
+  calculate_species_richness()
+write_csv(birdrich_point, 'data_clean/TOKA_birds_richness_by_point.csv')
 
 birdrich_point_format = format_bird_richness(birdrich_point)
 
@@ -156,8 +156,8 @@ birdrich_trend = birddat %>%
   filter(habitat != 'other') %>% 
   unite('id', habitat, Year, remove = FALSE) %>% 
   unite('Visit', Point, Visit, remove = FALSE) %>% 
-  calculate_species_richness() %>% 
-  write_csv('data_clean/TOKA_birds_richness_by_year.csv')
+  calculate_species_richness()
+write_csv(birdrich_trend, 'data_clean/TOKA_birds_richness_by_year.csv')
 
 # plot trend
 birdrich_trend_plot = birdrich_trend %>% 
@@ -203,16 +203,16 @@ streamdat_raw = readxl::read_excel(
 
 # UPDATE CODE ANNUALLY: filter to latest water year of data, and change file name
 streamdat_raw %>% filter(WY == 2020) %>% 
-  select('date/time' = date.time, `Water Temp`:`Streamflow, ft3/s`) %>% 
-  write_csv('data_raw/stream/WY2020.csv')
+  select('date/time' = date.time, `Water Temp`:`Streamflow, ft3/s`)
+write_csv(streamdat_raw, 'data_raw/stream/WY2020.csv')
 
 # compile all raw data
-streamdat = compile_stream_data(dir = 'data_raw/stream') %>% 
-  write_csv('data_clean/TOKA_stream_main.csv')
+streamdat = compile_stream_data(dir = 'data_raw/stream')
+write_csv(streamdat, 'data_clean/TOKA_stream_main.csv')
 
 ## 1. PLOT daily stats------
-streamdat_daily = calculate_stream_daily(streamdat) %>% 
-  write_csv('data_clean/TOKA_stream_daily_stats.csv')
+streamdat_daily = calculate_stream_daily(streamdat)
+write_csv(streamdat_daily, 'data_clean/TOKA_stream_daily_stats.csv')
 
 streamdat_daily_plot = streamdat_daily %>% 
   select(name, date, value = mean) %>% 
@@ -221,14 +221,16 @@ streamdat_daily_plot = streamdat_daily %>%
                  ymax = c(20, 100, 4),
                  ymin = c(0, 0, 0),
                  type = 'scatter', mode = 'lines',
-                 selector = TRUE, slider = TRUE) %>%
-  save_widget(pathout = 'docs/widget/stream_plot_daily.html',
-              selfcontained = FALSE, libdir = 'lib',
-              title = 'Honsinger Creek Daily Stats')
+                 selector = TRUE, slider = TRUE)
+
+save_widget(streamdat_daily_plot, 
+            pathout = 'docs/widget/stream_plot_daily.html',
+            selfcontained = FALSE, libdir = 'lib',
+            title = 'Honsinger Creek Daily Stats')
 
 ## 2. PLOT monthly stats---------
-streamdat_monthly = calculate_stream_monthly(streamdat_daily) %>% 
-  write_csv('data_clean/TOKA_stream_monthly_stats.csv')
+streamdat_monthly = calculate_stream_monthly(streamdat_daily) 
+write_csv(streamdat_monthly, 'data_clean/TOKA_stream_monthly_stats.csv')
 
 streamdat_monthly_plot = streamdat_monthly %>% 
   select(name, date, value = diff) %>% 
@@ -237,10 +239,12 @@ streamdat_monthly_plot = streamdat_monthly %>%
                  ymax = c(4, 5, 1),
                  ymin = c(-4, -5, -1),
                  type = 'bar', mode = NULL,
-                 selector = FALSE, slider = FALSE) %>%
-  save_widget(pathout = 'docs/widget/stream_plot_monthly.html',
-              selfcontained = FALSE, libdir = 'lib',
-              title = 'Honsinger Creek Monthly Stats')
+                 selector = FALSE, slider = FALSE)
+
+save_widget(streamdat_monthly_plot,
+            pathout = 'docs/widget/stream_plot_monthly.html',
+            selfcontained = FALSE, libdir = 'lib',
+            title = 'Honsinger Creek Monthly Stats')
 
 ## update webpage----------
 # first review and update text in "Rmd/stream.Rmd"
@@ -267,24 +271,26 @@ source('src/plot_weather_data.R')
 #extract daily rain totals and max/min temps:
 weatherdat = bind_rows(
   compile_weather_old(path = 'data_raw/weather_station/TOKA_Weather_ALL_9.8.10_7.24.17.csv'), 
-  compile_weather_west(dir = 'data_raw/weather_station')) %>% 
-  write_csv('data_clean/TOKA_weather_main.csv')
+  compile_weather_west(dir = 'data_raw/weather_station'))
+write_csv(weatherdat, 'data_clean/TOKA_weather_main.csv')
 
 # plot daily weather
 weatherdat_daily_plot = plot_daily_weather(
   weatherdat, colors = pointblue.palette[c(3,2,4)],
   ytitle = c('Temperature (F)', 'Precipitation (in)'), 
   yrange = c(0, 100, 0, 8),
-  selector = TRUE, slider = TRUE) %>%
-  save_widget(pathout = 'docs/widget/weather_plot_daily.html',
-              selfcontained = FALSE, libdir = 'lib',
-              title = 'TomKat Daily Weather')
+  selector = TRUE, slider = TRUE)
+
+save_widget(weatherdat_daily_plot,
+            pathout = 'docs/widget/weather_plot_daily.html',
+            selfcontained = FALSE, libdir = 'lib',
+            title = 'TomKat Daily Weather')
 
 ## 2. PLOT monthly stats----------
 # show as differences from 1980-2010 "normals"
 
-weatherdat_monthly = calculate_weather_monthly(weatherdat) %>% 
-  write_csv('data_clean/TOKA_weather_monthly_stats.csv')
+weatherdat_monthly = calculate_weather_monthly(weatherdat) 
+write_csv(weatherdat_monthly, 'data_clean/TOKA_weather_monthly_stats.csv')
 
 # GET HALF MOON BAY DATA FROM NOAA
 # set up API:
@@ -316,10 +322,12 @@ weatherdat_monthly_diffnorm = calculate_weather_diffs(
 weatherdat_monthly_plot = plot_monthly_weather(
   weatherdat_monthly_diffnorm, 
   colors = pointblue.palette[c(3, 2, 4)],
-  selector = TRUE) %>%
-  save_widget(pathout = 'docs/widget/weather_plot_monthly.html',
-              selfcontained = FALSE, libdir = 'lib',
-              title = 'TomKat Monthly Weather')
+  selector = TRUE)
+
+save_widget(weatherdat_monthly_plot,
+            pathout = 'docs/widget/weather_plot_monthly.html',
+            selfcontained = FALSE, libdir = 'lib',
+            title = 'TomKat Monthly Weather')
 
 ## 3. PLOT drought indices------------
 # get latest data from NOAA (requires API as described above)
@@ -330,18 +338,22 @@ zndx = get_drought_indices(datname = 'zndxdv')
 pdsi_plot = plot_drought_index(
   pdsi, valuebreaks = c(-20, -4, -3, -2, 2, 3, 4, 20),
   colors = c(pointblue.palette[3], '#ffffff', pointblue.palette[4]),
-  yrange = c(-10, 8)) %>%
-  save_widget(pathout = 'docs/widget/weather_plot_pdsi.html',
-              selfcontained = FALSE, libdir = 'lib',
-              title = 'Palmer Drought Severity Index')
+  yrange = c(-10, 8))
+
+save_widget(pdsi_plot,
+            pathout = 'docs/widget/weather_plot_pdsi.html',
+            selfcontained = FALSE, libdir = 'lib',
+            title = 'Palmer Drought Severity Index')
 
 zndx_plot = plot_drought_index(
   zndx, valuebreaks = c(-20, -2.75, -2, -1.25, 1, 2.5, 3.5, 20),
   colors = c(pointblue.palette[3], '#ffffff', pointblue.palette[4]),
-  yrange = c(-6, 8)) %>%
-  save_widget(pathout = 'docs/widget/weather_plot_zndx.html',
-              selfcontained = FALSE, libdir = 'lib',
-              title = 'Palmer Z Index')
+  yrange = c(-6, 8))
+
+save_widget(zndx_plot,
+            pathout = 'docs/widget/weather_plot_zndx.html',
+            selfcontained = FALSE, libdir = 'lib',
+            title = 'Palmer Z Index')
 
 ## update webpage----------
 # first review and update text in "Rmd/weather.Rmd"
