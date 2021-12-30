@@ -1,0 +1,59 @@
+---
+title: 'Water'
+output:
+  html_document:
+    theme: NULL
+    css: tk_page_style.css 
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+pointblue.palette = c("#3682C7", "#64AD34", "#F38118", "#00459A", "#B3D225", 
+                      "#96999C", "#5A5B5E")
+```
+
+#### Beginning July 2011, Point Blue Conservation Science installed a stream gauge on Honsinger Creek and began monitoring water temperature, stream flow, and stage, with assistance from Trout Unlimited. {#intro}
+
+### SMART Goal
+
+<b>Perennial flow:</b> Maintain year-round flow, even in drought years.
+
+
+### Daily water temperature, flow, and stage
+Daily average <font color='`r pointblue.palette[3]`'><b>water temperature</b></font>, <font color='`r pointblue.palette[2]`'><b>stream flow </b></font>, and <font color='`r pointblue.palette[1]`'><b>stage</b></font> from the Honsinger Creek stream gauge, along with the daily range observed.
+
+<i>Click & drag the slider at the bottom to view different dates.</i>
+
+<center>
+<iframe src="widget/stream_plot_daily.html" data-external="1" style="border: none;" width = 100%; height = 650px;></iframe>
+</center>
+
+
+
+### Warmer water and recovering flows
+Consistent with the warm weather at TomKat and the regional drought conditions, monthly average water temperatures were above the averages observed in Honsinger Creek throughout most of 2014-2017, while water depth was below average 2013-2017. In 2017, water depths increased and water temperatures began declining. 
+
+<center>
+<iframe src="widget/stream_plot_monthly.html" data-external="1" style="border: none;" width = 100%; height = 650px;></iframe>
+</center>
+
+----------------------------------------------------------
+
+### Glossary
+
+**Water temperature:** Water temperature determines the aquatic life that can survive in a stream. Many species have a preferred temperature range and will leave or experience stress or mortality if water temperatures are too high. Warm water also holds less oxygen than cool water, further stressing aquatic life. The source of the water (such as a spring) determines the initial temperature, and the physical character of the stream and surrounding watershed have important influences. A stream with fast-flowing water (such as on a steep slope), with deep pools and extensive shade will have cooler temperatures than a slow-flowing, wide and shallow stream exposed to sunlight.
+
+**Stream Flow:** Stream flow is a measurement of the volume of water flowing through the stream channel per unit of time (commonly cubic feet per second, or cfs), and is strongly related to stage (see below). No stream flow measurements were taken between November 2014 and October 2015.
+
+**Stage:** Stage is a measurement of water depth and is strongly related to stream flow, but is usually easier to measure. The higher the stage, the higher the stream flow, but the exact relationship between the two depends on the shape of the stream channel. In Honsinger Creek, the relationship between stage and stream flow likely varies between years because of frequent changes to the channel bed and sensor drift.
+
+### About this page
+
+This interactive web page was produced in [R](https://www.R-project.org/){target="_blank"} using [rmarkdown](https://rmarkdown.rstudio.com/){target="_blank"} and the [plotly package](https://plot.ly/r/){target="_blank"}. The code used to produce this web page is available on [Github](https://github.com/pointblue/tomkat){target="_blank"}.
+
+
+### For more information
+
+Please contact:  
+[Chelsea Carey, PhD](https://www.pointblue.org/employee_bios/chelsea-carey/){target="_blank"}  
+Working Lands Research Director
+[Point Blue Conservation Science](https://www.pointblue.org){target="_blank"}
