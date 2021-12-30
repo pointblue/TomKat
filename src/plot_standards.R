@@ -185,7 +185,7 @@ create_palettes = function(df, set) {
           domain = df %>% 
             filter(maplayer == 'Total Nitrogen (N)' & 
                      grepl('diff', table_rowname, ignore.case = TRUE)) %>% pull(value),
-          bins = c(-1, -0.01, 0.01, 1),
+          bins = c(-1, -0.001, 0.001, 1),
           na.color = pointblue.palette[6]),
         
         'Extractable Phosphorus (P)' = colorBin(
@@ -194,7 +194,7 @@ create_palettes = function(df, set) {
           domain = df %>% 
             filter(maplayer == 'Extractable Phosphorus (P)' & 
                      grepl('diff', table_rowname, ignore.case = TRUE)) %>% pull(value),
-          bins = c(-50, -0.05, 0.05, 50),
+          bins = c(-50, -0.001, 0.001, 50),
           na.color = pointblue.palette[6]),
         
         'Calcium (Ca)' = colorBin(
@@ -203,7 +203,7 @@ create_palettes = function(df, set) {
           domain = df %>% 
             filter(maplayer == 'Calcium (Ca)' & 
                      grepl('diff', table_rowname, ignore.case = TRUE)) %>% pull(value),
-          bins = c(-50, -0.05, 0.05, 50),
+          bins = c(-50, -0.001, 0.001, 50),
           na.color = pointblue.palette[6]),
         
         'Magnesium (Mg)' = colorBin(
@@ -212,7 +212,7 @@ create_palettes = function(df, set) {
           domain = df %>% 
             filter(maplayer == 'Magnesium (Mg)' & 
                      grepl('diff', table_rowname, ignore.case = TRUE)) %>% pull(value),
-          bins = c(-50, -0.05, 0.05, 50),
+          bins = c(-50, -0.001, 0.001, 50),
           na.color = pointblue.palette[6]),
         
         'Potassium (K)' = colorBin(
@@ -221,7 +221,7 @@ create_palettes = function(df, set) {
           domain = df %>% 
             filter(maplayer == 'Potassium (K)' & 
                      grepl('diff', table_rowname, ignore.case = TRUE)) %>% pull(value),
-          bins = c(-1, -0.05, 0.05, 1),
+          bins = c(-1, -0.001, 0.001, 1),
           na.color = pointblue.palette[6]),
         
         'Sodium (Na)' = colorBin(
@@ -230,7 +230,7 @@ create_palettes = function(df, set) {
           domain = df %>% 
             filter(maplayer == 'Sodium (Na)' & 
                      grepl('diff', table_rowname, ignore.case = TRUE)) %>% pull(value),
-          bins = c(-200, -1, 1, 200),
+          bins = c(-200, -0.001, 0.001, 200),
           na.color = pointblue.palette[6]),
         
         'Cation Exchange Capacity (CEC)' = colorBin(
@@ -239,7 +239,7 @@ create_palettes = function(df, set) {
           domain = df %>% 
             filter(maplayer == 'Cation Exchange Capacity (CEC)' & 
                      grepl('diff', table_rowname, ignore.case = TRUE)) %>% pull(value),
-          bins = c(-100, -0.05, 0.05, 100),
+          bins = c(-100, -0.001, 0.001, 100),
           na.color = pointblue.palette[6]),
         
         'pH' = colorBin(
@@ -248,7 +248,7 @@ create_palettes = function(df, set) {
           domain = df %>% 
             filter(maplayer == 'pH' & 
                      grepl('diff', table_rowname, ignore.case = TRUE)) %>% pull(value),
-          bins = c(-10, -0.05, 0.05, 10),
+          bins = c(-10, -0.001, 0.001, 10),
           na.color = pointblue.palette[6])
       ))
   }
