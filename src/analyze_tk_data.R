@@ -450,8 +450,8 @@ soil_productivity_change_map = map_data(
   palette = soildat_productivity_change_palettes,
   maplayers = names(soildat_productivity_change_palettes),
   multilegend = FALSE, 
-  legend.values = c(20, 0, -20, NA),
-  legend.labels = c('improving', 'little change', 'declining', 'no data'),
+  legend.values = c(20, 0, -20),
+  legend.labels = c('Improving', 'Little change', 'Declining'),
   legend.title = 'Direction of change',
   htmltab = soildat_productivity_change_tables
 )
@@ -484,7 +484,7 @@ soildat_nutrient_palettes = create_palettes(
 
 # create map:
 soil_nutrient_map = map_data(
-  dat = soildat_nutrients %>% filter(SampleYear == max(SampleYear) & !is.na(maplayer)),
+  dat = soildat_nutrients %>% filter(SampleYear == max(SampleYear)),
   pts_toka = 'GIS/TOKA_point_count_grid.shp',
   fields = 'GIS/TK_veg_fields.shp',
   boundary = 'GIS/TomKat_ranch_boundary.shp',
@@ -529,7 +529,7 @@ soil_nutrient_change_map = map_data(
   maplayers = names(soildat_nutrient_change_palettes),
   multilegend = FALSE, 
   legend.values = c(0.5, 0, -0.5, NA),
-  legend.labels = c('increasing', 'little change', 'decreasing', 'no data'),
+  legend.labels = c('Increasing', 'No change', 'Decreasing', 'Missing data'),
   legend.title = 'Direction of change',
   htmltab = soildat_nutrient_change_tables
 )
