@@ -238,8 +238,8 @@ map_data = function(dat, as_raster = FALSE, maplayers = NULL, htmltab = NULL,
   if (!is.null(fields)) {
     shp_poly <- read_sf(fields) %>% st_transform(4326)
     m <- m %>% 
-      addPolygons(data = shp_poly, fillColor = '#74b743', #point blue green
-                  color = 'black', weight = 1, fillOpacity = 0.1)
+      addPolygons(data = shp_poly, fillColor = '#666666', #gray
+                  color = 'black', weight = 1, fillOpacity = 0.15)
   }
   
   ## ranch boundary
@@ -309,7 +309,9 @@ map_data = function(dat, as_raster = FALSE, maplayers = NULL, htmltab = NULL,
           addLegend(pal = palette[[i]],
                     values = dat %>% filter(maplayer == maplayers[[i]]) %>% 
                       pull(value),
-                    title = maplayers[i],
+                    bins = 5,
+                    title = dat %>% filter(maplayer == maplayers[[i]]) %>% 
+                      slice(1) %>% pull(legend_title),
                     group = maplayers[i],
                     position = 'topright',
                     opacity = 1,
