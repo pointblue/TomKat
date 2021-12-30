@@ -178,7 +178,13 @@ format_soil_productivity_metrics = function(df) {
                                   carbonB = '% Carbon (10-40cm)',
                                   mean = 'Overall score'),
            # default:
-           table_caption = ''
+           table_caption = '',
+           legend_title = recode(var,
+                                 bulk.dens.gcm3 = 'Bulk density<br>(g/cm<sup>3</sup>)',
+                                 water.infil = 'Water<br>Infiltration<br>(min)',
+                                 carbonA = '% Carbon', 
+                                 carbonB = '% Carbon',
+                                 mean = 'Overall score<br>(percentile)')
            )
     
 }
