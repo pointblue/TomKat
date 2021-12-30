@@ -278,8 +278,9 @@ create_palettes = function(df, set) {
     return(
       list(
         'default' = colorNumeric(
-          palette = colorRamp(colors = c('#ffffff', pointblue.palette[4])),
-          domain = df %>% pull(value)))
+          palette = c('#ffffff', pointblue.palette[4]),
+          domain = NULL)
+        )
     )
   }
 }
