@@ -422,6 +422,12 @@ soil_productivity_map = map_data(
   multilegend = TRUE,
   htmltab = soildat_productivity_tables
 )
+# sandbox version for testing:
+save_widget(soil_productivity_map,
+            pathout = 'docs/sandbox/soil_map_productivity.html',
+            selfcontained = FALSE, libdir = 'lib',
+            title =  paste0('TomKat Soil Map ', max(soildat$SampleYear)))
+# final version
 save_widget(soil_productivity_map,
             pathout = 'docs/widget/soil_map_productivity.html',
             selfcontained = FALSE, libdir = 'lib',
@@ -467,6 +473,12 @@ soil_productivity_change_map = map_data(
   legend.title = 'Direction of change',
   htmltab = soildat_productivity_change_tables
 )
+# sandbox version for testing
+save_widget(soil_productivity_change_map,
+            pathout = 'docs/sandbox/soil_map_productivity_change.html',
+            selfcontained = FALSE, libdir = 'lib',
+            title =  paste0('TomKat Soil Changes 2018-', max(soildat$SampleYear)))
+# final version
 save_widget(soil_productivity_change_map,
             pathout = 'docs/widget/soil_map_productivity_change.html',
             selfcontained = FALSE, libdir = 'lib',
@@ -506,6 +518,13 @@ soil_nutrient_map = map_data(
   htmltab = soildat_nutrient_tables
 )
 
+# sandbox version for testing
+save_widget(
+  soil_nutrient_map,
+  pathout = 'docs/sandbox/soil_map_nutrients.html',
+  selfcontained = FALSE, libdir = 'lib',
+  title =  paste0('TomKat Soil Nutrients ', max(soildat_nutrients$SampleYear)))
+# final version
 save_widget(
   soil_nutrient_map,
   pathout = 'docs/widget/soil_map_nutrients.html',
@@ -545,6 +564,12 @@ soil_nutrient_change_map = map_data(
   legend.title = 'Direction of change',
   htmltab = soildat_nutrient_change_tables
 )
+# sandbox version for testing
+save_widget(soil_nutrient_change_map,
+            pathout = 'docs/sandbox/soil_map_nutrient_change.html',
+            selfcontained = FALSE, libdir = 'lib',
+            title =  paste0('TomKat Soil Changes 2018-', max(soildat$SampleYear)))
+# final version
 save_widget(soil_nutrient_change_map,
             pathout = 'docs/widget/soil_map_nutrient_change.html',
             selfcontained = FALSE, libdir = 'lib',
@@ -588,7 +613,13 @@ soil_microbe_map = map_data(
   legend.title = 'Bacterial<br>richness',
   htmltab = soildat_phyla_popplots
 )
-
+# sandbox version for testing
+save_widget(
+  soil_microbe_map,
+  pathout = 'docs/sandbox/soil_map_microbes.html',
+  selfcontained = FALSE, libdir = 'lib',
+  title =  paste0('TomKat Soil Microbes ', max(soildat_microbes$SampleYear)))
+# final version
 save_widget(
   soil_microbe_map,
   pathout = 'docs/widget/soil_map_microbes.html',
@@ -597,6 +628,9 @@ save_widget(
 
 ## update webpage------
 # first review and update text in "Rmd/soil.Rmd"
+# sandbox version for testing
+rmarkdown::render(input = 'Rmd/soil_sandbox.Rmd',
+                  output_file = here::here('docs/soil_sandbox.html'))
 
 rmarkdown::render(input = 'Rmd/soil.Rmd',
                   output_file = here::here('docs/soil.html'))
