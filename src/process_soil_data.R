@@ -41,15 +41,17 @@ calculate_bulk_density = function(df) {
 }
 
 calculate_water_infiltration = function(df) {
-  # select water infiltration metric based on sample year: two water
-  # infiltration tests performed in 2015 (prefer second one) but only one
-  # performed in 2018 (convert these using an equation)
+  # select second water infiltration attempt, even though in most years only 
+  # one water infiltration time was recorded; if not T2, convert from T1 using
+  # an equation: 
   df %>% 
     mutate(
       water.infiltration = if_else(
-        SampleYear == 2015, `Water Infiltration Time 2`, 
-        exp(0.84 * log(`Water Infiltration Time 1`) + 1.18)
-      ))
+        !is.na(`Water Infiltration Time 2`), 
+        `Water Infiltration Time 2`,
+        exp(1.18 + 0.84 * log(`Water Infiltration Time 1`))
+      )
+    )
 }
 
 summarize_soil_fielddata = function(df) {
@@ -171,7 +173,7 @@ format_soil_productivity_metrics = function(df) {
            # rownames within popup tables
            table_rowname = recode(var,
                                   bulk.dens.gcm3 = 'Bulk density (g/cm<sup>3</sup>)',
-                                  water.infil = 'Water Infiltration (min/in)',
+                                  water.infil = 'Water Infiltration (min)',
                                   carbonA = '% Carbon (0-10cm)', 
                                   carbonB = '% Carbon (10-40cm)',
                                   mean = 'Overall score'),
