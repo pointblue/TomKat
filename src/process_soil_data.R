@@ -228,7 +228,7 @@ format_soil_nutrients = function(df) {
              grepl('Calcium', var) ~ 'Calcium (Ca)',
              grepl('pH', var) ~ 'pH',
              grepl('CEC', var) ~ 'Cation Exchange Capacity (CEC)',
-             grepl('Olsen', var) ~ 'Phosphorus (Olsen P)'),
+             grepl('Olsen', var) ~ 'Extractable Phosphorus (P)'),
            # default
            point_weight = 1,
            # additional point size formatting for surface vs. deeper layers
@@ -253,8 +253,13 @@ format_soil_nutrients = function(df) {
              grepl('Calcium', var) ~ 'Calcium',
              grepl('pH', var) ~ '',
              grepl('CEC', var) ~ 'Cation Exchange<br>Capacity',
-             grepl('Olsen', var) ~ 'Phosphorus'),
+             grepl('Olsen', var) ~ 'Extractable<br>Phosphorus'),
            # default:
-           table_caption = ''
+           table_caption = '',
+           # legend titles (with line breaks and units?)
+           legend_title = if_else(
+             maplayer == 'pH',
+             table_header,
+             paste0(table_rowheader,'<br>', table_header))
            )
 }
