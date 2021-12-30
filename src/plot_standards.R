@@ -117,138 +117,154 @@ create_palettes = function(df, set) {
   if (set == 'soil_nutrients') {
     return(
       list(
-        'Total Nitrogen (N)' = colorBin(
-          palette = colorRamp(colors = c('#ffffff', pointblue.palette[4])),
-          domain = df %>% filter(maplayer == 'Total Nitrogen (N)') %>% 
-            pull(value),
-          bins = c(0, 0.2, 0.3, 0.4, 0.7),
+        # 'Total Nitrogen (N)' = colorBin(
+        #   palette = colorRamp(colors = c('#ffffff', pointblue.palette[4])), #dark blue
+        #   domain = df %>% filter(maplayer == 'Total Nitrogen (N)') %>% 
+        #     pull(value),
+        #   bins = c(0, 0.20, 0.25, 0.3, 0.4, 0.5, 0.7),
+        #   na.color = pointblue.palette[6]),
+        
+        'Total Nitrogen (N)' = colorNumeric(
+          palette = c('#ffffff', pointblue.palette[4]), #dark blue
+          domain = NULL,
           na.color = pointblue.palette[6]),
         
-        'Extractable Phosphorus (P)' = colorBin(
-          palette = colorRamp(colors = c('#ffffff', tk.palette[7])),
-          domain = df %>% filter(maplayer == 'Extractable Phosphorus (P)') %>% 
-            pull(value),
-          bins = c(0, 5, 10, 15, 20),
+        # 'Extractable Phosphorus (P)' = colorBin(
+        #   palette = colorRamp(colors = c('#ffffff', pointblue.palette[8])), #dark green
+        #   domain = df %>% filter(maplayer == 'Extractable Phosphorus (P)') %>% 
+        #     pull(value),
+        #   bins = c(0, 5, 10, 15, 20, 30, 50),
+        #   na.color = pointblue.palette[6]),
+        
+        'Extractable Phosphorus (P)' = colorNumeric(
+          palette = c('#ffffff', tk.palette[8]), #tk red
+          domain = NULL,
           na.color = pointblue.palette[6]),
         
-        'Calcium (Ca)' = colorBin(
-          palette = colorRamp(colors = c('#ffffff', tk.palette[6])),
-          domain = df %>% filter(maplayer == 'Calcium (Ca)') %>% 
-            pull(value),
-          bins = c(0, 10, 15, 20, 25),
+        # 'Calcium (Ca)' = colorBin(
+        #   palette = colorRamp(colors = c('#ffffff', tk.palette[6])), #teal
+        #   domain = df %>% filter(maplayer == 'Calcium (Ca)') %>% 
+        #     pull(value),
+        #   bins = c(0, 5, 10, 15, 20, 25),
+        #   na.color = pointblue.palette[6]),
+        
+        'Calcium (Ca)' = colorNumeric(
+          palette = c('#ffffff', pointblue.palette[3]), #orange
+          domain = NULL,
           na.color = pointblue.palette[6]),
         
-        'Magnesium (Mg)' = colorBin(
-          palette = colorRamp(colors = c('#ffffff', tk.palette[8])),
-          domain = df %>% filter(maplayer == 'Magnesium (Mg)') %>% 
-            pull(value),
-          bins = c(0, 5, 8, 11, 15),
+        # 'Magnesium (Mg)' = colorBin(
+        #   palette = colorRamp(colors = c('#ffffff', tk.palette[8])), #tk red
+        #   domain = df %>% filter(maplayer == 'Magnesium (Mg)') %>% 
+        #     pull(value),
+        #   bins = c(0, 5, 10, 15, 20),
+        #   na.color = pointblue.palette[6]),
+        
+        'Magnesium (Mg)' = colorNumeric(
+          palette = c('#ffffff', pointblue.palette[8]), #dark green
+          domain = NULL,
           na.color = pointblue.palette[6]),
         
-        'Potassium (K)' = colorBin(
-          palette = colorRamp(colors = c('#ffffff', pointblue.palette[3])),
-          domain = df %>% filter(maplayer == 'Potassium (K)') %>% 
-            pull(value),
-          bins = c(0, 0.5, 1, 1.5, 3),
+        # 'Potassium (K)' = colorBin(
+        #   palette = colorRamp(colors = c('#ffffff', pointblue.palette[3])), #orange
+        #   domain = df %>% filter(maplayer == 'Potassium (K)') %>% 
+        #     pull(value),
+        #   bins = c(0, 0.25, 0.5, 0.75, 1, 1.5, 3),
+        #   na.color = pointblue.palette[6]),
+        
+        'Potassium (K)' = colorNumeric(
+          palette = c('#ffffff', pointblue.palette[9]), #pink
+          domain = NULL,
           na.color = pointblue.palette[6]),
         
-        'Sodium (Na)' = colorBin(
-          palette = colorRamp(colors = c('#ffffff', pointblue.palette[10])),
-          domain = df %>% filter(maplayer == 'Sodium (Na)') %>% 
-            pull(value),
-          bins = c(0, 50, 75, 100, 125, 175),
-          # bins = c(0, 0.25, 0.5, 0.75, 1),
+        # 'Sodium (Na)' = colorBin(
+        #   palette = colorRamp(colors = c('#ffffff', pointblue.palette[10])), #purple
+        #   domain = df %>% filter(maplayer == 'Sodium (Na)') %>% 
+        #     pull(value),
+        #   bins = c(0, 0.25, 0.5, 0.75, 1),
+        #   na.color = pointblue.palette[6]),
+        
+        'Sodium (Na)' = colorNumeric(
+          palette = c('#ffffff', pointblue.palette[11]), #yellow
+          domain = NULL,
           na.color = pointblue.palette[6]),
         
-        'Cation Exchange Capacity (CEC)' = colorBin(
-          palette = colorRamp(colors = c('#ffffff', pointblue.palette[9])),
-          domain = df %>% filter(maplayer == 'Cation Exchange Capacity (CEC)') %>% 
-            pull(value),
-          bins = c(0, 20, 25, 30, 35),
+        # 'Cation Exchange Capacity (CEC)' = colorBin(
+        #   palette = colorRamp(colors = c('#ffffff', pointblue.palette[9])), #pink
+        #   domain = df %>% filter(maplayer == 'Cation Exchange Capacity (CEC)') %>% 
+        #     pull(value),
+        #   bins = c(15, 20, 25, 30, 40, 50, 70),
+        #   na.color = pointblue.palette[6]),
+        
+        'Cation Exchange Capacity (CEC)' = colorNumeric(
+          palette = c('#ffffff', pointblue.palette[10]), #purple
+          domain = NULL,
           na.color = pointblue.palette[6]),
         
-        'pH' = colorBin(
-          palette = colorRamp(colors = c('#ffffff', tk.palette[7])),
-          domain = df %>% filter(maplayer == 'pH') %>% pull(value),
-          bins = c(5, 5.5, 6, 6.5),
+        # 'pH' = colorBin(
+        #   palette = colorRamp(colors = c('#ffffff', tk.palette[7])),
+        #   domain = df %>% filter(maplayer == 'pH') %>% pull(value),
+        #   bins = c(5, 5.5, 6, 6.5, 7),
+        #   na.color = pointblue.palette[6])
+        
+        'pH' = colorNumeric(
+          palette = c('#ffffff', tk.palette[7]), #tk brown
+          domain = NULL,
           na.color = pointblue.palette[6])
       ))
   }
   if (set == 'soil_nutrient_change') {
     return(
       list(
-        # same scale of declining/little change/improving, but bins are different for
-        # each metric
+        # same scale of declining/little change/improving, but bins identifying
+        # improvement, decline, or little change may be customizable/different
+        # for each metric
         'Total Nitrogen (N)' = colorBin(
-          palette = colorRamp(
-            colors = c(pointblue.palette[3], '#ffffff', pointblue.palette[4])),
-          domain = df %>% 
-            filter(maplayer == 'Total Nitrogen (N)' & 
-                     grepl('diff', table_rowname, ignore.case = TRUE)) %>% pull(value),
-          bins = c(-1, -0.001, 0.001, 1),
+          palette = c(pointblue.palette[3], '#ffffff', pointblue.palette[4]),
+          domain = NULL,
+          bins = c(-Inf, -0.005, 0.005, Inf),
           na.color = pointblue.palette[6]),
         
         'Extractable Phosphorus (P)' = colorBin(
-          palette = colorRamp(
-            colors = c(pointblue.palette[3], '#ffffff', pointblue.palette[4])),
-          domain = df %>% 
-            filter(maplayer == 'Extractable Phosphorus (P)' & 
-                     grepl('diff', table_rowname, ignore.case = TRUE)) %>% pull(value),
-          bins = c(-50, -0.001, 0.001, 50),
+          palette = c(pointblue.palette[3], '#ffffff', pointblue.palette[4]),
+          domain = NULL,
+          bins = c(-Inf, -0.005, 0.005, Inf),
           na.color = pointblue.palette[6]),
         
         'Calcium (Ca)' = colorBin(
-          palette = colorRamp(
-            colors = c(pointblue.palette[3], '#ffffff', pointblue.palette[4])),
-          domain = df %>% 
-            filter(maplayer == 'Calcium (Ca)' & 
-                     grepl('diff', table_rowname, ignore.case = TRUE)) %>% pull(value),
-          bins = c(-50, -0.001, 0.001, 50),
+          palette = c(pointblue.palette[3], '#ffffff', pointblue.palette[4]),
+          domain = NULL,
+          bins = c(-Inf, -0.005, 0.005, Inf),
           na.color = pointblue.palette[6]),
         
         'Magnesium (Mg)' = colorBin(
-          palette = colorRamp(
-            colors = c(pointblue.palette[3], '#ffffff', pointblue.palette[4])),
-          domain = df %>% 
-            filter(maplayer == 'Magnesium (Mg)' & 
-                     grepl('diff', table_rowname, ignore.case = TRUE)) %>% pull(value),
-          bins = c(-50, -0.001, 0.001, 50),
+          palette = c(pointblue.palette[3], '#ffffff', pointblue.palette[4]),
+          domain = NULL,
+          bins = c(-Inf, -0.005, 0.005, Inf),
           na.color = pointblue.palette[6]),
         
         'Potassium (K)' = colorBin(
-          palette = colorRamp(
-            colors = c(pointblue.palette[3], '#ffffff', pointblue.palette[4])),
-          domain = df %>% 
-            filter(maplayer == 'Potassium (K)' & 
-                     grepl('diff', table_rowname, ignore.case = TRUE)) %>% pull(value),
-          bins = c(-1, -0.001, 0.001, 1),
+          palette = c(pointblue.palette[3], '#ffffff', pointblue.palette[4]),
+          domain = NULL,
+          bins = c(-Inf, -0.005, 0.005, Inf),
           na.color = pointblue.palette[6]),
         
         'Sodium (Na)' = colorBin(
-          palette = colorRamp(
-            colors = c(pointblue.palette[3], '#ffffff', pointblue.palette[4])),
-          domain = df %>% 
-            filter(maplayer == 'Sodium (Na)' & 
-                     grepl('diff', table_rowname, ignore.case = TRUE)) %>% pull(value),
-          bins = c(-200, -0.001, 0.001, 200),
+          palette = c(pointblue.palette[3], '#ffffff', pointblue.palette[4]),
+          domain = NULL,
+          bins = c(-Inf, -0.005, 0.005, Inf),
           na.color = pointblue.palette[6]),
         
         'Cation Exchange Capacity (CEC)' = colorBin(
-          palette = colorRamp(
-            colors = c(pointblue.palette[3], '#ffffff', pointblue.palette[4])),
-          domain = df %>% 
-            filter(maplayer == 'Cation Exchange Capacity (CEC)' & 
-                     grepl('diff', table_rowname, ignore.case = TRUE)) %>% pull(value),
-          bins = c(-100, -0.001, 0.001, 100),
+          palette = c(pointblue.palette[3], '#ffffff', pointblue.palette[4]),
+          domain = NULL,
+          bins = c(-Inf, -0.005, 0.005, Inf),
           na.color = pointblue.palette[6]),
         
         'pH' = colorBin(
-          palette = colorRamp(
-            colors = c(pointblue.palette[3], '#ffffff', pointblue.palette[4])),
-          domain = df %>% 
-            filter(maplayer == 'pH' & 
-                     grepl('diff', table_rowname, ignore.case = TRUE)) %>% pull(value),
-          bins = c(-10, -0.001, 0.001, 10),
+          palette = c(pointblue.palette[3], '#ffffff', pointblue.palette[4]),
+          domain = NULL,
+          bins = c(-Inf, -0.005, 0.005, Inf),
           na.color = pointblue.palette[6])
       ))
   }
