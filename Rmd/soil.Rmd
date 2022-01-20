@@ -16,7 +16,7 @@ nsites <- readr::read_csv(here::here('data_clean/TOKA_soil_main.csv')) %>%
   dplyr::count()
 ```
 
-#### Since 2014, Point Blue Conservation Science has tested soils at `r nsites` sites across TomKat Ranch. These data allow us to evaluate soil productivity throughout the ranch and track changes over time. {#intro}
+#### Since 2014, Point Blue Conservation Science has tested soils across TomKat Ranch. These data allow us to evaluate soil productivity throughout the ranch and track changes over time. {#intro}
 
 
 ### SMART Goals
@@ -30,7 +30,7 @@ nsites <- readr::read_csv(here::here('data_clean/TOKA_soil_main.csv')) %>%
 
 ### Soil productivity
 
-In 2021, we measured three indicators of soil productivity: organic carbon content at two depths (0-10cm and 10-40cm), surface soil bulk density, and water infiltration rates. We also produced an overall score combining all three indicators. 
+In 2021, we measured three indicators of soil productivity at 15 sites: organic carbon content at two depths (0-10cm and 10-40cm), surface soil bulk density, and water infiltration rates. We also produced an overall score combining all three indicators. 
 
 In the map below, each point represents a soil sample location, with colors representing the score for each indicator. For carbon, the inner circle represents the surface soil sample (0-10 cm deep), and the outer circle represents the deeper soil sample (10-40 cm). Two locations where compost was applied are marked with a heavy black border.  
 
@@ -44,7 +44,7 @@ In the map below, each point represents a soil sample location, with colors repr
 
 ### Changes in soil productivity
 
-We compared data collected in 2021 to data collected in 2018 to identify locations where each productivity indicator have improved or declined. Locations where compost was applied are marked with a heavy black border. Note that lower values in bulk density and water infiltration represent improvements.
+We compared data collected in 2021 to data collected in 2018 to identify sites where productivity indicators have improved or declined: <b>93% showed an improvement or no change</b> in their overall soil productivity since 2018. Locations where compost was applied are marked with a heavy black border. Note that lower values in bulk density and water infiltration represent improvements.
 
 <i>Choose one metric at a time at bottom left. Click on any of the survey points to learn more.</i>
 
@@ -94,6 +94,16 @@ In 2018, we analyzed the richness and composition of soil bacterial communities 
 <b>Organic carbon content:</b> An indicator of soil organic matter and soil productivity, organic carbon is measured as the percent of soil volume made up by organic carbon. Productive soils have an abundant microbial community that contribute to high levels of soil organic matter, driving plant growth and improving soil stabilization and capacity for storing water.
 
 <b>Overall productivity score:</b> To identify the overall most productive locations within TomKat Ranch, or the least productive locations that may be good candidates for management actions, we combined values of all 3 soil indicators above into one overall score. We fit [empirical cumulative distribution functions](https://www.r-bloggers.com/exploratory-data-analysis-conceptual-foundations-of-empirical-cumulative-distribution-functions/){target="_blank"} to each productivity indicator (including separate scores for surface and deeper soil carbon) that effectively ranked each sampling location against each other. We reversed the bulk density and water infiltration rankings because for these indicators, lower values are better for soil productivity. We then calculated an overall percentile score as the mean of these individual percentile scores, weighting each indicator equally, so that a high value represents a relatively high overall productivity. <b>*Note:</b> These scores are only based on comparing these locations at TomKat to each other and not to values that may be found elsewhere on the ranch or beyond. 
+
+<b>Total nitrogen:</b> An indicator of all nitrogen in the soil, whether it is readily bioavailable or not. Nitrogen is an important and often limiting plant nutrient, and this indicator includes both organic and inorganic (ammonium, nitrate) forms.
+
+<b>Extractable Phosphorus:</b> An indicator of bioavailable phosphorus, which is an important and often limiting plant nutrient.
+
+<b>Calcium, Magnesium, Potassium, Sodium:</b> Indicators of soil fertility, calcium, magnesium, and potassium are essential plant nutrients. Together with sodium, they make up the majority of base (positively charged, non-acidic) cations in the soil.
+
+<b>Cation Exchange Capacity:</b> An indicator of the relative ability of soils to store cations. The larger the number, the more cations (both base and acidic cations such as aluminum) the soil can hold. Cation exchange capacity values have been estimated here by summing the base cations, an approach that slightly underestimates capacity in acidic soil such as those at TomKat Ranch.
+
+<b>pH:</b> An indicator of the relative acidity or alkalinity of the soil. Soil pH affects the availability of some plant nutrients such as phosphorus and iron. All else being equal, nutrient availability is optimized in soils that have a near-neutral pH (6.5-7.5).
 
 <b>Bacterial and fungal richness:</b> The number of bacterial and fungal species observed in each soil sample. (Species were determined using operational taxonomic units (OTUs) at 97% sequence similarity. An OTU is composed of a group of closely related individuals.) 
 
