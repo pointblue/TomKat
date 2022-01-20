@@ -194,7 +194,7 @@ source('src/plot_stream_data.R')
 
 # create CSV for latest WY of data (Excel file too large to store on Github)
 streamdat_raw = readxl::read_excel(
-  path = 'data_raw/stream/Pe01 Honsinger Creek streamflow WY2011 - WY2020.xlsx',
+  path = 'data_raw/stream/Pe01 Honsinger Creek streamflow WY2011 - WY2021.xlsx',
   sheet = 2, skip = 4) %>% 
   rename(date.time = 'date/time') %>% 
   mutate(year = format(date.time, '%Y') %>% as.numeric(),
@@ -202,9 +202,9 @@ streamdat_raw = readxl::read_excel(
          WY = if_else(mo <= 9, year, year + 1))
 
 # UPDATE CODE ANNUALLY: filter to latest water year of data, and change file name
-streamdat_raw %>% filter(WY == 2020) %>% 
-  select('date/time' = date.time, `Water Temp`:`Streamflow, ft3/s`)
-write_csv(streamdat_raw, 'data_raw/stream/WY2020.csv')
+streamdat_raw %>% filter(WY == 2021) %>% 
+  select('date/time' = date.time, `Water Temp`:`Streamflow, ft3/s`) %>% 
+  write_csv('data_raw/stream/WY2021.csv')
 
 # compile all raw data
 streamdat = compile_stream_data(dir = 'data_raw/stream')
