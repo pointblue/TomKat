@@ -18,7 +18,7 @@ rmarkdown::render(input = 'Rmd/index.Rmd',
 
 # readme for git repo https://github.com/pointblue/TomKat
 rmarkdown::render(input = 'Rmd/README.Rmd',
-                  output_file = here::here('README.Rmd')) # store in top-level directory
+                  output_file = here::here('README.md')) # store in top-level directory
 
 # BIRDS-------------
 source('src/process_bird_data.R')
