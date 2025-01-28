@@ -133,16 +133,16 @@ birdrich_point_tables = create_html_tables(
 # pop-up tables)
 
 birdrich_point_map = map_data(
-    dat = birdrich_point_format %>% filter(var == 'estimated'),
-    as_raster = TRUE,
-    pts_toka = 'GIS/TOKA_point_count_grid.shp',
-    pts_hocr = 'GIS/HOCR_point_count_riparian.shp',
-    bins = c(0, 15, 25, 35, 45, 100),
-    legend.labels = c('0 - 15', '16 - 25', '25 - 35', '35 - 45', '> 45'),
-    legend.title = 'Estimated<br>species<br>richness',
-    htmltab = birdrich_point_tables,
-    fields = 'GIS/TK_veg_fields.shp',
-    boundary = 'GIS/TomKat_ranch_boundary.shp')
+  dat = birdrich_point_format %>% filter(var == 'estimated'),
+  as_raster = TRUE,
+  pts_toka = 'GIS/TOKA_point_count_grid.shp',
+  pts_hocr = 'GIS/HOCR_point_count_riparian.shp',
+  bins = c(0, 15, 25, 35, 45, 100),
+  legend.labels = c('0 - 15', '16 - 25', '25 - 35', '35 - 45', '> 45'),
+  legend.title = 'Estimated<br>species<br>richness',
+  htmltab = birdrich_point_tables,
+  fields = 'GIS/TK_veg_fields.shp',
+  boundary = 'GIS/TomKat_ranch_boundary.shp')
 
 save_widget(birdrich_point_map,
             pathout = 'docs/widget/bird_map_richness.html',
@@ -372,7 +372,7 @@ source('src/process_soil_data.R')
 
 # Note: these functions may need updating with additional sample years!
 
-soildat = compile_soil_fielddata('data_raw/soil/TOKA_cadcsoil2014to21.csv') %>% 
+soildat = compile_soil_fielddata('data_raw/soil/TOKA_soildata_CADC_2014to24.csv') %>% 
   calculate_bulk_density() %>% 
   calculate_water_infiltration() %>% 
   summarize_soil_fielddata() %>% 
@@ -404,7 +404,7 @@ soildat_productivity = soildat %>%
 # create pop-up tables of data (most recent year only)
 soildat_productivity_tables = create_html_tables(
   soildat_productivity %>% filter(SampleYear == max(soildat$SampleYear)), 
-  set = 'soil_productivity')
+  set = 'soil_productivity')  
 
 # generate color palettes for range of each metric (most recent year only)
 soildat_productivity_palettes = create_palettes(
