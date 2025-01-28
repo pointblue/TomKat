@@ -2,19 +2,19 @@
 ### TomKat Ranch Veg Code 01-2025 #########
 ############################################################################
 #author: M. Preston
-#questions labeled with #EF?
 
 #Set working directory, read in data and background files
 #CA plant list updated to V2
 #Invasives updated specifically for TomKat
 rm(list=ls()) #clear everything before starting
-lol.path<-file.path(getwd(),'data_raw', 'lol') #set the path to land owner letter data
+
+lol.path<-file.path(getwd(),"data_raw","lol")
 
 main<-read.csv(file.path(lol.path,"toka_main.csv"))
 lpi<-read.csv(file.path(lol.path, "toka_lpi.csv"))
 checklist<-read.csv(file.path(lol.path,"toka_check.csv"))
 CAPlants<-read.csv(file.path(lol.path,"CAPlantsv3.csv"))
-Invasives<-read.csv(file.path(lol.path,"toka_invasives.csv")) #EF? not running
+Invasives<-read.csv(file.path(lol.path,"toka_invasives.csv")) #need file
 point24 <- read.csv(file.path(lol.path,"point24.csv"))
 
 #load these packages
