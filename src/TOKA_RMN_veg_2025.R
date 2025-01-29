@@ -199,12 +199,13 @@ lpi.trimlong$Tally<-1
 
 #remove all the non-plant rows of data from lpi.trimlong
 lpi.trimlong$Spp<-as.factor(lpi.trimlong$Spp)
-Exclude<-c("", "AM", "ASTERA", "APIACE", "BORAGI", "FABACE", "2FA", "2FERN", "2FORB", "2FP", "2GA", "2GP", "2LICHN", #2GP unknown perennial grass, 2FP unkown perennial fob
+Exclude<-c("", "AM", "ASTERA", "APIACE", "BORAGI", "FABACE", "2FA", "2FERN", "2FORB", "2FP", "2GA", "2LICHN", #"2GP",  unknown perennial grass, 2FP unkown perennial fob
            "2LTR", "2LTRWS",  "2PLANT",  "2W", "NOPLANT", "L", "S", "M", "R", "WL", "NA")
 lpi.trimlong<- lpi.trimlong[!(lpi.trimlong$Spp %in% Exclude),]
 lpi.trimlong<-droplevels(lpi.trimlong) 
 lpi.trimlong<-lpi.trimlong %>% tidyr::drop_na(Spp)
 levels(lpi.trimlong$Spp)
+str(lpi.trimlong)
 
 #newlpi used for absolute cover
 newlpi<-reshape2::dcast(lpi.trimlong, pointyear~Spp,value.var=c("Tally"), sum)
@@ -212,7 +213,7 @@ newlpi<-merge(newlpi, a, by="pointyear")
 pointyear<-newlpi$pointyear
 
 #Almost there, just some tidying
-drops<-c("","Var.2", "2FA", "2FORB", "2FP", "2FS", "2GA", "2GP", "2LICHN", "2LTR", "2LTRWS", "2MOSS", "2PLANT", 
+drops<-c("","Var.2", "2FA", "2FORB", "2FP", "2FS", "2GA", "2LICHN", "2LTR", "2LTRWS", "2MOSS", "2PLANT", #2GP
          "2W", "NA", "NumIndices", "NOPLANT", "UNKNWN", "M", "L", "EM", "AM", "R", "WL", "S")
 newlpi <- newlpi[,!(names(newlpi) %in% drops)]
 
@@ -251,10 +252,14 @@ longlpi2<-lpi.trimlong
 longlpi2$FunGrp<-NULL
 longlpi2$FunGrp<-CAPlantsI$FunGrp[match(lpi.trimlong$Spp,CAPlantsI$Accepted.Symbol)]
 longlpi2$FunGrp<-as.factor(longlpi2$FunGrp)
-longlpi2$Provenance<-SppList$Provenance[match(lpi.trimlong$Spp,SppList$Spp)]
+longlpi2$Provenance<-SppList$Provenance[match(lpi.trimlong$Spp,SppList$Spp)]  #includes 2GP
 
+longlpi2[which(longlpi2$Spp=="2GP"),]$FunGrp <-"Perennial Grass" #assign perennial grass to 2GP
+ 
 #double check your FunGrps
 levels(longlpi2$FunGrp)
+
+head(subset(longlpi2, Spp=="2GP"),5) #check assigned perennial grass to 2GP
 
 #table of absolute cover by functional group incl. invasives
 Fun.SumI<-aggregate(longlpi2$Tally, list(longlpi2$pointyear, longlpi2$FunGrp), sum)
@@ -287,14 +292,24 @@ pg.diff.24.21 <- Fun.SumI2 %>%
     .groups = "drop"                   # Drop the grouping structure
   )
 
-as.data.frame(Fun.SumI2)
+pg.diff.24.16 <- Fun.SumI2 %>%
+  filter(year %in% c(2024, 2016)) %>%  # Filter rows for years 2024 and 2021
+  group_by(point) %>%                  # Group by 'point'
+  summarise(
+    PG_Difference = `Perennial Grass`[year == 2024] - `Perennial Grass`[year == 2016],
+    .groups = "drop"                   # Drop the grouping structure
+  )
 
+t.diff<- pg.diff.24.21 %>% 
+  left_join(pg.diff.24.16, by="point") %>% 
+  rename(PG24to21 = PG_Difference.x, PG24to16 = PG_Difference.y); t.diff
 
+t.diff %>% summarise(across(everything(), mean, na.rm = TRUE))
 ################################################################################
 ######### get your cover tables ready to plot (with and without invasives) ##### 
 ################################################################################
 #remove extra columns so you can melt
-funplotI2<-Fun.SumI2[,-11]
+funplotI2<-Fun.SumI2[,-c(11:13)]
 
 #melt that!
 funplotI2<-reshape2::melt(funplotI2, id="pointyear")
@@ -355,7 +370,7 @@ ggplot2::ggplot(funplotI2, aes(x=year, y=Cover))+
   theme(legend.text = element_text(size=8)) +
   theme(legend.title = element_blank()) +
   scale_fill_manual(values = c("olivedrab", "steelblue3", "orange3","mediumpurple4",
-                               "aquamarine","firebrick4", "indianred2", "gold1", "yellowgreen")) +
+                               "aquamarine","firebrick4", "indianred2", "gold1", "yellowgreen", "lightgray", "darkgray")) +
   facet_wrap(~point, ncol = 5) +
   theme_bw()+
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
@@ -383,7 +398,7 @@ g+
 
 g+
   geom_point(aes(color = FunGrp)) + geom_line(aes(linetype = "dotted", group=FunGrp, color=FunGrp))+
-  geom_errorbar(aes(x))+
+  geom_errorbar(aes(ymin=Cover-se, max = Cover+se ), width=.1, color="lightgray")+
   theme(legend.position = "top") + 
   theme(legend.text = element_text(size=8)) +
   theme(legend.title = element_blank()) +
@@ -393,6 +408,25 @@ g+
   guides(fill=guide_legend(title="Functional Group"))+
   #theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   labs(x="year", y="cover (%)")
+
+fungroup2<-subset(fungroup, FunGrp =="Perennial Grass")
+ 
+g2<- ggplot(fungroup2, aes(x=year, y=Cover))
+
+g2+
+  geom_point(aes(color = FunGrp)) + geom_line(aes(linetype = "dotted", group=FunGrp, color=FunGrp))+
+  geom_errorbar(aes(ymin=Cover-se, max = Cover+se ), width=.1, color="lightgray")+
+  theme(legend.position = "top") + 
+  theme(legend.text = element_text(size=8)) +
+  theme(legend.title = element_blank()) +
+  scale_fill_manual(values = c("steelblue3")) +
+  theme_bw()+
+  guides(fill=guide_legend(title="Functional Group"))+
+  ylim(c(0,50))+
+  #theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  labs(x="year", y="cover (%)")
+
+fungroup2
 
 ################################################################################
 ## Plots: Species Richness by Point and Year, color coded by fun grp
