@@ -1,4 +1,4 @@
-# TomKat State of the Ranch Data Pages
+# TomKat State of the Ranch Data Project
 
 [Point Blue Conservation Science](http://www.pointblue.org) has
 partnered with [TomKat Ranch](https://tomkatranch.org) to collect many
