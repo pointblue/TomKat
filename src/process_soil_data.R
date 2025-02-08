@@ -21,7 +21,7 @@ compile_soil_fielddata = function(path) {
                                              TRUE ~ `Bulk Density Dry Wt`)) %>% 
     # convert water infiltration time from h:m:s to minutes
     mutate(across(c('Water Infiltration Time 1':'Water Infiltration Time 3'),
-                  ~as.difftime(., units = 'mins') %>% as.numeric())) %>% 
+                  ~as.difftime(format(.,format="%H:%M:%S"), units = 'mins') %>% as.numeric())) %>% 
     # fix missing carbon values reported as 0 (the only zeroes for carbon)
     mutate(
       `Carbon 0-10 cm` = case_when(
