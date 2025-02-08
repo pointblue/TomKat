@@ -441,8 +441,8 @@ save_widget(soil_productivity_map,
 soildat_productivity_change = calculate_productivity_change(
   df = soildat_productivity,
   current = max(soildat_productivity$SampleYear),
-  baseline = 2018,
-  difflabel = 'Difference<br>(2021-2018)') %>% 
+  baseline = 2015,
+  difflabel = 'Difference<br>(2024-2015)') %>% 
   mutate(
     table_rowheader = maplayer,
     table_header = case_when(
