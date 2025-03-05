@@ -29,8 +29,8 @@ source('src/plot_bird_data.R')
 birddat = compile_bird_data('data_raw/TOKA_HOCR_PC_2010_2020.csv') %>%
   # add simplistic habitat classifications:
   left_join(read_csv('data_clean/sample_point_habitat.csv'), by = 'Point') %>% 
-  mutate(habitat = if_else(is.na(habitat), 'other', NA_character_)) %>% 
-  write_csv('data_clean/TOKA_birds_main.csv')
+  mutate(habitat = if_else(is.na(habitat), 'other', NA_character_)) #%>% 
+  #write_csv('data_clean/TOKA_birds_main.csv')
 # Note: birddat does include all distances <300 and juveniles, but not flyovers
 
 # check that number of species and surveys hasn't decreased: update these
@@ -477,12 +477,12 @@ soil_productivity_change_map = map_data(
 save_widget(soil_productivity_change_map,
             pathout = 'docs/sandbox/soil_map_productivity_change.html',
             selfcontained = FALSE, libdir = 'lib',
-            title =  paste0('TomKat Soil Changes 2018-', max(soildat$SampleYear)))
+            title =  paste0('TomKat Soil Changes 2015-', max(soildat$SampleYear)))
 # final version
 save_widget(soil_productivity_change_map,
             pathout = 'docs/widget/soil_map_productivity_change.html',
             selfcontained = FALSE, libdir = 'lib',
-            title =  paste0('TomKat Soil Changes 2018-', max(soildat$SampleYear)))
+            title =  paste0('TomKat Soil Changes 2015-', max(soildat$SampleYear)))
 
 
 ## 3. MAP soil nutrient concentrations------
