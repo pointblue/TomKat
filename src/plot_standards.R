@@ -116,7 +116,7 @@ create_palettes = function(df, set) {
         '% Carbon' = colorBin(
           palette = c(pointblue.palette[3], '#ffffff', pointblue.palette[4]),
           domain = NULL,
-          bins = c(-Inf, -0.05, 0.05, Inf),
+          bins = c(-Inf, -0.3, 0.3, Inf),
           na.color = pointblue.palette[6])
       ))
   }
