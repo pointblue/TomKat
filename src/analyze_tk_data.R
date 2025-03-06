@@ -36,8 +36,8 @@ birddat = compile_bird_data('data_raw/TOKA_HOCR_PC_2010_2020.csv') %>%
 
 # check that number of species and surveys hasn't decreased: update these
 # numbers with last year's totals!
-birdtest1 = testthat::expect_gte(count_species(birddat), 94)
-birdtest2 = testthat::expect_gte(count_surveys(birddat), 1205)
+birdtest1 = testthat::expect_gte(count_species(birddat), 95)
+birdtest2 = testthat::expect_gte(count_surveys(birddat), 1289)
 
 
 ## 1. MAP avg density per point------------- 
