@@ -64,10 +64,10 @@ calculate_focal_density = function(dat,
 
   # fit distance functions and estimate densities per sample point for each
   #  focal species: (skip wcsp for now)
-  grsp = pbdistance::fit_distance_models(data = fdat, spec = 'grsp', 
+  grsp = fit_distance_models(data = fdat, spec = 'grsp', 
                                          maxdist = 100,
                                          bins = c(0, 30, 50, 70, 80, 90, 100))
-  savs = pbdistance::fit_distance_models(data = fdat, spec = 'savs', 
+  savs = fit_distance_models(data = fdat, spec = 'savs', 
                                          maxdist = 100,
                                          bins = c(0, 30, 50, 70, 80, 90, 100))
   # wcsp = pbdistance::fit_distance_models(data = fdat, spec = 'wcsp', 
