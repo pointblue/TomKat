@@ -71,6 +71,11 @@ birddens_point_map = map_data(
 )
 
 save_widget(birddens_point_map,
+            pathout = 'docs/sandbox/bird_map_density.html',
+            selfcontained = FALSE, libdir = 'lib',
+            title = 'TomKat Bird Density Map')
+
+save_widget(birddens_point_map,
             pathout = 'docs/widget/bird_map_density.html',
             selfcontained = FALSE, libdir = 'lib',
             title = 'TomKat Bird Density Map')
