@@ -27,7 +27,7 @@ source('src/fit_distance_models.R')
 
 ## data set up--------
 # bird data (update filepath to most recent one):
-birddat = compile_bird_data('data_raw/TOKA_HOCR_PC_2010_2020.csv') %>%
+birddat = compile_bird_data('data_raw/TOKA_HOCR_PC_2010_2025.csv') %>%
   # add simplistic habitat classifications:
   left_join(read_csv('data_clean/sample_point_habitat.csv'), by = 'Point') %>% 
   mutate(habitat = if_else(is.na(habitat), 'other', NA_character_)) #%>% 
@@ -87,7 +87,7 @@ save_widget(birddens_point_map,
 # together)
 
 birddens_trend = calculate_focal_density(
-  dat = birddat %>% filter(Transect == 'TOKA' & habitat == 'grassland'),
+  dat = birddat %>% filter(Transect == 'TOKA'),
   strata = 'Transect', year = 'Year', 
   dist = 'Distance Bin', dist_bin_id = NULL)
 write_csv(birddens_trend, 'data_clean/TOKA_birds_density_by_year.csv')
@@ -113,6 +113,11 @@ birddens_trend_plot = birddens_trend %>%
   plotly_trend(colors = pointblue.palette[c(2, 3)],
                yrange = c(0, 10),
                ytitle = 'Density (birds/10 acres)')
+
+save_widget(birddens_trend_plot,
+            pathout = 'docs/sandbox/bird_trend_density.html',
+            selfcontained = FALSE, libdir = 'lib',
+            title = 'TomKat Bird Density Trends')
 
 save_widget(birddens_trend_plot,
             pathout = 'docs/widget/bird_trend_density.html',
