@@ -187,10 +187,17 @@ birdrich_trend_plot = birdrich_trend %>%
                              round(boot + boot.se, digits = 0), ')')) %>% 
   plotly_trend(colors = pointblue.palette[c(2, 4)],
                yrange = c(0, 75),
-               ytitle = 'Estimated number of species') %>% 
-  save_widget(pathout = 'docs/widget/bird_trend_richness.html',
-              selfcontained = FALSE, libdir = 'lib',
-              title = 'TomKat Bird Richness Trends')
+               ytitle = 'Estimated number of species')
+
+save_widget(birdrich_trend_plot,
+            pathout = 'docs/sandbox/bird_trend_richness.html',
+            selfcontained = FALSE, libdir = 'lib',
+            title = 'TomKat Bird Richness Trends')
+
+save_widget(birdrich_trend_plot,
+            pathout = 'docs/widget/bird_trend_richness.html',
+            selfcontained = FALSE, libdir = 'lib',
+            title = 'TomKat Bird Richness Trends')
 # -> year x group model shows declining trend for grassland birds, and 
 #  different trend (slightly increasing) for riparian birds)
 
