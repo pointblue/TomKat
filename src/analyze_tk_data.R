@@ -156,6 +156,11 @@ birdrich_point_map = map_data(
   boundary = 'GIS/TomKat_ranch_boundary.shp')
 
 save_widget(birdrich_point_map,
+            pathout = 'docs/sandbox/bird_map_richness.html',
+            title = 'TomKat Bird Richness Map',
+            selfcontained = FALSE, libdir = 'lib')
+
+save_widget(birdrich_point_map,
             pathout = 'docs/widget/bird_map_richness.html',
             title = 'TomKat Bird Richness Map',
             selfcontained = FALSE, libdir = 'lib')
