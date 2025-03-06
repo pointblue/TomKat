@@ -30,7 +30,7 @@ source('src/fit_distance_models.R')
 birddat = compile_bird_data('data_raw/TOKA_HOCR_PC_2010_2025.csv') %>%
   # add simplistic habitat classifications:
   left_join(read_csv('data_clean/sample_point_habitat.csv'), by = 'Point') %>% 
-  mutate(habitat = if_else(is.na(habitat), 'other', NA_character_)) #%>% 
+  mutate(habitat = if_else(is.na(habitat), 'other', habitat)) #%>% 
   #write_csv('data_clean/TOKA_birds_main.csv')
 # Note: birddat does include all distances <300 and juveniles, but not flyovers
 
@@ -87,7 +87,7 @@ save_widget(birddens_point_map,
 # together)
 
 birddens_trend = calculate_focal_density(
-  dat = birddat %>% filter(Transect == 'TOKA'),
+  dat = birddat %>% filter(Transect == 'TOKA' & habitat == 'grassland'),
   strata = 'Transect', year = 'Year', 
   dist = 'Distance Bin', dist_bin_id = NULL)
 write_csv(birddens_trend, 'data_clean/TOKA_birds_density_by_year.csv')
