@@ -23,6 +23,7 @@ rmarkdown::render(input = 'Rmd/README.Rmd',
 # BIRDS-------------
 source('src/process_bird_data.R')
 source('src/plot_bird_data.R')
+source('src/fit_distance_models.R')
 
 ## data set up--------
 # bird data (update filepath to most recent one):
