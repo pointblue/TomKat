@@ -10,14 +10,14 @@ output:
 
 ### Current status
 
-2021 update underway
+Update with data through 2021 is currently underway
 
 ### Page index
 
 * [index](index.html)
-* [weather](weather.html) - updated Dec 2020
-* [soil](soil.html) - in progress
+* [weather](weather.html) - last updated Dec 2020
+* [soil](soil.html) - last updated Jan 2022
 * [vegetation](vegetation.html)
-* [water](stream.html) - updated Nov 2020
-* [birds](birds.html) - 2021 update underway
+* [water](stream.html) - last updated Nov 2020
+* [birds](birds.html)
 * [management](mgmt.html)
