@@ -12,6 +12,15 @@
 ##' @author Kristen Dybala
 ##'
 ##'   
+
+compile_weather_new = function(path) {
+  #Daily weather (tempmax, tempmin, and precip) data downloaded from https://www.westernweathergroup.com.
+  # Does not need to be aggregated by day
+  read_csv(path,  
+           col_names = c('Date', 'DailyMaxTemp', 'DailyMinTemp', 'DailyRain'),skip=1) %>%
+    mutate(Date = as.Date(Date, '%m/%d/%y'))
+}
+
 compile_weather_west = function(dir) {
   filelist <- list.files(path = dir, 
                          pattern = 'TOKA_weatherwest_.*csv', 
@@ -80,7 +89,7 @@ compile_weather_old = function(path) {
            DailyRain = case_when(n.rain < 20 ~ NA_real_,
                                  TRUE ~ DailyRain)) %>%
     select(-n.temp, -n.rain) %>% 
-    filter(Date > '2010-09-08') #no data from day 1
+    filter(Date > '2010-09-21') #no data from day 1
   
 }
 
