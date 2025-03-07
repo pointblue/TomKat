@@ -12,7 +12,7 @@ library(tidyverse)
 library(tidyverse)
 
 ## input files
-loadd(weatherdat)
+weatherdat<-readr::read_csv(here::here('data_clean/TOKA_weather_main.csv'))
 
 # current year
 thisyear = max(weatherdat$Date) %>% format('%Y') %>% as.numeric()
@@ -26,7 +26,7 @@ extremes <- weatherdat %>%
   mutate(datelab = format(Date, '%B %d, %Y'))
 
 extreme_previous <- weatherdat %>% 
-  filter(Date < as.Date(paste0(thisyear, '-01-01'))) %>%
+  filter(Date < as.Date(paste0(2021, '-01-01'))) %>%
   pivot_longer(-Date) %>% 
   filter(value == max(value[which(name == 'DailyMaxTemp')], na.rm = TRUE) |
            value == min(value[which(name == 'DailyMinTemp')], na.rm = TRUE) |
@@ -46,14 +46,15 @@ palette = pal(7)
 
 ```
 
-#### Point Blue Conservation Science established a weather station at TomKat Ranch in September 2010. Since then, we have observed consistently warm weather, new record temperatures, and extreme drought conditions.{#intro}
+#### Point Blue Conservation Science established a weather station at TomKat Ranch in September 2010. Since then, we have observed consistently warm weather, new record temperatures, and extreme drought conditions. TomKat Ranch Manager, Mark Biaggi, describes it well, "As a kid it was Wet decades interrupted by dry years. Now it is dry decades interrupted by wet years. Our understanding of what is happening hasn't kept up with reality. We need a paradigm shift."{#intro}
 
+<i> Updated: March 7, 2025</i>
 
 ### Daily weather
 
 Daily <font color="`r pointblue.palette[3]`"><b>high temperature</b></font>, <font color="`r pointblue.palette[2]`"><b>low temperature</b></font>, and <font color="`r pointblue.palette[1]`"><b>precipitation</b></font> from the TomKat weather station, along with the normal monthly range of temperatures observed since the weather station was established. <i>Note: Gaps in weather data occurred when the weather station was being upgraded.</i>
 
-In 2020, TomKat experienced a new record high temperature of <b>`r extremes %>% filter(name == 'DailyMaxTemp') %>% pull(value)`&deg;F</b> on `r extremes %>% filter(name == 'DailyMaxTemp') %>% pull(datelab)`, beating the previous record of `r extreme_previous %>% filter(name == 'DailyMaxTemp') %>% pull(value)`&deg;F</b> set just last year on `r extreme_previous %>% filter(name == 'DailyMaxTemp') %>% pull(datelab)`. High temperatures in 2020 also exceeded the normal range of high temperatures on several other dates in May, June, and August. The lowest temperature recorded in 2020 was `r extreme_thisyear %>% filter(name == 'DailyMinTemp') %>% slice(1) %>% pull(value)`&deg;F on both `r extreme_thisyear %>% filter(name == 'DailyMinTemp') %>% slice(1) %>% pull(datelab)` and `r extreme_thisyear %>% filter(name == 'DailyMinTemp') %>% slice(2) %>% pull(datelab)`, missing the record low of <b>`r extremes %>% filter(name == 'DailyMinTemp') %>% pull(value)`&deg;F</b> set on `r extremes %>% filter(name == 'DailyMinTemp') %>% pull(datelab)`. The single rainiest day in 2020 (through `r max(weatherdat$Date) %>% format('%B %d')`) was `r extreme_thisyear %>% filter(name == 'DailyRain') %>% pull(value)` inches on `r extreme_thisyear %>% filter(name == 'DailyRain') %>% pull(datelab)`. The rainiest day ever recorded was `r extremes %>% filter(name == 'DailyRain') %>% pull(datelab)`, with a total of <b>`r extremes %>% filter(name == 'DailyRain') %>% pull(value)` inches</b>.
+In 2022, TomKat experienced a new record high temperature of <b>`r extremes %>% filter(name == 'DailyMaxTemp') %>% pull(value)`&deg;F</b> on `r extremes %>% filter(name == 'DailyMaxTemp') %>% pull(datelab)`, beating the previous record of `r extreme_previous %>% filter(name == 'DailyMaxTemp') %>% pull(value)`&deg;F</b> set on `r extreme_previous %>% filter(name == 'DailyMaxTemp') %>% pull(datelab)`. 2024 was slightly cooler, with the lowest temperature of <b>`r extreme_thisyear %>% filter(name == 'DailyMinTemp') %>% slice(1) %>% pull(value)`&deg;F</b> recorded on `r extreme_thisyear %>% filter(name == 'DailyMinTemp') %>% slice(1) %>% pull(datelab)`. The single rainiest day in 2024 was <b>`r extreme_thisyear %>% filter(name == 'DailyRain') %>% pull(value)` inches</b> on `r extreme_thisyear %>% filter(name == 'DailyRain') %>% pull(datelab)`. The rainiest day ever recorded was `r extremes %>% filter(name == 'DailyRain') %>% pull(datelab)`, with a total of <b>`r extremes %>% filter(name == 'DailyRain') %>% pull(value)` inches</b>.
 
 <i>Click & drag the slider at the bottom to view different dates.</i>
 <center>
@@ -79,7 +80,7 @@ TomKat's high temperatures have been warmer than estimated historic averages in 
 We examined two drought indices from the [National Centers for Environmental Information](http://www.ncdc.noaa.gov/temp-and-precip/drought/historical-palmers/overview){target="_blank"}: the Palmer Drought Severity Index (PDSI) and the Palmer Z Index. The PDSI is an indicator of long-term drought that takes into account precipitation and temperature over several months, while the Z index measures short-term drought on a monthly scale, and can better reflect recent storms and soil moisture conditions.
 
 ### Palmer Drought Severity Index (PDSI)
-The PDSI for Central Coastal California entered drought conditions early in 2013, which persisted nearly 4 years until October 2016, including over two years of <b><font color='`r palette[7]`'>extreme drought</font></b> from June 2013 through November 2015. Conditions were largely normal through 2017, returned to <b><font color='`r palette[5]`'>moderate drought</font></b> for much of 2018, and have stayed in the <b>normal</b> range since.
+The PDSI for Central Coastal California entered drought conditions early in 2013, which persisted nearly 4 years until October 2016, including over two years of <b><font color='`r palette[7]`'>extreme drought</font></b> from June 2013 through November 2015. Conditions were largely normal through 2017, returned to <b><font color='`r palette[5]`'>moderate drought</font></b> for much of 2018, and progressed to <b><font color='`r palette[7]`'>extreme drought</font></b> again through the end of 2022. Average rainfall in 2023 and 2024 improved drought conditions.
 
 In the legend at top right, click on the lines for North Coast and South Coast to compare how these regions have fared over the same time period. During the extended drought, conditions in Northern Coastal California were never quite as dry, and Southern Coastal California generally fared worse. Northern and Southern Coastal California were also in the <b>normal</b> range throughout much of 2019, and in 2020 have switched places such that Northern Coastal California is currently the driest.
 
@@ -89,7 +90,7 @@ In the legend at top right, click on the lines for North Coast and South Coast t
 
 ### Palmer Z Index (PZI)
 
-The PZI more readily shows the impact of big storms, such as the <b><font color='`r palette[1]`'>extremely moist</font></b> conditions in February and May 2019, January 2017, October 2016, and December 2014. Central Coastal California has not yet had any moist short-term conditions in 2020.
+The PZI more readily shows the impact of big storms, such as the <b><font color='`r palette[1]`'>extremely moist</font></b> conditions recently in December 2022, January 2023, and March 2023. 
 
 In the legend at top right, click on the lines for North Coast and South Coast to compare how these regions have fared over the same time period. 
 
@@ -106,7 +107,6 @@ This interactive web page was produced in [R](https://www.R-project.org/){target
 
 ### For more information
 
-Please contact:  
-[Chelsea Carey, PhD](https://www.pointblue.org/employee_bios/chelsea-carey/){target="_blank"}  
-Working Lands Research Director
-[Point Blue Conservation Science](https://www.pointblue.org){target="_blank"}
+[Contact Point Blue Soils Team](mailto:rangec@pointblue.org){target="_blank"}  
+
+[Learn more about Point Blue's Ag-C Monitoring Program](https://www.pointblue.org/our-work/working-landscapes/agricultural-carbon-monitoring-program/){target="_blank"}
