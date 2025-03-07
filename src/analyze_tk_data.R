@@ -30,8 +30,8 @@ source('src/fit_distance_models.R')
 birddat = compile_bird_data('data_raw/TOKA_HOCR_PC_2010_2025.csv') %>%
   # add simplistic habitat classifications:
   left_join(read_csv('data_clean/sample_point_habitat.csv'), by = 'Point') %>% 
-  mutate(habitat = if_else(is.na(habitat), 'other', habitat)) #%>% 
-  #write_csv('data_clean/TOKA_birds_main.csv')
+  mutate(habitat = if_else(is.na(habitat), 'other', habitat)) %>% 
+  write_csv('data_clean/TOKA_birds_main.csv')
 # Note: birddat does include all distances <300 and juveniles, but not flyovers
 
 # check that number of species and surveys hasn't decreased: update these
