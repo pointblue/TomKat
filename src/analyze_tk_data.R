@@ -306,6 +306,11 @@ weatherdat_daily_plot = plot_daily_weather(
   selector = TRUE, slider = TRUE)
 
 save_widget(weatherdat_daily_plot,
+            pathout = 'docs/sandbox/weather_plot_daily.html',
+            selfcontained = FALSE, libdir = 'lib',
+            title = 'TomKat Daily Weather')
+
+save_widget(weatherdat_daily_plot,
             pathout = 'docs/widget/weather_plot_daily.html',
             selfcontained = FALSE, libdir = 'lib',
             title = 'TomKat Daily Weather')
