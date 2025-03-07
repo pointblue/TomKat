@@ -16,21 +16,21 @@ nsites <- readr::read_csv(here::here('data_clean/TOKA_soil_main.csv')) %>%
   dplyr::count()
 ```
 
-#### Since 2014, Point Blue Conservation Science has tested soils across TomKat Ranch. These data allow us to evaluate soil productivity throughout the ranch and track changes over time. {#intro}
+#### Since 2015, Point Blue Conservation Science has tested soils across TomKat Ranch. These data allow us to evaluate soil productivity throughout the ranch and track changes over time. As soil productivity impacts occur slowly over time, measurements are taken every three years (2015, 2018, 2021, 2024). {#intro}
 
 
 ### SMART Goals
 
-<b>Increase soil sponginess:</b> All RMN points surpass NRCS compaction and water infiltration targets by 2020.
+<b>Increase soil sponginess:</b> All RMN points surpass NRCS compaction and water infiltration targets.
 
-<b>Increase soil organic carbon (SOC):</b> All RMN points gain 0.5% SOC in 0-10 cm by 2021.*
+<b>Increase soil organic carbon (SOC):</b> All RMN points gain 0.5% SOC in 0-10 cm.*
 
-&ast;*Of the points that gained soil carbon on TomKat Ranch between 2015-2018, 0.5% was the average magnitude of change. We therefore feel this goal is ambitious but achievable.*
+&ast;*This goal is may be ambitious due to the ongoing drought conditions in California, which range from moderate (D1) to exceptional drought (D4) occuring in 2014-2016 and 2021-2022 and have led to a statewide decline in SOC. SOC declines on the ranch could therefore still reflect positive impacts, since the rate of decline may be slower than it would have been without restoration efforts.*
 
 
 ### Soil productivity
 
-In 2021, we measured three indicators of soil productivity at 15 sites: organic carbon content at two depths (0-10cm and 10-40cm), surface soil bulk density, and water infiltration rates. We also produced an overall score combining all three indicators. 
+In 2024, we measured three indicators of soil productivity at 15 sites: organic carbon content at two depths (0-10cm and 10-40cm), surface soil bulk density, and water infiltration rates. We also produced an overall score combining all three indicators. 
 
 In the map below, each point represents a soil sample location, with colors representing the score for each indicator. For carbon, the inner circle represents the surface soil sample (0-10 cm deep), and the outer circle represents the deeper soil sample (10-40 cm). Two locations where compost was applied are marked with a heavy black border.  
 
@@ -44,7 +44,7 @@ In the map below, each point represents a soil sample location, with colors repr
 
 ### Changes in soil productivity
 
-We compared data collected in 2021 to data collected in 2018 to identify sites where productivity indicators have improved or declined: <b>93% showed an improvement or no change</b> in their overall soil productivity since 2018. Locations where compost was applied are marked with a heavy black border. Note that lower values in bulk density and water infiltration represent improvements.
+We compared data collected in 2024 to data collected in 2015 to identify sites where productivity indicators have improved or declined. Note that lower values in bulk density and water infiltration represent improvements. Locations where compost was applied are marked with a heavy black border and show an improvement or no change in their overall soil productivity since 2015. All other points experienced a decline since 2015, likely due to drought conditions in 2020-2022.
 
 <i>Choose one metric at a time at bottom left. Click on any of the survey points to learn more.</i>
 
@@ -119,7 +119,6 @@ This interactive web page was produced in [R](https://www.R-project.org/){target
 
 ### For more information
 
-Please contact:  
-[Chelsea Carey, PhD](https://www.pointblue.org/employee_bios/chelsea-carey/){target="_blank"}  
-Working Lands Research Director
-[Point Blue Conservation Science](https://www.pointblue.org){target="_blank"}
+[Contact Point Blue Soils Team](mailto:rangec@pointblue.org){target="_blank"}  
+
+[Learn more about Point Blue's Ag-C Monitoring Program](https://www.pointblue.org/our-work/working-landscapes/agricultural-carbon-monitoring-program/){target="_blank"}
