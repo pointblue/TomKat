@@ -294,7 +294,8 @@ source('src/plot_weather_data.R')
 #extract daily rain totals and max/min temps:
 weatherdat = bind_rows(
   compile_weather_old(path = 'data_raw/weather_station/TOKA_Weather_ALL_9.8.10_7.24.17.csv'), 
-  compile_weather_west(dir = 'data_raw/weather_station'))
+  compile_weather_west(dir = 'data_raw/weather_station'),
+  compile_weather_new(path = './data_raw/weather_station/TOKA_weathernew_9.24.20_12.31.24.csv'))
 write_csv(weatherdat, 'data_clean/TOKA_weather_main.csv')
 
 # plot daily weather
