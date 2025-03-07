@@ -354,6 +354,11 @@ weatherdat_monthly_plot = plot_monthly_weather(
   selector = TRUE)
 
 save_widget(weatherdat_monthly_plot,
+            pathout = 'docs/sandbox/weather_plot_monthly.html',
+            selfcontained = FALSE, libdir = 'lib',
+            title = 'TomKat Monthly Weather')
+
+save_widget(weatherdat_monthly_plot,
             pathout = 'docs/widget/weather_plot_monthly.html',
             selfcontained = FALSE, libdir = 'lib',
             title = 'TomKat Monthly Weather')
