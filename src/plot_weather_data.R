@@ -41,7 +41,7 @@ plot_daily_weather = function(dat, colors,
     mutate(day = format(Date, '%m-%d'),
            mo = format(Date, '%m'),
            year = format(Date, '%Y')) %>%
-    complete(nesting(day, mo), year) %>%
+    tidyr::complete(nesting(day, mo), year) %>%
     mutate(Date = as.Date(paste0(year, '-', day))) %>%
     arrange(Date) %>% 
     filter(Date > '2010-09-08' & Date <= max(dat$Date)) %>%
