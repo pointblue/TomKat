@@ -17,8 +17,9 @@ nspecies = count_species(dat)
 nsurveys = count_surveys(dat)
 ```
 
-#### Since 2010, Point Blue Conservation Science has conducted <b>`r format(nsurveys, big.mark=',')` bird surveys</b> across TomKat Ranch during May and June and detected a total of <b>`r nspecies` bird species</b>. Each year, biologists conduct point count surveys for birds at a random sample of points chosen from a grid across the ranch, as well as at 12 points in riparian vegetation along Honsinger Creek. We analyzed this data to examine spatial patterns and trends in species richness and in grassland bird abundance across the ranch.<i> Edited: March 7, 2025</i>{#intro}
+#### Since 2010, Point Blue Conservation Science has conducted <b>`r format(nsurveys, big.mark=',')` bird surveys</b> across TomKat Ranch during May and June and detected a total of <b>`r nspecies` bird species</b>. Each year, biologists conduct point count surveys for birds at a random sample of points chosen from a grid across the ranch, as well as at 12 points in riparian vegetation along Honsinger Creek. We analyzed this data to examine spatial patterns and trends in species richness and in grassland bird abundance across the ranch.{#intro}
 
+<i> Updated: March 7, 2025</i>
 
 ### SMART Goals
 <b>Increase grassland breeding birds:</b> Increase densities to an average of 4.25 birds per 10 acres.
