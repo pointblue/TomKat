@@ -18,7 +18,7 @@ compile_weather_new = function(path) {
   # Does not need to be aggregated by day
   read_csv(path,  
            col_names = c('Date', 'DailyMaxTemp', 'DailyMinTemp', 'DailyRain'),skip=1) %>%
-    mutate(Date = as.Date(Date, '%m/%d/%y'))
+    mutate(Date = as.Date(Date, '%m/%d/%Y'))
 }
 
 compile_weather_west = function(dir) {
@@ -200,7 +200,7 @@ calculate_weather_diffs = function(localdat, hmbdat, hmb_historic) {
   ## estimate TomKat monthly normals
   normals <- full_join(
    # hmb dat
-   read.csv(hmb_historic) %>%
+   read.csv(hmb_historic,fileEncoding="latin1") %>%
      set_names('mo', 'MonthlyRain', 'MonthlyMinTemp', 'TAVG', 'MonthlyMaxTemp') %>% 
      select(-TAVG) %>% 
      pivot_longer(MonthlyRain:MonthlyMaxTemp, values_to = 'hmb'),
