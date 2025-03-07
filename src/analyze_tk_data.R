@@ -332,7 +332,7 @@ hmb_monthly = bind_rows(
   get_ncdc_weather(start.date = '2010-10-01',
                    end.date = '2020-09-15'),
   get_ncdc_weather(start.date = '2020-10-01',
-                   end.date = '2020-11-25'))
+                   end.date = '2024-12-31'))
 
 # estimate TomKat monthly differences from historical "normals" based on 
 #  estimates derived from Half Moon Bay normals and the current monthly
