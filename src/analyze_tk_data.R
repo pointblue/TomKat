@@ -680,7 +680,57 @@ rmarkdown::render(input = 'Rmd/soil.Rmd',
 ## update webpage
 
 # MANAGEMENT-------
-## data set up
-## 1. MAP animal days per acre
-## 2. MAP total grazing days
-## update webpage
+source('src/process_mgmt_data.R')
+source('src/plot_management_data.R')
+
+## data set up-----
+
+mgtdat = compile_mgt_data('data_raw/mgmt/Tom Kat Ranch - Pastures 2024dormant.xlsx',"Dormant") %>% 
+  rbind(compile_mgt_data('data_raw/mgmt/Tom Kat Ranch - Pastures 2024growingseason.xlsx',"Growing"))
+
+#Match fields to pastures used for veg data, remove fields not included in pasture shp file
+
+shp_poly <- st_read(here::here('GIS'), "TK_veg_fields", quiet = TRUE)
+mgtdat<-mgtdat %>%
+  mutate(field = toupper(field),
+       Pasture = case_when(toupper(field) %in% toupper(shp_poly$Pasture) ~ field,
+                            field == "36A" ~ "36",
+                            field == "4B" ~ "4",
+                            field == "41A" ~ "41",
+                            field == "18B" ~ "18",
+                           .default = NA
+                            )) %>%
+  filter(!is.na(Pasture))
+write_csv(mgtdat, here::here("data_clean/TK_mgmt_main.csv"))
+
+#Calculate ADA and total grazing days
+
+mgtcalc <- mgmt_calculations(mgtdat)
+write_csv(mgtcalc, here::here('data_clean/TK_mgmt_stats.csv'))
+
+## Create Maps-----
+# create pop-up tables of data 
+mgt_tables = create_mgt_html_tables(mgtcalc)  
+
+# create ADA map
+
+ADA_map = mgmt_ADA_plot(
+  dat = mgt_tables
+)
+title <- 'TomKat Grazing ADA Map 2023-2024'
+htmlwidgets::saveWidget(ADA_map,
+                        here::here('docs/widget/mgmt_map1.html'),
+                        selfcontained = FALSE, libdir = 'lib',
+                        title = title)
+
+# create total grazing days map
+
+TGD_map = mgmt_grazingdays_plot(
+  dat = mgt_tables
+)
+title2 <- 'TomKat Grazing Days Map 2023-2024'
+htmlwidgets::saveWidget(TGD_map,
+                        here::here('docs/widget/mgmt_map2.html'),
+                        selfcontained = FALSE, libdir = 'lib',
+                        title = title2)
+## update webpage----
