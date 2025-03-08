@@ -709,6 +709,7 @@ mgtcalc <- mgmt_calculations(mgtdat)
 write_csv(mgtcalc, here::here('data_clean/TK_mgmt_stats.csv'))
 
 ## Create Maps-----
+
 # create pop-up tables of data 
 mgt_tables = create_mgt_html_tables(mgtcalc)  
 
@@ -717,20 +718,21 @@ mgt_tables = create_mgt_html_tables(mgtcalc)
 ADA_map = mgmt_ADA_plot(
   dat = mgt_tables
 )
-title <- 'TomKat Grazing ADA Map 2023-2024'
-htmlwidgets::saveWidget(ADA_map,
-                        here::here('docs/widget/mgmt_map1.html'),
-                        selfcontained = FALSE, libdir = 'lib',
-                        title = title)
+save_widget(ADA_map,
+            pathout = 'docs/widget/mgmt_map1.html',
+            selfcontained = FALSE, libdir = 'lib',
+            title = 'TomKat Grazing ADA Map 2023-2024')
 
 # create total grazing days map
 
 TGD_map = mgmt_grazingdays_plot(
-  dat = mgt_tables
-)
-title2 <- 'TomKat Grazing Days Map 2023-2024'
-htmlwidgets::saveWidget(TGD_map,
-                        here::here('docs/widget/mgmt_map2.html'),
-                        selfcontained = FALSE, libdir = 'lib',
-                        title = title2)
+  dat = mgt_tables)
+save_widget(TGD_map,
+            pathout = 'docs/widget/mgmt_map2.html',
+            selfcontained = FALSE, libdir = 'lib',
+            title = 'TomKat Grazing Days Map 2023-2024')
+
 ## update webpage----
+
+rmarkdown::render(input = 'Rmd/mgmt.Rmd',
+                  output_file = here::here('docs/mgmt.html'))
