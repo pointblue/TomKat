@@ -1,526 +1,507 @@
-herd,season,date,hour,field,area,dn
-cattle,growing,2018-01-06,12,1,1,94
-cattle,growing,2018-01-07,08,1,1,-94
-cattle,growing,2018-04-05,17,1,Ralphs,48
-cattle,growing,2018-04-06,16,1,Ralphs,-48
-cattle,growing,2018-04-13,10,1,Between Ralphs and Pond,48
-cattle,growing,2018-04-14,11,1,Between Ralphs and Pond,-48
-cattle,growing,2017-12-29,13,10,10,20
-cattle,growing,2017-12-29,17,10,10,74
-cattle,growing,2017-12-30,13,10,10,-20
-cattle,growing,2017-12-30,17,10,10,-74
-cattle,growing,2018-03-31,08,10,Subdivision 1,48
-cattle,growing,2018-04-01,08,10,Subdivision 1,-48
-cattle,growing,2018-04-01,08,10,Subdivision 4,48
-cattle,growing,2018-04-02,10,10,Subdivision 4,-48
-cattle,growing,2018-04-16,07,10,Subdivision 2,47
-cattle,growing,2018-04-17,09,10,Subdivision 2,-47
-cattle,growing,2018-04-17,09,10,Subdivision 3,47
-cattle,growing,2018-04-18,17,10,Subdivision 3,-47
-cattle,growing,2017-12-24,17,11,Subdivision 1,74
-cattle,growing,2017-12-25,13,11,Subdivision 1,20
-cattle,growing,2017-12-26,13,11,Subdivision 1,-20
-cattle,growing,2017-12-26,17,11,Subdivision 1,-74
-cattle,growing,2018-03-27,07,11,11,48
-cattle,growing,2018-03-29,09,11,11,-48
-cattle,dormant,2018-10-12,16,11,11,73
-cattle,dormant,2018-10-15,09,11,11,-73
-cattle,growing,2018-04-23,07,12A,Subdivision 2,47
-cattle,growing,2018-04-24,07,12A,Subdivision 2,-47
-cattle,growing,2017-12-11,11,12B,12b,74
-cattle,growing,2017-12-15,11,12B,12b,-74
-cattle,growing,2018-04-24,07,12B,12b,47
-cattle,growing,2018-04-26,12,12B,12b,-47
-cattle,growing,2018-02-28,15,14,14,39
-cattle,growing,2018-03-01,15,14,14,-39
-cattle,growing,2017-12-21,08,15,15,74
-cattle,growing,2017-12-21,13,15,15,20
-cattle,growing,2017-12-22,05,15,15,-74
-cattle,growing,2017-12-22,13,15,15,-20
-cattle,growing,2018-03-26,08,15,15,48
-cattle,growing,2018-03-27,07,15,15,-48
-cattle,growing,2018-04-27,07,16B,Subdivision 3,43
-cattle,growing,2018-04-28,17,16B,Subdivision 3,-43
-cattle,growing,2018-04-28,17,16B,Subdivision 2,43
-cattle,growing,2018-05-01,07,16B,Subdivision 2,-43
-cattle,growing,2018-02-27,08,17,17,39
-cattle,growing,2018-02-28,15,17,17,-39
-cattle,growing,2018-03-01,15,18,18,39
-cattle,growing,2018-03-02,16,18,18,-39
-cattle,growing,2018-03-07,16,18,18,39
-cattle,growing,2018-03-10,08,18,18,-39
-cattle,growing,2018-03-12,16,18,18,39
-cattle,growing,2018-03-13,16,18,18,-39
-cattle,growing,2018-02-25,17,19,19,39
-cattle,growing,2018-02-27,08,19,19,-39
-cattle,growing,2018-03-02,16,19,19,39
-cattle,growing,2018-03-07,16,19,19,-39
-cattle,growing,2018-03-13,16,19,19,44
-cattle,growing,2018-03-17,08,19,19,-44
-cattle,growing,2018-01-25,14,23,23,4
-cattle,growing,2018-02-21,16,23,23,-4
-cattle,growing,2018-05-02,15,23,23,4
-cattle,growing,2018-06-19,13,23,23,-4
-cattle,growing,2018-02-26,08,24,24,55
-cattle,growing,2018-03-02,07,24,24,-55
-cattle,growing,2018-03-23,18,25,Subdivision 2,48
-cattle,growing,2018-03-24,08,25,Subdivision 2,-48
-cattle,growing,2018-03-24,08,25,Subdivision 1,48
-cattle,growing,2018-03-25,14,25,Subdivision 1,-48
-cattle,growing,2017-11-15,11,26,26,74
-cattle,growing,2017-11-18,08,26,26,-74
-cattle,growing,2018-03-10,08,26,26,39
-cattle,growing,2018-03-10,17,26,26,-39
-cattle,growing,2018-03-10,17,27,27,39
-cattle,growing,2018-03-11,08,27,27,-39
-cattle,growing,2017-11-18,08,28,28,74
-cattle,growing,2017-11-21,08,28,28,-74
-cattle,growing,2018-03-11,08,28,28,39
-cattle,growing,2018-03-12,16,28,28,-39
-cattle,growing,2018-03-25,14,29,29,48
-cattle,growing,2018-03-26,08,29,29,-48
-cattle,growing,2017-12-19,07,2A,2a,74
-cattle,growing,2017-12-21,08,2A,2a,-74
-cattle,growing,2018-04-06,16,2A,2a,48
-cattle,growing,2018-04-08,09,2A,2a,-48
-cattle,growing,2018-01-05,14,2B,Annie Pond Field,94
-cattle,growing,2018-01-06,07,2B,Annie Pond Field,-94
-cattle,growing,2018-01-06,07,2B,Annie's Pond Across Driveway,94
-cattle,growing,2018-01-06,12,2B,Annie's Pond Across Driveway,-94
-cattle,growing,2018-04-04,08,2B,Annie Pond Field,48
-cattle,growing,2018-04-05,11,2B,Annie Pond Field,-48
-cattle,growing,2018-04-05,11,2B,Annie's Pond Across Driveway,48
-cattle,growing,2018-04-05,17,2B,Annie's Pond Across Driveway,-48
-cattle,growing,2017-12-16,12,3,3,74
-cattle,growing,2017-12-19,07,3,3,-74
-cattle,growing,2018-04-08,09,3,3,48
-cattle,growing,2018-04-09,17,3,3,-48
-cattle,growing,2018-03-21,12,30A,Subdivision 3,48
-cattle,growing,2018-03-22,08,30A,Subdivision 3,-48
-cattle,growing,2018-03-22,08,30A,Subdivision 1,48
-cattle,growing,2018-03-23,06,30A,Subdivision 1,-48
-cattle,growing,2018-03-23,06,30A,Subdivision 2,48
-cattle,growing,2018-03-23,18,30A,Subdivision 2,-48
-cattle,growing,2017-11-23,14,30B,30b,74
-cattle,growing,2017-11-28,14,30B,30b,-74
-cattle,growing,2018-03-14,16,30B,Subdivision 2,4
-cattle,growing,2018-03-18,08,30B,Subdivision 1,44
-cattle,growing,2018-03-19,17,30B,Subdivision 1,-44
-cattle,growing,2018-03-19,17,30B,Subdivision 2,44
-cattle,growing,2018-03-21,12,30B,Subdivision 2,-48
-cattle,growing,2017-11-21,14,31,31,74
-cattle,growing,2017-11-23,14,31,31,-74
-cattle,growing,2018-03-17,08,31,31,44
-cattle,growing,2018-03-18,08,31,31,-44
-cattle,growing,2018-02-25,07,32,Subdivision 1,94
-cattle,growing,2018-02-25,17,32,Subdivision 1,-39
-cattle,growing,2018-02-26,07,32,Subdivision 1,-55
-cattle,dormant,2018-10-11,09,32,Subdivision 1,73
-cattle,dormant,2018-10-12,16,32,Subdivision 1,-73
-cattle,dormant,2018-10-15,10,32,Subdivision 1,1
-cattle,growing,2017-11-28,14,34,Oak Hill Road Top,74
-cattle,growing,2017-11-29,14,34,Oak Hill Road Top,-74
-cattle,growing,2018-05-01,07,34,Top of Oak Hill,43
-cattle,growing,2018-05-02,11,34,Top of Oak Hill,-43
-cattle,growing,2018-05-09,08,34,Subdivision 10,43
-cattle,growing,2018-05-10,17,34,Subdivision 10,-43
-cattle,growing,2017-11-29,14,35,Oak Hill Draw,74
-cattle,growing,2017-12-02,14,35,Oak Hill Draw,-74
-cattle,dormant,2018-10-10,16,35,Subdivision 5,73
-cattle,dormant,2018-10-11,09,35,Subdivision 5,-73
-cattle,growing,2017-12-02,14,36,Oak Hill,74
-cattle,growing,2017-12-04,07,36,Oak Hill,-74
-cattle,growing,2018-05-07,10,36,Subdivision 5,43
-cattle,growing,2018-05-09,08,36,Subdivision 5,-43
-cattle,growing,2017-12-04,07,37A,Subdivision 4,74
-cattle,growing,2017-12-06,08,37A,Subdivision 4,-74
-cattle,growing,2017-12-06,08,37A,Subdivision 1,74
-cattle,growing,2017-12-07,17,37A,Subdivision 1,-74
-cattle,growing,2017-12-07,17,37A,Subdivision 2,74
-cattle,growing,2017-12-09,08,37A,Subdivision 2,-74
-cattle,growing,2017-12-09,08,37A,Subdivision 3,74
-cattle,growing,2017-12-11,11,37A,Subdivision 3,-74
-cattle,growing,2018-05-02,11,37A,Subdivision 1,43
-cattle,growing,2018-05-03,07,37A,Subdivision 1,-43
-cattle,growing,2018-05-03,07,37A,Subdivision 2,43
-cattle,growing,2018-05-04,09,37A,Subdivision 2,-43
-cattle,growing,2018-05-04,09,37A,Subdivision 4,43
-cattle,growing,2018-05-05,09,37A,Subdivision 4,-43
-cattle,growing,2018-05-05,09,37A,Subdivision 3,43
-cattle,growing,2018-05-07,10,37A,Subdivision 3,-43
-cattle,growing,2018-02-20,08,37B,Subdivision 2,94
-cattle,growing,2018-02-21,08,37B,Subdivision 2,-94
-cattle,growing,2018-02-21,08,37B,Subdivision 3,94
-cattle,growing,2018-02-21,18,37B,Subdivision 3,-94
-cattle,growing,2018-02-21,18,37B,Subdivision 4,94
-cattle,growing,2018-02-23,07,37B,Subdivision 4,-94
-cattle,growing,2018-05-10,17,37B,Subdivision 8,43
-cattle,growing,2018-05-14,08,37B,Subdivision 8,-43
-cattle,growing,2018-05-14,08,37B,Subdivision 7,43
-cattle,growing,2018-05-17,15,37B,Subdivision 7,-43
-cattle,growing,2018-05-18,16,37B,Subdivision 4,15
-cattle,growing,2018-05-29,16,37B,Subdivision 4,-15
-cattle,growing,2018-05-29,16,37B,Subdivision 5,15
-cattle,growing,2018-06-27,10,37B,Subdivision 5,-15
-cattle,dormant,2018-09-24,11,37B,Subdivision 16,35
-cattle,dormant,2018-09-25,11,37B,Subdivision 16,39
-cattle,dormant,2018-09-26,11,37B,Subdivision 16,-74
-cattle,dormant,2018-09-26,11,37B,Subdivision 8,74
-cattle,dormant,2018-09-27,11,37B,Subdivision 8,-74
-cattle,dormant,2018-09-27,11,37B,Subdivision 9,74
-cattle,dormant,2018-09-28,08,37B,Subdivision 9,-74
-cattle,dormant,2018-09-28,08,37B,Subdivision 10,74
-cattle,dormant,2018-09-28,11,37B,Subdivision 10,-74
-cattle,dormant,2018-09-28,11,37B,Subdivision 11,74
-cattle,dormant,2018-09-29,11,37B,Subdivision 11,-74
-cattle,dormant,2018-09-29,11,37B,Subdivision 12,74
-cattle,dormant,2018-09-30,11,37B,Subdivision 12,-74
-cattle,dormant,2018-09-30,11,37B,Subdivision 13,74
-cattle,dormant,2018-09-30,18,37B,Subdivision 13,-74
-cattle,dormant,2018-09-30,18,37B,Subdivision 14,74
-cattle,dormant,2018-10-01,11,37B,Subdivision 14,-74
-cattle,dormant,2018-10-01,11,37B,Subdivision 15,74
-cattle,dormant,2018-10-02,11,37B,Subdivision 15,-74
-cattle,growing,2018-02-23,07,38A,38a,94
-cattle,growing,2018-02-23,21,38A,38a,-94
-cattle,dormant,2018-08-06,09,38A,Bees,49
-cattle,dormant,2018-08-09,09,38A,Bees,-49
-cattle,dormant,2018-08-09,09,38A,Flat,48
-cattle,dormant,2018-08-11,09,38A,Flat,-48
-cattle,dormant,2018-08-11,09,38A,Finger 1,48
-cattle,dormant,2018-08-13,09,38A,Finger 1,-48
-cattle,dormant,2018-08-13,09,38A,Finger 2,48
-cattle,dormant,2018-08-13,10,38A,Finger 2,-17
-cattle,dormant,2018-08-15,14,38A,Finger 2,-31
-cattle,dormant,2018-10-09,08,38A,Bees,73
-cattle,dormant,2018-10-10,16,38A,Bees,-73
-cattle,growing,2018-02-23,21,39A,39a,94
-cattle,growing,2018-02-24,07,39A,39a,-94
-cattle,dormant,2018-08-15,14,39A,Subdivision 1,31
-cattle,dormant,2018-08-17,08,39A,Subdivision 1,-31
-cattle,dormant,2018-08-19,14,39A,Subdivision 2,31
-cattle,dormant,2018-08-20,14,39A,Subdivision 2,-31
-cattle,growing,2018-02-24,07,39B,39b,94
-cattle,growing,2018-02-25,07,39B,39b,-94
-cattle,dormant,2018-08-17,08,39B,Subdivision 3,31
-cattle,dormant,2018-08-19,14,39B,Subdivision 3,-31
-cattle,dormant,2018-08-20,14,39B,Subdivision 2,31
-cattle,dormant,2018-08-21,17,39B,Subdivision 2,-31
-cattle,dormant,2018-08-21,17,39B,Subdivision 4,31
-cattle,dormant,2018-08-23,17,39B,Subdivision 4,-31
-cattle,dormant,2018-10-02,11,39B,Subdivision 4,74
-cattle,dormant,2018-10-03,13,39B,Subdivision 4,-74
-cattle,dormant,2018-10-03,13,39B,Subdivision 7,73
-cattle,dormant,2018-10-04,17,39B,Subdivision 7,-73
-cattle,dormant,2018-10-04,17,39B,Subdivision 10,73
-cattle,dormant,2018-10-05,08,39B,Subdivision 10,-73
-cattle,dormant,2018-10-05,08,39B,Subdivision 11,73
-cattle,dormant,2018-10-05,16,39B,Subdivision 11,-73
-cattle,dormant,2018-10-05,16,39B,Subdivision 8,73
-cattle,dormant,2018-10-06,13,39B,Subdivision 8,-73
-cattle,dormant,2018-10-06,13,39B,Subdivision 9,73
-cattle,dormant,2018-10-09,08,39B,Subdivision 9,-73
-cattle,growing,2017-12-15,11,4,4b,74
-cattle,growing,2017-12-16,12,4,4b,-74
-cattle,growing,2018-04-09,17,4,4,48
-cattle,growing,2018-04-10,16,4,4,-48
-cattle,growing,2018-04-10,16,4,4b,48
-cattle,growing,2018-04-11,08,4,4b,-48
-cattle,growing,2018-02-07,08,40,40,94
-cattle,growing,2018-02-09,11,40,40,-94
-cattle,dormant,2018-07-20,09,40,Apple Orchard,42
-cattle,dormant,2018-07-23,08,40,Apple Orchard,-42
-cattle,dormant,2018-07-23,08,40,Lower China,42
-cattle,dormant,2018-07-26,07,40,Lower China,-42
-cattle,dormant,2018-07-26,07,40,Middle China North,42
-cattle,dormant,2018-07-28,07,40,Middle China North,-42
-cattle,dormant,2018-07-28,07,40,Middle China South,42
-cattle,dormant,2018-07-29,07,40,Middle China South,-42
-cattle,growing,2018-02-09,11,41,Subdivision 2,94
-cattle,growing,2018-02-10,08,41,Subdivision 2,-94
-cattle,growing,2018-02-10,08,41,Subdivision 3,94
-cattle,growing,2018-02-11,08,41,Subdivision 3,-94
-cattle,growing,2018-02-11,08,41,Subdivision 1,94
-cattle,growing,2018-02-12,08,41,Subdivision 1,-94
-cattle,dormant,2018-07-29,07,41,Subdivision 10,42
-cattle,dormant,2018-07-30,08,41,Subdivision 10,-42
-cattle,dormant,2018-07-30,08,41,Subdivision 7,42
-cattle,dormant,2018-07-31,08,41,Subdivision 7,-42
-cattle,dormant,2018-07-31,08,41,Subdivision 6,42
-cattle,dormant,2018-08-01,08,41,Subdivision 6,-42
-cattle,dormant,2018-08-01,08,41,Subdivision 8,42
-cattle,dormant,2018-08-02,08,41,Subdivision 8,-42
-cattle,dormant,2018-08-02,08,41,Subdivision 5,49
-cattle,dormant,2018-08-03,08,41,Subdivision 5,-49
-cattle,dormant,2018-08-03,08,41,Subdivision 9,49
-cattle,dormant,2018-08-04,08,41,Subdivision 9,-49
-cattle,dormant,2018-08-04,08,41,Subdivision 4,49
-cattle,dormant,2018-08-05,08,41,Subdivision 4,-49
-cattle,dormant,2018-08-05,08,41,Subdivision 11,49
-cattle,dormant,2018-08-06,09,41,Subdivision 11,-49
-cattle,growing,2018-01-31,14,42,42,94
-cattle,growing,2018-02-01,07,42,42,-94
-cattle,dormant,2018-07-06,08,42,42,42
-cattle,dormant,2018-07-09,08,42,42,-42
-cattle,growing,2018-01-27,07,43,Subdivision 5,94
-cattle,growing,2018-01-27,19,43,Subdivision 5,-94
-cattle,growing,2018-01-28,17,43,Subdivision 1,94
-cattle,growing,2018-01-29,07,43,Subdivision 1,-94
-cattle,growing,2018-01-29,07,43,Subdivision 2,94
-cattle,growing,2018-01-30,16,43,Subdivision 2,-94
-cattle,growing,2018-01-30,16,43,Subdivision 3,94
-cattle,growing,2018-01-31,14,43,Subdivision 3,-94
-cattle,growing,2018-02-01,07,43,Subdivision 4,94
-cattle,growing,2018-02-01,13,43,Subdivision 4,-94
-cattle,growing,2018-06-22,12,43,Subdivision 5,41
-cattle,growing,2018-06-23,13,43,Subdivision 5,-41
-cattle,growing,2018-06-23,13,43,Subdivision 4,41
-cattle,growing,2018-06-25,13,43,Subdivision 4,-41
-cattle,growing,2018-06-25,13,43,Subdivision 3,41
-cattle,growing,2018-06-27,08,43,Subdivision 3,-41
-cattle,growing,2018-06-27,08,43,Subdivision 1,41
-cattle,growing,2018-06-27,09,43,Subdivision 1,-41
-cattle,growing,2018-06-27,09,43,Subdivision 11,42
-cattle,growing,2018-06-28,13,43,Subdivision 11,-42
-cattle,growing,2018-06-30,13,43,Subdivision 12,42
-cattle,dormant,2018-07-02,08,43,Subdivision 12,-42
-cattle,dormant,2018-07-02,08,43,Subdivision 8,42
-cattle,dormant,2018-07-04,08,43,Subdivision 8,-42
-cattle,dormant,2018-07-04,08,43,Subdivision 9,42
-cattle,dormant,2018-07-06,08,43,Subdivision 9,-42
-cattle,growing,2018-02-01,13,44,44,94
-cattle,growing,2018-02-02,12,44,44,-94
-cattle,dormant,2018-07-09,08,44,44,42
-cattle,dormant,2018-07-12,08,44,44,-42
-cattle,growing,2018-02-06,08,45,45,94
-cattle,growing,2018-02-07,08,45,45,-94
-cattle,dormant,2018-07-18,17,45,45,42
-cattle,dormant,2018-07-20,09,45,45,-42
-cattle,growing,2018-02-04,17,46,46,94
-cattle,growing,2018-02-05,15,46,46,-94
-cattle,dormant,2018-07-12,08,46,Subdivision 2,42
-cattle,dormant,2018-07-14,08,46,Subdivision 2,-42
-cattle,dormant,2018-07-17,09,46,Subdivision 1,42
-cattle,dormant,2018-07-18,09,46,Subdivision 1,-42
-cattle,growing,2018-02-02,12,47,Subdivision 1,94
-cattle,growing,2018-02-03,17,47,Subdivision 1,-94
-cattle,growing,2018-02-05,15,47,Subdivision 2,94
-cattle,growing,2018-02-06,08,47,Subdivision 2,-94
-cattle,dormant,2018-07-14,09,47,Subdivision 1,42
-cattle,dormant,2018-07-16,08,47,Subdivision 1,-42
-cattle,dormant,2018-07-16,10,47,Subdivision 2,42
-cattle,dormant,2018-07-17,08,47,Subdivision 2,-42
-cattle,growing,2018-01-26,21,48,Subdivision 1,94
-cattle,growing,2018-01-27,07,48,Subdivision 1,-94
-cattle,growing,2018-01-27,19,48,Subdivision 2,94
-cattle,growing,2018-01-28,07,48,Subdivision 2,-94
-cattle,growing,2018-06-18,07,48,Subdivision 1,41
-cattle,growing,2018-06-20,08,48,Subdivision 1,-41
-cattle,growing,2018-06-20,08,48,Subdivision 2,41
-cattle,growing,2018-06-22,12,48,Subdivision 2,-41
-cattle,growing,2017-11-20,17,49,Subdivision 1,4
-cattle,growing,2017-12-08,17,49,Subdivision 1,-4
-cattle,growing,2018-01-28,07,49,Subdivision 2,94
-cattle,growing,2018-01-28,17,49,Subdivision 2,-94
-cattle,growing,2018-06-28,13,49,Subdivision 2,42
-cattle,growing,2018-06-30,13,49,Subdivision 2,-42
-cattle,dormant,2018-10-09,11,49,Subdivision 1,6
-cattle,growing,2017-12-30,13,5,Subdivision 1,20
-cattle,growing,2017-12-30,17,5,Subdivision 1,74
-cattle,growing,2017-12-31,11,5,Subdivision 1,-74
-cattle,growing,2017-12-31,13,5,Subdivision 1,-20
-cattle,growing,2018-01-07,08,5,Subdivision 2,94
-cattle,growing,2018-01-08,07,5,Subdivision 2,-94
-cattle,growing,2018-04-14,11,5,Roadside 5,47
-cattle,growing,2018-04-15,10,5,Roadside 5,-47
-cattle,growing,2018-04-19,08,5,Subdivision 1,47
-cattle,growing,2018-04-20,08,5,Subdivision 1,-47
-cattle,growing,2017-12-08,17,50,Subdivision 1,4
-cattle,growing,2017-12-22,17,50,Subdivision 1,-4
-cattle,growing,2018-01-19,16,50,Subdivision 6,94
-cattle,growing,2018-01-20,08,50,Subdivision 6,-94
-cattle,growing,2018-01-20,08,50,Subdivision 5,94
-cattle,growing,2018-01-21,08,50,Subdivision 5,-94
-cattle,growing,2018-01-21,08,50,Subdivision 4,94
-cattle,growing,2018-01-22,08,50,Subdivision 4,-94
-cattle,growing,2018-01-22,08,50,Subdivision 3,94
-cattle,growing,2018-01-22,16,50,Subdivision 3,-94
-cattle,growing,2018-06-10,07,50,50,41
-cattle,growing,2018-06-18,07,50,50,-41
-cattle,growing,2018-02-03,17,51,51,94
-cattle,growing,2018-02-04,17,51,51,-94
-cattle,growing,2018-06-07,09,51,51,41
-cattle,growing,2018-06-10,07,51,51,-41
-cattle,growing,2018-01-17,16,52,Subdivision 3,94
-cattle,growing,2018-01-18,07,52,Subdivision 3,-94
-cattle,growing,2018-01-19,07,52,Subdivision 5,94
-cattle,growing,2018-01-19,16,52,Subdivision 5,-94
-cattle,growing,2018-01-25,12,52,Subdivision 4,94
-cattle,growing,2018-01-26,21,52,Subdivision 4,-94
-cattle,growing,2018-05-30,09,52,Subdivision 2,0
-cattle,growing,2018-06-01,09,52,Subdivision 3,43
-cattle,growing,2018-06-04,09,52,Subdivision 3,-43
-cattle,growing,2018-06-04,09,52,Subdivision 4,41
-cattle,growing,2018-06-07,09,52,Subdivision 4,-41
-cattle,growing,2018-01-02,13,53,Subdivision 3,4
-cattle,growing,2018-01-05,07,53,Subdivision 3,-4
-cattle,growing,2018-01-05,07,53,Subdivision 8,4
-cattle,growing,2018-01-08,08,53,Subdivision 8,-4
-cattle,growing,2018-01-08,08,53,Subdivision 10,4
-cattle,growing,2018-01-16,11,53,Subdivision 10,-4
-cattle,growing,2018-01-18,07,53,Subdivision 5,94
-cattle,growing,2018-01-19,07,53,Subdivision 5,-94
-cattle,growing,2018-05-30,09,53,Subdivision 14,43
-cattle,growing,2018-06-01,09,53,Subdivision 14,-43
-cattle,growing,2018-01-16,11,55,Subdivision 2,94
-cattle,growing,2018-01-17,16,55,Subdivision 2,-94
-cattle,growing,2018-05-19,10,55,Subdivision 1,43
-cattle,growing,2018-05-21,10,55,Subdivision 1,-43
-cattle,growing,2018-05-21,10,55,Subdivision 4,43
-cattle,growing,2018-05-22,10,55,Subdivision 4,-43
-cattle,growing,2018-05-28,10,55,Subdivision 5,43
-cattle,growing,2018-05-30,09,55,Subdivision 5,-43
-cattle,growing,2018-01-22,16,56,Bull3,94
-cattle,growing,2018-01-23,13,56,Bull3,-94
-cattle,growing,2018-01-23,13,56,Bull 3,94
-cattle,growing,2018-01-24,13,56,Bull 3,-94
-cattle,growing,2018-01-24,13,56,Bull1,94
-cattle,growing,2018-01-25,12,56,Bull1,-94
-cattle,dormant,2018-09-20,14,56,56,12
-cattle,dormant,2018-09-25,11,56,56,-12
-cattle,growing,2018-05-17,15,57,57,43
-cattle,growing,2018-05-19,10,57,57,-43
-cattle,dormant,2018-09-19,10,58A,Subdivision 2,12
-cattle,dormant,2018-09-20,14,58A,Subdivision 2,-12
-cattle,growing,2018-06-04,16,58B,Subdivision 1,35
-cattle,growing,2018-06-08,16,58B,Subdivision 1,-35
-cattle,dormant,2018-08-13,10,59,59,17
-cattle,dormant,2018-08-25,10,59,59,-17
-cattle,dormant,2018-08-25,10,60,60,16
-cattle,dormant,2018-09-19,10,60,60,-16
-cattle,dormant,2018-10-03,11,60,60,1
-cattle,dormant,2018-10-15,10,60,60,-1
-cattle,dormant,2018-08-23,17,61,Subdivision 2,31
-cattle,dormant,2018-08-24,17,61,Subdivision 2,-31
-cattle,dormant,2018-08-24,17,61,Subdivision 1,31
-cattle,dormant,2018-08-25,17,61,Subdivision 1,-31
-cattle,growing,2018-02-18,17,62,62,94
-cattle,growing,2018-02-19,12,62,62,-94
-cattle,dormant,2018-08-25,17,62,Subdivision 1,31
-cattle,dormant,2018-08-26,17,62,Subdivision 1,-31
-cattle,dormant,2018-08-26,17,62,Subdivision 2,31
-cattle,dormant,2018-08-28,17,62,Subdivision 2,-31
-cattle,growing,2018-02-18,08,63,63,94
-cattle,growing,2018-02-18,17,63,63,-94
-cattle,dormant,2018-08-28,17,63,Subdivision 2,31
-cattle,dormant,2018-08-30,08,63,Subdivision 2,-31
-cattle,dormant,2018-08-30,08,63,Subdivision 6,31
-cattle,dormant,2018-09-01,11,63,Subdivision 6,-31
-cattle,dormant,2018-09-04,11,63,Subdivision 5,31
-cattle,dormant,2018-09-05,11,63,Subdivision 5,-31
-cattle,dormant,2018-09-05,11,63,NA,31
-cattle,dormant,2018-09-07,09,63,NA,0
-cattle,dormant,2018-09-09,09,63,NA,-31
-cattle,growing,2018-02-19,12,64,64,94
-cattle,growing,2018-02-20,08,64,64,-94
-cattle,dormant,2018-09-01,11,64,Subdivision 1,31
-cattle,dormant,2018-09-04,11,64,Subdivision 1,-31
-cattle,growing,2018-02-13,08,65,65,94
-cattle,growing,2018-02-17,08,65,65,-94
-cattle,growing,2018-02-12,08,66,66,94
-cattle,growing,2018-02-13,08,66,66,-94
-cattle,growing,2018-02-17,08,67,67,94
-cattle,growing,2018-02-17,20,67,67,-94
-cattle,dormant,2018-09-09,09,67,Subdivision 3,31
-cattle,dormant,2018-09-12,09,67,Subdivision 3,-31
-cattle,dormant,2018-09-12,09,67,Subdivision 2,31
-cattle,dormant,2018-09-13,09,67,Subdivision 2,-31
-cattle,dormant,2018-09-21,10,67,Subdivision 2,31
-cattle,dormant,2018-09-22,10,67,Subdivision 2,-31
-cattle,dormant,2018-09-22,10,67,Subdivision 1,31
-cattle,dormant,2018-09-25,11,67,Subdivision 1,-31
-cattle,growing,2018-02-17,20,68,68,94
-cattle,growing,2018-02-18,08,68,68,-94
-cattle,dormant,2018-09-13,09,68,Subdivision 2,31
-cattle,dormant,2018-09-17,09,68,Subdivision 2,-31
-cattle,dormant,2018-09-17,09,68,Subdivision 1,31
-cattle,dormant,2018-09-21,10,68,Subdivision 1,-31
-cattle,growing,2017-12-31,11,6A,6a,74
-cattle,growing,2018-01-02,11,6A,6a,-74
-cattle,growing,2018-01-08,07,6A,Subdivision 1,94
-cattle,growing,2018-01-09,09,6A,Subdivision 1,-94
-cattle,growing,2017-12-31,13,6B,6b,20
-cattle,growing,2018-01-02,13,6B,6b,-20
-cattle,growing,2018-01-09,09,6B,6b,94
-cattle,growing,2018-01-11,08,6B,6b,-94
-cattle,growing,2018-01-11,08,7,Subdivision 1,94
-cattle,growing,2018-01-12,08,7,Subdivision 1,-94
-cattle,growing,2018-01-12,08,7,Subdivision 3,94
-cattle,growing,2018-01-14,11,7,Subdivision 3,-94
-cattle,growing,2018-01-14,11,7,Subdivision 2,94
-cattle,growing,2018-01-15,11,7,Subdivision 2,-94
-cattle,growing,2018-01-15,11,7,Subdivision 4,94
-cattle,growing,2018-01-16,11,7,Subdivision 4,-94
-cattle,growing,2018-04-15,10,7,Subdivision 4,47
-cattle,growing,2018-04-16,07,7,Subdivision 4,-47
-cattle,growing,2017-12-26,13,8,Subdivision 2,20
-cattle,growing,2017-12-26,17,8,Subdivision 2,74
-cattle,growing,2017-12-28,13,8,Subdivision 2,-20
-cattle,growing,2017-12-28,13,8,Subdivision 1,20
-cattle,growing,2017-12-28,17,8,Subdivision 2,-74
-cattle,growing,2017-12-28,17,8,Subdivision 1,74
-cattle,growing,2017-12-29,13,8,Subdivision 1,-20
-cattle,growing,2017-12-29,17,8,Subdivision 1,-74
-cattle,growing,2018-03-29,09,8,Subdivision 2,48
-cattle,growing,2018-03-30,08,8,Subdivision 2,-48
-cattle,growing,2018-03-30,08,8,Subdivision 1,48
-cattle,growing,2018-03-31,08,8,Subdivision 1,-48
-cattle,dormant,2018-10-15,09,8,Subdivision 2,73
-cattle,growing,2018-04-20,08,9,9,47
-cattle,growing,2018-04-23,07,9,9,-47
-horses,dormant,2018-08-12,14,16B,Subdivision 3,3
-horses,dormant,2018-09-06,14,16B,Subdivision 3,-3
-horses,dormant,2018-09-06,14,16B,Subdivision 2,3
-horses,dormant,2018-09-19,14,16B,Subdivision 2,-3
-horses,dormant,2018-09-19,14,16B,Subdivision 1,3
-horses,dormant,2018-09-26,14,16B,Subdivision 1,-3
-horses,dormant,2018-10-08,14,32,Subdivision 2,3
-horses,dormant,2018-10-15,07,32,Subdivision 2,-3
-horses,dormant,2018-10-15,07,32,Subdivision 1,3
-horses,dormant,2018-09-26,14,33,33,3
-horses,dormant,2018-10-08,14,33,33,-3
-horses,growing,2017-12-12,08,34,Horses,5
-horses,growing,2018-01-03,13,34,Horses,-5
-horses,growing,2018-01-03,13,34,Subdivision 6,5
-horses,growing,2018-01-12,09,34,Subdivision 6,-5
-horses,growing,2017-12-05,14,35,Oak Hill North Oaks,5
-horses,growing,2017-12-12,08,35,Oak Hill North Oaks,-5
-horses,growing,2018-01-12,09,35,Oak Hill Draw,5
-horses,growing,2018-01-29,12,35,Oak Hill Draw,-5
-horses,dormant,2018-09-20,14,35,Oak Hill North Oaks,5
-horses,dormant,2018-10-03,14,35,Oak Hill North Oaks,-5
-horses,dormant,2018-10-03,14,35,Oak Hill Draw,5
-horses,dormant,2018-07-26,14,37B,Subdivision 16,5
-horses,dormant,2018-09-20,14,37B,Subdivision 16,-5
-horses,dormant,2018-07-18,14,4,4b,3
-horses,dormant,2018-08-12,14,4,4b,-3
-horses,growing,2017-11-21,00,52,Subdivision 2,3
-horses,growing,2017-12-08,13,52,Subdivision 2,-3
-horses,growing,2017-11-15,00,53,Subdivision 4,3
-horses,growing,2017-11-21,00,53,Subdivision 4,-3
-horses,growing,2018-01-02,13,53,Subdivision 3,3
-horses,growing,2018-01-05,07,53,Subdivision 3,-3
-horses,growing,2018-01-05,07,53,Subdivision 8,3
-horses,growing,2018-01-08,08,53,Subdivision 8,-3
-horses,growing,2018-01-08,08,53,Subdivision 10,3
-horses,growing,2018-01-12,09,53,Subdivision 10,-3
-horses,growing,2018-01-12,09,53,Subdivision 11,3
-horses,growing,2018-02-03,08,53,Subdivision 11,-3
-horses,growing,2018-02-03,08,53,Subdivision 12,3
-horses,growing,2018-04-20,08,53,Subdivision 12,-3
-horses,growing,2017-12-08,13,55,Subdivision 1,3
-horses,growing,2018-01-02,13,55,Subdivision 1,-3
-horses,growing,2018-05-25,14,58A,Subdivision 1,5
-horses,dormant,2018-07-26,14,58A,Subdivision 1,-5
-horses,growing,2018-05-01,14,58B,Subdivision 2,5
-horses,growing,2018-05-25,14,58B,Subdivision 2,-5
+field,Start.Date,End.Date,Herd,n,days,season,Pasture
+1,2023-07-24T04:03:00Z,2023-07-29T18:06:00Z,Cows,46.229906,5.58541666666667,Dormant,1
+1,2023-07-24T04:03:00Z,2023-07-29T18:06:00Z,k,15.318038,5.58541666666667,Dormant,1
+1,2024-01-13T18:09:00Z,2024-01-14T06:09:00Z,Non-Breeding Cattle,29.635389,0.5,Dormant,1
+1,2024-01-13T18:09:00Z,2024-01-14T06:09:00Z,k,6.6017206999999996,0.5,Dormant,1
+1,2024-01-13T18:09:00Z,2024-01-14T06:09:00Z,Cows,46.373125,0.5,Dormant,1
+10,2023-12-28T18:53:00Z,2023-12-29T23:54:00Z,Non-Breeding Cattle,29.425316,1.20902777777778,Dormant,10
+10,2023-12-28T18:53:00Z,2023-12-29T23:54:00Z,Cows,46.05513,1.20902777777778,Dormant,10
+10,2023-12-28T18:53:00Z,2023-12-29T23:54:00Z,k,6.494411,1.20902777777778,Dormant,10
+11,2023-07-12T09:42:00Z,2023-07-12T17:00:00Z,k,15.060784,0.304166666666667,Dormant,11
+11,2023-07-12T09:42:00Z,2023-07-12T17:00:00Z,Cows,45.825098,0.304166666666667,Dormant,11
+11,2023-12-29T23:54:00Z,2023-12-31T23:55:00Z,Cows,46.097527,2.00069444444444,Dormant,11
+11,2023-12-29T23:54:00Z,2023-12-31T23:55:00Z,Non-Breeding Cattle,29.453326,2.00069444444444,Dormant,11
+11,2023-12-29T23:54:00Z,2023-12-31T23:55:00Z,k,6.508719,2.00069444444444,Dormant,11
+12A,2023-07-10T21:40:00Z,2023-07-12T09:42:00Z,Cows,45.802703,1.50138888888889,Dormant,12A
+12A,2023-07-10T21:40:00Z,2023-07-12T09:42:00Z,k,15.045651,1.50138888888889,Dormant,12A
+12A,2023-12-21T23:12:00Z,2023-12-27T18:53:00Z,Non-Breeding Cattle,29.396508,5.82013888888889,Dormant,12A
+12A,2023-12-21T23:12:00Z,2023-12-27T18:53:00Z,Cows,46.011309999999995,5.82013888888889,Dormant,12A
+12A,2023-12-21T23:12:00Z,2023-12-27T18:53:00Z,k,6.480103,5.82013888888889,Dormant,12A
+12A,2024-01-19T00:37:00Z,2024-01-19T19:39:00Z,k,6.644645000000001,0.793055555555556,Dormant,12A
+12A,2024-01-19T00:37:00Z,2024-01-19T19:39:00Z,Non-Breeding Cattle,29.718617,0.793055555555556,Dormant,12A
+12A,2024-01-19T00:37:00Z,2024-01-19T19:39:00Z,Cows,46.498906000000005,0.793055555555556,Dormant,12A
+12B,2023-11-06T19:31:00Z,2023-11-08T19:33:00Z,k,6.129558,2.00138888888889,Dormant,12B
+12B,2023-11-06T19:31:00Z,2023-11-08T19:33:00Z,Cows,45.689516000000005,2.00138888888889,Dormant,12B
+14,2023-07-08T01:04:00Z,2023-07-08T21:35:00Z,Cows,45.729848,0.854861111111111,Dormant,14
+14,2023-07-08T01:04:00Z,2023-07-08T21:35:00Z,k,15.000254,0.854861111111111,Dormant,14
+14,2024-02-02T18:28:00Z,2024-02-04T18:31:00Z,k,6.7591084,2.00208333333333,Dormant,14
+14,2024-02-02T18:28:00Z,2024-02-04T18:31:00Z,Non-Breeding Cattle,29.942693,2.00208333333333,Dormant,14
+14,2024-02-02T18:28:00Z,2024-02-04T18:31:00Z,Cows,46.838105000000006,2.00208333333333,Dormant,14
+15,2023-07-08T21:35:00Z,2023-07-09T09:36:00Z,k,15.000254,0.500694444444444,Dormant,15
+15,2023-07-08T21:35:00Z,2023-07-09T09:36:00Z,Cows,45.731269999999995,0.500694444444444,Dormant,15
+15,2024-02-13T04:09:00Z,2024-02-13T22:24:00Z,Non-Breeding Cattle,24.300537,0.760416666666667,Dormant,15
+15,2024-02-13T04:09:00Z,2024-02-13T22:24:00Z,Cows,47.030324,0.760416666666667,Dormant,15
+15,2024-02-13T04:09:00Z,2024-02-13T22:24:00Z,k,6.8234946,0.760416666666667,Dormant,15
+16A,2023-12-18T23:09:00Z,2023-12-21T23:12:00Z,Cows,45.885527,3.00208333333333,Dormant,16A
+16A,2023-12-18T23:09:00Z,2023-12-21T23:12:00Z,k,6.437179,3.00208333333333,Dormant,16A
+16A,2023-12-18T23:09:00Z,2023-12-21T23:12:00Z,Non-Breeding Cattle,29.313277,3.00208333333333,Dormant,16A
+16B,2023-07-01T09:00:00Z,2023-07-01T20:45:00Z,Wethers,5.761463,0.489583333333333,Dormant,16B
+16B,2023-07-01T09:00:00Z,2023-07-01T20:45:00Z,Does,3.0398555000000003,0.489583333333333,Dormant,16B
+16B,2023-07-05T16:04:00Z,2023-07-07T01:02:00Z,Cows,44.215168,1.37361111111111,Dormant,16B
+16B,2023-07-05T16:04:00Z,2023-07-07T01:02:00Z,k,17.558726999999998,1.37361111111111,Dormant,16B
+17,2024-02-04T18:31:00Z,2024-02-05T19:00:00Z,Non-Breeding Cattle,29.9567,1.02013888888889,Dormant,17
+17,2024-02-04T18:31:00Z,2024-02-05T19:00:00Z,k,6.7662627,1.02013888888889,Dormant,17
+17,2024-02-04T18:31:00Z,2024-02-05T19:00:00Z,Cows,46.859305,1.02013888888889,Dormant,17
+18,2024-02-05T19:00:00Z,2024-02-06T06:30:00Z,Cows,46.860727,0.479166666666667,Dormant,18
+18,2024-02-05T19:00:00Z,2024-02-06T06:30:00Z,Non-Breeding Cattle,29.9575,0.479166666666667,Dormant,18
+18,2024-02-05T19:00:00Z,2024-02-06T06:30:00Z,k,6.7662627,0.479166666666667,Dormant,18
+19,2024-02-06T06:30:00Z,2024-02-06T19:30:00Z,k,6.773416500000001,0.541666666666667,Dormant,19
+19,2024-02-06T06:30:00Z,2024-02-06T19:30:00Z,Cows,46.880504,0.541666666666667,Dormant,19
+19,2024-02-06T06:30:00Z,2024-02-06T19:30:00Z,Non-Breeding Cattle,29.970703,0.541666666666667,Dormant,19
+19,2024-02-06T19:30:00Z,2024-02-08T21:00:00Z,Non-Breeding Cattle,29.998713,2.0625,Dormant,19
+19,2024-02-06T19:30:00Z,2024-02-08T21:00:00Z,Cows,46.922906000000005,2.0625,Dormant,19
+19,2024-02-06T19:30:00Z,2024-02-08T21:00:00Z,k,6.7877246,2.0625,Dormant,19
+19,2024-02-08T21:00:00Z,2024-02-10T19:00:00Z,Cows,46.965305,1.91666666666667,Dormant,19
+19,2024-02-08T21:00:00Z,2024-02-10T19:00:00Z,k,6.8020320000000005,1.91666666666667,Dormant,19
+19,2024-02-08T21:00:00Z,2024-02-10T19:00:00Z,Non-Breeding Cattle,30.026723,1.91666666666667,Dormant,19
+21,2023-11-05T19:31:00Z,2023-11-06T19:31:00Z,k,6.11525,1,Dormant,21
+21,2023-11-05T19:31:00Z,2023-11-06T19:31:00Z,Cows,45.645112999999995,1,Dormant,21
+22,2023-07-01T09:00:00Z,2023-07-05T16:04:00Z,Cows,55.606926,4.29444444444444,Dormant,22
+22,2023-07-01T09:00:00Z,2023-07-05T16:04:00Z,k,22.079023,4.29444444444444,Dormant,22
+22,2024-02-10T19:00:00Z,2024-02-11T05:00:00Z,k,6.8020320000000005,0.416666666666667,Dormant,22
+22,2024-02-10T19:00:00Z,2024-02-11T05:00:00Z,Cows,46.966722999999995,0.416666666666667,Dormant,22
+22,2024-02-10T19:00:00Z,2024-02-11T05:00:00Z,Non-Breeding Cattle,30.027523000000002,0.416666666666667,Dormant,22
+23,2024-02-11T05:00:00Z,2024-02-11T18:15:00Z,k,6.8091865,0.552083333333333,Dormant,23
+23,2024-02-11T05:00:00Z,2024-02-11T18:15:00Z,Cows,46.986504000000004,0.552083333333333,Dormant,23
+23,2024-02-11T05:00:00Z,2024-02-11T18:15:00Z,Non-Breeding Cattle,30.040729,0.552083333333333,Dormant,23
+24,2024-02-11T21:30:00Z,2024-02-12T19:00:00Z,Non-Breeding Cattle,30.054732,0.895833333333333,Dormant,24
+24,2024-02-11T21:30:00Z,2024-02-12T19:00:00Z,k,6.8163403,0.895833333333333,Dormant,24
+24,2024-02-11T21:30:00Z,2024-02-12T19:00:00Z,Cows,47.007703,0.895833333333333,Dormant,24
+25,2023-11-04T17:29:00Z,2023-11-05T19:31:00Z,k,6.1080957,1.08472222222222,Dormant,25
+25,2023-11-04T17:29:00Z,2023-11-05T19:31:00Z,Cows,45.622913999999994,1.08472222222222,Dormant,25
+26,2023-10-29T01:14:00Z,2023-11-04T17:29:00Z,k,6.100942,6.67708333333333,Dormant,26
+26,2023-10-29T01:14:00Z,2023-11-04T17:29:00Z,Cows,45.600714999999994,6.67708333333333,Dormant,26
+27,2023-10-27T19:14:00Z,2023-10-29T01:14:00Z,Cows,45.446734,1.25,Dormant,27
+27,2023-10-27T19:14:00Z,2023-10-29T01:14:00Z,k,6.0508643,1.25,Dormant,27
+28,2023-10-26T16:38:00Z,2023-10-27T19:14:00Z,Cows,45.423117,1.10833333333333,Dormant,28
+28,2023-10-26T16:38:00Z,2023-10-27T19:14:00Z,k,6.04371,1.10833333333333,Dormant,28
+2A,2023-07-10T20:59:00Z,2023-07-17T21:03:00Z,Wethers,5.790995,7.00277777777778,Dormant,2A
+2A,2023-07-10T20:59:00Z,2023-07-17T21:03:00Z,Does,3.0537349,7.00277777777778,Dormant,2A
+2A,2024-01-14T06:09:00Z,2024-01-14T18:10:00Z,k,6.608875,0.500694444444444,Dormant,2A
+2A,2024-01-14T06:09:00Z,2024-01-14T18:10:00Z,Cows,46.392906,0.500694444444444,Dormant,2A
+2A,2024-01-14T06:09:00Z,2024-01-14T18:10:00Z,Non-Breeding Cattle,29.648594,0.500694444444444,Dormant,2A
+2B,2023-07-29T18:06:00Z,2023-07-30T01:07:00Z,Cows,46.23133,0.292361111111111,Dormant,2B
+2B,2023-07-29T18:06:00Z,2023-07-30T01:07:00Z,k,15.318038,0.292361111111111,Dormant,2B
+2B,2023-07-30T01:07:00Z,2023-07-30T18:07:00Z,Cows,46.25372,0.708333333333333,Dormant,2B
+2B,2023-07-30T01:07:00Z,2023-07-31T06:07:00Z,k,15.333171,1.20833333333333,Dormant,2B
+2B,2023-07-30T18:07:00Z,2023-08-02T18:22:00Z,Cows,46.325156,3.01041666666667,Dormant,2B
+2B,2023-07-31T06:07:00Z,2023-08-02T18:22:00Z,k,15.378568,2.51041666666667,Dormant,2B
+2B,2024-01-12T00:06:00Z,2024-01-12T12:07:00Z,k,6.594567,0.500694444444444,Dormant,2B
+2B,2024-01-12T00:06:00Z,2024-01-12T12:07:00Z,Cows,46.350508000000005,0.500694444444444,Dormant,2B
+2B,2024-01-12T00:06:00Z,2024-01-12T12:07:00Z,Non-Breeding Cattle,29.620583999999997,0.500694444444444,Dormant,2B
+3,2023-08-12T22:29:00Z,2023-08-15T04:50:00Z,Cows,46.612324,2.26458333333333,Dormant,3
+3,2023-08-12T22:29:00Z,2023-08-15T04:50:00Z,k,15.560159,2.26458333333333,Dormant,3
+30A,2023-10-06T18:06:00Z,2023-10-16T00:07:00Z,Cows,45.158137,9.25069444444444,Dormant,30A
+30A,2023-10-06T18:06:00Z,2023-10-16T00:07:00Z,k,5.9578622999999995,9.25069444444444,Dormant,30A
+30B,2023-10-16T00:07:00Z,2023-10-18T02:12:17Z,k,5.9721703999999995,2.08700653935196,Dormant,30B
+30B,2023-10-16T00:07:00Z,2023-10-18T02:12:17Z,Cows,45.202535000000005,2.08700653935196,Dormant,30B
+30B,2023-10-18T02:12:17Z,2023-10-23T16:35:00Z,k,6.015094,5.59910457175915,Dormant,30B
+30B,2023-10-18T02:12:17Z,2023-10-23T16:35:00Z,Cows,45.334316,5.59910457175915,Dormant,30B
+30B,2024-02-13T19:51:00Z,2024-02-15T10:00:00Z,Does,3.0767710000000004,1.58958333333333,Dormant,30B
+30B,2024-02-13T19:51:00Z,2024-02-15T10:00:00Z,Wethers,5.1735054,1.58958333333333,Dormant,30B
+30B,2024-02-13T19:51:00Z,2024-02-15T10:00:00Z,Kids,3,1.58958333333333,Dormant,30B
+31,2023-10-23T16:35:00Z,2023-10-26T16:38:00Z,Cows,45.400914,3.00208333333333,Dormant,31
+31,2023-10-23T16:35:00Z,2023-10-26T16:38:00Z,k,6.036555999999999,3.00208333333333,Dormant,31
+32,2023-07-04T20:57:00Z,2023-07-10T20:59:00Z,Does,3.0476626000000002,6.00138888888889,Dormant,32
+32,2023-07-04T20:58:00Z,2023-07-10T20:59:00Z,Wethers,5.7777993,6.00069444444444,Dormant,32
+32,2023-08-18T20:20:00Z,2023-08-22T23:23:00Z,Cows,43.95934,4.12708333333333,Dormant,32
+32,2023-08-18T20:20:00Z,2023-08-22T23:23:00Z,k,15.68122,4.12708333333333,Dormant,32
+32,2023-12-13T20:08:00Z,2023-12-18T23:09:00Z,k,6.4157173,5.12569444444444,Dormant,32
+32,2023-12-13T20:08:00Z,2023-12-18T23:09:00Z,Cows,45.82193,5.12569444444444,Dormant,32
+32,2023-12-13T20:08:00Z,2023-12-18T23:09:00Z,Non-Breeding Cattle,29.271264,5.12569444444444,Dormant,32
+32,2024-02-14T03:23:00Z,2024-02-15T10:00:00Z,k,6.8234946,1.27569444444444,Dormant,32
+32,2024-02-14T03:23:00Z,2024-02-15T10:00:00Z,Cows,47.030324,1.27569444444444,Dormant,32
+32,2024-02-14T03:23:00Z,2024-02-15T10:00:00Z,Non-Breeding Cattle,24.300537,1.27569444444444,Dormant,32
+33,2023-12-10T20:06:00Z,2023-12-13T20:08:00Z,Non-Breeding Cattle,29.20044,3.00138888888889,Dormant,33
+33,2023-12-10T20:06:00Z,2023-12-13T20:08:00Z,Cows,45.714510000000004,3.00138888888889,Dormant,33
+33,2023-12-10T20:06:00Z,2023-12-13T20:08:00Z,k,6.3799472999999995,3.00138888888889,Dormant,33
+33,2024-02-13T22:24:00Z,2024-02-14T03:23:00Z,Cows,47.030324,0.207638888888889,Dormant,33
+33,2024-02-13T22:24:00Z,2024-02-14T03:23:00Z,Non-Breeding Cattle,24.300537,0.207638888888889,Dormant,33
+33,2024-02-13T22:24:00Z,2024-02-14T03:23:00Z,k,6.8234946,0.207638888888889,Dormant,33
+34,2023-07-01T20:45:00Z,2023-07-04T20:57:00Z,Does,3.0424578,3.00833333333333,Dormant,34
+34,2023-07-01T20:45:00Z,2023-07-04T20:58:00Z,Wethers,5.766908,3.00902777777778,Dormant,34
+34,2024-01-19T19:39:00Z,2024-01-20T18:59:00Z,k,6.651799,0.972222222222222,Dormant,34
+34,2024-01-19T19:39:00Z,2024-01-20T18:59:00Z,Cows,46.520105,0.972222222222222,Dormant,34
+34,2024-01-19T19:39:00Z,2024-01-20T18:59:00Z,Non-Breeding Cattle,29.732623,0.972222222222222,Dormant,34
+35,2023-07-01T09:00:00Z,2023-07-03T22:09:00Z,Bulls,3.963661,2.54791666666667,Dormant,35
+35,2023-07-07T01:02:00Z,2023-07-08T01:04:00Z,Cows,45.707457000000005,1.00138888888889,Dormant,35
+35,2023-07-07T01:02:00Z,2023-07-08T01:04:00Z,k,14.985121,1.00138888888889,Dormant,35
+35,2023-10-02T02:03:00Z,2023-10-03T21:04:00Z,Cows,44.890316,1.79236111111111,Dormant,35
+35,2023-10-02T02:03:00Z,2023-10-03T21:04:00Z,k,5.872014600000001,1.79236111111111,Dormant,35
+35,2023-10-27T18:42:00Z,2023-11-03T23:45:00Z,Bulls,1.7331893,7.21041666666667,Dormant,35
+35,2023-11-14T21:48:00Z,2023-12-11T21:49:00Z,Does,3.1012530000000003,27.0006944444444,Dormant,35
+35,2024-01-24T21:56:00Z,2024-01-26T18:00:00Z,Does,3.1411567,1.83611111111111,Dormant,35
+35,2024-01-24T21:57:00Z,2024-01-26T18:00:00Z,Kids,3,1.83541666666667,Dormant,35
+35,2024-01-24T21:57:00Z,2024-01-26T18:00:00Z,Wethers,5.1408325,1.83541666666667,Dormant,35
+36,2023-08-30T20:46:00Z,2023-08-31T17:09:00Z,Cows,44.157723,0.849305555555556,Dormant,36
+36,2023-08-30T20:46:00Z,2023-08-31T17:09:00Z,k,15.817413,0.849305555555556,Dormant,36
+36,2024-01-20T18:59:00Z,2024-01-22T02:58:00Z,k,6.658952599999999,1.33263888888889,Dormant,36
+36,2024-01-20T18:59:00Z,2024-01-22T02:58:00Z,Non-Breeding Cattle,29.747428,1.33263888888889,Dormant,36
+36,2024-01-20T18:59:00Z,2024-01-22T02:58:00Z,Cows,46.542727,1.33263888888889,Dormant,36
+36A,2023-08-31T17:09:00Z,2023-09-02T01:10:00Z,k,15.832546,1.33402777777778,Dormant,36
+36A,2023-08-31T17:09:00Z,2023-09-02T01:10:00Z,Cows,44.18134,1.33402777777778,Dormant,36
+36A,2024-01-25T10:00:00Z,2024-01-25T20:06:00Z,Cows,46.626105,0.420833333333333,Dormant,36
+36A,2024-01-25T10:00:00Z,2024-01-25T20:06:00Z,Non-Breeding Cattle,29.802646,0.420833333333333,Dormant,36
+36A,2024-01-25T10:00:00Z,2024-01-25T20:06:00Z,k,6.687569000000001,0.420833333333333,Dormant,36
+36A,2024-01-28T01:38:00Z,2024-02-06T20:35:00Z,Kids,3,9.78958333333333,Dormant,36
+36A,2024-01-28T01:38:00Z,2024-02-06T20:35:00Z,Wethers,5.1607993,9.78958333333333,Dormant,36
+36A,2024-01-28T01:38:00Z,2024-02-06T20:35:00Z,Does,3.1506987,9.78958333333333,Dormant,36
+37A,2023-09-02T01:10:00Z,2023-09-04T18:11:00Z,Cows,44.24652,2.70902777777778,Dormant,37A
+37A,2023-09-02T01:10:00Z,2023-09-04T18:11:00Z,k,15.877943,2.70902777777778,Dormant,37A
+37A,2024-01-22T02:58:00Z,2024-01-25T10:00:00Z,k,6.6804146,3.29305555555556,Dormant,37A
+37A,2024-01-22T02:58:00Z,2024-01-25T10:00:00Z,Non-Breeding Cattle,29.789441,3.29305555555556,Dormant,37A
+37A,2024-01-22T02:58:00Z,2024-01-25T10:00:00Z,Cows,46.606324,3.29305555555556,Dormant,37A
+37A,2024-01-26T18:00:00Z,2024-01-28T01:38:00Z,Kids,3,1.31805555555556,Dormant,37A
+37A,2024-01-26T18:00:00Z,2024-01-28T01:38:00Z,Wethers,5.143136999999999,1.31805555555556,Dormant,37A
+37A,2024-01-26T18:00:00Z,2024-01-28T01:38:00Z,Does,3.1420242,1.31805555555556,Dormant,37A
+37B,2023-09-04T18:11:00Z,2023-09-05T21:13:00Z,k,15.893075999999999,1.12638888888889,Dormant,37B
+37B,2023-09-04T18:11:00Z,2023-09-05T21:13:00Z,Cows,44.26872,1.12638888888889,Dormant,37B
+37B,2023-09-05T21:12:00Z,2023-09-12T21:12:00Z,Wethers,5.6444595,7,Dormant,37B
+37B,2023-09-10T20:29:00Z,2023-09-19T19:33:00Z,k,5.7718584,8.96111111111111,Dormant,37B
+37B,2023-09-19T18:32:00Z,2023-09-19T19:33:00Z,Cows,44.579519999999995,0.0423611111111111,Dormant,37B
+37B,2023-09-25T22:03:00Z,2023-10-02T02:03:00Z,Cows,44.847336000000006,6.16666666666667,Dormant,37B
+37B,2023-09-25T22:03:00Z,2023-10-02T02:03:00Z,k,5.8577065,6.16666666666667,Dormant,37B
+38A,2023-08-06T21:05:00Z,2023-08-11T21:05:00Z,Does,3.0754216000000003,5,Dormant,38A
+38A,2023-08-06T21:05:00Z,2023-08-15T21:09:00Z,Wethers,5.7186353,9.00277777777778,Dormant,38A
+38A,2023-09-05T21:13:00Z,2023-09-10T20:29:00Z,k,15.968738,4.96944444444444,Dormant,38A
+38A,2023-09-05T21:13:00Z,2023-09-19T18:32:00Z,Cows,44.579519999999995,13.8881944444444,Dormant,38A
+39A,2023-10-03T21:04:00Z,2023-10-06T18:06:00Z,Cows,44.956917999999995,2.87638888888889,Dormant,39A
+39A,2023-10-03T21:04:00Z,2023-10-06T18:06:00Z,k,5.8934766,2.87638888888889,Dormant,39A
+39B,2023-08-22T23:23:00Z,2023-08-30T20:46:00Z,k,15.802280000000001,7.89097222222222,Dormant,39B
+39B,2023-08-22T23:23:00Z,2023-08-30T20:46:00Z,Cows,44.13552,7.89097222222222,Dormant,39B
+4,2023-08-15T04:50:00Z,2023-08-16T04:00:00Z,Cows,46.636137000000005,0.965277777777778,Dormant,4
+4,2023-08-15T04:50:00Z,2023-08-16T04:00:00Z,k,15.575292,0.965277777777778,Dormant,4
+4,2024-01-14T18:10:00Z,2024-01-16T04:34:00Z,k,6.616029,1.43333333333333,Dormant,4
+4,2024-01-14T18:10:00Z,2024-01-16T04:34:00Z,Non-Breeding Cattle,29.663398,1.43333333333333,Dormant,4
+4,2024-01-14T18:10:00Z,2024-01-16T04:34:00Z,Cows,46.415527000000004,1.43333333333333,Dormant,4
+40,2023-11-10T19:34:00Z,2023-11-12T19:36:00Z,k,6.158174,2.00138888888889,Dormant,40
+40,2023-11-10T19:34:00Z,2023-11-12T19:36:00Z,Cows,45.057311999999996,2.00138888888889,Dormant,40
+41,2023-11-12T19:36:00Z,2023-11-16T01:30:00Z,k,6.1796356999999995,3.24583333333333,Dormant,41
+41,2023-11-14T01:28:00Z,2023-11-16T01:30:00Z,Non-Breeding Cattle,28.809105,2.00138888888889,Dormant,41
+41,2023-11-12T19:36:00Z,2023-11-16T01:30:00Z,Cows,45.122332,3.24583333333333,Dormant,41
+43,2023-12-02T18:00:00Z,2023-12-03T20:01:00Z,Cows,45.50251,1.08402777777778,Dormant,43
+43,2023-12-02T18:00:00Z,2023-12-03T20:01:00Z,Non-Breeding Cattle,29.060393,1.08402777777778,Dormant,43
+43,2023-12-02T18:00:00Z,2023-12-03T20:01:00Z,k,6.3084077,1.08402777777778,Dormant,43
+43,2023-12-05T20:02:00Z,2023-12-09T20:03:00Z,k,6.351331500000001,4.00069444444444,Dormant,43
+43,2023-12-05T20:02:00Z,2023-12-09T20:03:00Z,Non-Breeding Cattle,29.144419999999997,4.00069444444444,Dormant,43
+43,2023-12-05T20:02:00Z,2023-12-09T20:03:00Z,Cows,45.629709999999996,4.00069444444444,Dormant,43
+43,2023-12-26T21:51:00Z,2023-12-29T21:51:00Z,Does,3.1168674000000003,3,Dormant,43
+43,2023-12-29T21:51:00Z,2024-01-05T21:51:00Z,Does,3.1229397,7,Dormant,43
+43,2024-01-09T21:52:00Z,2024-01-20T21:53:00Z,Does,3.135952,11.0006944444444,Dormant,43
+45,2023-11-27T20:25:00Z,2023-11-29T18:48:00Z,k,6.2797915,1.93263888888889,Dormant,45
+45,2023-11-27T20:25:00Z,2023-11-29T18:48:00Z,Cows,45.41771,1.93263888888889,Dormant,45
+45,2023-11-27T20:25:00Z,2023-11-29T18:48:00Z,Non-Breeding Cattle,29.004373,1.93263888888889,Dormant,45
+46,2023-11-29T18:48:00Z,2023-12-01T05:00:00Z,Cows,45.440332000000005,1.425,Dormant,46
+46,2023-11-29T18:48:00Z,2023-12-01T05:00:00Z,k,6.2869453,1.425,Dormant,46
+46,2023-11-29T18:48:00Z,2023-12-01T05:00:00Z,Non-Breeding Cattle,29.019178,1.425,Dormant,46
+47,2024-01-05T21:08:00Z,2024-01-24T21:57:00Z,Kids,3,19.0340277777778,Dormant,47
+47,2024-01-05T21:08:00Z,2024-01-24T21:57:00Z,Wethers,5.137692,19.0340277777778,Dormant,47
+48,2023-12-01T05:00:00Z,2023-12-02T18:00:00Z,k,6.301253399999999,1.54166666666667,Dormant,48
+48,2023-12-01T05:00:00Z,2023-12-02T18:00:00Z,Non-Breeding Cattle,29.046387,1.54166666666667,Dormant,48
+48,2023-12-01T05:00:00Z,2023-12-02T18:00:00Z,Cows,45.481311999999996,1.54166666666667,Dormant,48
+49,2023-08-15T21:09:00Z,2023-09-05T21:12:00Z,Wethers,5.6317534,21.0020833333333,Dormant,49
+49,2023-12-09T20:03:00Z,2023-12-10T20:06:00Z,k,6.358485399999999,1.00208333333333,Dormant,49
+49,2023-12-09T20:03:00Z,2023-12-10T20:06:00Z,Cows,45.65091,1.00208333333333,Dormant,49
+49,2023-12-09T20:03:00Z,2023-12-10T20:06:00Z,Non-Breeding Cattle,29.158426,1.00208333333333,Dormant,49
+4B,2023-08-09T22:19:00Z,2023-08-10T22:23:00Z,Cows,46.517074,1.00277777777778,Dormant,4
+4B,2023-08-09T22:19:00Z,2023-08-10T22:23:00Z,k,15.499629,1.00277777777778,Dormant,4
+4B,2023-08-18T04:30:00Z,2023-08-18T20:20:00Z,k,15.620689,0.659722222222222,Dormant,4
+4B,2023-08-18T04:30:00Z,2023-08-18T20:20:00Z,Cows,46.706156,0.659722222222222,Dormant,4
+4B,2024-01-16T04:34:00Z,2024-01-18T00:35:00Z,Non-Breeding Cattle,29.691408,1.83402777777778,Dormant,4
+4B,2024-01-16T04:34:00Z,2024-01-18T00:35:00Z,k,6.630337000000001,1.83402777777778,Dormant,4
+4B,2024-01-16T04:34:00Z,2024-01-18T00:35:00Z,Cows,46.457926,1.83402777777778,Dormant,4
+5,2023-07-18T21:57:00Z,2023-07-24T04:03:00Z,k,15.227242,5.25416666666667,Dormant,5
+5,2023-07-18T21:57:00Z,2023-07-24T04:03:00Z,Cows,46.088453,5.25416666666667,Dormant,5
+5,2023-08-16T04:00:00Z,2023-08-18T04:30:00Z,Cows,46.68376,2.02083333333333,Dormant,5
+5,2023-08-16T04:00:00Z,2023-08-18T04:30:00Z,k,15.605557000000001,2.02083333333333,Dormant,5
+50,2024-01-28T18:26:00Z,2024-01-31T01:27:00Z,Cows,46.733523,2.29236111111111,Dormant,50
+50,2024-01-28T18:26:00Z,2024-01-31T01:27:00Z,k,6.723339,2.29236111111111,Dormant,50
+50,2024-01-28T18:26:00Z,2024-01-31T01:27:00Z,Non-Breeding Cattle,29.87347,2.29236111111111,Dormant,50
+51,2023-12-13T21:07:00Z,2024-01-05T21:08:00Z,Wethers,5.1032036,23.0006944444444,Dormant,51
+51,2023-12-13T21:07:00Z,2024-01-05T21:08:00Z,Kids,3,23.0006944444444,Dormant,51
+52,2023-11-14T21:06:00Z,2023-12-13T21:07:00Z,Wethers,5.061455,29.0006944444444,Dormant,52
+52,2023-11-14T21:06:00Z,2023-12-13T21:07:00Z,Kids,3,29.0006944444444,Dormant,52
+55,2024-01-27T06:25:00Z,2024-01-28T18:26:00Z,Cows,46.689707000000006,1.50069444444444,Dormant,55
+55,2024-01-27T06:25:00Z,2024-01-28T18:26:00Z,k,6.7090309999999995,1.50069444444444,Dormant,55
+55,2024-01-27T06:25:00Z,2024-01-28T18:26:00Z,Non-Breeding Cattle,29.84466,1.50069444444444,Dormant,55
+56,2023-11-10T20:31:00Z,2024-02-15T10:00:00Z,Bulls,1.7444763,96.5618055555556,Dormant,56
+57,2024-01-26T06:19:00Z,2024-01-27T06:25:00Z,k,6.694722700000001,1.00416666666667,Dormant,57
+57,2024-01-26T06:19:00Z,2024-01-27T06:25:00Z,Cows,46.648727,1.00416666666667,Dormant,57
+57,2024-01-26T06:19:00Z,2024-01-27T06:25:00Z,Non-Breeding Cattle,29.817451000000002,1.00416666666667,Dormant,57
+58A,2024-01-25T20:06:00Z,2024-01-26T06:19:00Z,Cows,46.627527,0.425694444444444,Dormant,58A
+58A,2024-01-25T20:06:00Z,2024-01-26T06:19:00Z,k,6.687569000000001,0.425694444444444,Dormant,58A
+58A,2024-01-25T20:06:00Z,2024-01-26T06:19:00Z,Non-Breeding Cattle,29.803445,0.425694444444444,Dormant,58A
+59,2023-09-19T19:33:00Z,2023-09-23T21:02:00Z,k,5.800474599999999,4.06180555555556,Dormant,59
+59,2023-09-19T19:33:00Z,2023-09-23T21:02:00Z,Cows,44.66832,4.06180555555556,Dormant,59
+60,2023-09-23T21:02:00Z,2023-09-25T22:03:00Z,k,5.814782699999999,2.04236111111111,Dormant,60
+60,2023-09-23T21:02:00Z,2023-09-25T22:03:00Z,Cows,44.714137,2.04236111111111,Dormant,60
+61,2023-11-16T20:30:00Z,2023-11-17T23:57:00Z,Cows,45.164730000000006,1.14375,Dormant,61
+61,2023-11-16T20:30:00Z,2023-11-17T23:57:00Z,k,6.193944,1.14375,Dormant,61
+61,2023-11-16T20:30:00Z,2023-11-17T23:57:00Z,Non-Breeding Cattle,28.837115,1.14375,Dormant,61
+62,2023-11-17T23:57:00Z,2023-11-19T23:59:00Z,k,6.208252000000001,2.00138888888889,Dormant,62
+62,2023-11-17T23:57:00Z,2023-11-19T23:59:00Z,Cows,45.207133,2.00138888888889,Dormant,62
+62,2023-11-17T23:57:00Z,2023-11-19T23:59:00Z,Non-Breeding Cattle,28.865125,2.00138888888889,Dormant,62
+65,2023-11-21T00:00:00Z,2023-11-23T00:02:00Z,Cows,45.27073,2.00138888888889,Dormant,65
+65,2023-11-21T00:00:00Z,2023-11-23T00:02:00Z,Non-Breeding Cattle,28.907139,2.00138888888889,Dormant,65
+65,2023-11-21T00:00:00Z,2023-11-23T00:02:00Z,k,6.2297139999999995,2.00138888888889,Dormant,65
+66,2023-11-19T23:59:00Z,2023-11-21T00:00:00Z,k,6.215406,1.00069444444444,Dormant,66
+66,2023-11-19T23:59:00Z,2023-11-21T00:00:00Z,Non-Breeding Cattle,28.879129000000002,1.00069444444444,Dormant,66
+66,2023-11-19T23:59:00Z,2023-11-21T00:00:00Z,Cows,45.228332,1.00069444444444,Dormant,66
+67,2023-11-23T00:02:00Z,2023-11-25T00:04:00Z,k,6.2440215,2.00138888888889,Dormant,67
+67,2023-11-23T00:02:00Z,2023-11-25T00:04:00Z,Non-Breeding Cattle,28.935148,2.00138888888889,Dormant,67
+67,2023-11-23T00:02:00Z,2023-11-25T00:04:00Z,Cows,45.313133,2.00138888888889,Dormant,67
+68,2023-11-25T00:04:00Z,2023-11-27T20:25:00Z,Cows,45.375312,2.84791666666667,Dormant,68
+68,2023-11-25T00:04:00Z,2023-11-27T20:25:00Z,Non-Breeding Cattle,28.976363000000003,2.84791666666667,Dormant,68
+68,2023-11-25T00:04:00Z,2023-11-27T20:25:00Z,k,6.2654834,2.84791666666667,Dormant,68
+6A,2024-01-05T23:57:00Z,2024-01-07T09:58:00Z,Non-Breeding Cattle,29.537354999999998,1.41736111111111,Dormant,6A
+6A,2024-01-05T23:57:00Z,2024-01-07T09:58:00Z,Cows,46.224727,1.41736111111111,Dormant,6A
+6A,2024-01-05T23:57:00Z,2024-01-07T09:58:00Z,k,6.551643,1.41736111111111,Dormant,6A
+6B,2024-01-07T09:58:00Z,2024-01-09T00:02:00Z,k,6.565951,1.58611111111111,Dormant,6B
+6B,2024-01-07T09:58:00Z,2024-01-09T00:02:00Z,Cows,46.267129999999995,1.58611111111111,Dormant,6B
+6B,2024-01-07T09:58:00Z,2024-01-09T00:02:00Z,Non-Breeding Cattle,29.565365,1.58611111111111,Dormant,6B
+6B,2024-01-11T00:03:00Z,2024-01-12T00:06:00Z,Non-Breeding Cattle,29.607379,1.00208333333333,Dormant,6B
+6B,2024-01-11T00:03:00Z,2024-01-12T00:06:00Z,Cows,46.330726999999996,1.00208333333333,Dormant,6B
+6B,2024-01-11T00:03:00Z,2024-01-12T00:06:00Z,k,6.587413,1.00208333333333,Dormant,6B
+7,2023-07-16T21:51:00Z,2023-07-17T21:54:00Z,Cows,45.944160000000004,1.00208333333333,Dormant,7
+7,2023-07-16T21:51:00Z,2023-07-17T21:54:00Z,k,15.136447,1.00208333333333,Dormant,7
+7,2024-01-03T23:56:00Z,2024-01-05T23:57:00Z,k,6.544489,2.00069444444444,Dormant,7
+7,2024-01-03T23:56:00Z,2024-01-05T23:57:00Z,Cows,46.203527,2.00069444444444,Dormant,7
+7,2024-01-03T23:56:00Z,2024-01-05T23:57:00Z,Non-Breeding Cattle,29.523349999999997,2.00069444444444,Dormant,7
+7,2024-01-18T00:35:00Z,2024-01-18T12:36:00Z,Non-Breeding Cattle,29.704613000000002,0.500694444444444,Dormant,7
+7,2024-01-18T00:35:00Z,2024-01-18T12:36:00Z,Cows,46.477707,0.500694444444444,Dormant,7
+7,2024-01-18T00:35:00Z,2024-01-18T12:36:00Z,k,6.6374907,0.500694444444444,Dormant,7
+8,2023-07-12T17:00:00Z,2023-07-13T17:00:00Z,Cows,45.848910000000004,1,Dormant,8
+8,2023-07-12T17:00:00Z,2023-07-13T17:00:00Z,k,15.075916999999999,1,Dormant,8
+8,2023-07-17T21:54:00Z,2023-07-18T21:57:00Z,k,15.151579,1.00208333333333,Dormant,8
+8,2023-07-17T21:54:00Z,2023-07-18T21:57:00Z,Cows,45.967973,1.00208333333333,Dormant,8
+8,2023-12-31T23:55:00Z,2024-01-02T23:56:00Z,k,6.523027,2.00069444444444,Dormant,8
+8,2023-12-31T23:55:00Z,2024-01-02T23:56:00Z,Cows,46.13993,2.00069444444444,Dormant,8
+8,2023-12-31T23:55:00Z,2024-01-02T23:56:00Z,Non-Breeding Cattle,29.481336,2.00069444444444,Dormant,8
+9,2023-07-13T17:00:00Z,2023-07-16T21:51:00Z,Cows,45.920348,3.20208333333333,Dormant,9
+9,2023-07-13T17:00:00Z,2023-07-16T21:51:00Z,k,15.121314,3.20208333333333,Dormant,9
+9,2024-01-02T23:56:00Z,2024-01-03T23:56:00Z,Cows,46.16113,1,Dormant,9
+9,2024-01-02T23:56:00Z,2024-01-03T23:56:00Z,Non-Breeding Cattle,29.49534,1,Dormant,9
+9,2024-01-02T23:56:00Z,2024-01-03T23:56:00Z,k,6.530181,1,Dormant,9
+9,2024-01-09T00:02:00Z,2024-01-11T00:03:00Z,Cows,46.309527,2.00069444444444,Dormant,9
+9,2024-01-09T00:02:00Z,2024-01-11T00:03:00Z,k,6.580259,2.00069444444444,Dormant,9
+9,2024-01-09T00:02:00Z,2024-01-11T00:03:00Z,Non-Breeding Cattle,29.593375,2.00069444444444,Dormant,9
+9,2024-01-18T12:36:00Z,2024-01-19T00:37:00Z,Cows,46.479125,0.500694444444444,Dormant,9
+9,2024-01-18T12:36:00Z,2024-01-19T00:37:00Z,Non-Breeding Cattle,29.705412,0.500694444444444,Dormant,9
+9,2024-01-18T12:36:00Z,2024-01-19T00:37:00Z,k,6.6374907,0.500694444444444,Dormant,9
+9,2024-02-13T03:00:00Z,2024-02-13T04:09:00Z,Cows,47.009125,0.0479166666666667,Dormant,9
+9,2024-02-13T03:00:00Z,2024-02-13T04:09:00Z,Non-Breeding Cattle,30.055533,0.0479166666666667,Dormant,9
+9,2024-02-13T03:00:00Z,2024-02-13T04:09:00Z,k,6.8163403,0.0479166666666667,Dormant,9
+1,2024-03-23T18:30:00Z,2024-03-25T01:05:00Z,Cows,32.77892,1.27430555555556,Growing,1
+1,2024-06-14T02:30:00Z,2024-06-18T16:16:00Z,Cows,38.124,4.57361111111111,Growing,1
+10,2024-03-30T00:15:00Z,2024-03-31T00:16:00Z,Cows,33.53876,1.00069444444444,Growing,10
+11,2024-03-29T00:14:00Z,2024-03-30T00:15:00Z,Cows,33.41212,1.00069444444444,Growing,11
+12B,2024-04-02T20:28:00Z,2024-04-04T19:00:00Z,Cows,34.17196,1.93888888888889,Growing,12B
+16B,2024-02-27T21:00:00Z,2024-03-02T18:59:09Z,Cows,47.410504,3.91607638888889,Growing,16B
+16B,2024-02-27T21:00:00Z,2024-03-02T18:59:09Z,Non-Breeding Cattle,12.982224,3.91607638888889,Growing,16B
+16B,2024-02-27T21:00:00Z,2024-03-02T18:59:09Z,k,6.952266,3.91607638888889,Growing,16B
+16B,2024-06-12T16:16:00Z,2024-06-14T02:30:00Z,Cows,38.124,1.42638888888889,Growing,16B
+17,2024-04-10T00:00:00Z,2024-04-10T21:14:00Z,Cows,34.9318,0.884722222222222,Growing,17
+18,2024-04-08T18:30:00Z,2024-04-10T00:00:00Z,Cows,34.80516,1.22916666666667,Growing,18
+18B,2024-04-07T18:30:00Z,2024-04-08T18:30:00Z,Cows,34.67852,1,Growing,18
+19,2024-04-04T19:00:00Z,2024-04-05T18:30:00Z,Cows,34.2986,0.979166666666667,Growing,19
+22,2024-04-07T06:30:00Z,2024-04-07T18:30:00Z,Cows,34.551883000000004,0.5,Growing,22
+23,2024-04-05T18:30:00Z,2024-04-07T06:30:00Z,Cows,34.425242,1.5,Growing,23
+24,2024-04-04T20:00:00Z,2024-04-09T21:06:00Z,L,21.397979,5.04583333333333,Growing,24
+25,2024-02-17T18:45:00Z,2024-02-18T20:50:00Z,Non-Breeding Cattle,24.369761999999998,1.08680555555556,Growing,25
+25,2024-02-17T18:45:00Z,2024-02-18T20:50:00Z,Cows,47.134906,1.08680555555556,Growing,25
+25,2024-02-17T18:45:00Z,2024-02-18T20:50:00Z,k,6.8592640000000005,1.08680555555556,Growing,25
+25,2024-02-27T02:15:00Z,2024-02-27T21:00:00Z,k,6.9236504000000005,0.78125,Growing,25
+25,2024-02-27T02:15:00Z,2024-02-27T21:00:00Z,Cows,47.325703000000004,0.78125,Growing,25
+25,2024-02-27T02:15:00Z,2024-02-27T21:00:00Z,Non-Breeding Cattle,24.495805,0.78125,Growing,25
+26,2024-02-23T20:03:41Z,2024-02-25T21:00:00Z,Cows,47.283305,2.0391087962963,Growing,26
+26,2024-02-23T20:03:41Z,2024-02-25T21:00:00Z,k,6.9093423000000005,2.0391087962963,Growing,26
+26,2024-02-23T20:03:41Z,2024-02-25T21:00:00Z,Non-Breeding Cattle,24.467795,2.0391087962963,Growing,26
+27,2024-06-21T20:46:00Z,2024-06-23T20:49:00Z,Wethers,6.89,2.00208333333333,Growing,27
+27,2024-06-21T20:46:00Z,2024-06-23T20:49:00Z,Does,4.6,2.00208333333333,Growing,27
+27,2024-06-21T20:46:00Z,2024-06-23T20:49:00Z,Kids,1,2.00208333333333,Growing,27
+28,2024-02-22T18:30:00Z,2024-02-23T20:02:41Z,Cows,47.240902,1.06436342592593,Growing,28
+28,2024-02-22T18:30:00Z,2024-02-23T20:02:41Z,Non-Breeding Cattle,24.439785,1.06436342592593,Growing,28
+28,2024-02-22T18:30:00Z,2024-02-23T20:02:41Z,k,6.895034,1.06436342592593,Growing,28
+28,2024-02-27T20:58:00Z,2024-02-29T20:58:00Z,Kids,3,2,Growing,28
+28,2024-02-27T20:58:00Z,2024-02-29T20:58:00Z,Does,3.0906506,2,Growing,28
+28,2024-02-27T20:58:00Z,2024-02-29T20:58:00Z,Wethers,5.202548,2,Growing,28
+28,2024-06-15T20:44:00Z,2024-06-19T20:45:00Z,Does,4.6,4.00069444444444,Growing,28
+28,2024-06-15T20:44:00Z,2024-06-19T20:45:00Z,Kids,1,4.00069444444444,Growing,28
+28,2024-06-15T20:44:00Z,2024-06-19T20:45:00Z,Wethers,6.89,4.00069444444444,Growing,28
+28,2024-06-19T20:45:00Z,2024-06-21T20:46:00Z,Wethers,6.89,2.00069444444444,Growing,28
+28,2024-06-19T20:45:00Z,2024-06-21T20:46:00Z,Does,4.6,2.00069444444444,Growing,28
+28,2024-06-19T20:45:00Z,2024-06-21T20:46:00Z,Kids,1,2.00069444444444,Growing,28
+29,2024-02-18T20:50:00Z,2024-02-19T19:11:00Z,Cows,47.156105000000004,0.93125,Growing,29
+29,2024-02-18T20:50:00Z,2024-02-19T19:11:00Z,k,6.8664185,0.93125,Growing,29
+29,2024-02-18T20:50:00Z,2024-02-19T19:11:00Z,Non-Breeding Cattle,24.383766,0.93125,Growing,29
+2A,2024-03-25T01:05:00Z,2024-03-25T23:00:00Z,Cows,32.905559999999994,0.913194444444444,Growing,2A
+2B,2024-03-14T08:00:00Z,2024-03-14T20:00:00Z,Cows,40.614650000000005,0.5,Growing,2B
+2B,2024-06-18T16:16:00Z,2024-06-21T18:18:00Z,Cows,51.837375,3.08472222222222,Growing,2B
+3,2024-03-25T23:00:00Z,2024-03-26T16:26:00Z,Cows,33.032199999999996,0.726388888888889,Growing,3
+3,2024-06-28T20:58:00Z,2024-07-01T09:00:00Z,Kids,1,2.50138888888889,Growing,3
+3,2024-06-28T20:58:00Z,2024-07-01T09:00:00Z,Does,4.6,2.50138888888889,Growing,3
+3,2024-06-28T20:58:00Z,2024-07-01T09:00:00Z,Wethers,6.89,2.50138888888889,Growing,3
+30A,2024-02-19T19:11:00Z,2024-02-20T19:13:00Z,Cows,47.177305,1.00138888888889,Growing,30A
+30A,2024-02-19T19:11:00Z,2024-02-20T19:13:00Z,k,6.8735723,1.00138888888889,Growing,30A
+30A,2024-02-19T19:11:00Z,2024-02-20T19:13:00Z,Non-Breeding Cattle,24.397771000000002,1.00138888888889,Growing,30A
+30A,2024-02-25T21:00:00Z,2024-02-26T20:00:00Z,k,6.916496,0.958333333333333,Growing,30A
+30A,2024-02-25T21:00:00Z,2024-02-26T20:00:00Z,Cows,47.304504,0.958333333333333,Growing,30A
+30A,2024-02-25T21:00:00Z,2024-02-26T20:00:00Z,Non-Breeding Cattle,24.4818,0.958333333333333,Growing,30A
+30B,2024-02-15T10:00:00Z,2024-02-18T02:51:00Z,Does,3.080241,2.70208333333333,Growing,30B
+30B,2024-02-15T10:00:00Z,2024-02-18T02:51:00Z,Kids,3,2.70208333333333,Growing,30B
+30B,2024-02-15T10:00:00Z,2024-02-18T02:51:00Z,Wethers,5.181256,2.70208333333333,Growing,30B
+30B,2024-02-20T19:13:00Z,2024-02-21T19:14:00Z,k,6.880725999999999,1.00069444444444,Growing,30B
+30B,2024-02-20T19:13:00Z,2024-02-21T19:14:00Z,Non-Breeding Cattle,24.411775000000002,1.00069444444444,Growing,30B
+30B,2024-02-20T19:13:00Z,2024-02-21T19:14:00Z,Cows,47.198504,1.00069444444444,Growing,30B
+30B,2024-02-18T02:51:00Z,2024-02-21T20:57:00Z,Does,3.0837109999999996,3.75416666666667,Growing,30B
+30B,2024-02-18T02:51:00Z,2024-02-21T20:57:00Z,Wethers,5.188027,3.75416666666667,Growing,30B
+30B,2024-02-18T02:51:00Z,2024-02-21T20:57:00Z,Kids,3,3.75416666666667,Growing,30B
+30B,2024-02-21T20:57:00Z,2024-02-27T20:58:00Z,Wethers,5.198917499999999,6.00069444444444,Growing,30B
+30B,2024-02-21T20:57:00Z,2024-02-27T20:58:00Z,Does,3.0889158,6.00069444444444,Growing,30B
+30B,2024-02-21T20:57:00Z,2024-02-27T20:58:00Z,Kids,3,6.00069444444444,Growing,30B
+30B,2024-02-29T20:58:00Z,2024-03-05T20:59:00Z,Kids,3,5.00069444444444,Growing,30B
+30B,2024-02-29T20:58:00Z,2024-03-05T20:59:00Z,Wethers,5.211624,5.00069444444444,Growing,30B
+30B,2024-02-29T20:58:00Z,2024-03-05T20:59:00Z,Does,3.094988,5.00069444444444,Growing,30B
+31,2024-02-21T19:14:00Z,2024-02-22T18:30:00Z,Cows,47.219703,0.969444444444444,Growing,31
+31,2024-02-21T19:14:00Z,2024-02-22T18:30:00Z,Non-Breeding Cattle,24.425781,0.969444444444444,Growing,31
+31,2024-02-21T19:14:00Z,2024-02-22T18:30:00Z,k,6.8878804,0.969444444444444,Growing,31
+32,2024-02-15T10:00:00Z,2024-02-15T21:30:00Z,Cows,47.071305,0.479166666666667,Growing,32
+32,2024-02-15T10:00:00Z,2024-02-15T21:30:00Z,Non-Breeding Cattle,24.327745999999998,0.479166666666667,Growing,32
+32,2024-02-15T10:00:00Z,2024-02-15T21:30:00Z,k,6.8378022000000005,0.479166666666667,Growing,32
+32,2024-06-29T18:24:00Z,2024-06-30T16:39:00Z,k,12.407396,0.927083333333333,Growing,32
+33,2024-02-15T21:30:00Z,2024-02-17T00:57:00Z,Cows,47.09392,1.14375,Growing,33
+33,2024-02-15T21:30:00Z,2024-02-17T00:57:00Z,k,6.8449565,1.14375,Growing,33
+33,2024-02-15T21:30:00Z,2024-02-17T00:57:00Z,Non-Breeding Cattle,24.342553,1.14375,Growing,33
+35,2024-06-09T18:08:00Z,2024-06-12T16:16:00Z,Cows,38.124,2.92222222222222,Growing,35
+36,2024-06-08T18:07:00Z,2024-06-09T18:08:00Z,Cows,38.124,1.00069444444444,Growing,36
+37A,2024-06-01T16:47:00Z,2024-06-07T00:00:00Z,Cows,38.124,5.30069444444444,Growing,37A
+37A,2024-06-10T20:43:00Z,2024-06-12T20:43:00Z,Wethers,6.89,2,Growing,37A
+37A,2024-06-10T20:43:00Z,2024-06-12T20:43:00Z,Does,4.6,2,Growing,37A
+37A,2024-06-10T20:43:00Z,2024-06-12T20:43:00Z,Kids,1,2,Growing,37A
+37A,2024-06-12T20:43:00Z,2024-06-15T20:44:00Z,Wethers,6.89,3.00069444444444,Growing,37A
+37A,2024-06-12T20:43:00Z,2024-06-15T20:44:00Z,Does,4.6,3.00069444444444,Growing,37A
+37A,2024-06-12T20:43:00Z,2024-06-15T20:44:00Z,Kids,1,3.00069444444444,Growing,37A
+37B,2024-03-11T19:23:00Z,2024-03-14T08:00:00Z,Cows,40.509203,2.52569444444444,Growing,37B
+37B,2024-03-05T01:04:00Z,2024-03-29T21:13:00Z,Bulls,2.8292159999999997,24.8395833333333,Growing,37B
+37B,2024-05-01T22:00:00Z,2024-05-03T02:06:00Z,k,20.007741999999997,1.17083333333333,Growing,37B
+37B,2024-05-03T02:06:00Z,2024-05-03T20:00:00Z,k,20.051482,0.745833333333333,Growing,37B
+37B,2024-05-03T20:00:00Z,2024-05-04T20:00:00Z,k,20.095225,1,Growing,37B
+37B,2024-05-04T20:00:00Z,2024-05-05T20:00:00Z,k,20.138965,1,Growing,37B
+37B,2024-05-05T20:00:00Z,2024-05-06T18:00:00Z,k,20.182706999999997,0.916666666666667,Growing,37B
+37B,2024-05-06T18:00:00Z,2024-05-07T18:00:00Z,k,20.226447,1,Growing,37B
+37B,2024-05-07T18:00:00Z,2024-05-08T18:01:00Z,k,20.27019,1.00069444444444,Growing,37B
+37B,2024-05-08T18:01:00Z,2024-05-09T18:03:00Z,k,20.31393,1.00138888888889,Growing,37B
+37B,2024-05-09T18:03:00Z,2024-05-10T18:04:00Z,k,20.357671999999997,1.00069444444444,Growing,37B
+37B,2024-05-10T18:04:00Z,2024-05-11T18:06:00Z,k,20.401412,1.00138888888889,Growing,37B
+37B,2024-05-11T18:06:00Z,2024-05-12T18:07:00Z,k,20.445154,1.00069444444444,Growing,37B
+37B,2024-05-12T18:07:00Z,2024-05-13T18:08:00Z,k,20.488896,1.00069444444444,Growing,37B
+37B,2024-05-13T18:08:00Z,2024-05-14T18:09:00Z,k,20.532636999999998,1.00069444444444,Growing,37B
+37B,2024-05-14T18:09:00Z,2024-05-15T06:09:00Z,k,20.532636999999998,0.5,Growing,37B
+37B,2024-05-15T06:09:00Z,2024-05-15T23:13:00Z,k,20.576379,0.711111111111111,Growing,37B
+37B,2024-06-07T19:06:00Z,2024-06-08T18:07:00Z,Cows,38.124,0.959027777777778,Growing,37B
+38A,2024-06-14T02:00:00Z,2024-06-18T16:19:00Z,k,22.252076000000002,4.59652777777778,Growing,38A
+39A,2024-02-17T00:57:00Z,2024-02-17T18:45:00Z,k,6.8521104,0.741666666666667,Growing,39A
+39A,2024-02-17T00:57:00Z,2024-02-17T18:45:00Z,Cows,47.113703,0.741666666666667,Growing,39A
+39A,2024-02-17T00:57:00Z,2024-02-17T18:45:00Z,Non-Breeding Cattle,24.355756,0.741666666666667,Growing,39A
+39A,2024-06-18T16:19:00Z,2024-06-19T18:23:00Z,k,22.255020000000002,1.08611111111111,Growing,39A
+39A,2024-06-19T18:23:00Z,2024-06-20T16:24:00Z,k,22.257963,0.917361111111111,Growing,39A
+39A,2024-06-20T16:24:00Z,2024-06-21T18:15:00Z,k,22.260906,1.07708333333333,Growing,39A
+39B,2024-06-21T18:15:00Z,2024-06-22T18:16:00Z,k,22.263849999999998,1.00069444444444,Growing,39B
+39B,2024-06-22T18:16:00Z,2024-06-23T18:17:00Z,k,12.386792,1.00069444444444,Growing,39B
+39B,2024-06-23T18:17:00Z,2024-06-24T18:18:00Z,k,12.389736000000001,1.00069444444444,Growing,39B
+39B,2024-06-24T18:18:00Z,2024-06-25T18:18:00Z,k,12.39268,1,Growing,39B
+39B,2024-06-25T18:18:00Z,2024-06-27T18:23:00Z,k,12.398566,2.00347222222222,Growing,39B
+39B,2024-06-27T18:23:00Z,2024-06-29T18:24:00Z,k,12.404453,2.00069444444444,Growing,39B
+39B,2024-06-30T16:39:00Z,2024-07-01T09:00:00Z,k,12.407396,0.68125,Growing,39B
+4,2024-03-18T02:41:00Z,2024-03-18T19:42:00Z,Cows,41.03642,0.709027777777778,Growing,4
+4,2024-03-27T02:00:00Z,2024-03-28T02:32:00Z,Cows,33.15884,1.02222222222222,Growing,4
+40,2024-03-02T19:00:09Z,2024-03-03T20:39:00Z,Cows,47.431703,1.06864583333333,Growing,40
+40,2024-03-02T19:00:09Z,2024-03-03T20:39:00Z,k,6.95942,1.06864583333333,Growing,40
+40,2024-03-02T19:00:09Z,2024-03-03T20:39:00Z,Non-Breeding Cattle,12.995429,1.06864583333333,Growing,40
+41,2024-03-03T20:39:00Z,2024-03-05T22:42:00Z,Non-Breeding Cattle,13.021837999999999,2.08541666666667,Growing,41
+41,2024-03-03T20:39:00Z,2024-03-05T22:42:00Z,Cows,47.475523,2.08541666666667,Growing,41
+41,2024-03-03T20:39:00Z,2024-03-05T22:42:00Z,k,6.973728,2.08541666666667,Growing,41
+43,2024-05-10T17:23:00Z,2024-05-12T05:27:00Z,Cows,35.253277000000004,1.50277777777778,Growing,43
+43,2024-05-13T00:15:00Z,2024-05-15T16:40:00Z,Cows,35.712593999999996,2.68402777777778,Growing,43
+43,2024-05-15T16:40:00Z,2024-05-19T00:00:00Z,Cows,36.05708,3.30555555555556,Growing,43
+43,2024-05-22T20:30:00Z,2024-05-26T18:41:00Z,Cows,36.97571,3.92430555555556,Growing,43
+43,2024-05-26T18:41:00Z,2024-05-29T17:42:00Z,Cows,37.3202,2.95902777777778,Growing,43
+45,2024-04-12T20:00:00Z,2024-04-14T23:20:00Z,Cows,32.152895,2.13888888888889,Growing,45
+46,2024-04-14T23:20:00Z,2024-04-16T21:00:00Z,Cows,32.382553,1.90277777777778,Growing,46
+47,2024-03-24T20:24:00Z,2024-04-16T20:25:00Z,Wethers,5.2878609999999995,23.0006944444444,Growing,47
+47,2024-03-24T20:24:00Z,2024-04-16T20:25:00Z,Does,3.1314216,23.0006944444444,Growing,47
+47,2024-04-16T21:00:00Z,2024-04-19T18:00:00Z,Cows,32.72704,2.875,Growing,47
+47,2024-05-06T16:44:00Z,2024-05-07T16:55:00Z,Cows,34.79396,1.00763888888889,Growing,47
+47,2024-05-28T20:32:00Z,2024-05-31T20:33:00Z,Wethers,6.8695435,3.00069444444444,Growing,47
+47,2024-05-28T20:32:00Z,2024-05-31T20:33:00Z,Kids,1,3.00069444444444,Growing,47
+47,2024-05-28T20:32:00Z,2024-05-31T20:33:00Z,Does,4.590458,3.00069444444444,Growing,47
+48,2024-04-19T18:00:00Z,2024-04-21T17:30:00Z,Cows,32.9567,1.97916666666667,Growing,48
+48,2024-05-07T16:55:00Z,2024-05-07T17:55:00Z,Cows,34.79396,0.0416666666666667,Growing,48
+48,2024-05-07T17:55:00Z,2024-05-09T17:00:00Z,Cows,35.023617,1.96180555555556,Growing,48
+48,2024-05-09T17:00:00Z,2024-05-10T17:23:00Z,Cows,35.13845,1.01597222222222,Growing,48
+49,2024-05-12T05:27:00Z,2024-05-13T00:15:00Z,Cows,35.368105,0.783333333333333,Growing,49
+4B,2024-03-26T16:26:00Z,2024-03-27T02:00:00Z,Cows,33.032199999999996,0.398611111111111,Growing,4
+5,2024-03-18T19:42:00Z,2024-03-19T19:00:00Z,Cows,41.141863,0.970833333333333,Growing,5
+5,2024-06-29T20:28:00Z,2024-06-30T20:29:00Z,Cows,52.028062,1.00069444444444,Growing,5
+5,2024-06-30T20:29:00Z,2024-07-01T09:00:00Z,Cows,52.028062,0.521527777777778,Growing,5
+50,2024-04-21T17:30:00Z,2024-04-22T17:12:00Z,Cows,33.071527,0.9875,Growing,50
+50,2024-04-24T23:16:00Z,2024-04-25T19:00:00Z,Cows,33.41601,0.822222222222222,Growing,50
+50,2024-04-29T22:00:00Z,2024-05-01T16:48:00Z,Cows,34.10499,1.78333333333333,Growing,50
+50,2024-05-02T17:27:00Z,2024-05-03T17:33:00Z,Cows,34.334644999999995,1.00416666666667,Growing,50
+50,2024-05-04T17:34:00Z,2024-05-05T17:36:00Z,Cows,34.5643,1.00138888888889,Growing,50
+51,2024-04-25T19:00:00Z,2024-04-29T01:00:00Z,Cows,33.7605,3.25,Growing,51
+51,2024-04-29T01:00:00Z,2024-04-29T22:00:00Z,Cows,33.875330000000005,0.875,Growing,51
+51,2024-05-01T16:48:00Z,2024-05-02T17:27:00Z,Cows,34.219816,1.02708333333333,Growing,51
+51,2024-05-03T17:33:00Z,2024-05-04T17:34:00Z,Cows,34.449473,1.00069444444444,Growing,51
+51,2024-05-05T17:36:00Z,2024-05-06T16:44:00Z,Cows,34.679133,0.963888888888889,Growing,51
+51,2024-05-31T20:33:00Z,2024-06-03T20:36:00Z,Does,4.59306,3.00208333333333,Growing,51
+51,2024-05-31T20:33:00Z,2024-06-03T20:36:00Z,Wethers,6.874988999999999,3.00208333333333,Growing,51
+51,2024-05-31T20:33:00Z,2024-06-03T20:36:00Z,Kids,1,3.00208333333333,Growing,51
+52,2024-04-24T05:14:00Z,2024-04-24T14:00:00Z,Cows,33.186355000000006,0.365277777777778,Growing,52
+52,2024-06-03T20:36:00Z,2024-06-10T20:43:00Z,Wethers,6.887695,7.00486111111111,Growing,52
+52,2024-06-03T20:36:00Z,2024-06-10T20:43:00Z,Does,4.5991323,7.00486111111111,Growing,52
+52,2024-06-03T20:36:00Z,2024-06-10T20:43:00Z,Kids,1,7.00486111111111,Growing,52
+56,2024-02-15T10:00:00Z,2024-03-05T01:04:00Z,Bulls,2.7639053,18.6277777777778,Growing,56
+56,2024-03-06T21:05:00Z,2024-04-16T20:12:00Z,Kids,3,40.9631944444444,Growing,56
+58A,2024-03-29T21:13:00Z,2024-06-22T15:40:00Z,Bulls,3.085,84.76875,Growing,58A
+59,2024-03-10T20:06:00Z,2024-03-11T19:23:00Z,Cows,40.298316,0.970138888888889,Growing,59
+59,2024-03-10T20:06:00Z,2024-03-11T19:23:00Z,Non-Breeding Cattle,10.515,0.970138888888889,Growing,59
+59,2024-03-10T20:06:00Z,2024-03-12T00:17:00Z,k,16.180989,1.17430555555556,Growing,59
+59,2024-05-29T17:42:00Z,2024-05-31T17:44:00Z,Cows,37.549855,2.00138888888889,Growing,59
+60,2024-05-31T17:44:00Z,2024-06-01T16:47:00Z,Cows,37.664684,0.960416666666667,Growing,60
+61,2024-03-06T00:00:00Z,2024-03-06T08:59:00Z,k,6.973728,0.374305555555556,Growing,61
+61,2024-03-06T00:00:00Z,2024-03-06T08:59:00Z,Non-Breeding Cattle,13.021837999999999,0.374305555555556,Growing,61
+61,2024-03-06T00:00:00Z,2024-03-06T08:59:00Z,Cows,47.475523,0.374305555555556,Growing,61
+62,2024-03-06T08:59:00Z,2024-03-06T21:30:00Z,Non-Breeding Cattle,13.035043,0.521527777777778,Growing,62
+62,2024-03-06T08:59:00Z,2024-03-06T21:30:00Z,k,6.9808823,0.521527777777778,Growing,62
+62,2024-03-06T08:59:00Z,2024-03-06T21:30:00Z,Cows,47.495305,0.521527777777778,Growing,62
+62,2024-05-21T20:31:00Z,2024-05-24T20:31:00Z,Wethers,6.8568370000000005,3,Growing,62
+62,2024-05-21T20:31:00Z,2024-05-24T20:31:00Z,Does,4.5843856999999995,3,Growing,62
+62,2024-05-21T20:31:00Z,2024-05-24T20:31:00Z,Kids,1,3,Growing,62
+63,2024-03-10T20:21:00Z,2024-03-14T20:22:00Z,Wethers,5.2279604,4.00069444444444,Growing,63
+63,2024-03-10T20:21:00Z,2024-03-14T20:22:00Z,Does,3.1027952,4.00069444444444,Growing,63
+63,2024-04-16T20:25:00Z,2024-05-21T20:31:00Z,Wethers,6.8513916,35.0041666666667,Growing,63
+63,2024-04-16T20:25:00Z,2024-05-21T20:31:00Z,Does,4.581783000000001,35.0041666666667,Growing,63
+63,2024-04-16T20:12:00Z,2024-05-21T20:31:00Z,Kids,1,35.0131944444444,Growing,63
+64,2024-03-14T20:22:00Z,2024-03-24T20:24:00Z,Wethers,5.246112,10.0013888888889,Growing,64
+64,2024-03-14T20:22:00Z,2024-03-24T20:24:00Z,Does,3.1114699999999997,10.0013888888889,Growing,64
+65,2024-03-06T21:30:00Z,2024-03-07T22:03:00Z,Cows,47.51792,1.02291666666667,Growing,65
+65,2024-03-06T21:30:00Z,2024-03-07T22:03:00Z,Non-Breeding Cattle,13.048248,1.02291666666667,Growing,65
+65,2024-03-06T21:30:00Z,2024-03-07T22:03:00Z,k,6.988036,1.02291666666667,Growing,65
+66,2024-03-07T22:03:00Z,2024-03-08T19:59:00Z,Cows,47.537703,0.913888888888889,Growing,66
+66,2024-03-07T22:03:00Z,2024-03-08T19:59:00Z,Non-Breeding Cattle,13.061452,0.913888888888889,Growing,66
+66,2024-03-07T22:03:00Z,2024-03-08T19:59:00Z,k,6.99519,0.913888888888889,Growing,66
+67,2024-03-08T19:59:00Z,2024-03-10T00:05:00Z,k,7.002344,1.17083333333333,Growing,67
+67,2024-03-08T19:59:00Z,2024-03-10T00:05:00Z,Cows,47.56032,1.17083333333333,Growing,67
+67,2024-03-08T19:59:00Z,2024-03-10T00:05:00Z,Non-Breeding Cattle,13.074656999999998,1.17083333333333,Growing,67
+68,2024-03-10T00:05:00Z,2024-03-10T20:06:00Z,Cows,47.5801,0.834027777777778,Growing,68
+68,2024-03-10T00:05:00Z,2024-03-10T20:06:00Z,Non-Breeding Cattle,13.087862,0.834027777777778,Growing,68
+68,2024-03-10T00:05:00Z,2024-03-10T20:06:00Z,k,7.009498,0.834027777777778,Growing,68
+6A,2024-03-22T17:43:00Z,2024-03-23T18:30:00Z,Cows,32.65228,1.03263888888889,Growing,6A
+6A,2024-04-10T21:14:00Z,2024-04-12T20:00:00Z,Cows,31.923236,1.94861111111111,Growing,6A
+6B,2024-03-21T19:30:00Z,2024-03-22T17:43:00Z,Cows,32.52564,0.925694444444444,Growing,6B
+7,2024-03-19T19:00:00Z,2024-03-20T17:45:00Z,Cows,41.143046999999996,0.947916666666667,Growing,7
+7,2024-03-20T20:45:00Z,2024-03-21T19:30:00Z,Cows,39.747855,0.947916666666667,Growing,7
+8,2024-03-28T02:32:00Z,2024-03-29T00:14:00Z,Cows,33.28548,0.904166666666667,Growing,8
+9,2024-03-20T17:45:00Z,2024-03-20T20:45:00Z,Cows,41.24731,0.125,Growing,9
+9,2024-03-31T18:17:00Z,2024-04-02T20:28:00Z,Cows,33.91868,2.09097222222222,Growing,9
