@@ -6,7 +6,9 @@ output:
     css: tk_page_style.css
 ---
 
-#### In 2016 and 2017, TomKat Ranch staff recorded the movement of animals in and out of fields to track grazing intensity in each field. Point Blue Conservation Science summarized these data as the total number of days grazed and the number of animal-days per acre (ADA) by season.{#intro}
+#### In 2023 and 2024, TomKat Ranch staff recorded the movement of animals in and out of fields to track grazing intensity in each field. Point Blue Conservation Science summarized these data as the total number of days grazed and the number of animal-days per acre (ADA) by season.{#intro}
+
+<i> Updated: March 7, 2025</i>
 
 ### Guiding Principle
 
@@ -42,7 +44,6 @@ This interactive web page was produced in [R](https://www.R-project.org/){target
 
 ### For more information
 
-Please contact:  
-[Chelsea Carey, PhD](https://www.pointblue.org/employee_bios/chelsea-carey/){target="_blank"}  
-Working Lands Research Director
-[Point Blue Conservation Science](https://www.pointblue.org){target="_blank"}
+[Contact Point Blue Soils Team](mailto:rangec@pointblue.org){target="_blank"}  
+
+[Learn more about Point Blue's Ag-C Monitoring Program](https://www.pointblue.org/our-work/working-landscapes/agricultural-carbon-monitoring-program/){target="_blank"}

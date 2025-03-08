@@ -13,13 +13,17 @@ pointblue.palette = c("#3682C7", "#64AD34", "#F38118", "#00459A", "#B3D225",
 
 #### Beginning July 2011, Point Blue Conservation Science installed a stream gauge on Honsinger Creek and began monitoring water temperature, stream flow, and stage, with assistance from Trout Unlimited. {#intro}
 
+<i>Updated: March 7, 2025</i>
+
 ### SMART Goal
 
 <b>Perennial flow:</b> Maintain year-round flow, even in drought years.
 
 
 ### Daily water temperature, flow, and stage
-Daily average <font color='`r pointblue.palette[3]`'><b>water temperature</b></font>, <font color='`r pointblue.palette[2]`'><b>stream flow </b></font>, and <font color='`r pointblue.palette[1]`'><b>stage</b></font> from the Honsinger Creek stream gauge, along with the daily range observed.
+Daily average <font color='`r pointblue.palette[3]`'><b>water temperature</b></font>, <font color='`r pointblue.palette[2]`'><b>stream flow </b></font>, and <font color='`r pointblue.palette[1]`'><b>stage</b></font> from the Honsinger Creek stream gauge, along with the daily range observed. Note that there was a lapse in data from October 2021 to November 2022 due to damaged equipment. 
+
+Data show that Honsinger Creek provides adequate habitat for fish, since it retains water year-round and has mild temperatures which rarely peak above 16C. Winter storms are evenly distributed and water depth generally did not exceed 4 ft. The exception to this was the winter of 2022-2023 when above-average rainfall caused multiple high flow events, which are challenging to fish eggs and juveniles waiting to outmigrate in the spring. <i>Data interpretation provided by Trout Unlimited.</i>
 
 <i>Click & drag the slider at the bottom to view different dates.</i>
 
@@ -27,10 +31,10 @@ Daily average <font color='`r pointblue.palette[3]`'><b>water temperature</b></f
 <iframe src="widget/stream_plot_daily.html" data-external="1" style="border: none;" width = 100%; height = 650px;></iframe>
 </center>
 
-
+unique(streamdat_monthly$name)
 
 ### Monthly deviations from average
-Consistent with regional drought conditions, monthly average water temperatures were above the averages observed in Honsinger Creek throughout most of 2014-2017, while water depth was below average 2013-2017. In 2017-2020, water depths increased and water temperatures varied around the long-term average.
+Consistent with regional drought conditions (see Weather page), monthly average water temperatures were above the averages observed in Honsinger Creek throughout most of 2014-2017, while water depth was below average 2013-2017. In 2017-2020, water depths increased and water temperatures varied around the long-term average. The drought in 2021-2022 decreased water depth until heavy rains in 2023-2024 led to greater depth, flow levels and temperatures. 
 
 <center>
 <iframe src="widget/stream_plot_monthly.html" data-external="1" style="border: none;" width = 100%; height = 650px;></iframe>
@@ -53,7 +57,6 @@ This interactive web page was produced in [R](https://www.R-project.org/){target
 
 ### For more information
 
-Please contact:  
-[Chelsea Carey, PhD](https://www.pointblue.org/employee_bios/chelsea-carey/){target="_blank"}  
-Working Lands Research Director
-[Point Blue Conservation Science](https://www.pointblue.org){target="_blank"}
+[Contact Point Blue Soils Team](mailto:rangec@pointblue.org){target="_blank"}  
+
+[Learn more about Point Blue's Ag-C Monitoring Program](https://www.pointblue.org/our-work/working-landscapes/agricultural-carbon-monitoring-program/){target="_blank"}

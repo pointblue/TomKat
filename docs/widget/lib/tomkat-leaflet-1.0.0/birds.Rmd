@@ -19,9 +19,10 @@ nsurveys = count_surveys(dat)
 
 #### Since 2010, Point Blue Conservation Science has conducted <b>`r format(nsurveys, big.mark=',')` bird surveys</b> across TomKat Ranch during May and June and detected a total of <b>`r nspecies` bird species</b>. Each year, biologists conduct point count surveys for birds at a random sample of points chosen from a grid across the ranch, as well as at 12 points in riparian vegetation along Honsinger Creek. We analyzed this data to examine spatial patterns and trends in species richness and in grassland bird abundance across the ranch.{#intro}
 
+<i> Updated: March 7, 2025</i>
 
 ### SMART Goals
-<b>Increase grassland breeding birds:</b> Increase densities to an average of 4.25 birds per 10 acres by 2020.
+<b>Increase grassland breeding birds:</b> Increase densities to an average of 4.25 birds per 10 acres.
 
 <b>Support riparian birds:</b> Continue increasing riparian bird populations at current rates (Wilson's Warbler, Swainson's Thrush, Song Sparrow). Maintain high bird species richness in Honsinger Creek (20-50 species per point).
 
@@ -62,7 +63,7 @@ The shading in this map shows the estimated number of species ever detected near
 
 
 ### Decline in grassland species richness  
-Ranch-wide, there were initially more total species in grassland point than in riparian points, but grassland species richness has declined in recent years while riparian richness has remained steady through the drought.
+Ranch-wide, there were initially more total species in grassland point than in riparian points. Grassland species richness was particularly sensitive to drought, with reduced species richness in years (2014-2016, 2021-2022), but increased with average rainfall in 2024. 
 
 <center>
 <iframe src="widget/bird_trend_richness.html" data-external="1" style="border: none;" width = 100%; height = 450px;></iframe>
@@ -77,7 +78,6 @@ This interactive web page was produced in [R](https://www.R-project.org/){target
 
 ### For more information
 
-Please contact:  
-[Chelsea Carey, PhD](https://www.pointblue.org/employee_bios/chelsea-carey/){target="_blank"}  
-Working Lands Research Director
-[Point Blue Conservation Science](https://www.pointblue.org){target="_blank"}
+[Contact Point Blue Soils Team](mailto:rangec@pointblue.org){target="_blank"}  
+
+[Learn more about Point Blue's Ag-C Monitoring Program](https://www.pointblue.org/our-work/working-landscapes/agricultural-carbon-monitoring-program/){target="_blank"}
