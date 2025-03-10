@@ -120,6 +120,6 @@ This interactive web page was produced in [R](https://www.R-project.org/){target
 
 ### For more information
 
-[Contact Point Blue Soils Team](mailto:rangec@pointblue.org){target="_blank"}  
+[Email the Point Blue Soils Team](mailto:rangec@pointblue.org){target="_blank"}  
 
-[Learn more about Point Blue's Ag-C Monitoring Program](https://www.pointblue.org/our-work/working-landscapes/agricultural-carbon-monitoring-program/){target="_blank"}
+[Learn more about Point Blue](https://www.pointblue.org/our-work/working-landscapes/){target="_blank"}
