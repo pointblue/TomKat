@@ -26,7 +26,7 @@ nsites <- readr::read_csv(here::here('data_clean/TOKA_soil_main.csv')) %>%
 
 <b>Increase soil organic carbon (SOC):</b> All RMN points gain 0.5% SOC in 0-10 cm.*
 
-&ast;*This goal is may be ambitious due to the ongoing drought conditions in California, which have led to a statewide decline in SOC. Over the monitoring period, drought ranged from moderate (D1) to exceptional drought (D4) occurring in 2014-2016 and 2021-2022. With notably low precipitation levels from 2020 to 2022 (see Weather page), any SOC declines on the ranch could still reflect positive impacts, since the rate of decline may be slower than it would have been without restoration efforts.*
+&ast;*This goal is may be ambitious due to the ongoing drought conditions in California, which have led to a statewide decline in SOC. Over the monitoring period, drought ranged from moderate (D1) to exceptional drought (D4) occurring in 2014-2016 and 2021-2022. TomKat Ranch Manager, Mark Biaggi, describes it well, "As a kid it was Wet decades interrupted by dry years. Now it is dry decades interrupted by wet years. Our understanding of what is happening hasn't kept up with reality. We need a paradigm shift." With notably low precipitation levels from 2020 to 2022 (see Weather page), any SOC declines on the ranch could still reflect positive impacts, since the rate of decline may be slower than it would have been without restoration efforts.*
 
 
 ### Soil productivity
