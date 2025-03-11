@@ -6,10 +6,10 @@ output:
     css: tk_page_style.css
 ---
 
-#### Point Blue Conservation Science has surveyed grassland vegetation across TomKat Ranch each summer since 2011. We examined patterns in the current vegetation cover and diversity in each pasture, changes over time in each pasture, and ranch-wide vegetation trends.{#intro}
+#### Point Blue Conservation Science has surveyed grassland vegetation across TomKat Ranch since 2011, with an updated monitoring effort in summer of 2023. We examine patterns in the current vegetation cover and diversity in each pasture, changes over time in each pasture, and ranch-wide vegetation trends.{#intro}
 
 
-### SMART Goals
+### Achieved SMART Goals
 
 <b>Increase perennial grass:</b> Average of 20% native perennial grass cover on the west side by 2020.
 
@@ -18,7 +18,7 @@ output:
 
 ### Current vegetation cover
 
-Vegetation cover varies across the ranch, likely reflecting the interaction between local soil conditions, management decisions, and weather. Native grasses are more common on the west side of the ranch, where in 2019 most pastures exceeded the goal of 20% native grass cover. In addition, most pastures across the entire ranch met the goal of <5% bare ground.
+Vegetation cover varies across the ranch, likely reflecting the interaction between local soil conditions, management decisions, and weather. Native grasses are more common on the west side of the ranch, where in 2023 most pastures exceeded the goal of 20% native grass cover. In addition, most pastures across the entire ranch met the goal of <5% bare ground.
 
 <i>Choose a vegetation type at bottom left. Click on any of the pastures for details.</i>
 
@@ -85,7 +85,6 @@ This interactive web page was produced in [R](https://www.R-project.org/){target
 
 ### For more information
 
-Please contact:  
-[Chelsea Carey, PhD](https://www.pointblue.org/employee_bios/chelsea-carey/){target="_blank"}  
-Working Lands Research Director 
-[Point Blue Conservation Science](https://www.pointblue.org){target="_blank"}
+[Email the Point Blue Soils Team](mailto:rangec@pointblue.org){target="_blank"}  
+
+[Learn more about Point Blue](https://www.pointblue.org/our-work/working-landscapes/){target="_blank"}
