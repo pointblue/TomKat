@@ -671,7 +671,15 @@ rmarkdown::render(input = 'Rmd/soil.Rmd',
 
 
 # VEGETATION-------
+
+source('src/process_veg_data.R')
+source('src/plot_veg_data.R')
+
 ## data set up
+
+vegdat = compile_veg_data("data_raw/veg/LPI_TomKat_2024.csv")
+write_csv(vegdat, here::here('data_clean/TK_veg_main.csv'))
+
 ## 1. MAP current veg cover
 ## 2. MAP vegetation change
 ## 3. GRAPH ranch-wide veg trends
