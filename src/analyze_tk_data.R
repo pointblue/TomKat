@@ -683,9 +683,18 @@ write_csv(vegdat, here::here('data_clean/TK_veg_main.csv'))
 ## 1. MAP current veg cover
 ## 2. MAP vegetation change
 ## 3. GRAPH ranch-wide veg trends
+
+plot1<-veg_trend_plot(vegdat)
+
+htmlwidgets::saveWidget(plot1,
+                        here::here('docs/widget/vegetation_graph1.html'),
+                        selfcontained = FALSE, libdir = 'lib',
+                        title = 'TomKat Vegetation Trends')
 ## 4. GRAPH ranch-wide grass trends
 ## 5. MAP vegetation species diversity
 ## update webpage
+rmarkdown::render(input = 'Rmd/soil.Rmd',
+                  output_file = here::here('docs/soil.html'))
 
 # MANAGEMENT-------
 source('src/process_mgmt_data.R')

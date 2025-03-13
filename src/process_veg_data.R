@@ -17,9 +17,10 @@ compile_veg_data<-function(dat){
     filter(!is.na(value)  & !value %in% c("L", "S", "AM", "R", "M", "NOPLANT", "EM", 'WL',"",'2LTR')) %>%
     left_join(plants[,c("Symbol","FunGrp")], by = c('value' = 'Symbol')) %>%
     mutate(FunGrp = case_when(value == '2GA' ~ "Annual Grass",
-                              value %in% c('2FA','2FORB') ~ 'Annual Forb',
+                              value %in% c('2FA','2FORB') ~ 'Forb',
                               value == '2GP' ~ 'Perennial Grass',
                               value %in% c('2LICHN','2PLANT','2GRAM') ~ 'Other',
+                              FunGrp %in% c('Annual Forb','Perennial Forb') ~ 'Forb',
                               .default = FunGrp)) %>%
     group_by(Point.Id, Year, Point.Index,Direction) %>% 
     distinct(FunGrp)
@@ -34,44 +35,22 @@ compile_veg_data<-function(dat){
     select(Point.Id,Year,FunGrp,cover)
   
   lpi_sum <- lpi_clean %>%
-    group_by(Point.Id, Year, Direction) %>% 
+    group_by(Point.Id, Year) %>% 
     count(FunGrp) %>% 
     mutate(cover = n/100*100) %>%
     select(-n) %>%
-    rbind(bg)
-  
-  #Match points to field polygons and take average of field polygons
-  
-  shp_poly <- st_read(here::here('GIS'), 'TK_veg_fields', quiet = TRUE) %>%
-    st_transform('+proj=longlat +datum=WGS84') 
-  
-  pasture_labs <- st_read(here::here('GIS'), 'TOKA_point_count_grid', quiet = TRUE) %>%
-    st_transform('+proj=longlat +datum=WGS84') %>%
-    filter(Name %in% unique(lpi_sum$Point.Id)) %>%
-    st_join(shp_poly,join=st_intersects) %>%
-    as.data.frame() %>%
-    select(Name,Pasture)
-  
-  pasture_vals <- lpi_sum %>%
-    left_join(pasture_labs, by = c('Point.Id' = 'Name')) %>%
-    filter(!is.na(Pasture)) %>%
+    rbind(bg) %>%
     pivot_wider(names_from = FunGrp, values_from = cover) %>%
-    mutate(`All Grasses` = `Annual Grass` + `Perennial Grass`,
-           Forbs = `Annual Forb` + `Perennial Forb`) %>%
-    pivot_longer(`Annual Forb`:Forbs,names_to='vegtype') %>%
-    mutate(value = replace_na(value, 0)) %>%
-    group_by(Year, Pasture,vegtype) %>%
-    summarise(cover = mean(value)) %>%
-    ungroup() %>%
-    select(Pasture,Year,vegtype,cover) %>%
-    filter(!vegtype %in% c('Annual Forb','Perennial Forb')) %>%
+    pivot_longer(`Annual Grass`:`Bare Ground`,names_to='vegtype',values_to = 'cover') %>%
+    mutate(cover = replace_na(cover, 0)) %>%
+    select(Point.Id,Year,vegtype,cover) %>%
     mutate(vegtype = case_when(vegtype == 'Annual Grass' ~ "AnnualGr",
                                vegtype == 'Perennial Grass' ~ "PereGr",
                                vegtype == 'All Grasses' ~ "Grass",
                                vegtype == 'Bare Ground' ~ "BareGround",
                                .default = vegtype))
   
-  return(pasture_vals)
+  return(lpi_sum)
 }
 
 
