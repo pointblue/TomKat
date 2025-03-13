@@ -693,8 +693,8 @@ htmlwidgets::saveWidget(plot1,
 ## 4. GRAPH ranch-wide grass trends
 ## 5. MAP vegetation species diversity
 ## update webpage
-rmarkdown::render(input = 'Rmd/soil.Rmd',
-                  output_file = here::here('docs/soil.html'))
+rmarkdown::render(input = 'Rmd/vegetation.Rmd',
+                  output_file = here::here('docs/vegetation.html'))
 
 # MANAGEMENT-------
 source('src/process_mgmt_data.R')
