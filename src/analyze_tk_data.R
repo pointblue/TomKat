@@ -711,18 +711,33 @@ save_widget(veg_cover_map,
             selfcontained = FALSE, libdir = 'lib',
             title =  paste0('TomKat Veg Map ', max(vegdat$Year)))
 
+## 2. GRAPH ranch-wide veg trends
 
-## 2. MAP vegetation change
-## 3. GRAPH ranch-wide veg trends
+# Remove 2023 data (only sampled for trial points)
+vegdat <- vegdat %>%
+  filter(Year != 2023) %>%
+  mutate( # Bin years to combine cohorts
+    YearBin = case_when(
+      Year %in% c(2024, 2025) ~ "2024-2025",
+      Year %in% c(2021, 2022) ~ "2021-2022",
+      Year == 2018 ~ "2018",
+      Year == 2016 ~ "2016",
+      TRUE ~ as.character(Year)
+    ),
+    YearBin = factor(YearBin, levels = c("2016", "2018", "2021-2022", "2024-2025"))
+  ) %>%
+  mutate( #Convert Shrub and Trees in 2016 to NA since they weren't assessed 
+    cover = ifelse(YearBin == "2016" & vegtype == "ShrubsTrees", NA, cover)
+  )
 
+#Plot
 plot1<-veg_trend_plot(vegdat)
 
 htmlwidgets::saveWidget(plot1,
                         here::here('docs/widget/vegetation_graph1.html'),
                         selfcontained = FALSE, libdir = 'lib',
                         title = 'TomKat Vegetation Trends')
-## 4. GRAPH ranch-wide grass trends
-## 5. MAP vegetation species diversity
+
 ## update webpage
 rmarkdown::render(input = 'Rmd/vegetation.Rmd',
                   output_file = here::here('docs/vegetation.html'))
