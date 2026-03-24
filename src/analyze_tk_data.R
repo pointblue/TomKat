@@ -27,7 +27,7 @@ source('src/fit_distance_models.R')
 
 ## data set up--------
 # bird data (update filepath to most recent one):
-birddat = compile_bird_data('data_raw/TOKA_HOCR_PC_2010_2025.csv') %>%
+birddat = compile_bird_data('data_raw/TOKA_HOCR_PC_2010_2026.csv') %>%
   # add simplistic habitat classifications:
   left_join(read_csv('data_clean/sample_point_habitat.csv'), by = 'Point') %>% 
   mutate(habitat = if_else(is.na(habitat), 'other', habitat)) %>% 
@@ -36,8 +36,8 @@ birddat = compile_bird_data('data_raw/TOKA_HOCR_PC_2010_2025.csv') %>%
 
 # check that number of species and surveys hasn't decreased: update these
 # numbers with last year's totals!
-birdtest1 = testthat::expect_gte(count_species(birddat), 95)
-birdtest2 = testthat::expect_gte(count_surveys(birddat), 1289)
+birdtest1 = testthat::expect_gte(count_species(birddat), 98)
+birdtest2 = testthat::expect_gte(count_surveys(birddat), 1461)
 
 
 ## 1. MAP avg density per point------------- 
