@@ -406,7 +406,7 @@ source('src/process_soil_data.R')
 
 # Note: these functions may need updating with additional sample years!
 
-soildat = compile_soil_fielddata('data_raw/soil/TOKA_soildata_CADC_2014to24.csv') %>% 
+soildat = compile_soil_fielddata('data_raw/soil/TOKA_soildata_CADC_2014to25.csv') %>% 
   calculate_bulk_density() %>% 
   calculate_water_infiltration() %>% 
   summarize_soil_fielddata() %>% 
@@ -418,7 +418,7 @@ soildat = compile_soil_fielddata('data_raw/soil/TOKA_soildata_CADC_2014to24.csv'
 write_csv(soildat, 'data_clean/TOKA_soil_main.csv')
 
 # list of points sampled in the most recent year:
-samplepts = soildat %>% filter(SampleYear == max(SampleYear)) %>% 
+samplepts = soildat %>% filter(SampleYear %in% c(max(SampleYear),max(SampleYear)-1)) %>% 
   pull(Point) %>% unique()
 
 
@@ -435,19 +435,20 @@ soildat_productivity = soildat %>%
          table_caption = if_else(Point %in% c('TOKA-022', 'TOKA-068'), 
                                  ' (compost applied)', ''))
 
-# create pop-up tables of data (most recent year only)
+# create pop-up tables of data (most recent cohort only)
 soildat_productivity_tables = create_html_tables(
-  soildat_productivity %>% filter(SampleYear == max(soildat$SampleYear)), 
+  soildat_productivity %>% filter(SampleYear %in% c(max(soildat$SampleYear),max(soildat$SampleYear)-1)), 
   set = 'soil_productivity')  
 
-# generate color palettes for range of each metric (most recent year only)
+# generate color palettes for range of each metric (most recent cohort only)
 soildat_productivity_palettes = create_palettes(
-  soildat_productivity %>% filter(SampleYear == max(soildat$SampleYear)),
+  soildat_productivity %>% filter(SampleYear %in% c(max(soildat$SampleYear),max(soildat$SampleYear)-1)),
   set = 'soil_productivity')
 
 # create map
 soil_productivity_map = map_data(
-  dat = soildat_productivity %>% filter(SampleYear == max(soildat$SampleYear)),
+  dat = soildat_productivity %>% filter(SampleYear %in% c(max(soildat$SampleYear),max(soildat$SampleYear)-1))
+  ,
   pts_toka = 'GIS/TOKA_point_count_grid.shp',
   fields = 'GIS/TK_veg_fields.shp',
   boundary = 'GIS/TomKat_ranch_boundary.shp',
@@ -473,10 +474,9 @@ save_widget(soil_productivity_map,
 
 # calculate change in each metric and change in overall percentile score
 soildat_productivity_change = calculate_productivity_change(
-  df = soildat_productivity,
-  current = max(soildat_productivity$SampleYear),
+  df = soildat_productivity %>% filter(Point %in% samplepts),
   baseline = 2015,
-  difflabel = 'Difference<br>(2024-2015)') %>% 
+  difflabel = 'Difference') %>% 
   mutate(
     table_rowheader = maplayer,
     table_header = case_when(
@@ -495,7 +495,7 @@ soildat_productivity_change_palettes = create_palettes(
   set = 'soil_productivity_change')
 
 soil_productivity_change_map = map_data(
-  dat = soildat_productivity_change %>% filter(Point %in% samplepts),
+  dat = soildat_productivity_change %>% filter(Point %in% samplepts[!samplepts=="TOKA-117"]),
   pts_toka = 'GIS/TOKA_point_count_grid.shp',
   fields = 'GIS/TK_veg_fields.shp',
   boundary = 'GIS/TomKat_ranch_boundary.shp',
