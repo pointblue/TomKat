@@ -44,25 +44,38 @@ ppt.width.wide = 13.33 #inches
 shp_poly <- st_read(here::here('GIS'), poly, quiet = TRUE) 
 
 veg_trend_plot<-function(dat){
-  dat <- dat %>%
-    group_by(Year, vegtype) %>%
-    summarize(Cover = mean(cover, na.rm=TRUE)) %>%
+  # Keep only points observed in every year bin
+  years_all <- levels(droplevels(dat$YearBin))
+  
+  pts_all_years <- dat %>%
     ungroup() %>%
-    mutate(y_round = paste0(round(Cover, digits = 0), '%'),
-           vegtype = factor(vegtype, levels = c('AnnualGr', 
-                                                'PereGr','Legumes', 'Forbs', 
-                                                'SedgesRushes', 'ShrubsTrees', 
-                                                'Other','BareGround'    
-           )),
-           fullname = recode(vegtype, 
-                             AnnualGr = 'Annual Grasses',
-                             Legumes = 'Legumes',
-                             BareGround = 'Bare Ground',
-                             PereGr = 'Perennial Grasses',
-                             Forbs = 'Forbs',
-                             SedgesRushes = 'Sedges and Rushes',
-                             ShrubsTrees = 'Shrubs and Trees',
-                             Other = 'Other'))
+    distinct(Point.Id, YearBin) %>%
+    count(Point.Id, name = "n_years") %>%
+    filter(n_years == length(years_all)) %>%
+    pull(Point.Id)
+  
+  dat <- dat %>%
+    filter(Point.Id %in% pts_all_years) %>%
+    group_by(YearBin, vegtype) %>%
+    summarize(Cover = mean(cover, na.rm = TRUE), .groups = "drop") %>%
+    mutate(
+      y_round = paste0(round(Cover, digits = 0), '%'),
+      vegtype = factor(vegtype, levels = c(
+        'AnnualGr', 'PereGr', 'Legumes', 'Forbs',
+        'SedgesRushes', 'ShrubsTrees', 'Other', 'BareGround'
+      )),
+      fullname = recode(
+        vegtype,
+        AnnualGr = 'Annual Grasses',
+        Legumes = 'Legumes',
+        BareGround = 'Bare Ground',
+        PereGr = 'Perennial Grasses',
+        Forbs = 'Forbs',
+        SedgesRushes = 'Sedges and Rushes',
+        ShrubsTrees = 'Shrubs and Trees',
+        Other = 'Other'
+      )
+    )
   
   
   
@@ -70,8 +83,9 @@ veg_trend_plot<-function(dat){
   # PLOT 1-------------
   # Overview: all grasses, shrubs, forbs, bare ground, weeds
   
-  plot1 <- plot_ly(x = ~Year) %>%
+  plot1 <- plot_ly() %>%
     add_trace(data = dat %>% filter(vegtype == 'Legumes'), 
+              x = ~YearBin,
               y = ~Cover , 
               type = 'scatter', 
               mode = 'markers+lines',
@@ -81,7 +95,8 @@ veg_trend_plot<-function(dat){
               text = ~y_round,
               hoverinfo = 'x+text', 
               name = 'Legumes') %>%
-    add_trace(data = dat %>% filter(vegtype == 'BareGround'), 
+    add_trace(data = dat %>% filter(vegtype == 'BareGround'),
+              x = ~YearBin,
               y = ~Cover , 
               type = 'scatter', 
               mode = 'lines+markers',
@@ -91,7 +106,8 @@ veg_trend_plot<-function(dat){
               text = ~y_round,
               hoverinfo = 'x+text', 
               name = 'Bare Ground') %>%
-    add_trace(data = dat %>% filter(vegtype == 'Forbs'), 
+    add_trace(data = dat %>% filter(vegtype == 'Forbs'),
+              x = ~YearBin,
               y = ~Cover , 
               type = 'scatter', 
               mode = 'lines+markers',
@@ -101,7 +117,8 @@ veg_trend_plot<-function(dat){
               text = ~y_round,
               hoverinfo = 'x+text', 
               name = 'Forbs') %>%
-    add_trace(data = dat %>% filter(vegtype == 'SedgesRushes'), 
+    add_trace(data = dat %>% filter(vegtype == 'SedgesRushes'),
+              x = ~YearBin,
               y = ~Cover , 
               type = 'scatter', 
               mode = 'lines+markers',
@@ -111,7 +128,8 @@ veg_trend_plot<-function(dat){
               text = ~y_round,
               hoverinfo = 'x+text', 
               name = 'Sedges and Rushes') %>%
-    add_trace(data = dat %>% filter(vegtype == 'ShrubsTrees'), 
+    add_trace(data = dat %>% filter(vegtype == 'ShrubsTrees'),
+              x = ~YearBin,
               y = ~Cover , 
               type = 'scatter', 
               mode = 'lines+markers',
@@ -121,7 +139,8 @@ veg_trend_plot<-function(dat){
               text = ~y_round,
               hoverinfo = 'x+text', 
               name = 'Shrubs and Trees') %>%
-    add_trace(data = dat %>% filter(vegtype == 'PereGr'), 
+    add_trace(data = dat %>% filter(vegtype == 'PereGr'),
+              x = ~YearBin,
               y = ~Cover , 
               type = 'scatter', 
               mode = 'markers+lines',
@@ -131,7 +150,8 @@ veg_trend_plot<-function(dat){
               text = ~y_round,
               hoverinfo = 'x+text', 
               name = 'Perennial Grass') %>%
-    add_trace(data = dat %>% filter(vegtype == 'AnnualGr'), 
+    add_trace(data = dat %>% filter(vegtype == 'AnnualGr'),
+              x = ~YearBin,
               y = ~Cover , 
               type = 'scatter', 
               mode = 'markers+lines',
@@ -150,13 +170,20 @@ veg_trend_plot<-function(dat){
                         showgrid = FALSE,
                         automargin = TRUE),
            xaxis = list(title = NA,
+                        type = "category",
+                        categoryorder = "array",
+                        categoryarray = c("2016", "2018", "2021-2022", "2024-2025"),
                         showline = TRUE,
                         ticks = 'outside',
                         showgrid = FALSE),
-           legend = list(x = 0.01, xanchor = 'left', y = 1, yanchor = 'top',
-                         bordercolor = ~I('black'), borderwidth = 1,
-                         font = list(family = 'sans-serif',
-                                     size = 14)),
+           legend = list(
+             x = 0.01, xanchor = 'left',
+             y = 0.99, yanchor = 'top',
+             bgcolor = 'rgba(255,255,255,0.7)',  # semi-transparent background
+             bordercolor = 'black',
+             borderwidth = 1,
+             font = list(family = 'sans-serif', size = 14)
+           ),
            hovermode = 'x',
            margin = list(r = 0, b = 10, t = 10)) %>%
     config(displaylogo = FALSE, showTips = FALSE,
