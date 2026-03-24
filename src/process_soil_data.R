@@ -190,30 +190,47 @@ format_soil_productivity_metrics = function(df) {
 }
 
 
-calculate_productivity_change = function(df, current, baseline, difflabel = 'Difference') {
-  df %>% 
-    mutate(yr = case_when(SampleYear == current ~ 'current',
-                          SampleYear == baseline ~ 'baseline',
-                          TRUE ~ as.character(SampleYear))) %>% 
-    select(Point, var, depth, yr, value, maplayer, starts_with('point'), 
-           starts_with('table')) %>% 
-    pivot_wider(names_from = yr, values_from = value) %>% 
-    mutate(diff = current - baseline) %>% 
-    select(-table_rowname) %>% # replace old table rowname
-    pivot_longer(!(Point:table_caption), names_to = 'table_rowname') %>% 
-    # relabel back with their corresponding years (as rownames in popup tables)
-    mutate(table_rowname = recode(table_rowname, 
-                                  'current' = as.character(current), 
-                                  'baseline' = as.character(baseline),
-                                  'diff' = difflabel),
-           value_round = if_else(
-             var == 'mean',
-             txtRound(value, digits = 0, txt.NA = 'NA'),
-             txtRound(value, digits = 2, txt.NA = 'NA')),
-           value_round = case_when(
-             grepl('diff', table_rowname, ignore.case = TRUE) & 
-               value > 0 ~ paste0('+', value_round),
-             TRUE ~ value_round))
+calculate_productivity_change <- function(df, baseline = 2015, difflabel = "Difference") {
+  
+  # rows for all actual sampled years
+  year_rows <- df %>%
+    filter(!is.na(Point), !is.na(SampleYear)) %>%
+    mutate(table_rowname = as.character(SampleYear)) %>%
+    select(Point, var, depth, maplayer, starts_with("point"),
+           starts_with("table"), table_rowname, value)
+  
+  # rows for point-specific current-baseline difference
+  diff_rows <- df %>%
+    filter(!is.na(Point), !is.na(SampleYear)) %>%
+    group_by(Point, var, depth, maplayer,
+             across(starts_with("point")),
+             across(starts_with("table"))) %>%
+    summarise(
+      current_year = max(SampleYear, na.rm = TRUE),
+      current_value = value[SampleYear == max(SampleYear, na.rm = TRUE)][1],
+      baseline_value = value[SampleYear == baseline][1],
+      .groups = "drop"
+    ) %>%
+    mutate(
+      table_rowname = paste0(difflabel, "<br>(", current_year, "-", baseline, ")"),
+      value = current_value - baseline_value
+    ) %>%
+    select(Point, var, depth, maplayer, starts_with("point"),
+           starts_with("table"), table_rowname, value)
+  
+  bind_rows(year_rows, diff_rows) %>%
+    mutate(
+      value_round = if_else(
+        var == "mean",
+        txtRound(value, digits = 0, txt.NA = "NA"),
+        txtRound(value, digits = 2, txt.NA = "NA")
+      ),
+      value_round = case_when(
+        grepl("^Difference", table_rowname, ignore.case = TRUE) &
+          !is.na(value) & value > 0 ~ paste0("+", value_round),
+        TRUE ~ value_round
+      )
+    )
 }
 
 format_soil_nutrients = function(df) {
