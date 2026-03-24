@@ -167,6 +167,166 @@ veg_trend_plot<-function(dat){
 }
 
 
+logo <- "https://www.pointblue.org/wp-content/uploads/2020/09/PointBlue_Logo.png"
+
+txtRound <- function(x, digits = 0) {
+  ifelse(is.na(x), "", format(round(x, digits), nsmall = digits, trim = TRUE))
+}
+
+create_veg_html_tables <- function(dat) {
+  dat %>%
+    ungroup() %>%
+    mutate(value_round = paste0(txtRound(value, 0), "%")) %>%
+    group_by(Point, maplayer) %>%
+    group_modify(~{
+      sdat <- .x %>%
+        arrange(Year) %>%
+        distinct(Year, .keep_all = TRUE)
+      
+      tibble(
+        table_html = htmlTable(
+          x = matrix(
+            sdat$value_round,
+            ncol = 1,
+            dimnames = list(as.character(sdat$Year), "value")
+          ),
+          align = "r",
+          caption = paste0("<b>", .y$Point, "</b>")
+        )
+      )
+    }) %>%
+    ungroup()
+}
+
+create_veg_palettes <- function(dat, domain = c(0, 100)) {
+  dat %>%
+    distinct(maplayer) %>%
+    pull(maplayer) %>%
+    rlang::set_names() %>%
+    purrr::map(~ leaflet::colorNumeric(
+      palette = c("#ffffff", "#005baa"),
+      domain = domain,
+      na.color = "transparent"
+    ))
+}
+
+map_veg_cover <- function(dat,
+                          pts_toka,
+                          fields = NULL,
+                          boundary = NULL,
+                          htmltab = NULL,
+                          palette = NULL,
+                          map_height = 500) {
+  
+  shp_pts_utm <- read_sf(pts_toka) %>%
+    select(Point = Name)
+  
+  shp_pts_longlat <- shp_pts_utm %>%
+    st_transform(4326) %>%
+    inner_join(dat, by = "Point")
+  
+  if (!is.null(htmltab)) {
+    shp_pts_longlat <- shp_pts_longlat %>%
+      left_join(htmltab, by = c("Point", "maplayer"))
+  }
+  
+  if (is.null(palette)) {
+    palette <- create_veg_palettes(dat)
+  }
+  
+  maplayers <- unique(dat$maplayer)
+  
+  m <- leaflet(shp_pts_longlat, height = map_height) %>%
+    setView(lng = -122.3598, lat = 37.26693, zoom = 14) %>%
+    addProviderTiles(
+      "Esri.WorldStreetMap",
+      options = providerTileOptions(minzoom = 14, maxzoom = 15)
+    ) %>%
+    leafem::addLogo(
+      img = logo,
+      src = "remote",
+      url = "https://www.pointblue.org",
+      width = 174,
+      height = 90,
+      offset.y = -5
+    )
+  
+  if (!is.null(fields)) {
+    shp_poly <- read_sf(fields) %>%
+      st_transform(4326)
+    
+    m <- m %>%
+      addPolygons(
+        data = shp_poly,
+        fillColor = "#666666",
+        color = "black",
+        weight = 1,
+        fillOpacity = 0.15
+      )
+  }
+  
+  if (!is.null(boundary)) {
+    shp_ranch <- read_sf(boundary) %>%
+      st_transform(4326)
+    
+    m <- m %>%
+      addPolygons(
+        data = shp_ranch,
+        fill = FALSE,
+        color = "black",
+        weight = 3
+      )
+  }
+  
+  for (lyr in maplayers) {
+    pal_i <- palette[[lyr]]
+    
+    m <- m %>%
+      addCircleMarkers(
+        data = shp_pts_longlat %>% filter(maplayer == lyr),
+        group = lyr,
+        popup = ~table_html,
+        radius = ~point_radius,
+        color = "black",
+        opacity = 1,
+        weight = ~point_weight,
+        fillColor = ~pal_i(value),
+        fillOpacity = 1,
+        options = popupOptions(maxWidth = 500)
+      ) %>%
+      addLegend(
+        pal = pal_i,
+        values = c(0, 100),
+        title = "Percent cover",
+        position = "topright",
+        opacity = 1,
+        group = lyr,
+        labFormat = labelFormat(suffix = "%")
+      )
+  }
+  
+  m <- m %>%
+    addLayersControl(
+      position = "bottomleft",
+      options = layersControlOptions(collapsed = FALSE),
+      overlayGroups = maplayers
+    ) %>%
+    hideGroup(maplayers[-1])
+  
+  m$dependencies <- c(
+    m$dependencies,
+    list(
+      htmltools::htmlDependency(
+        name = "tomkat-leaflet",
+        version = "1.0.0",
+        src = here::here("Rmd"),
+        stylesheet = "tk_leaflet.css"
+      )
+    )
+  )
+  
+  m
+}
 
 
 

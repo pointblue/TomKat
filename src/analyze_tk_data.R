@@ -677,10 +677,41 @@ source('src/plot_veg_data.R')
 
 ## data set up
 
-vegdat = compile_veg_data("data_raw/veg/LPI_TomKat_2024.csv")
+vegdat = compile_veg_data("data_raw/veg/LPI_TomKat_2025.csv")
 write_csv(vegdat, here::here('data_clean/TK_veg_main.csv'))
 
-## 1. MAP current veg cover
+## 1. MAP current veg cover of functional groups by point
+
+# reformat vegdat
+vegdat_tomap = vegdat %>% 
+  filter(Year %in% c(max(vegdat$Year, na.rm = TRUE),
+                     max(vegdat$Year, na.rm = TRUE) - 1)) %>%
+  rename(Point = Point.Id) %>%
+  distinct(Point, Year, vegtype, .keep_all = TRUE) %>%
+  format_veg_cover()
+
+vegdat_tables <- create_veg_html_tables(vegdat_tomap)
+
+vegdat_palettes <- create_veg_palettes(vegdat_tomap)
+
+veg_cover_map <- map_veg_cover(
+  dat = vegdat_tomap,
+  pts_toka = "GIS/TOKA_point_count_grid.shp",
+  fields = "GIS/TK_veg_fields.shp",
+  boundary = "GIS/TomKat_ranch_boundary.shp",
+  htmltab = vegdat_tables,
+  palette = vegdat_palettes
+)
+
+veg_cover_map
+
+# final version
+save_widget(veg_cover_map,
+            pathout = 'docs/widget/veg_cover_map.html',
+            selfcontained = FALSE, libdir = 'lib',
+            title =  paste0('TomKat Veg Map ', max(vegdat$Year)))
+
+
 ## 2. MAP vegetation change
 ## 3. GRAPH ranch-wide veg trends
 

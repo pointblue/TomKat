@@ -55,7 +55,87 @@ compile_veg_data<-function(dat){
 
 
 
+format_veg_cover = function(df) {
+  veg_labels <- c(
+    PereGr = "Perennial Grass",
+    AnnualGr = "Annual Grass",
+    Legumes = "Legumes",
+    ShrubsTrees = "Shrubs & Trees",
+    SedgesRushes = "Sedges & Rushes",
+    Forb = "Forb",
+    Other = "Other"
+  )
+  df %>%
+    mutate(
+      value = cover,
+      maplayer = recode(vegtype, !!!veg_labels),
+      pointlayer = maplayer,
+      point_weight = 1,
+      point_radius = 8,
+      table_rowheader = "",
+      table_header = "value",
+      table_rowname = as.character(Year),
+      table_caption = "",
+      legend_title = "Percent cover"
+    )
+}
 
+
+
+create_veg_palettes = function(dat) {
+  dat %>%
+    split(.$maplayer) %>%
+    purrr::map(~ leaflet::colorNumeric(
+      palette = c('#ffffff', '#005baa'),
+      domain = .x$value,
+      na.color = 'transparent'
+    ))
+}
+
+format_veg_metrics = function(df) {
+  df %>% 
+    mutate(
+           value_round = cover,
+           # labels within map layer control
+           maplayer = recode(vegtype,
+                             AnnualGr = 'Annual grass',
+                             Forb = 'Forb',
+                             Legumes = 'Legumes',
+                             PereGr = 'Perennial grass',
+                             SedgesRushes = 'Sedges and rushes',
+                             ShrubsTrees = 'Shrubs and trees',
+                             Other = 'Other',
+                             BareGround = 'Bare ground'),
+           # each set of distinct points to be plotted:
+           pointlayer = vegtype,
+           # default 
+           point_weight = 1,
+           # smaller point size for surface carbon points
+           point_radius = 9,
+           # rownames within popup tables
+           table_rowname = recode(vegtype,
+                                  AnnualGr = 'Annual grass',
+                                  Forb = 'Forb',
+                                  Legumes = 'Legumes',
+                                  PereGr = 'Perennial grass',
+                                  SedgesRushes = 'Sedges and rushes',
+                                  ShrubsTrees = 'Shrubs and trees',
+                                  Other = 'Other',
+                                  BareGround = 'Bare ground'),
+           # default:
+           table_caption = '',
+           legend_title = recode(vegtype,
+                                 AnnualGr = 'Annual grass',
+                                 Forb = 'Forb',
+                                 Legumes = 'Legumes',
+                                 PereGr = 'Perennial grass',
+                                 SedgesRushes = 'Sedges and rushes',
+                                 ShrubsTrees = 'Shrubs and trees',
+                                 Other = 'Other',
+                                 BareGround = 'Bare ground')
+    )
+  
+}
 
   
 
