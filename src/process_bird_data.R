@@ -111,7 +111,7 @@ format_bird_density = function(dat) {
     select(Point = Label, species, value = Estimate) %>%
     #optional: convert to birds per 10 acres (from birds/ha)
     mutate(value = value / 2.47105 * 10,
-           value_round = txtRound(value, digits = 1, txt.NA = 'NA'),
+           value_round = txtRound(value, digits = 1),
            species = factor(species, levels = c('GRSP', 'SAVS', 'total')),
            # labels within map layer control
            maplayer = recode(species,
@@ -134,7 +134,7 @@ format_bird_richness = function(dat) {
                                   estimated = 'Estimated species',
                                   observed = 'Observed species',
                                   n = 'Number of surveys'),
-           value_round = txtRound(value, digits = 0, txt.NA = 'NA'),
+           value_round = txtRound(value, digits = 0),
            # default (only one layer for this map, but need to specify one)
            maplayer = 'default',
            table_header = '')
