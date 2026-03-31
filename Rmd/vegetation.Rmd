@@ -21,7 +21,13 @@ output:
 Cover for each vegetation type has remained mostly stable since 2016, with a slight increase in legume cover over the 2021-2022 sampling event. 
 
 <center>
-<iframe src="widget/vegetation_graph1.html" style="border: none;" width = 100%; height = 500px;></iframe>
+<iframe 
+  src="widget/vegetation_graph1.html" 
+  style="border: none;" 
+  width="100%" 
+  height="700"
+  scrolling="no">
+</iframe>
 </center>
 
 ### Point-level vegetation cover
@@ -31,7 +37,14 @@ In the map below, each point represents a vegetation sampling location. Toggle b
 <i>Choose one metric at a time at bottom left. Click on any of the survey points to learn more.</i>
 
 <center>
-<iframe src="widget/veg_cover_map.html" data-external="1" style="border: none;" width = 100%; height = 550px;></iframe>
+<iframe 
+  src="widget/veg_cover_map.html" 
+  data-external="1" 
+  style="border: none;" 
+  width="100%" 
+  height="700"
+  scrolling="no">
+</iframe>
 </center>
 
 ---------------------------------------
