@@ -27,7 +27,7 @@ source('src/fit_distance_models.R')
 
 ## data set up--------
 # bird data (update filepath to most recent one):
-birddat = compile_bird_data('data_raw/TOKA_HOCR_PC_2010_2026.csv') %>%
+birddat = compile_bird_data('data_raw/TOKA_HOCR_PC_2010_2026_all.csv') %>%
   # add simplistic habitat classifications:
   left_join(read_csv('data_clean/sample_point_habitat.csv'), by = 'Point') %>% 
   mutate(habitat = if_else(is.na(habitat), 'other', habitat)) %>% 
@@ -178,6 +178,7 @@ write_csv(birdrich_trend, 'data_clean/TOKA_birds_richness_by_year.csv')
 # plot trend
 birdrich_trend_plot = birdrich_trend %>% 
   separate(id, c('group', 'year')) %>%
+  filter(year != '2021') %>%
   mutate(year = as.numeric(year),
          value = boot,
          minus = boot.se,
