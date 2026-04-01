@@ -6,9 +6,9 @@ output:
     css: tk_page_style.css
 ---
 
-#### Point Blue Conservation Science has surveyed grassland vegetation across TomKat Ranch since 2011, with an updated monitoring effort in summer of 2023. We examine patterns in the current vegetation cover and diversity, changes over time, and ranch-wide vegetation trends.{#intro}
+#### Point Blue Conservation Science has surveyed grassland vegetation across TomKat Ranch since 2011, with an updated monitoring effort in summer of 2025. We examine patterns in the current vegetation cover and diversity, changes over time, and ranch-wide vegetation trends.{#intro}
 
-<i>Updated March 12, 2024</i>
+<i>Updated March 31, 2026</i>
 
 ### Achieved SMART Goals
 
@@ -18,12 +18,34 @@ output:
 
 ### Ranch-wide vegetation trends
   
-Cover for each vegetation type has remained mostly stable since 2016, with a slight decrease during the 2021-2022 drought. Bare ground has shown a stead decline since 2016.
+Cover for each vegetation type has remained mostly stable since 2016, with a slight increase in legume cover over the 2021-2022 sampling event. 
 
 <center>
-<iframe src="widget/vegetation_graph1.html" style="border: none;" width = 100%; height = 500px;></iframe>
+<iframe 
+  src="widget/vegetation_graph1.html" 
+  style="border: none;" 
+  width="100%" 
+  height="700"
+  scrolling="no">
+</iframe>
 </center>
 
+### Point-level vegetation cover
+
+In the map below, each point represents a vegetation sampling location. Toggle between vegetation types to see percent cover for each functional group. Darker colors indicate higher cover for the selected vegetation type. Only data for the most recent sampling event (2024-2025) are displayed.
+
+<i>Choose one metric at a time at bottom left. Click on any of the survey points to learn more.</i>
+
+<center>
+<iframe 
+  src="widget/veg_cover_map.html" 
+  data-external="1" 
+  style="border: none;" 
+  width="100%" 
+  height="700"
+  scrolling="no">
+</iframe>
+</center>
 
 ---------------------------------------
 ### Glossary
